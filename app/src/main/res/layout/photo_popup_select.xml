@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/id_pop_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#eff0f4"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_ffffff"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/id_btn_take_photo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="拍照"
+                android:textColor="#000000"
+                android:textSize="22sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/common_drivder_line" />
+
+            <TextView
+                android:id="@+id/id_btn_select"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="相册"
+                android:textColor="#000000"
+                android:textSize="22sp" />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/id_btn_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:padding="10dp"
+            android:background="@color/color_ffffff"
+            android:text="取消"
+            android:textColor="#000000"
+            android:textSize="22sp" />
+    </LinearLayout>
+</RelativeLayout>

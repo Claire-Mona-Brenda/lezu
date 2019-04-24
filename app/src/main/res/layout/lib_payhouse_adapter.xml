@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginBottom="10dp"
+    android:id="@+id/lin_order"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:background="#ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_10"
+        android:layout_marginBottom="1dp">
+
+        <TextView
+            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_centerVertical="true"
+            android:id="@+id/xh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:textSize="@dimen/style_text_tips"/>
+
+        <TextView
+            android:layout_marginRight="@dimen/dp_16"
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/style_text_tips"/>
+        <TextView
+            android:textColor="@android:color/black"
+            android:id="@+id/h_lx"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/status"
+            android:textSize="@dimen/style_text_context"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:background="#ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_10"
+        android:orientation="horizontal">
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_marginBottom="@dimen/dp_5"
+            android:layout_marginLeft="@dimen/dp_15"
+            app:cardCornerRadius="@dimen/dp_5"
+            app:cardElevation="0dp"
+            app:cardUseCompatPadding="false">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/img_house"
+            android:scaleType="centerCrop"
+            android:layout_width="@dimen/dp_80"
+            android:layout_height="@dimen/dp_80"
+            />
+        </androidx.cardview.widget.CardView>
+        <LinearLayout
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:ems="9"
+                    android:layout_alignParentLeft="true"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/style_text_title"
+                    android:id="@+id/adress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_start_time_l"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/adress"
+                    android:textSize="@dimen/style_text_small"
+                    android:textColor="@color/text_black"
+                    android:text="@string/renter_start_time"/>
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/adress"
+                    android:layout_toRightOf="@+id/tv_start_time_l"
+                    android:textSize="@dimen/style_text_small"
+                    android:textColor="@color/text_black"
+                    android:id="@+id/dis_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="" />
+                <TextView
+                    android:id="@+id/tv_end_time_l"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/tv_start_time_l"
+                    android:textSize="@dimen/style_text_small"
+                    android:textColor="@color/text_black"
+                    android:text="@string/renter_end_time"/>
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/tv_start_time_l"
+                    android:layout_toRightOf="@+id/tv_end_time_l"
+                    android:textSize="@dimen/style_text_small"
+                    android:textColor="@color/text_black"
+                    android:id="@+id/tv_end_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="" />
+                <TextView
+                    android:layout_marginRight="@dimen/dp_16"
+                    android:id="@+id/price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/tv_end_time_l"
+                    android:layout_alignParentRight="true"
+                    android:textColor="@color/lib_landlord_house" />
+            </RelativeLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+<FrameLayout
+    android:layout_marginTop="1dp"
+    android:background="#ffffff"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+    <LinearLayout
+        android:layout_gravity="right|center_vertical"
+        android:id="@+id/btn_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp_16"
+        >
+
+        <TextView
+            style="@style/tv_order_btn"
+            android:id="@+id/cancel"
+            android:text="@string/renter_cancel_apply"
+            android:visibility="gone"/>
+
+        <TextView
+            style="@style/tv_order_btn"
+            android:id="@+id/connect"
+            android:text="@string/renter_call_landlord"
+            android:visibility="visible"/>
+        <TextView
+            android:visibility="gone"
+            style="@style/tv_order_btn"
+            android:id="@+id/sqtf"
+            android:text="@string/renter_apply_to_end"
+           />
+        <TextView
+            android:visibility="gone"
+            style="@style/tv_order_btn"
+            android:id="@+id/fwf"
+            android:text="@string/sever_pay_money"
+         />
+        <TextView
+            android:id="@+id/renew"
+            android:visibility="gone"
+            style="@style/tv_order_btn"
+            android:text="@string/renter_relet" />
+    </LinearLayout>
+</FrameLayout>
+</LinearLayout>

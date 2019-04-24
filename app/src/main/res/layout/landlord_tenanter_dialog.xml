@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/shape_white"
+              android:orientation="vertical"
+              android:padding="@dimen/dp_10">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_10">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:text="@string/tenanter_title_dialog"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/common_text_size_small"
+            />
+
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:src="@mipmap/icon_tenanter_close"/>
+
+    </LinearLayout>
+
+    <include layout="@layout/include_view_line"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_10"
+        >
+
+        <ImageView
+            android:id="@+id/iv_photo"
+            android:layout_width="@dimen/dp_80"
+            android:layout_height="@dimen/dp_80"
+            android:src="@mipmap/fangchan_jiazai"
+            android:layout_centerVertical="true"
+            android:scaleType="centerCrop"/>
+        
+
+
+        <TextView
+            android:id="@+id/tv_name_hint"
+            style="@style/tenanter_des_text_hint"
+            android:text="@string/tenanter_des_name"
+            android:layout_toRightOf="@+id/iv_photo"/>
+
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/tenanter_des_text"
+            android:layout_toRightOf="@+id/tv_name_hint"
+            />
+
+        <TextView
+            android:id="@+id/tv_gender_hint"
+            style="@style/tenanter_des_text_hint"
+            android:text="@string/tenanter_des_gender"
+            android:layout_toRightOf="@+id/iv_photo"
+            android:layout_below="@+id/tv_name_hint"/>
+
+        <TextView
+            android:id="@+id/tv_gender"
+            style="@style/tenanter_des_text"
+            android:layout_below="@+id/tv_name"
+            android:layout_toRightOf="@+id/tv_gender_hint"
+            />
+
+        <TextView
+            android:id="@+id/tv_phone_hint"
+            style="@style/tenanter_des_text_hint"
+            android:text="@string/tenanter_des_phone"
+            android:layout_toRightOf="@+id/iv_photo"
+            android:layout_below="@+id/tv_gender_hint"/>
+
+        <TextView
+            android:id="@+id/tv_phone"
+            style="@style/tenanter_des_text"
+            android:layout_below="@+id/tv_gender_hint"
+            android:layout_toRightOf="@+id/tv_gender_hint"
+            android:layout_marginBottom="@dimen/dp_10"/>
+
+        <!--<TextView-->
+            <!--android:id="@+id/tv_address_hint"-->
+            <!--style="@style/tenanter_des_text_hint"-->
+            <!--android:text="@string/tenanter_des_address"-->
+            <!--android:layout_toRightOf="@+id/iv_photo"-->
+            <!--android:layout_below="@+id/tv_birthday_hint"/>-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/tv_address"-->
+            <!--style="@style/tenanter_des_text"-->
+            <!--android:layout_below="@+id/tv_birthday_hint"-->
+            <!--android:text="浙江省"-->
+            <!--android:layout_toRightOf="@+id/tv_gender_hint"-->
+            <!--/>-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/tv_idcard_hint"-->
+            <!--style="@style/tenanter_des_text_hint"-->
+            <!--android:text="@string/tenanter_des_id_card"-->
+            <!--android:layout_toRightOf="@+id/iv_photo"-->
+            <!--android:layout_below="@+id/tv_address"/>-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/tv_idcard"-->
+            <!--style="@style/tenanter_des_text"-->
+            <!--android:layout_below="@+id/tv_address"-->
+            <!--android:text="1000000000000000"-->
+            <!--android:layout_toRightOf="@+id/tv_idcard_hint"-->
+            <!--/>-->
+
+    </RelativeLayout>
+    <Button
+        android:id="@+id/btn_call_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tenanter_des_call_phone"
+        android:background="@drawable/shape_button"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="@dimen/dp_10"
+        android:textSize="@dimen/common_text_size_small"
+        />
+</LinearLayout>

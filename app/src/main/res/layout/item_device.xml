@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.mcxtzhang.swipemenulib.SwipeMenuLayout android:id="@+id/swipemenulayout"
+                                            xmlns:android="http://schemas.android.com/apk/res/android"
+                                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:background="@android:color/white"
+                                            app:ios="false"
+                                            app:leftSwipe="true"
+                                            app:swipeEnable="true">
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:id="@+id/linear_item"
+        android:orientation="horizontal"
+        android:padding="@dimen/common_margin">
+
+        <ImageView
+            android:id="@+id/iv_icon"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center_vertical"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/icon_success"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/common_margin"
+            android:layout_weight="1.0"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="test"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/common_text_size_small"/>
+
+            <TextView
+                android:id="@+id/tv_device_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_5"
+                android:text="test111"
+                android:textColor="#515151"
+                android:textSize="@dimen/common_text_size_smallest"/>
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="2017-01-01"
+                android:textColor="#929292"
+                android:textSize="@dimen/common_text_size_smallest"/>
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingRight="@dimen/common_margin">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|right"
+                android:layout_marginTop="@dimen/dp_10"
+                >
+                <TextView
+                    android:id="@+id/tv_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/sel_device_status"
+                    android:drawablePadding="@dimen/dp_3"
+                    android:gravity="center_vertical"
+                    android:text="@string/device_item_status_normal"
+                    android:textColor="@drawable/sel_item_device_status"
+                    android:textSize="@dimen/common_text_size_smallest"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/tv_open_door"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="开门"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingRight="@dimen/dp_10"
+                    android:paddingTop="@dimen/dp_5"
+                    android:layout_marginLeft="@dimen/common_margin"
+                    android:paddingBottom="@dimen/dp_5"
+                    android:background="@drawable/shape_white"
+                    android:layout_gravity="center_vertical"/>
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/tv_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:drawableLeft="@mipmap/user_icon_locatio"
+                android:drawablePadding="@dimen/dp_3"
+                android:ellipsize="start"
+                android:maxWidth="100dp"
+                android:singleLine="true"
+                android:text="@string/device_bind_success"
+                android:textColor="@color/color_929292"
+                android:textSize="@dimen/common_text_size_smallest"
+                android:visibility="gone"/>
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_del"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:background="@color/color_E50113"
+        android:text="@string/common_del"
+        android:textColor="@android:color/white"/>
+</com.mcxtzhang.swipemenulib.SwipeMenuLayout>

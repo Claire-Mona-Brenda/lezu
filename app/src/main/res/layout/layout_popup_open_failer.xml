@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/color_ffffff"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="@dimen/dp_50"
+        android:layout_height="@dimen/dp_50"
+        android:layout_marginLeft="@dimen/dp_70"
+        android:layout_marginRight="@dimen/dp_70"
+        android:layout_marginTop="@dimen/dp_20"
+        android:src="@mipmap/icon_open_failer" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_20"
+        android:text="@string/open_failer"
+        android:textColor="@color/color_000000"
+        android:textSize="@dimen/common_text_size_bigest" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_10">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_15"
+            android:text="@string/please_reopen"
+            android:textColor="@color/color_666666"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_15"
+            android:id="@+id/tv_service"
+            android:text="@string/underline_service"
+            android:textColor="@color/color_ele"/>
+    </LinearLayout>
+</LinearLayout>

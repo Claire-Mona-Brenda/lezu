@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_drivder_line"
+    android:orientation="vertical"
+    tools:context="com.konka.renting.landlord.home.copy.CopyDesActivity">
+
+    <include layout="@layout/include_title_text"/>
+
+    <include layout="@layout/item_room"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_item_height"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="@dimen/dp_1"
+        android:background="@android:color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/common_text_size_small"
+            android:text="@string/copy_last_water"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:textColor="@color/color_666666"/>
+
+        <TextView
+            android:id="@+id/tv_last_water"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2315"
+            android:layout_marginLeft="@dimen/dp_30"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/common_text_size_small"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_item_height"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="@dimen/dp_1"
+        android:background="@android:color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/common_text_size_small"
+            android:text="@string/copy_current_water"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:textColor="@color/color_666666"/>
+
+        <EditText
+            android:id="@+id/tv_current_water"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/copy_current_water_hint"
+            android:inputType="numberDecimal"
+            android:background="@android:color/transparent"
+            android:layout_marginLeft="@dimen/dp_30"
+            android:textColorHint="@color/common_bg"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/common_text_size_small"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_item_height"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="@dimen/dp_1"
+        android:background="@android:color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/common_text_size_small"
+            android:text="@string/copy_last_electricity"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:textColor="@color/color_666666"/>
+
+        <TextView
+            android:id="@+id/tv_last_electricity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2017"
+            android:layout_marginLeft="@dimen/dp_30"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/common_text_size_small"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_item_height"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="@dimen/dp_1"
+        android:background="@android:color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/common_text_size_small"
+            android:text="@string/copy_current_electricity"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:textColor="@color/color_666666"/>
+
+        <EditText
+            android:id="@+id/tv_current_electricity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/copy_current_electricity_hint"
+            android:background="@android:color/transparent"
+            android:layout_marginLeft="@dimen/dp_30"
+            android:inputType="numberDecimal"
+            android:textColorHint="@color/common_bg"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/common_text_size_small"
+            />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_commit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_15"
+        android:text="@string/common_commit"
+        style="@style/main_button"
+        />
+</LinearLayout>

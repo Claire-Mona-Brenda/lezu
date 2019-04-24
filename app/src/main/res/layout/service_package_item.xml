@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/flow_card_item"
+        android:layout_width="@dimen/dp_130"
+        android:layout_height="@dimen/dp_30"
+        android:background="@drawable/shape_button_stroke"
+        android:textColor="@color/color_black"
+        android:textSize="@dimen/sp_13"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="@dimen/dp_40"
+        android:layout_marginTop="@dimen/dp_20"/>
+</RelativeLayout>

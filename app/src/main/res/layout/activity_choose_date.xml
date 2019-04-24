@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/include_title_text"/>
+    <com.henry.calendarview.DayPickerView
+        android:id="@+id/activity_choose_date_day"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        app:colorCurrentDay="@color/common_title"
+        app:colorSelectedDayBackground="#FFCFA8"
+        app:colorSelectedDayText="#727272"
+        app:colorPreviousDayText="#dddddd"
+        app:colorNormalDayText="#727272"
+        app:colorYearMonthText="#333333"
+        app:colorWeekText="#727272"
+        app:colorBusyDaysBg="#11ffffff"
+        app:colorInValidDaysBg="#11ffffff"
+        app:colorBusyDaysText="#dddddd"
+        app:colorInValidDaysText="#dddddd"
+        app:colorCheckInText="#D30606"
+        app:colorCheckOutText="#D30606"
+
+        app:textSizeDay="14sp"
+        app:textSizeTag="10sp"
+        app:textSizeYearMonth="14sp"
+        app:textSizeWeek="14sp"
+        app:headerMonthHeight="70dp"
+        app:selectedDayRadius="20dp"
+        app:calendarHeight="350dp"
+        app:enablePreviousDay="false"/>
+</LinearLayout>

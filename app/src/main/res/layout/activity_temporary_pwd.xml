@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_bg_gray"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_title_white" />
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refresh"
+        android:layout_marginTop="@dimen/dp_1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_250"
+        android:background="@mipmap/chengse_bg"
+        android:gravity="center_vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/baise_bg">
+
+            <LinearLayout
+                android:id="@+id/ll_pwd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dp_40">
+
+                <TextView
+                    android:id="@+id/tv_pwd_1"
+                    style="@style/textview_temporary_pwd" />
+
+                <TextView
+                    android:id="@+id/tv_pwd_2"
+                    style="@style/textview_temporary_pwd" />
+
+                <TextView
+                    android:id="@+id/tv_pwd_3"
+                    style="@style/textview_temporary_pwd" />
+
+                <TextView
+                    android:id="@+id/tv_pwd_4"
+                    style="@style/textview_temporary_pwd" />
+
+                <TextView
+                    android:id="@+id/tv_pwd_5"
+                    style="@style/textview_temporary_pwd" />
+
+                <TextView
+                    android:id="@+id/tv_pwd_6"
+                    style="@style/textview_temporary_pwd"
+                    android:background="@drawable/shape_bg_pwd_stroke"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ll_pwd"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dp_20">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/house_setting_temporary_pwd_tips_1"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/style_text_context" />
+
+                <TextView
+                    android:id="@+id/tv_end_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/style_text_context" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/house_setting_temporary_pwd_tips_2"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/style_text_context" />
+            </LinearLayout>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_20"
+        android:textColor="@color/text_gray"
+        android:textSize="@dimen/style_text_tips"
+        android:visibility="gone" />
+        </LinearLayout>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+</LinearLayout>

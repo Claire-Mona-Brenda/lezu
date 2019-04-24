@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/re_user"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_150"
+        android:background="@mipmap/personage_bg"
+        android:layout_marginTop="@dimen/dp_10"
+        >
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/icon_user_photo"
+            android:layout_width="@dimen/dp_65"
+            android:layout_height="@dimen/dp_65"
+            android:layout_marginRight="@dimen/dp_40"
+            android:layout_marginTop="@dimen/dp_40"
+            android:layout_alignParentRight="true"
+
+            android:src="@mipmap/touxiang" />
+        <TextView
+            android:id="@+id/tv_user_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_50"
+            android:layout_marginLeft="@dimen/dp_50"
+            android:gravity="center"
+            android:text="@string/user_name"
+            android:textColor="@color/color_ffffff"
+            android:textSize="@dimen/style_text_title" />
+        <TextView
+            android:id="@+id/tv_user_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="18*******102"
+            android:textColor="@color/color_ffffff"
+            android:textSize="@dimen/style_text_context"
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_below="@+id/tv_user_nickname"
+            android:layout_alignLeft="@+id/tv_user_nickname"/>
+        <ImageView
+            android:id="@+id/img_user_isAuthentication"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_12"
+            android:src="@mipmap/notattestation_icon"
+            android:layout_toRightOf="@+id/tv_user_phone"
+            android:layout_alignBottom="@+id/tv_user_phone"/>
+
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/re_user"
+        android:layout_marginTop="@dimen/dp_40">
+
+        <TextView
+            android:id="@+id/tv_message"
+            style="@style/user_view_item"
+            android:drawableLeft="@mipmap/my_message_icon"
+            android:text="@string/my_message"
+             />
+        <View
+            style="@style/user_view"/>
+        <TextView
+            android:id="@+id/tv_authentication"
+            style="@style/user_view_item"
+            android:drawableLeft="@mipmap/my_certification_icon"
+            android:text="@string/certification"
+            />
+        <View
+            style="@style/user_view" />
+        <TextView
+            android:id="@+id/tv_problem"
+            style="@style/user_view_item"
+            android:drawableLeft="@mipmap/my_faq_icon"
+            android:text="@string/problem"
+            />
+        <View
+            style="@style/user_view" />
+        <TextView
+            android:id="@+id/tv_serviceCall"
+            style="@style/user_view_item"
+            android:drawableLeft="@mipmap/my_relation_icon"
+            android:text="@string/underline_service"
+         />
+        <View
+            style="@style/user_view"
+           />
+        <TextView
+            android:id="@+id/tv_after_the_process"
+            style="@style/user_view_item"
+            android:drawableLeft="@mipmap/my_about_icon"
+            android:text="@string/after_the_process"
+            android:visibility="gone"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_10"
+            android:background="@color/style_bg_card_1"/>
+        <TextView
+            android:id="@+id/tv_quit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_ffffff"
+            android:gravity="center"
+            android:padding="@dimen/dp_20"
+            android:text="@string/login_out"
+            android:textColor="@color/text_org"
+            android:textSize="@dimen/style_text_context" />
+    </LinearLayout>
+
+</RelativeLayout>

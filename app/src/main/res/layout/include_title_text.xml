@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/lin_title"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/common_title_height"
+    android:background="@color/color_ffffff"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="title"
+        android:layout_gravity="center"
+        android:textSize="@dimen/style_text_title"
+        android:textColor="@color/text_black" />
+
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
+        android:paddingLeft="16dp"
+        android:paddingRight="12dp"
+        android:src="@mipmap/chevron" />
+
+    <TextView
+        android:id="@+id/tv_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|center_vertical"
+        android:layout_marginRight="@dimen/common_margin"
+        android:text=""
+        android:textColor="@drawable/sel_title_right"
+        android:textSize="@dimen/common_text_size_middle" />
+
+    <ImageView
+        android:id="@+id/iv_right"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="right"
+        android:scaleType="center"
+        android:src="@mipmap/device_icon_scan"
+        android:visibility="gone" />
+
+</FrameLayout>

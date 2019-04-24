@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:layout_gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context="com.konka.renting.login.ChoiceIdentityActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="选择身份"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/common_text_size_middle"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:background="@color/common_drivder_line"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="@string/app_name"
+        android:layout_gravity="center_horizontal"
+        android:drawableTop="@mipmap/logo"
+        android:drawablePadding="@dimen/dp_10"
+        android:textColor="@android:color/black"
+        android:layout_marginTop="@dimen/dp_50"
+        android:textSize="@dimen/common_text_size_middle"/>
+
+
+    <Button
+        android:id="@+id/btn_landlord"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textColor="@android:color/white"
+        android:layout_margin="@dimen/dp_30"
+        android:background="@drawable/shape_login_landlord"
+        android:text="@string/login_landlord"
+        android:textSize="@dimen/common_text_size_middle"
+        />
+
+    <Button
+        android:id="@+id/btn_tenant"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textColor="@android:color/white"
+        android:layout_marginLeft="@dimen/dp_30"
+        android:layout_marginRight="@dimen/dp_30"
+        android:background="@drawable/shape_login_tenant"
+        android:text="@string/login_tenant"
+        android:textSize="@dimen/common_text_size_middle"
+        />
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login_tips_1"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/common_light_gray"
+        android:layout_marginTop="@dimen/dp_20"
+        android:textSize="@dimen/common_text_size_smallest"/>
+
+</LinearLayout>

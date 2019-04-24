@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?><!--  <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_marginTop="10dp"
+    android:orientation="vertical"
+    app:cardBackgroundColor="#ffffff"
+    app:cardCornerRadius="20dp"
+    android:background="#fff"
+    app:contentPadding="0dp" >  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+
+    android:orientation="vertical"
+    >
+    <RelativeLayout
+        android:id="@+id/title_bg"
+
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_item_height"
+        android:background="@color/common_title">
+        <ImageView
+            android:onClick="onClick"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:id="@+id/back"
+            android:layout_width="28dp"
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:src="@mipmap/icon_back"
+            />
+        <TextView
+            android:id="@+id/text_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="收租历史"
+            android:textColor="@android:color/white" />
+
+
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:background="#ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="1dp">
+
+        <TextView
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/xh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="TextView" />
+
+        <TextView
+            android:visibility="invisible"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="TextView"
+            android:textColor="@color/lib_landlord_house" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:background="#ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_marginLeft="5dp"
+            android:padding="5dp"
+            android:id="@+id/img_house"
+            android:scaleType="centerCrop"
+            android:layout_width="80dp"
+            android:layout_height="80dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:ems="10"
+                    android:textColor="@android:color/black"
+                    android:id="@+id/adress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="TextView" />
+
+                <TextView
+                    android:layout_marginRight="5dp"
+                    android:id="@+id/price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:text="TextView"
+                    android:textColor="@color/lib_landlord_house" />
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/adress"
+                    android:textSize="10sp"
+                    android:id="@+id/dis_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="租期" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+
+                <Button
+                    android:visibility="invisible"
+                    android:background="@drawable/shape_house"
+                    android:textSize="10sp"
+                    android:id="@+id/edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:text="编辑房产"
+                    android:textColor="@color/lib_landlord_house" />
+            </RelativeLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="1dp"
+        android:background="#ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_marginLeft="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="租客：" />
+
+            <TextView
+                android:id="@+id/people_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="2"
+                android:textColor="@color/lib_landlord_house" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="人" />
+        </LinearLayout>
+
+        <LinearLayout xmlns:circleimageview="http://schemas.android.com/apk/res-auto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            android:id="@+id/user_group"
+            android:orientation="horizontal">
+
+            <com.konka.renting.landlord.house.widget.CircleImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                circleimageview:civ_border_overlay="true"
+                circleimageview:civ_border_width="2dp"></com.konka.renting.landlord.house.widget.CircleImageView>
+        </LinearLayout>
+    </RelativeLayout>
+<FrameLayout
+    android:layout_marginTop="1dp"
+    android:background="#ffffff"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_gravity="right"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/tz"
+            android:background="@android:color/white"
+            android:textSize="10sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="退保证金"
+            android:textColor="@android:color/black" />
+
+        <Button
+            android:id="@+id/start_end"
+            android:background="@android:color/white"
+            android:textSize="10sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="开始收租"
+            android:textColor="@android:color/black" />
+
+        <Button
+            android:background="@android:color/white"
+            android:textSize="10sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="收租历史"
+            android:textColor="@android:color/black" />
+
+        <Button
+            android:id="@+id/delroom"
+            android:background="@android:color/white"
+            android:textSize="10sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="删除房产"
+            android:textColor="@android:color/black" />
+    </LinearLayout>
+</FrameLayout>
+    <LinearLayout
+        android:paddingLeft="@dimen/dp_10"
+        android:minHeight="40dp"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@color/color_ffffff"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:text="历史总收入："
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_gravity="center"
+            android:textColor="@color/common_title"
+            android:id="@+id/total_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <ListView
+        android:background="@color/color_ffffff"
+        android:layout_marginTop="@dimen/dp_10"
+        android:id="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></ListView>
+</LinearLayout>
+
+    <!-- </androidx.cardview.widget.CardView> -->

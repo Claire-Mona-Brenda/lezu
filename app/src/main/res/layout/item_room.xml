@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relative"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:padding="@dimen/dp_10">
+    <ImageView
+        android:id="@+id/iv_icon"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@mipmap/ic_launcher"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:scaleType="centerCrop"/>
+    <TextView
+        android:id="@+id/tv_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/common_text_size_small"
+        android:textColor="@drawable/sel_room_type_text"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_toRightOf="@+id/iv_icon"
+        android:text="【长租】"/>
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/common_text_size_small"
+        android:layout_marginRight="90dp"
+        android:textColor="@android:color/black"
+        android:layout_marginLeft="@dimen/dp_5"
+        android:layout_alignBaseline="@id/tv_type"
+        android:layout_toRightOf="@+id/tv_type"
+        android:text="西湖区西城家园 19号楼82门"/>
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/common_text_size_smallest"
+        android:textColor="@color/common_light_gray"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_below="@+id/tv_title"
+        android:layout_toRightOf="@+id/iv_icon"
+        />
+
+    <TextView
+        android:id="@+id/tv_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¥1500"
+        android:textSize="@dimen/common_text_size_small"
+        android:textColor="@color/common_title"
+        android:layout_alignParentRight="true"
+        />
+
+</RelativeLayout>

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#E8e8e8"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/title_bg"
+
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_item_height"
+        android:background="@color/common_title">
+        <ImageView
+            android:onClick="onClick"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:id="@+id/back"
+            android:layout_width="28dp"
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:src="@mipmap/icon_back"
+            />
+        <TextView
+            android:id="@+id/text_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="变更交租方式"
+            android:textColor="@android:color/white" />
+
+
+
+
+
+
+
+
+
+
+
+    </RelativeLayout>
+<include
+    android:layout_below="@+id/title_bg"
+    android:id="@+id/group"
+    android:layout_width="match_parent"
+    layout="@layout/lib_payhouse_adapter"
+    android:layout_height="wrap_content"></include>
+    <LinearLayout
+        android:layout_below="@+id/group"
+android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="1dp"
+            android:background="@android:color/white">
+
+            <TextView
+                android:ems="6"
+                android:textColor="@android:color/black"
+                android:id="@+id/textview2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="3dp"
+                android:text="交租方式"
+                android:textSize="@dimen/lib_house_edit_text" />
+
+            <TextView
+                android:textColor="@android:color/black"
+                android:id="@+id/chose1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="3dp"
+                android:gravity="left"
+                android:minWidth="200dp"
+                android:textSize="@dimen/lib_house_edit_text" />
+            <TextView
+                android:layout_centerVertical="true"
+                android:background="@mipmap/right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="1dp"
+            android:background="@android:color/white">
+
+            <TextView
+                android:id="@+id/textview1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="3dp"
+                android:ems="6"
+                android:text="上次交租日期"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/lib_house_edit_text" />
+
+            <TextView
+                android:id="@+id/chose2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="3dp"
+                android:gravity="left"
+                android:minWidth="200dp"
+                android:textSize="@dimen/lib_house_edit_text" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:background="@mipmap/right" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="1dp"
+            android:background="@android:color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="3dp"
+                android:ems="6"
+                android:text="下次交租日期"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/lib_house_edit_text" />
+
+            <TextView
+                android:id="@+id/chose3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="3dp"
+                android:gravity="left"
+                android:minWidth="200dp"
+                android:textSize="@dimen/lib_house_edit_text" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:background="@mipmap/right" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <Button
+
+        android:textColor="@android:color/white"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/btn_tf"
+        android:background="@android:color/holo_red_dark"
+        android:text="提交申请"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    </RelativeLayout>

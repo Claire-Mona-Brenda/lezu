@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_ffffff"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_48">
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingStart="@dimen/dp_22"
+            android:paddingEnd="@dimen/dp_22"
+            android:text="@string/common_cancel"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/style_text_context" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:paddingStart="@dimen/dp_22"
+            android:paddingEnd="@dimen/dp_22"
+            android:text="@string/rename"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/style_text_title"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_save"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:gravity="center"
+            android:paddingStart="@dimen/dp_22"
+            android:paddingEnd="@dimen/dp_22"
+            android:text="@string/common_save"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/style_text_context" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:background="@color/style_line"/>
+
+    <EditText
+        android:id="@+id/activity_rename_edt_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_28"
+        android:paddingTop="@dimen/dp_5"
+        android:paddingBottom="@dimen/dp_5"
+        android:background="@null"
+        android:textColor="@color/text_black"
+        android:textSize="@dimen/sp_13" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:background="@color/style_line"
+        android:layout_marginStart="@dimen/dp_20" />
+</LinearLayout>

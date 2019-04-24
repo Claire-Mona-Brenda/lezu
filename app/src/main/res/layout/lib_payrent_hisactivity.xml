@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#E8e8e8"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/title_bg"
+
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_item_height"
+        android:background="@color/common_title">
+        <ImageView
+            android:onClick="onClick"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:id="@+id/back"
+            android:layout_width="28dp"
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:src="@mipmap/icon_back"
+            />
+        <TextView
+            android:textSize="@dimen/common_text_size_middle"
+            android:id="@+id/text_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="历史账单"
+            android:textColor="@android:color/white" />
+
+
+        <Button
+            android:visibility="gone"
+            android:id="@+id/button_query"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="4dp"
+            android:background="@null"
+            android:gravity="right|center_vertical"
+            android:text="添加"
+            android:textColor="@android:color/white" />
+
+
+    </RelativeLayout>
+
+    <com.google.android.material.tabs.TabLayout
+        android:visibility="gone"
+        android:id="@+id/tab_pay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_ffffff"
+        app:tabIndicatorColor="@color/title_back"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/title_back"
+        app:tabTextColor="@color/color_666666" />
+
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:layout_width="fill_parent"
+        android:id="@+id/refresh"
+        android:layout_height="fill_parent"
+        >
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="@dimen/dp_1"
+            android:id="@+id/listView1"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_above="@+id/add_house"
+            android:layout_below="@+id/title_bg"
+            android:cacheColorHint="@null"
+            android:clickable="true"
+            android:focusable="true"
+
+            ></androidx.recyclerview.widget.RecyclerView>
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+
+
+</LinearLayout>

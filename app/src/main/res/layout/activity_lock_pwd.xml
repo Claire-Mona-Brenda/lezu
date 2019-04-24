@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:id="@+id/set_pwd">
+
+    <include layout="@layout/include_title_text"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60"
+        android:paddingLeft="@dimen/dp_20"
+        android:paddingRight="@dimen/dp_10"
+        android:layout_marginTop="@dimen/common_margin"
+        android:background="@android:color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/common_text_size_small"
+            android:textColor="@android:color/black"
+            android:layout_gravity="center_vertical"
+            android:text="@string/use_pwd"/>
+
+        <Switch
+            android:id="@+id/switch_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"/>
+
+    </FrameLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:background="@android:color/white"
+        android:paddingLeft="@dimen/dp_20"
+        android:src="@color/common_drivder_line"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60"
+        android:paddingLeft="@dimen/dp_20"
+        android:paddingRight="@dimen/dp_10"
+        android:id="@+id/re_revise_pwd"
+        android:background="@android:color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/common_text_size_small"
+            android:textColor="@android:color/black"
+            android:layout_gravity="center_vertical"
+            android:text="@string/revise_pwd"/>
+
+    </FrameLayout>
+</LinearLayout>

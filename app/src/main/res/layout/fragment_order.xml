@@ -1,0 +1,26 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context="com.konka.renting.landlord.order.OrderFragment">
+
+    <include layout="@layout/include_title_order"/>
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_order"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_1"
+        android:background="@color/color_ffffff"
+        app:tabIndicatorColor="@color/text_org"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/text_org"
+        app:tabTextColor="@color/color_666666" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/vp_order"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

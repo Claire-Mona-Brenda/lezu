@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_device"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/style_bg_page"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_title_white" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/dp_1"
+        android:layout_weight="1.0">
+
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/refreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ListView
+                android:id="@+id/listview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@drawable/shape_intelligent_divider"
+                android:dividerHeight="@dimen/dp_10" />
+
+
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/btn_add"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="@dimen/dp_15"
+        android:background="@drawable/shape_button"
+        android:text="@string/device_add_btn"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/common_text_size_middle" />
+
+</LinearLayout>

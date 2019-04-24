@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#E8e8e8"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/title_bg"
+
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_item_height"
+        android:background="@color/common_title">
+        <ImageView
+            android:onClick="onClick"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:id="@+id/back"
+            android:layout_width="28dp"
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:src="@mipmap/icon_back"
+            />
+        <TextView
+            android:id="@+id/text_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="申请退房"
+            android:textColor="@android:color/white" />
+
+
+    </RelativeLayout>
+    <TextView
+        android:background="@color/color_ffffff"
+        android:layout_below="@+id/title_bg"
+        android:padding="5dp"
+        android:id="@+id/hl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:text="退房后，服务期限将提前结束。"
+        android:textColor="@color/common_title_color" />
+<include
+    android:layout_marginTop="@dimen/dp_1"
+    android:layout_below="@+id/hl"
+    android:id="@+id/group"
+    android:layout_width="match_parent"
+    layout="@layout/lib_payhouse_adapter"
+    android:layout_height="wrap_content"></include>
+
+    <RelativeLayout
+        android:layout_below="@+id/group"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/white">
+
+        <TextView
+            android:ems="5"
+            android:textColor="@android:color/black"
+            android:id="@+id/text9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="3dp"
+            android:text="退房原因"
+            android:textSize="@dimen/lib_house_edit_text" />
+
+        <EditText
+            android:hint="请输入退房原因"
+            android:id="@+id/h_edit8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/text9"
+            android:background="@null"
+            android:inputType="text"
+
+            android:textSize="@dimen/lib_house_edit_text" />
+    </RelativeLayout>
+    <Button
+        android:textColor="@android:color/white"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/btn_tf"
+        android:background="@drawable/shape_button"
+        android:text="申请退房"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    </RelativeLayout>

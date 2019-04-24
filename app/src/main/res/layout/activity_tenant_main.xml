@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_tenant_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <FrameLayout
+        android:id="@+id/frame_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/activity_tenant_ll_bottom"/>
+
+
+        <LinearLayout
+            android:id="@+id/activity_tenant_ll_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_ffffff"
+            android:layout_alignParentBottom="true"
+            android:gravity="top"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="@dimen/dp_10">
+
+            <TextView
+                android:id="@+id/tv_main"
+                style="@style/main_bottom_text"
+                android:drawableTop="@drawable/navigation_home"
+                android:text="@string/main_main"
+                />
+
+            <TextView
+                android:id="@+id/tv_findroom"
+                style="@style/main_bottom_text"
+                android:drawableTop="@drawable/navigation_findroom"
+                android:text="@string/tenant_main_findroom"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/tv_opendoor"
+                style="@style/main_bottom_text"
+                android:drawableTop="@drawable/navigation_opendoor"
+                android:text="@string/tenant_main_opendoor" />
+
+            <!--<ImageView-->
+                <!--android:id="@+id/tv_opendoor"-->
+                <!--style="@style/main_bottom_text"-->
+                <!--android:src="@mipmap/kaimen_icon"-->
+                <!--/>-->
+            <TextView
+                android:id="@+id/tv_payrent"
+                style="@style/main_bottom_text"
+                android:drawableTop="@drawable/navigation_payrent"
+                android:text="@string/tenant_main_payrent"/>
+
+            <TextView
+                android:id="@+id/tv_user"
+                style="@style/main_bottom_text"
+                android:drawableTop="@drawable/navigation_user"
+                android:text="@string/main_user"
+                />
+        </LinearLayout>
+
+
+
+</RelativeLayout>

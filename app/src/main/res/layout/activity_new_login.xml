@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    tools:context="com.konka.renting.login.LoginNewActivity">
+
+    <TextView
+        android:id="@+id/btn_regist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|center_vertical"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_25"
+        android:text="@string/login_regist"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/common_text_size_big" />
+
+    <RadioGroup
+        android:id="@+id/activity_new_login_rg_group"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_160"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_20">
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2">
+        <RadioButton
+            android:id="@+id/activity_new_login_rb_tenant"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="@dimen/dp_60"
+            android:button="@null"
+            android:checked="false"
+            android:background="@drawable/selector_login_tenant"
+            android:layout_centerInParent="true"/>
+        <TextView
+            android:id="@+id/activity_new_login_tv_tenant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_tenant"
+            android:textSize="@dimen/style_text_context"
+            android:textColor="@color/selected_text_color_black_main_check"
+            android:enabled="false"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"/>
+        </RelativeLayout>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2">
+        <RadioButton
+            android:id="@+id/activity_new_login_rb_landlord"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="@dimen/dp_60"
+            android:button="@null"
+            android:checked="false"
+            android:layout_centerInParent="true"
+            android:background="@drawable/selector_login_landlord" />
+            <TextView
+                android:id="@+id/activity_new_login_tv_landlord"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/login_landlord"
+                android:textSize="@dimen/style_text_context"
+                android:textColor="@color/selected_text_color_black_main_check"
+                android:enabled="false"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"/>
+        </RelativeLayout>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+    </RadioGroup>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:layout_marginTop="@dimen/dp_10"
+        android:paddingLeft="@dimen/dp_35"
+        android:paddingRight="@dimen/dp_35">
+
+        <ImageView
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:src="@mipmap/login_phone_icon" />
+
+        <EditText
+            android:id="@+id/edit_phone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:background="@android:color/transparent"
+            android:hint="@string/login_phone_hint"
+            android:maxLength="11"
+            android:inputType="number"
+            android:textSize="@dimen/common_text_size_small"
+            android:textColor="@color/text_black"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:layout_marginLeft="@dimen/dp_35"
+        android:layout_marginRight="@dimen/dp_35"
+        android:background="@color/common_drivder_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:layout_marginTop="@dimen/dp_10"
+        android:paddingLeft="@dimen/dp_35"
+        android:paddingRight="@dimen/dp_35">
+
+        <ImageView
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:src="@mipmap/login_lock_icon" />
+
+        <EditText
+            android:id="@+id/edit_password"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_weight="1.0"
+            android:background="@android:color/transparent"
+            android:hint="@string/login_password_hint"
+            android:digits="@string/login_pwd_input"
+            android:inputType="textPassword"
+            android:textSize="@dimen/common_text_size_small"
+            android:textColor="@color/text_black"/>
+
+        <ImageView
+            android:id="@+id/iv_show_passowrd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="center"
+            android:src="@mipmap/icon_show_password"
+            android:visibility="gone"/>
+        <TextView
+            android:id="@+id/btn_forget"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_forget"
+            android:textColor="@color/selector_btn_color_black_theme" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:layout_marginLeft="@dimen/dp_35"
+        android:layout_marginRight="@dimen/dp_35"
+        android:background="@color/common_drivder_line" />
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
+        android:layout_marginLeft="@dimen/dp_35"
+        android:layout_marginRight="@dimen/dp_35"
+        android:layout_marginTop="@dimen/dp_45"
+        android:enabled="false"
+        android:background="@drawable/selector_btn_enable_org_tran"
+        android:text="@string/login"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/common_text_size_small" />
+
+
+
+    <TextView
+        android:id="@+id/tv_login_verify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:padding="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_25"
+        android:text="@string/login_verify_switch"
+        android:textColor="@color/text_black"
+        android:textSize="@dimen/common_text_size_smallest" />
+</LinearLayout>

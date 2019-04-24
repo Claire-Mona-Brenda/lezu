@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/dp_10"
+    android:background="@android:color/white">
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/dp_5"
+        app:cardElevation="0dp"
+        app:cardUseCompatPadding="false">
+    <ImageView
+        android:id="@+id/iv_icon"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:scaleType="centerCrop" />
+    </androidx.cardview.widget.CardView>
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:layout_toRightOf="@id/card"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:textSize="@dimen/common_text_size_middle"
+        />
+
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color_666666"
+        android:layout_toRightOf="@id/card"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:textSize="@dimen/common_text_size_smallest"
+        android:text="2018"
+        />
+
+</RelativeLayout>

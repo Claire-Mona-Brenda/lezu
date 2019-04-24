@@ -1,0 +1,551 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.konka.renting">
+
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!-- iBeancon功能所需权限 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <!-- 硬件特性 -->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <application
+        android:name=".KonkaApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:replace="android:name"
+        >
+        <!--android:appComponentFactory=""-->
+        <!--tools:replace="android:appComponentFactory"-->
+        <!--android:extractNativeLibs="true"-->
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="1cf251cda18c8a3fa80fddfd0386330e" />
+        <!-- 拍照、相册7.0权限设置 -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.konka.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            tools:replace="android:authorities">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <service
+            android:name=".service.GeTuiPushService"
+            android:exported="true"
+            android:label="PushService"
+            android:process=":pushservice" />
+        <service android:name=".service.GeTuiIntentService" />
+
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name="com.alipay.sdk.app.H5AuthActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <!-- 启动页面 -->
+        <activity
+            android:name=".start.StartActivity"
+            android:configChanges="screenSize|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustNothing">
+
+        </activity>
+
+        <!-- 引导页面 -->
+        <activity
+            android:name=".guide.GuideActivity"
+            android:configChanges="screenSize|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustNothing" />
+        <activity
+            android:name=".login.SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/FullScreenTheme"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".landlord.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/DefaultCityPickerTheme"
+            android:launchMode="singleTask"/>
+        <activity
+            android:name=".tenant.TenantMainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/DefaultCityPickerTheme"
+            android:launchMode="singleTask"/>
+        <activity
+            android:name=".landlord.user.incomeprofile.IncomeProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.user.rentoutincome.RentOutIncomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.user.withdrawcash.WithdrawcashActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.user.withdrawcash.WithdrawRecordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.user.withdrawcash.WithdrawDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.user.tenantdeposit.TenantDepositActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".landlord.user.tenant.HouseTenantListActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name=".landlord.user.bill.BillActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.user.collection.MyCollectionActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name=".landlord.user.message.MessageActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name=".landlord.user.myorder.MyOrderActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.user.setting.SeetingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.order.CollectRentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.house.TemporaryPwdActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name=".landlord.house.PaySeverActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name=".landlord.house.HouseEditActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name=".landlord.house.HouseAddActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name=".landlord.house.HouseInfoActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name=".landlord.house.PicViewPagerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.house.view.HousePublishActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name=".landlord.house.view.SZLSActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.user.userinfo.UserInfoActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name=".landlord.home.tenanter.TenantListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".login.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".login.LoginNewActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/LoginFullScreenTheme" />
+        <activity
+            android:name=".login.LoginVerifyActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/LoginFullScreenTheme" />
+        <activity
+            android:name=".login.RegistActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name=".login.UserProtocolActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name=".login.ForgetPasswordActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name=".landlord.home.bill.BillListActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name=".landlord.user.bill.BillInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.home.freehouse.FreeHouseActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".login.ChoiceIdentityActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.home.copy.CopyListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.home.copy.CopyDesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.house.CreateOrderActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop">
+
+        </activity>
+        <activity
+            android:name=".landlord.house.ChooseDateActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name=".landlord.order.PwsOrderDetailsActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop">
+
+        </activity>
+        <activity
+            android:name=".tenant.findroom.roominfo.ReqRoomActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name=".tenant.findroom.roominfo.RoomInfoActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name=".tenant.payrent.view.RoomPayCGActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tenant.payrent.view.RoomTFActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tenant.payrent.view.HistoryOrderPay"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tenant.payrent.view.RoomRentDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tenant.payrent.view.PaySubmitActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tenant.payrent.view.PayDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tenant.payrent.view.HouseACHActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".landlord.house.view.BailPayActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name=".landlord.house.view.PaySuccessActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.home.search.SearchActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tenant.user.despoit.MyDespoitDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tenant.user.despoit.MyTenantDispoitActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tenant.user.manager.TenantManagerActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name=".landlord.order.OrderDetailActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name=".landlord.user.withdrawcash.SelectBankCardActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.user.withdrawcash.AddBankCardActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.user.userinfo.FaceDetectActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.user.userinfo.PlayVideoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tenant.user.TenantUserInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.user.userinfo.CertificationActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".landlord.user.other.AfterProcessActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity android:name=".landlord.user.other.DisclaimerActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name=".landlord.order.RefundsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.order.ChangeRentTypeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.user.message.MessageDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.home.more.MoreHotRoomListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tenant.user.manager.TenantHouseActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.user.userinfo.BindMobileActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name=".landlord.gateway.ChoiceMachineActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name=".landlord.gateway.GatewayListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.gateway.CheckGatewayStatusActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.gateway.BindGatewayActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name=".landlord.gateway.UserGatewayListActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name=".landlord.gateway.GatewayDetailActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name=".landlord.gateway.EditGatewayActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name=".landlord.gateway.GatewaySettingActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name=".landlord.gateway.ChooseWiFiActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name=".landlord.gateway.GatewayConnectionActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name=".landlord.gateway.HowBindingActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name=".landlord.gateway.ScanQrCodeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.gateway.BindGatewaySuccessActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.gateway.BindGatewayFaildedActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.gateway.BindGatewayDesActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name=".landlord.gateway.DeviceListActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name=".landlord.user.userinfo.IdCardExampleActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tenant.payrent.TenantOrderDetailActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name=".login.RegistPasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tenant.payrent.ApplyCheckoutActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tenant.payrent.ServiceChargeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.user.withdrawcash.TradeRecordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.user.withdrawcash.RechargeActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name=".landlord.user.setting.WebviewActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity android:name=".landlord.user.ProblemActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name=".tenant.payrent.view.ApplyReTenantActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tenant.opendoor.OtherSettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tenant.opendoor.ClockSetManageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tenant.opendoor.RenameActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.house.OpenManageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.gateway.ManagePwdActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.gateway.GetManagePwdAuthorityActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tenant.opendoor.GetTimePwdActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tenant.opendoor.LockPwdActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tenant.opendoor.RevisePwdActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tenant.opendoor.UploadFileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tenant.opendoor.AddDevicesOpenPwdActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tenant.opendoor.DevicesOpenPasswordActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name=".tenant.findroom.roominfo.AllCommentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.user.userinfo.FaceOnlineVerifyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.user.userinfo.OfflineFaceLivenessActivity"
+            android:screenOrientation="portrait" />
+        <!-- share sdk -->
+        <activity
+            android:name="com.mob.tools.MobUIShell"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+
+            <!--
+            	AuthorizeAdapter表示一个继承自cn.sharesdk.framework.authorize.AuthorizeAdapter
+            	的类，这个类可以监听到页面的生命周期，也可以获取授权页面的各种UI控件。
+            	开发者可以通过继承AuthorizeAdapter，重写其方法，并获取各种UI来自定义这个页面的行为。
+            -->
+            <!-- <meta-data android:name="AuthorizeAdapter" android:value="cn.sharesdk.demo.MyAdapter" /> -->
+            <!--
+            	QZoneWebShareAdapter表示一个继承自cn.sharesdk.tencent.qzone.QZoneWebShareAdapter
+            	的类，这个类可以监听到页面的生命周期，也可以获QQ空间网页分享权页面的各种UI控件。
+            	开发者可以通过继承QZoneWebShareAdapter，重写其方法，并获取各种UI来自定义这个页面的行为。
+            <meta-data android:name="QZoneWebShareAdapter" android:value="cn.sharesdk.demo.MyQZoneWebShareAdapter" />
+            <meta-data android:name="QQWebShareAdapter" android:value="cn.sharesdk.demo.MyQQWebShareAdapter" />
+            -->
+
+
+            <!--
+            	Dropbox的SSO功能需要在此处添加一个对ACTION_VIEW事件的过滤器，其中的scheme是
+            	“db-”前缀再开发者应用的加上appKey。如果此过滤器不设置，则不能完成SSO功能授权
+            -->
+            <intent-filter>
+                <data android:scheme="db-23a56e4ec4bb6" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <!--
+                如果集成QQ分享，或者使用QQ客户端来进行QQ空间的分享，须要在此处添加一个对ACTION_VIEW
+                事件的过滤器，其中的scheme是“tencent”前缀再开发者应用的加上appId。如果此过滤器不设置，
+                则分享结束以后不能得到正确的回调
+            -->
+            <intent-filter>
+                <data android:scheme="tencent101472351" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".landlord.user.userinfo.IdentyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.home.WebViewActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name=".landlord.user.userinfo.NewFaceDectectActivity"
+            android:screenOrientation="portrait" />
+    </application>
+
+</manifest>

@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#E8e8e8"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/title_bg"
+
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_item_height"
+        android:background="@color/common_title">
+        <ImageView
+            android:onClick="onClick"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:id="@+id/back"
+            android:layout_width="28dp"
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:src="@mipmap/icon_back"
+            />
+        <TextView
+            android:id="@+id/text_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="评价房屋"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/common_text_size_middle" />
+
+
+        <Button
+            android:id="@+id/button_query"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="4dp"
+            android:background="@null"
+            android:gravity="right|center_vertical"
+            android:text="添加"
+            android:textColor="@android:color/white"
+            android:visibility="gone" />
+
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="1dp"
+            android:background="#ffffff"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/xh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:text="TextView"
+                android:textColor="@color/lib_landlord_house" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:id="@+id/img_house"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="5dp"
+                android:padding="5dp"
+                android:scaleType="centerCrop" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/adress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:text="TextView"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="5dp"
+                        android:text="TextView"
+                        android:textColor="@color/lib_landlord_house" />
+
+                    <TextView
+                        android:id="@+id/dis_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/adress"
+                        android:layout_marginTop="5dp"
+                        android:text="租期"
+                        android:textSize="10sp" />
+                </RelativeLayout>
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:background="#ffffff"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+
+            <LinearLayout xmlns:circleimageview="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/user_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="5dp"
+                android:orientation="horizontal">
+
+                <com.konka.renting.landlord.house.widget.CircleImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    circleimageview:civ_border_overlay="true"
+                    circleimageview:civ_border_width="2dp"></com.konka.renting.landlord.house.widget.CircleImageView>
+
+                <TextView
+                    android:id="@+id/ll_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/ll_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_ffffff"
+        android:orientation="vertical">
+
+
+    </LinearLayout>
+
+    <RelativeLayout
+
+        android:background="@color/color_ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/common_title" />
+
+
+        <LinearLayout
+            android:paddingTop="@dimen/dp_10"
+            android:paddingLeft="@dimen/dp_10"
+            android:id="@+id/lay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textSize="14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="综合评价" />
+
+            <RatingBar
+                android:layout_marginLeft="@dimen/dp_30"
+                style="@style/myRatingBar"
+                android:id="@+id/ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/total"
+
+              />
+        </LinearLayout>
+
+        <EditText
+            android:background="@null"
+            android:paddingLeft="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_15"
+            android:textSize="14sp"
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lay"
+            android:hint="请输入您对房屋的描述" />
+        <LinearLayout
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_below="@+id/content"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.konka.renting.landlord.house.widget.PicRecordWidget
+                android:id="@+id/pic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true">
+
+            </com.konka.renting.landlord.house.widget.PicRecordWidget>
+            <CheckBox
+                android:id="@+id/nm"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_gravity="right"
+                android:text="匿名评价"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <Button
+
+                android:layout_margin="@dimen/dp_20"
+                android:layout_gravity="center"
+                android:id="@+id/add_house"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/shape_button"
+                android:onClick="onClick"
+                android:text="提交"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
+</LinearLayout>

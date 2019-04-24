@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@android:color/white"
+              android:orientation="vertical">
+
+    <include layout="@layout/item_room"/>
+
+    <include layout="@layout/include_view_line"/>
+
+    <FrameLayout
+        android:id="@+id/frame_bill"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_10">
+
+        <TextView
+            android:id="@+id/btn_collection"
+            style="@style/main_button"
+            android:gravity="center"
+            android:paddingLeft="@dimen/dp_20"
+            android:paddingRight="@dimen/dp_20"
+            android:text="@string/copy_button"
+            android:layout_gravity="right"
+            />
+
+
+    </FrameLayout>
+</LinearLayout>

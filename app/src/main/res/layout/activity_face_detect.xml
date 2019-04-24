@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/color_ffffff"
+    tools:context="com.konka.renting.landlord.user.userinfo.FaceDetectActivity">
+
+    <include layout="@layout/include_title_text" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/please_sreading"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/sp_15"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ver_number"
+            android:id="@+id/tv_verfy"
+            android:textColor="@color/common_title"
+            android:layout_marginLeft="@dimen/dp_5"/>
+    </LinearLayout>
+    <SurfaceView
+        android:id="@+id/record_surfaceView"
+        android:background="@mipmap/ic_face_back"
+        android:layout_width="230dp"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="230dp" />
+
+    <Button
+        android:layout_width="@dimen/dp_80"
+        android:layout_height="@dimen/dp_80"
+        android:text="@string/start_radio"
+        android:textColor="@color/color_ff640c"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_20"
+        android:id="@+id/btn_start"
+        android:background="@drawable/shape_radio_button"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/click_start_redio"
+        android:textColor="@color/color_666666"
+        android:textSize="@dimen/sp_13"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_10"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_50"
+        android:visibility="gone"
+        android:id="@+id/re_button"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_play"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/try_look"
+            android:gravity="center"
+            android:drawableTop="@mipmap/ic_play" />
+
+        <TextView
+            android:id="@+id/tv_re_radio"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/re_radio"
+            android:gravity="center"
+            android:drawableTop="@mipmap/ic_re_radio" />
+        <TextView
+            android:id="@+id/tv_upload"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/upload"
+            android:gravity="center"
+            android:drawableTop="@mipmap/ic_upload" />
+
+
+
+    </LinearLayout>
+</LinearLayout>

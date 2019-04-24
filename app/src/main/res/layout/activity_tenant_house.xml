@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#E8e8e8"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true">
+
+    <include layout="@layout/include_title_text"/>
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/refresh"
+        >
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="@dimen/dp_1"
+            android:id="@+id/listView1"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_above="@+id/add_house"
+            android:layout_below="@+id/title_bg"
+            android:cacheColorHint="@null"
+            android:clickable="true"
+            android:focusable="true"
+
+            ></androidx.recyclerview.widget.RecyclerView>
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+
+
+</LinearLayout>

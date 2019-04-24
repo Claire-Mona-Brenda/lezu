@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/main_bg_gray"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/title_bg"
+
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_title_height"
+        android:background="@color/color_ffffff">
+
+        <TextView
+            android:id="@+id/text_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/style_text_title"
+            android:text="@string/landlord_main_order"
+            />
+
+
+        <Button
+            android:visibility="gone"
+            android:id="@+id/button_query"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="4dp"
+            android:background="@null"
+            android:gravity="right|center_vertical"
+            android:text="添加"
+            android:textColor="@android:color/white" />
+
+
+    </RelativeLayout>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_pay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_ffffff"
+        android:layout_marginTop="@dimen/dp_1"
+        app:tabIndicatorColor="@color/style_main"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/text_org"
+        app:tabTextColor="@color/text_black" />
+
+
+   <androidx.viewpager.widget.ViewPager
+       android:id="@+id/viewpager"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+
+   </androidx.viewpager.widget.ViewPager>
+
+
+</LinearLayout>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/style_bg_page">
+<include layout="@layout/include_title_white"/>
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refresh"
+        android:layout_marginTop="@dimen/dp_1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/activity_bill_list_recycle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+</LinearLayout>

@@ -1,0 +1,808 @@
+<resources>
+    <string name="app_name">乐租小窝</string>
+
+    <string name="do_success">操作成功</string>
+    <string name="do_failed">操作失败</string>
+    <string name="loading">请求中,请稍候</string>
+
+    <string name="main_main">首页</string>
+    <string name="landlord_main_order">订单</string>
+    <string name="landlord_main_house">房产</string>
+    <string name="main_user">我的</string>
+
+    <string name="login">登录</string>
+
+    <!--个人中心-->
+
+    <string name="user_name">个人昵称</string>
+    <string name="income_profile">收入概况</string>
+    <string name="rent_out_income">我的出租收入</string>
+    <string name="rent_out_income_title">出租收入</string>
+    <string name="withdraw_cash">我的收入提现</string>
+    <string name="my_deposit">我的租客押金</string>
+    <string name="tenant_deposit">租客押金</string>
+    <string name="my_bill">我的账单</string>
+    <string name="my_collection">我的催收</string>
+    <string name="my_message">我的消息</string>
+    <string name="message_detail">消息详情</string>
+    <string name="my_order">我的预约</string>
+    <string name="switch_tenant">切换租客端</string>
+    <string name="setting">设置</string>
+    <string name="sum_income">总收入:</string>
+    <string name="my_income">我的收入</string>
+    <string name="money">￥2000.00</string>
+    <string name="withdraw">提现</string>
+    <string name="withdraw_record">提现记录</string>
+    <string name="withdraw_to">提现至招商银行（8888）</string>
+    <string name="yhk">招商银行（8888）</string>
+    <string name="to_yhk">到账银行卡</string>
+    <string name="select_to">请选择到账银行</string>
+    <string name="recharge_money">充值金额</string>
+    <string name="withdraw_money">提现金额</string>
+    <string name="purse_balance">钱包余额</string>
+    <string name="withdraw_all">全部提现</string>
+    <string name="withdraw_into">到账时间银行为准</string>
+    <string name="non_payment">未付账单</string>
+    <string name="alredy_paid">已付账单</string>
+    <string name="order_number_title">订单编号：</string>
+    <string name="order_num">2018030422356718</string>
+    <string name="non_pay">未付款</string>
+    <string name="alredy_pay">已付款</string>
+    <string name="text_collection">催房租</string>
+    <string name="text_tenant">租客：</string>
+    <string name="man">人</string>
+    <string name="go_collection">去催租</string>
+    <string name="select_all">全选</string>
+    <string name="about">关于</string>
+    <string name="problem">常见问题</string>
+    <string name="login_out">退出登录</string>
+    <string name="apply_ing">申请订单</string>
+    <string name="check_in">入住订单</string>
+    <string name="check_out">退房订单</string>
+    <string name="expire">失效订单</string>
+    <string name="confirm_order">确认订单</string>
+    <string name="cancel_order">取消订单</string>
+    <string name="check_pwd">查看密码</string>
+    <string name="income_history">收租历史</string>
+    <string name="agree_relet">同意续租</string>
+    <string name="agree_change">同意变更</string>
+    <string name="confirm_refund">确认退款</string>
+    <string name="confirm_apply_checkout">同意退房</string>
+    <string name="cancle_apply_checkout">拒绝退房</string>
+    <string name="service">联系客服</string>
+    <string name="wait_confirm">待确认</string>
+    <string name="wait_refund">待退款</string>
+    <string name="lease_income">租期总收入:</string>
+    <string name="revise_photo">修改头像</string>
+    <string name="name">姓名</string>
+    <string name="input_name">请输入姓名</string>
+    <string name="sex">性别</string>
+    <string name="age">年龄</string>
+    <string name="bind_mobile">修改手机</string>
+    <string name="idcard_mobile">身份证号码</string>
+    <string name="input_idcard">请输入身份证号码</string>
+    <string name="idcard_photo">身份证正反面照</string>
+    <string name="upload_front">上传正面</string>
+    <string name="upload_back">上传背面</string>
+    <string name="face_detect">人脸识别</string>
+    <string name="user_setting">个人设置</string>
+    <string name="tenant_my_despoit">我的押金</string>
+    <string name="tenant_manager">租客管理</string>
+    <string name="switch_landmore">切换房东端</string>
+    <string name="share_app">分享app</string>
+    <string name="lock_despoit">门锁押金</string>
+    <string name="flow_card_record">流量费记录</string>
+    <string name="text_tenant_manager">房客:</string>
+    <string name="manager">管理员</string>
+    <string name="agree">同意</string>
+    <string name="refuse">拒绝</string>
+    <string name="remove">移除</string>
+    <string name="easy_open">一键开锁</string>
+    <string name="opening">开门中...</string>
+    <string name="open_success">开门成功</string>
+    <string name="open_failer">开门失败</string>
+    <string name="please_reopen">请重新开门或</string>
+    <string name="underline_service">联系客服</string>
+    <string name="pay_time">下单时间：</string>
+    <string name="time">2017-07-06 19：31</string>
+    <string name="rent_type">租金类型</string>
+    <string name="pay_type">交租方式</string>
+    <string name="rent_despoit">租房押金</string>
+    <string name="month_rent">每月房租</string>
+    <string name="water_fee">水费</string>
+    <string name="ele_fee">电费</string>
+    <string name="property_fee">物业管理费</string>
+    <string name="lj_fee">垃圾处理费</string>
+    <string name="net_fee">网费</string>
+    <string name="tenant_mark">历史备注：</string>
+    <string name="rent_agreement">租房合同</string>
+    <string name="ele_receipt">电子收据</string>
+    <string name="order_detail">订单详情</string>
+    <string name="select_bank_card">选择银行卡</string>
+    <string name="use_new">使用新卡提现</string>
+    <string name="add_bank">添加</string>
+    <string name="add_bank_title">添加银行卡</string>
+    <string name="please_bind_self">请绑定持卡人本人的银行卡</string>
+    <string name="cardholder">持卡人</string>
+    <string name="card_num">卡号</string>
+    <string name="please_select_type">请选择银行卡类型</string>
+    <string name="card_type">卡类型</string>
+    <string name="mobile_num">手机号</string>
+    <string name="complete">完成</string>
+    <string name="please_input_true_name">请输入持卡人真实姓名</string>
+    <string name="please_input_bank_mobile">请输入银行预留手机号</string>
+    <string name="please_input_card_num">请输入银行卡号</string>
+    <string name="please_sreading">请大声读出:</string>
+    <string name="ver_number">123456</string>
+    <string name="start_radio">开始录制</string>
+    <string name="click_start_redio">点击开始录制唇语验证码</string>
+    <string name="radio_ing">录制中...</string>
+    <string name="click_stop_radio">点击停止录制</string>
+    <string name="try_look">试看</string>
+    <string name="re_radio">重录</string>
+    <string name="upload">上传</string>
+    <string name="certification">实名认证</string>
+    <string name="please_photo_camera">请拍摄以下证件照片，注意避免证件反光：</string>
+    <string name="idcard_head">身份证人像面</string>
+    <string name="idcard_national_emblem">身份证国徽面</string>
+    <string name="immediately_photo">立即拍照</string>
+    <string name="please_confirm">请确认以下信息是否与你证件上的一致:</string>
+    <string name="idcard">身份证</string>
+    <string name="text_revise">修改</string>
+    <string name="text_change_payway">申请变更交租方式为线下付款,等待房东确认</string>
+    <string name="text_agree_change">同意变更</string>
+    <string name="text_refunds">确认退款</string>
+    <string name="text_wait_refunds">待退款</string>
+    <string name="text_refunds_certificate">退款凭证</string>
+    <string name="upload_certificate">（上传退款转账截图）</string>
+    <string name="text_certificate">保证金将在租客确认退房后方可申请退款</string>
+    <string name="certificate_money">确认退款</string>
+    <string name="refuse_money">拒绝退款</string>
+    <string name="text_last_time">上次交租日期</string>
+    <string name="text_next_time">下次交租日期</string>
+    <string name="text_agree_apply">同意申请</string>
+    <string name="text_change">变更交租方式</string>
+    <string name="rent_manager">租客管理</string>
+    <string name="checkout_service">退房后，服务期限将提前结束</string>
+    <string name="pwd_no_empty">密码不能为空</string>
+    <string name="open_door_pwd">开锁密码</string>
+    <string name="use_pwd">密码验证</string>
+    <string name="revise_pwd">密码修改</string>
+    <string name="change_pwd">修改密码</string>
+    <string name="set_pwd">设置密码</string>
+    <string name="pwd_noempty">密码不能为空</string>
+    <string name="old_pwd">旧密码</string>
+    <string name="new_pwd">新密码</string>
+    <string name="revise_lock_pwd">修改开锁密码</string>
+    <string name="vercode_txt">验证码</string>
+    <string name="get_code">获取验证码</string>
+    <string name="send_code">发送验证码</string>
+    <string name="set_open_pwd">设置开锁密码+</string>
+
+    <string name="balance">钱包余额：</string>
+    <string name="sum_record">金额:</string>
+    <string name="rmb">￥</string>
+    <string name="balance_pay">钱包支付</string>
+    <string name="please_balance_pay">是否从钱包余额中扣除</string>
+
+    <!--房客(tenant)-->
+    <string name="tenant_main_findroom">找房</string>
+    <string name="tenant_main_opendoor">开门</string>
+    <string name="tenant_main_payrent">订单</string>
+    <string name="upload_file">上传合同</string>
+    <string name="upload_file_picture">（上传合同文件截图）</string>
+    <string name="upload_file_please">上传合同</string>
+    <string name="upload_file_ok">确定上传</string>
+    <string name="please_text">温馨提示</string>
+    <string name="please_comtext">根据公安部门城市管理要求，需要上传您租房合约存档备份，请您按照要求，拍照上传！谢谢合作！</string>
+    <string name="please_upload">马上上传</string>
+    <string name="please_upload_complete">上传完成！</string>
+    <string name="please_upload_complete_2">系统将在1-3个工作日审核完成。</string>
+    <string name="please_choose_device">请选择你要切换的设备</string>
+    <string name="confirm">确定</string>
+
+    <string name="pwd_useful_life">密码使用有效期剩余：</string>
+    <string name="forever">永久</string>
+    <string name="please_pwd_txt">正在使用的开锁密码</string>
+    <string name="pwd_add_tips_1">设置开锁密码后，可以通过输入密码来开锁</string>
+    <string name="pwd_add_tips_2">（必须为整数）</string>
+    <string name="useful_life">有效期</string>
+    <string name="hours">小时</string>
+    <string name="day">天</string>
+    <string name="title_set_pwd">设置开锁密码</string>
+    <string name="please_input_pwd">请填写6位密码</string>
+    <string name="please_input_hours">请填写有效期小时</string>
+    <string name="please_input_hours_no_0">有效期小时应大于0</string>
+    <string name="please_input_days">请填写有效期天数</string>
+    <string name="please_input_days_no_0">有效期天数应大于0</string>
+    <string name="add_success">添加成功</string>
+    <string name="tips_pwd_time">密码不固定，不定时自动刷新</string>
+    <string name="warm_no_to_add_pwd_more">门锁设置的密码数量不能超过7个</string>
+
+    <string name="houes_id">房间</string>
+    <string name="start_rent">入住时间</string>
+    <string name="end_rent">退房时间</string>
+    <string name="input_rent_phone_number">租客手机号码（选填）</string>
+    <string name="caution_create_pwd">* 填入手机号码，生成的卡号和密码会直接以短信的形式发送到该号码的手机上。</string>
+    <string name="to_create">生成密码</string>
+    <string name="warn_input_date">请选择入住时间和退房时间</string>
+    <string name="warn_input_mobile">请填写正确的手机号码</string>
+
+    <string name="choose_date">选择入住时间</string>
+    <string name="please_choose_date">请选择入住日期和退租日期</string>
+    <string name="warn_end_time_not_same">退房时间已被出租，请重新选择</string>
+
+    <string name="title_pwd_order_details">查看密码</string>
+    <string name="card_number">卡号：</string>
+    <string name="card_pwd">密码：</string>
+    <string name="easy_copy">一键复制</string>
+    <string name="hint_card_user">*注意卡号密码仅支持一个用户使用</string>
+    <string name="toach_copy_to_clipboard">已成功复制到剪贴板内</string>
+
+
+    <string name="guide_one_title_txt">个性编辑，轻松操控</string>
+    <string name="guide_two_title_txt">远程掌控，及时通知</string>
+    <string name="guide_three_title_txt">智能安防，轻松离家</string>
+
+    <!--申请租房-->
+    <string name="apply_rent_house">申请租房</string>
+    <string name="apply_house_call_landlord">联系房东</string>
+    <string name="apply_house_call_tenant">联系租客</string>
+    <string name="remark">备注留言</string>
+
+    
+    <!--订单列表/订单详情-->
+    <string name="renter_start_time">出租时间：</string>
+    <string name="renter_end_time">到期时间：</string>
+    <string name="renter_sever_end_time">服务费到期：</string>
+    <string name="renter_rent_type">出租类型：</string>
+    <string name="renter_rent_money">租金：</string>
+    <string name="renter_cancel_apply">取消申请</string>
+    <string name="renter_call_landlord">联系房东</string>
+    <string name="renter_apply_to_end">申请退房</string>
+    <string name="landlord_apply_to_end_agree">确定退房申请</string>
+
+    <string name="renter_relet">申请续租</string>
+    <string name="renter_joint_rent">申请合租</string>
+
+    <string name="renter_dialog_apply_to_end">是否向房东申请退房</string>
+    <string name="landlord__dialog_apply_to_end">是否同意该租客的退房申请？</string>
+    <string name="landlord__dialog_cancel_to_end">是否拒绝该租客的退房申请？</string>
+    <string name="dialog_apply_to_joint_rent">是否向租客发起合租申请</string>
+
+    <string name="dialog_apply_cancel">是否拒绝该租客发起的租房申请？</string>
+    <string name="dialog_apply_rent">是否同意该租客发起的租房申请？</string>
+    <string name="dialog_dissmiss_apply_rent">是否取消该订单？</string>
+
+    <string name="apply">申请</string>
+
+    <string name="rent_cancle_to_end">取消退房</string>
+    <string name="public_joint_rent">发布合租</string>
+    <string name="cancle_joint_rent">禁止合租</string>
+
+    <string name="order_status_1">申请中</string>
+    <string name="order_status_2">已确认</string>
+    <string name="order_status_3">入住中</string>
+    <string name="order_status_4">申请退租</string>
+    <string name="order_status_5">过期</string>
+    <string name="order_status_6">租客取消</string>
+    <string name="order_status_7">房东取消</string>
+
+    <!--租客管理-->
+    <string name="dialog_renter_manage_apply_title">合租申请</string>
+    <string name="dialog_renter_manage_remove_title">移除合租租客</string>
+    <string name="dialog_renter_manage_agree">是否同意合租申请</string>
+    <string name="dialog_renter_manage_cancel">是否拒绝合租申请</string>
+    <string name="dialog_renter_manage_remove">是否移除该租客的开门权限</string>
+
+    <!--公共-->
+    <string name="message">消息</string>
+    <string name="common_des">查看详情</string>
+    <string name="common_save">保存</string>
+    <string name="common_set">修改</string>
+    <string name="common_del">删除</string>
+    <string name="common_check">查询</string>
+    <string name="common_sure">确定</string>
+    <string name="common_cancel">取消</string>
+    <string name="common_complete">完成</string>
+    <string name="common_edit">编辑</string>
+    <string name="common_back">返回</string>
+    <string name="common_more">查看更多</string>
+    <string name="common_commit">提交</string>
+    <string name="common_add">添加</string>
+    <string name="common_refresh">刷新</string>
+    <string name="common_next">下一步</string>
+    <string name="server_end_time">服务费到期</string>
+    <string name="server_renew">马上续费 >></string>
+    <string name="device_gateway_check_status">查询状态</string>
+
+    <string name="warn_confirm">确定</string>
+    <string name="warn_cancel">取消</string>
+    <string name="warn_short_rental_comtext">请注意！短租发布后即日开始自动从账号钱包扣除流量费用，如扣除时钱包余额不足，网关功能将停止</string>
+    <string name="warn_del_is_on_sale">房产已通过认证，不能进行删除操作</string>
+
+    <!--房东首页-->
+    <string name="landlord_home_search">您想要住哪里？</string>
+    <string name="landlord_home_tips">用户***提交了租房订单</string>
+    <string name="landlord_home_hot_house">热门房源</string>
+    <string name="landlord_home_hot_article">热门咨询</string>
+    <string name="landlord_article_title">咨询</string>
+    <string name="after_the_process">售后流程</string>
+    <string name="disclaimer">免责声明</string>
+
+    <!--登录-->
+    <string name="login_title">登录</string>
+    <string name="login_landlord">我是房东</string>
+    <string name="login_tenant">我是租客</string>
+    <string name="login_tips_1">房东和租客是两个独立账号，账户信息不互通</string>
+    <string name="login_login">登录</string>
+    <string name="login_phone_regist">手机号注册</string>
+    <string name="login_regist">注册</string>
+    <string name="login_forget">忘记密码?</string>
+    <string name="login_password">密码</string>
+    <string name="login_account">账号</string>
+    <string name="login_phone_hint">请输入手机号码</string>
+    <string name="login_password_hint">请输入密码</string>
+    <string name="login_back">返回切换登录</string>
+    <string name="login_pwd_input">0123456789zxcvbnmasdfghjklqwertyuiopZXCVBNMASDFGHJKLQWERTYUIOP</string>
+
+    <string name="login_verify_switch">验证码登录 >></string>
+    <string name="login_verify_title">手机验证码登录</string>
+    <string name="login_verify_title_tips">需要先注册后才能使用验证码登录</string>
+
+    <!--注册-->
+    <string name="regist_title">注册账号</string>
+    <string name="regist_protocol">用户协议</string>
+    <string name="regist_phone">手机号码</string>
+    <string name="regist_verfication_num">验证码</string>
+    <string name="regist_get_verfication_num">获取验证码</string>
+    <string name="regist_verfication_num_hint">请输入验证码</string>
+    <string name="regist_password">密码</string>
+    <string name="regist_password_sure">再次确认</string>
+    <string name="regist_password_hint">请输入密码</string>
+    <string name="regist_password_hint_new">请输入新密码（最少6位，最多12位）</string>
+    <string name="regist_password_suer_hint">请再次输入密码</string>
+    <string name="phone_num_is_wrong_txt">手机号格式不正确</string>
+    <string name="regist_password_is_wrong_txt">两次输入密码不一致</string>
+    <string name="regist_password_is_wrong_lenght">密码至少为6位</string>
+    <string name="regist_read_and_agree">我已仔细阅读并同意</string>
+    <string name="regist_sever_protocol">《乐租小窝服务协议》</string>
+    <string name="warm_regist_please_input">请填写手机号和短信验证码</string>
+    <string name="warm_please_verfication_no_empty">验证码不能为空</string>
+    <string name="warm_regist_please_agree">请阅读乐租小窝服务协议</string>
+    <string name="regist_password_input_tips">密码格式为6-20位数字或英文字母(区分大小写)</string>
+
+    <!--重设密码-->
+    <string name="forget_password_title">重设密码</string>
+    <string name="forget_password_new">新密码</string>
+    <string name="forget_password_new_hint">请输入新密码</string>
+    <string name="forget_password_sure">再次确认</string>
+    <string name="forget_password_sure_hint">请再次输入密码</string>
+    
+    <!--房东房产-->
+    <string name="add_house">添加房产</string>
+    <string name="house_id">房间编号：</string>
+    <string name="house_sever_end_time">服务费到期：</string>
+    <string name="house_sever_end_time_emty">暂无信息</string>
+    <string name="house_sever_end_time_end">服务费已到期</string>
+    <string name="house_creat_order">生成订单</string>
+    <string name="house_short_rent_warn">短租需要钱包金额大于500元，短租订单会扣取一定的服务费。
+    *发布短租房源，收取服务费330元/年，服务期内取消发布，服务费将不予退还。服务费直接从钱包余额扣除，余额不足时将无法发布。已发布且余额不足导致不能扣除服务费时，租房订单将无法生成。</string>
+    <string name="house_short_rent_warn_year">按年扣除（330/年）</string>
+    <string name="house_short_rent_warn_moon">按月扣除（30/月）</string>
+    <string name="house_emty_warm">亲，还没有登记房产哦</string>
+    <string name="house_public_tips">请注意：长租请填写一个月收费价格，短租请填写一天收费价格</string>
+    <string name="house_public_input_money">请输入金额</string>
+
+    <string name="warm_open_no_device">未添加门锁</string>
+    <string name="warm_del_context_no">已申请删除房产，不能发布房源信息</string>
+
+    <string name="start_to_rent">开始发布</string>
+    <string name="end_to_rent">取消发布</string>
+    <string name="sever_pay_money">服务续费</string>
+
+    <string name="house_status_type_1">未缴纳安装费</string>
+    <string name="house_status_type_2">待安装认证</string>
+    <string name="house_status_type_3">待发布</string>
+    <string name="house_status_type_4">待租出</string>
+    <string name="house_status_type_5">等待入住</string>
+    <string name="house_status_type_6">已入住</string>
+    <string name="house_status_type_7">申请删除</string>
+
+    <string name="short_rent">短租</string>
+    <string name="long_rent">长租</string>
+
+    <string name="please_input_rent_money">请填写金额</string>
+    <string name="public_title">发布房源</string>
+
+    <!--添加或编辑房产-->
+    <string name="add_house_title">房产登记</string>
+    <string name="add_house_house_name">房产名</string>
+    <string name="add_house_edit_name">请输入房产名</string>
+    <string name="add_house_house_address">所在省市区</string>
+    <string name="add_house_edit_address">请选择房产所在的省市区</string>
+    <string name="add_house_house_address_more">详细地址</string>
+    <string name="add_house_edit_address_more">请输入详细地址</string>
+    <string name="add_house_house_floor">楼层</string>
+    <string name="add_house_edit_floor">请输入楼层号</string>
+    <string name="add_house_house_floor_sum">总楼层</string>
+    <string name="add_house_edit_floor_sum">请输入总楼层数</string>
+    <string name="add_house_house_type">房型</string>
+    <string name="add_house_edit_type">请选择房屋类型</string>
+    <string name="add_house_house_area">面积</string>
+    <string name="add_house_edit_area">请输入房屋面积</string>
+    <string name="add_house_house_agent">代理商</string>
+    <string name="add_house_edit_agent">请选择代理商</string>
+    <string name="add_house_house_confit">房屋配置</string>
+    <string name="add_house_edit_confit">请输入房屋已有的配置，每一项用“，”或者“、”分开</string>
+    <string name="add_house_house_introduce">房屋介绍</string>
+    <string name="add_house_edit_introduce">请输入房屋相关的介绍信息</string>
+    <string name="add_house_house_pic">上传房屋图片</string>
+    <string name="add_house_house_submit">提交</string>
+    <string name="add_house_house_submit_tips_1">*每项房产安装门锁设备需要支付200元安装费用*</string>
+
+    <string name="unit_m2">平方米</string>
+    
+    <string name="warm_house_floor_sum">填写的楼层数不能大于总楼层数</string>
+    <string name="warm_house_floor_0">填写正确的楼层数</string>
+    <string name="warm_house_floor_sum_0">填写的总楼层数不能为0</string>
+
+    <string name="warm_house_give_up_add">是否放弃添加？</string>
+    <string name="warm_house_give_up_edit">是否放弃编辑？</string>
+
+    <!--房产详情-->
+    <string name="house_info_title">房产详情</string>
+    <string name="house_info_rent_pay_unit">/月</string>
+    <string name="house_info_start">发布</string>
+    <string name="house_info_type">户型</string>
+    <string name="house_info_area">面积</string>
+    <string name="house_info_floor">楼层</string>
+    <string name="house_info_official">平台认证</string>
+    <string name="house_info_address">地理位置</string>
+    <string name="house_info_floor_unit">层</string>
+    <string name="house_info_confit">房屋配置</string>
+    
+    <string name="house_info_setting_paysetting">安装付费</string>
+    <string name="house_info_setting_edit">编辑房产</string>
+    <string name="house_info_setting_binddevice">绑定设备</string>
+    <string name="house_info_setting_gateway">网关列表</string>
+    <string name="house_info_setting_key_pwd">钥匙孔密码</string>
+    <string name="house_info_setting_open_manage">开门管理</string>
+    <string name="house_info_setting_del">申请删除</string>
+    <string name="house_info_setting_temporary_pwd">临时密码</string>
+
+    <string name="warm_comfit_ok">已确定</string>
+    <string name="house_info_warm_setting_paysetting">缴纳安装费用前请先等安装人员上门确定网络情况后再缴纳安装费用</string>
+    <string name="house_info_warm_del_title">申请删除房产</string>
+    <string name="house_info_warm_del_context">是否申请删除房产</string>
+    <string name="house_info_warm_del_context_no">已申请，请等待工作人员上门</string>
+    <string name="house_info_warm_del_toast_ok">申请成功，请等待工作人员上门</string>
+    <string name="house_info_warm_del_toast_no">申请失败</string>
+
+    <string name="house_setting_temporary_pwd_tips_1">有效期：</string>
+    <string name="house_setting_temporary_pwd_tips_2">前</string>
+    
+    <!--发布房源-->
+    <string name="public_house_pay_day">日租</string>
+    <string name="public_house_pay_mon">月租</string>
+    <string name="public_house_pay_unit_day">元/天</string>
+    <string name="public_house_pay_unit_mon">元/月</string>
+
+    <!--开锁-->
+    <string name="warm_open_setting_show_pwd_err">与设备同步失败</string>
+    <string name="open_tips">智能门锁，一键开启</string>
+    <string name="open_check_pwd_long_click">查看开锁密码</string>
+    <string name="open_check_pwd_key_click">查看钥匙孔密码</string>
+    <string name="open_check_pwd_pop_tips">*密码时效与租房时间相同，前后均无效。</string>
+    <string name="warm_open_no_on_rent">未到入住时间，请入住后再操作</string>
+
+    <!--开门管理-->
+    <string name="open_other_setting">其他功能</string>
+    <string name="open_pwd_self">自定义密码</string>
+    <string name="open_pwd_time">时效性密码</string>
+    <string name="gateway_setting">设置网关</string>
+    <string name="open_pwd">开门密码</string>
+    <string name="open_manage_pwd">管理员密码</string>
+    <string name="open_fingerprint">指纹管理</string>
+    <string name="open_ic_card">IC卡管理</string>
+    <string name="open_remote">遥控器管理</string>
+    <string name="open_gateway_restart">重启网关</string>
+    <string name="pwd_restart">重置密码</string>
+    <string name="popup_warm_pwd_time">遇到问题？戳我～</string>
+    <string name="open_pwd_time_tips">时效性密码：</string>
+    <string name="open_manage_pwd_tips">管理员密码：</string>
+
+    <string name="tips_get_authority_content">房屋已出租，权限失效！</string>
+    <string name="get_authority">维修获取</string>
+
+    <string name="open_tips_pwd_self">暂无密码，快添加一个吧</string>
+    <string name="open_tips_get_pwd_time_fail">获取密码失败！</string>
+    <string name="open_tips_del_pwd">是否删除此密码？</string>
+
+    <string name="open_key_pwd">钥匙孔密码</string>
+    <string name="open_key_pwd_tips">*请在设备上输入密码，开启钥匙孔功能*</string>
+
+    <string name="tips_manage_pwd_fail">*如果门锁提示密码错误，请点击</string>
+    <string name="tips_refresh_pwd">是否重新设置密码？</string>
+
+    <string name="tips_loading">请求中..</string>
+
+    <!--获取管理员密码-->
+    <string name="get_manage_pwd_authority">获取管理员密码</string>
+    <string name="get_manage_pwd_authority_tips">房屋已出租，为保障租客的安全和私隐，\n需要先获取租客手机验证码进行操作验证</string>
+    <string name="get_manage_pwd_success_tips">验证成功！\n管理员密码已通过短信发送！</string>
+
+    <!--门锁功能管理界面-->
+    <string name="tips_empty">这里什么也没有～</string>
+    <string name="rename">重命名</string>
+    <string name="tips_popup_add_fingerprint">要添加新的指纹吗？</string>
+    <string name="tips_popup_add_ic">要添加新的IC卡吗？</string>
+    <string name="tips_popup_add_remote">要添加新的遥控器吗？</string>
+    <string name="please_input_name">请输入别名</string>
+
+    <string name="warm_popup_fingerprint">⚠此操作使门锁直接进入添加指纹状态\n请确保门锁在视线范围内</string>
+    <string name="warm_popup_ic">⚠此操作使门锁直接进入添加IC卡状态\n请确保门锁在视线范围内</string>
+    <string name="warm_popup_remote">⚠此操作使门锁直接进入添加遥控器状态\n请确保门锁在视线范围内</string>
+
+    <!--支付-->
+    <string name="pay_setting">安装付费</string>
+    <string name="pay_sever_title">服务续费</string>
+    <string name="pay">付款</string>
+    <string name="pay_choose_type">选择支付方式</string>
+    <string name="pay_choose_sever_type">选择续费套餐</string>
+    <string name="alipay">支付宝</string>
+    <string name="wxpay">微信</string>
+    <string name="otherpay">钱包余额</string>
+
+    <string name="tips_pay_other">是否使用钱包余额支付？</string>
+
+    <!--我的-->
+    <string name="my_money">我的资产</string>
+    <string name="money_unit">元</string>
+
+    <!--个人设置-->
+    <string name="setting_user_real_no">未认证</string>
+    <string name="setting_user_real_ok">已认证</string>
+    <string name="setting_user_title_real">修改提示</string>
+    <string name="setting_user_title_real_msg">修改此项需要重新进行实名认证流程</string>
+    <string name="setting_user_title_phone_msg">修改此项需要进行活体验证流程</string>
+
+    <!--租客-->
+    <string name="tenanter_list">租客列表</string>
+    <string name="tenanter_title">租客</string>
+    <string name="tenanter_title_dialog">租客信息</string>
+    <string name="tenanter_des_name">姓名：</string>
+    <string name="tenanter_des_gender">性别：</string>
+    <string name="tenanter_des_ethnic">民族：</string>
+    <string name="tenanter_des_birthday">年龄：</string>
+    <string name="tenanter_des_phone">电话：</string>
+    <string name="tenanter_des_address">住址：</string>
+    <string name="tenanter_des_id_card">身份证号：</string>
+    <string name="tenanter_des_call_phone">联系租客</string>
+    <string name="roominfo_date_time">%1$s ~ %2$s</string>
+    <string name="tenanter_count">租客:%s人</string>
+    <string name="room_type_title">【%s】</string>
+    <string name="tenanter_call_ta">联系TA</string>
+
+    <!--账单-->
+    <string name="bill_title">账单</string>
+    <string name="bill_unpay">未付款</string>
+    <string name="bill_pay">已付款</string>
+    <string name="bill_serial_num">订单编号：%s</string>
+    <string name="bill_collection">催账</string>
+    <string name="bill_pay_tips">支：</string>
+    <string name="bill_income_tips">收：</string>
+    <string name="bill_info">账单详情</string>
+    <string name="bill_explain">账单说明</string>
+    <string name="bill_info_number">账单号</string>
+    <string name="bill_info_type">账单类型</string>
+    <string name="bill_info_endtime">账期</string>
+    <string name="bill_info_more">备注</string>
+
+    <string name="bill_info_type_1">充值</string>
+    <string name="bill_info_type_2">服务费支付 </string>
+    <string name="bill_info_type_3">安装费</string>
+    <string name="bill_info_type_4">服务费退款</string>
+
+    <!--抄表-->
+    <string name="copy_title">抄表</string>
+    <string name="copy_button">去抄表</string>
+    <string name="copy_last_water">上月水表</string>
+    <string name="copy_current_water">本月水表</string>
+    <string name="copy_current_water_hint">请输入本月水表</string>
+    <string name="copy_last_electricity">上月电表</string>
+    <string name="copy_current_electricity">本月电表</string>
+    <string name="copy_current_electricity_hint">请输入本月电表</string>
+
+    <!--催账-->
+    <string name="collection_warn_tips">已出租的房产可以设置开启短信催帐通知,开启后系统将自动在设定的日期发送短信催帐。</string>
+    <string name="collection_warn_tips_know">知道了</string>
+    <string name="collection_tips">选择每月催租日期</string>
+    <string name="collection_open">开启</string>
+    <string name="collection_close">关闭</string>
+
+    <!--闲置房间-->
+    <string name="freehouse_title">闲置房间</string>
+    <string name="freehouse_item_snap_password">临时看房密码：</string>
+    <string name="freehouse_item_copy_password">复制密码</string>
+
+    <!--搜索-->
+    <string name="search_edit_hint">请输入要搜索的房屋、房屋编号</string>
+    <string name="search_history_clear">删除搜索记录</string>
+    <string name="roomlist_title_des">%1$s  %2$s号楼%3$s门%4$s</string>
+    <string name="roomlist_description_des">%1$s | %2$s平米 | %3$s/%4$s层</string>
+
+    <!--房产-->
+    <string name="warm_open_door">是否开门？</string>
+
+    <!--网关-->
+    <string name="title_activity_gateway_list">选择网关</string>
+    <string name="device_model_title">选择设备类型</string>
+    <string name="device_gateway_name_hint">请给网关取个名字</string>
+    <string name="device_gateway_serial_hint">请输入网关编码</string>
+    <string name="device_gateway_password_hint">请输入网关密码</string>
+    <string name="device_gateway_address_hint">请输入您的地址</string>
+    <string name="device_gateway_sure">确定</string>
+    <string name="device_edit_bind_gateway">绑定网关</string>
+    <string name="gateway_connection_title">结果</string>
+    <string name="gateway_name">网关名称：  %s</string>
+    <string name="gateway_address">网关地址：  %s</string>
+    <string name="gateway_serial">网关编码：  %s</string>
+    <string name="gateway_des_title">网关信息</string>
+
+
+    <string name="tips_gateway_bind">网关准备进入绑定模式，请稍等...</string>
+    <string name="tips_gateway_binding">网关已进入绑定模式</string>
+    <string name="how_on_the_device_handle">如何操作？</string>
+    <string name="please_on_the_device_handle">请在设备上操作响应…</string>
+    <string name="device_bind_success">绑定成功</string>
+    <string name="device_bind_failed">绑定失败</string>
+    
+    
+    <string name="text_gateway">网关</string>
+    <string name="device_gateway_result_title">绑定网关</string>
+    <string name="device_wifi_result_title">绑定无线按钮</string>
+    <string name="device_add_btn">添加设备</string>
+    <string name="device_list_title">设备列表</string>
+    <string name="device_item_status_normal">正常</string>
+    <string name="device_item_status_abnormal">异常</string>
+    <string name="warm_gateway_no_to_add">已添加网关，不能再添加</string>
+    <string name="please_input_gateway_code">请输入序列号：</string>
+    <string name="please_input_gateway_code_tips">输入序列号或扫描产品上二维码贴纸</string>
+    <string name="please_input_gateway_pwd">*请输入产品贴纸上的密码</string>
+    <string name="setting_gateway_wifi_tips">点击“设置”，可以帮助网关连接或修改Wi-Fi。</string>
+    <string name="connecting">连接中...</string>
+    <string name="restart">重启</string>
+    <string name="manage">管理</string>
+    <string name="tips">提示</string>
+
+    <string name="gateway_List">网关列表</string>
+    <string name="edit_gateway">编辑网关</string>
+    <string name="edit_gateway_name">设置名字</string>
+    <string name="gateway_info">网关信息</string>
+    <string name="gateway_info_name">网关名称：</string>
+    <string name="gateway_info_number">网关编码：</string>
+    <string name="gateway_info_bind_time">绑定时间：</string>
+    <string name="gateway_info_type_number">网关型号：</string>
+    <string name="gateway_info_type">网关类型：</string>
+    <string name="gateway_info_pwd">网关密码：</string>
+    <string name="gateway_info_bind_address">绑定地址：</string>
+    <string name="gateway_connection_mode">当前连接：</string>
+    <string name="gateway_request_fail">获取失败</string>
+    <string name="gateway_conn_2G">蜂窝网络</string>
+    <string name="gateway_conn_WiFi">Wi-Fi</string>
+    <string name="gateway_conn_Ethernet">以太网</string>
+    <string name="gateway_power_mode">外接电源：</string>
+    <string name="disconnect">连接断开</string>
+    <string name="yes">是</string>
+    <string name="no">否</string>
+    <string name="un_know">未知</string>
+
+    <string name="del_gateway">删除网关</string>
+    <string name="warm_del_gateway">要删除当前网关吗？</string>
+    <string name="warm_restart_gateway">重启后将会中断当前所有连接\n需要约30秒钟恢复!\n是否重启当前网关？</string>
+    <string name="please_input_gateway_name">请给网关取个名字</string>
+
+    <string name="device_add_title">添加设备</string>
+    <string name="device_add_hint_name">请输入设备类型</string>
+    <string name="device_add_hint_alias">请输入设备别名</string>
+    <string name="device_add_hint_location">请输入地点</string>
+    <string name="device_add_install_tips_title">安装注意事项</string>
+    <string name="device_add_install_tips_1">1.安装前戳一下设备的重置孔，如果网关提示"连接正常"，说明位置合适，否则，将设备靠近网关，再试一次</string>
+    <string name="device_add_install_tips_2">2.如果所示，不要粘在金属上</string>
+    <string name="device_item_history_open">%s 设备开启</string>
+    <string name="device_item_history_close">%s 设备关闭</string>
+    <string name="device_item_choice_door_type">选择门类型</string>
+    <string name="device_item_choice_door_type_tips">请选择门类型</string>
+
+
+
+
+    <!--WiFi-->
+    <string name="choose_wifi_title">选择Wi-Fi</string>
+    <string name="setting_gateway_wifi_title">Wi-Fi设置</string>
+    <string name="setting_choose_gateway_wifi">选择网关工作Wi-Fi</string>
+    <string name="setting_choose_gateway_wifi_tips_1">此设备仅支持使用2.4G Wi-Fi连接使用</string>
+    <string name="setting_choose_gateway_wifi_tips_2">Wi-Fi名称仅支持数字、英文字符</string>
+    <string name="setting_choose_gateway_wifi_tips_3">设置完成后，需要重启网关</string>
+    <string name="setting_choose_gateway_other">查看附近Wi-Fi</string>
+
+    <string name="WiFi">Wi-Fi：</string>
+    <string name="please_input_wifi_name">请输入Wi-Fi名称</string>
+    <string name="pwd">密码：</string>
+    <string name="please_input_wifi_pwd">请输入Wi-Fi密码</string>
+
+    <string name="please_input_wifi_ssid">请输入WiFi名称</string>
+    <string name="please_input_wifi_pwd_more">输入的wifi密码应不小于8位或不填</string>
+    <string name="please_input_wifi_pwd_same">WiFi名称或密码未作修改</string>
+    <string name="success_to_setting_wifi_please_gateway_restart">网关WiFi设置成功，网关即将重新启动\n需要约30秒钟恢复，期间请勿操作</string>
+    <string name="please_gateway_restart_success_wait">网关正在重启\n需要约30秒钟恢复，期间请勿操作</string>
+    <string name="please_gateway_restart_fail">网关网络通讯状态差，网关重启失败</string>
+    <string name="popup_sure_change_wifi">确定要修改Wi-Fi吗？</string>
+    
+    <!--如何绑定设备操作-->
+    <string name="title_how_to_bind">设备绑定</string>
+    <string name="how_bind_device_name_1">智能门锁 K44</string>
+    <string name="how_bind_device_name_2">智能门锁 K52</string>
+    <string name="how_bind_device_name_3">智能门锁 K47</string>
+    <string name="how_bind_device_name_4">智能保险箱</string>
+    <string name="how_bind_device_name_5">空气质量探测器</string>
+
+    <string name="how_bind_device_1_step_1">1、设备上输入777*进入菜单；</string>
+    <string name="how_bind_device_1_step_2">2、根据设备语音提示完成操作。</string>
+
+    <string name="how_bind_device_2_step_1">1、设备上输入*#，管理员密码进入菜单；</string>
+    <string name="how_bind_device_2_step_2">2、根据设备语音提示完成操作。</string>
+
+    <string name="how_bind_device_3_step_1">1、点击左边主锁设置键进入绑定；</string>
+    <string name="how_bind_device_3_step_2">2、门外设备插入外接电源，启动应急锁；</string>
+    <string name="how_bind_device_3_step_3">3、点击右边应急锁设置键进入绑定。</string>
+
+    <string name="how_bind_device_4_step_1">1、点击左边主锁设置键进入绑定；</string>
+    <string name="how_bind_device_4_step_2">2、门外设备插入外接电源，启动应急锁；</string>
+    <string name="how_bind_device_4_step_3">3、点击右边应急锁设置键进入绑定。</string>
+
+
+    <string name="how_bind_device_5_step_1">1、长按主键两秒以上；</string>
+    <string name="how_bind_device_5_step_2">2、松手后设备进入绑定模式。</string>
+
+    <string name="tips_choose_device">请选择对应的设备</string>
+    <string name="how_bind_title_step">操作步骤：</string>
+    <string name="how_bind_title_lock_main">主锁绑定：</string>
+    <string name="how_bind_title_lock_second">应急锁绑定：</string>
+    
+    <string name="how_to_setting_fingerprint">请根据语音录入指纹</string>
+    <string name="how_to_setting_ic_card">请根据语音录入IC卡</string>
+    <string name="how_to_setting_remote">门锁进入绑定模式后\n点击遥控器开门按钮进行绑定</string>
+
+
+    <string name="find_new_version">发现新版本!</string>
+    <string name="new_version">更新版本</string>
+    <string name="version_size">更新内容</string>
+    <string name="text_try">立即更新</string>
+    <string name="title_dialog">友情提示</string>
+    <string name="version_number">V1.1.0</string>
+    <string name="version_history">历史版本</string>
+    <string name="update_content">有新版本请前往更新</string>
+    <string-array name="landlord_home_grid">
+        <item>租客</item>
+        <item>账单</item>
+        <item>催账</item>
+        <item>抄表</item>
+        <item>闲置房间</item>
+    </string-array>
+
+    <string-array name="landlord_tenanters">
+        <item>已出租</item>
+        <item>未出租</item>
+        <item>即将到期</item>
+    </string-array>
+
+    <string-array name="landlord_bill">
+        <item>未付账单</item>
+        <item>已付账单</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

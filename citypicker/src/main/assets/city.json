@@ -1,0 +1,1832 @@
+[
+  {
+    "name": "台湾",
+    "pinyin": "",
+    "index": "T"
+  },
+  {
+    "name": "澳门",
+    "pinyin": "",
+    "index": "A"
+  },
+  {
+    "name": "香港",
+    "pinyin": "",
+    "index": "X"
+  },
+  {
+    "name": "重庆市",
+    "pinyin": "",
+    "index": "C"
+  },
+  {
+    "name": "义乌市",
+    "pinyin": "",
+    "index": "Y"
+  },
+  {
+    "name": "衢州市",
+    "pinyin": "",
+    "index": "Q"
+  },
+  {
+    "name": "舟山市",
+    "pinyin": "",
+    "index": "Z"
+  },
+  {
+    "name": "温州市",
+    "pinyin": "",
+    "index": "W"
+  },
+  {
+    "name": "台州市",
+    "pinyin": "",
+    "index": "T"
+  },
+  {
+    "name": "绍兴市",
+    "pinyin": "",
+    "index": "S"
+  },
+  {
+    "name": "宁波市",
+    "pinyin": "",
+    "index": "N"
+  },
+  {
+    "name": "丽水市",
+    "pinyin": "",
+    "index": "L"
+  },
+  {
+    "name": "金华市",
+    "pinyin": "",
+    "index": "J"
+  },
+  {
+    "name": "嘉兴市",
+    "pinyin": "",
+    "index": "J"
+  },
+  {
+    "name": "湖州市",
+    "pinyin": "",
+    "index": "H"
+  },
+  {
+    "name": "杭州市",
+    "pinyin": "",
+    "index": "H"
+  },
+  {
+    "name": "昭通市",
+    "pinyin": "",
+    "index": "Z"
+  },
+  {
+    "name": "玉溪市",
+    "pinyin": "",
+    "index": "Y"
+  },
+  {
+    "name": "西双版纳市",
+    "pinyin": "",
+    "index": "X"
+  },
+  {
+    "name": "文山市",
+    "pinyin": "",
+    "index": "W"
+  },
+  {
+    "name": "曲靖市",
+    "pinyin": "",
+    "index": "Q"
+  },
+  {
+    "name": "临沧市",
+    "pinyin": "",
+    "index": "L"
+  },
+  {
+    "name": "红河市",
+    "pinyin": "",
+    "index": "H"
+  },
+  {
+    "name": "迪庆市",
+    "pinyin": "",
+    "index": "D"
+  },
+  {
+    "name": "德宏市",
+    "pinyin": "",
+    "index": "D"
+  },
+  {
+    "name": "大理市",
+    "pinyin": "",
+    "index": "D"
+  },
+  {
+    "name": "楚雄市",
+    "pinyin": "",
+    "index": "C"
+  },
+  {
+    "name": "保山市",
+    "pinyin": "",
+    "index": "B"
+  },
+  {
+    "name": "丽江市",
+    "pinyin": "",
+    "index": "L"
+  },
+  {
+    "name": "普洱市",
+    "pinyin": "",
+    "index": "P"
+  },
+  {
+    "name": "怒江市",
+    "pinyin": "",
+    "index": "N"
+  },
+  {
+    "name": "昆明市",
+    "pinyin": "",
+    "index": "K"
+  },
+  {
+    "name": "伊犁市",
+    "pinyin": "",
+    "index": "Y"
+  },
+  {
+    "name": "五家渠市",
+    "pinyin": "",
+    "index": "W"
+  },
+  {
+    "name": "吐鲁番市",
+    "pinyin": "",
+    "index": "T"
+  },
+  {
+    "name": "图木舒克市",
+    "pinyin": "",
+    "index": "T"
+  },
+  {
+    "name": "石河子市",
+    "pinyin": "",
+    "index": "S"
+  },
+  {
+    "name": "克孜勒苏市",
+    "pinyin": "",
+    "index": "K"
+  },
+  {
+    "name": "克拉玛依市",
+    "pinyin": "",
+    "index": "K"
+  },
+  {
+    "name": "喀什市",
+    "pinyin": "",
+    "index": "K"
+  },
+  {
+    "name": "和田市",
+    "pinyin": "",
+    "index": "H"
+  },
+  {
+    "name": "哈密市",
+    "pinyin": "",
+    "index": "H"
+  },
+  {
+    "name": "昌吉市",
+    "pinyin": "",
+    "index": "C"
+  },
+  {
+    "name": "博尔塔拉市",
+    "pinyin": "",
+    "index": "B"
+  },
+  {
+    "name": "巴音郭楞市",
+    "pinyin": "",
+    "index": "B"
+  },
+  {
+    "name": "阿拉尔市",
+    "pinyin": "",
+    "index": "A"
+  },
+  {
+    "name": "阿克苏市",
+    "pinyin": "",
+    "index": "A"
+  },
+  {
+    "name": "乌鲁木齐市",
+    "pinyin": "",
+    "index": "W"
+  },
+  {
+    "name": "山南市",
+    "pinyin": "",
+    "index": "S"
+  },
+  {
+    "name": "日喀则市",
+    "pinyin": "",
+    "index": "R"
+  },
+  {
+    "name": "那曲市",
+    "pinyin": "",
+    "index": "N"
+  },
+  {
+    "name": "林芝市",
+    "pinyin": "",
+    "index": "L"
+  },
+  {
+    "name": "昌都市",
+    "pinyin": "",
+    "index": "C"
+  },
+  {
+    "name": "阿里市",
+    "pinyin": "",
+    "index": "A"
+  },
+  {
+    "name": "拉萨市",
+    "pinyin": "",
+    "index": "L"
+  },
+  {
+    "name": "天津市",
+    "pinyin": "",
+    "index": "T"
+  },
+  {
+    "name": "泸州市",
+    "pinyin": "",
+    "index": "L"
+  },
+  {
+    "name": "自贡市",
+    "pinyin": "",
+    "index": "Z"
+  },
+  {
+    "name": "资阳市",
+    "pinyin": "",
+    "index": "Z"
+  },
+  {
+    "name": "宜宾市",
+    "pinyin": "",
+    "index": "Y"
+  },
+  {
+    "name": "雅安市",
+    "pinyin": "",
+    "index": "Y"
+  },
+  {
+    "name": "遂宁市",
+    "pinyin": "",
+    "index": "S"
+  },
+  {
+    "name": "攀枝花市",
+    "pinyin": "",
+    "index": "P"
+  },
+  {
+    "name": "内江市",
+    "pinyin": "",
+    "index": "N"
+  },
+  {
+    "name": "南充市",
+    "pinyin": "",
+    "index": "N"
+  },
+  {
+    "name": "眉山市",
+    "pinyin": "",
+    "index": "M"
+  },
+  {
+    "name": "凉山市",
+    "pinyin": "",
+    "index": "L"
+  },
+  {
+    "name": "乐山市",
+    "pinyin": "",
+    "index": "L"
+  },
+  {
+    "name": "广元市",
+    "pinyin": "",
+    "index": "G"
+  },
+  {
+    "name": "广安市",
+    "pinyin": "",
+    "index": "G"
+  },
+  {
+    "name": "甘孜市",
+    "pinyin": "",
+    "index": "G"
+  },
+  {
+    "name": "德阳市",
+    "pinyin": "",
+    "index": "D"
+  },
+  {
+    "name": "达州市",
+    "pinyin": "",
+    "index": "D"
+  },
+  {
+    "name": "巴中市",
+    "pinyin": "",
+    "index": "B"
+  },
+  {
+    "name": "阿坝市",
+    "pinyin": "",
+    "index": "A"
+  },
+  {
+    "name": "绵阳市",
+    "pinyin": "",
+    "index": "M"
+  },
+  {
+    "name": "成都市",
+    "pinyin": "",
+    "index": "C"
+  },
+  {
+    "name": "上海市",
+    "pinyin": "",
+    "index": "S"
+  },
+  {
+    "name": "杨凌",
+    "pinyin": "",
+    "index": "Y"
+  },
+  {
+    "name": "榆林市",
+    "pinyin": "",
+    "index": "Y"
+  },
+  {
+    "name": "延安市",
+    "pinyin": "",
+    "index": "Y"
+  },
+  {
+    "name": "咸阳市",
+    "pinyin": "",
+    "index": "X"
+  },
+  {
+    "name": "渭南市",
+    "pinyin": "",
+    "index": "W"
+  },
+  {
+    "name": "铜川市",
+    "pinyin": "",
+    "index": "T"
+  },
+  {
+    "name": "商洛市",
+    "pinyin": "",
+    "index": "S"
+  },
+  {
+    "name": "汉中市",
+    "pinyin": "",
+    "index": "H"
+  },
+  {
+    "name": "宝鸡市",
+    "pinyin": "",
+    "index": "B"
+  },
+  {
+    "name": "安康市",
+    "pinyin": "",
+    "index": "A"
+  },
+  {
+    "name": "西安市",
+    "pinyin": "",
+    "index": "X"
+  },
+  {
+    "name": "运城市",
+    "pinyin": "",
+    "index": "Y"
+  },
+  {
+    "name": "阳泉市",
+    "pinyin": "",
+    "index": "Y"
+  },
+  {
+    "name": "忻州市",
+    "pinyin": "",
+    "index": "X"
+  },
+  {
+    "name": "朔州市",
+    "pinyin": "",
+    "index": "S"
+  },
+  {
+    "name": "吕梁市",
+    "pinyin": "",
+    "index": "L"
+  },
+  {
+    "name": "临汾市",
+    "pinyin": "",
+    "index": "L"
+  },
+  {
+    "name": "晋中市",
+    "pinyin": "",
+    "index": "J"
+  },
+  {
+    "name": "晋城市",
+    "pinyin": "",
+    "index": "J"
+  },
+  {
+    "name": "大同市",
+    "pinyin": "",
+    "index": "D"
+  },
+  {
+    "name": "长治市",
+    "pinyin": "",
+    "index": "C"
+  },
+  {
+    "name": "太原市",
+    "pinyin": "",
+    "index": "T"
+  },
+  {
+    "name": "淄博市",
+    "pinyin": "",
+    "index": "Z"
+  },
+  {
+    "name": "枣庄市",
+    "pinyin": "",
+    "index": "Z"
+  },
+  {
+    "name": "烟台市",
+    "pinyin": "",
+    "index": "Y"
+  },
+  {
+    "name": "潍坊市",
+    "pinyin": "",
+    "index": "W"
+  },
+  {
+    "name": "威海市",
+    "pinyin": "",
+    "index": "W"
+  },
+  {
+    "name": "泰安市",
+    "pinyin": "",
+    "index": "T"
+  },
+  {
+    "name": "日照市",
+    "pinyin": "",
+    "index": "R"
+  },
+  {
+    "name": "临沂市",
+    "pinyin": "",
+    "index": "L"
+  },
+  {
+    "name": "聊城市",
+    "pinyin": "",
+    "index": "L"
+  },
+  {
+    "name": "莱芜市",
+    "pinyin": "",
+    "index": "L"
+  },
+  {
+    "name": "济宁市",
+    "pinyin": "",
+    "index": "J"
+  },
+  {
+    "name": "菏泽市",
+    "pinyin": "",
+    "index": "H"
+  },
+  {
+    "name": "东营市",
+    "pinyin": "",
+    "index": "D"
+  },
+  {
+    "name": "德州市",
+    "pinyin": "",
+    "index": "D"
+  },
+  {
+    "name": "滨州市",
+    "pinyin": "",
+    "index": "B"
+  },
+  {
+    "name": "青岛市",
+    "pinyin": "",
+    "index": "Q"
+  },
+  {
+    "name": "济南市",
+    "pinyin": "",
+    "index": "J"
+  },
+  {
+    "name": "玉树市",
+    "pinyin": "",
+    "index": "Y"
+  },
+  {
+    "name": "黄南市",
+    "pinyin": "",
+    "index": "H"
+  },
+  {
+    "name": "海西市",
+    "pinyin": "",
+    "index": "H"
+  },
+  {
+    "name": "海南市",
+    "pinyin": "",
+    "index": "H"
+  },
+  {
+    "name": "海东市",
+    "pinyin": "",
+    "index": "H"
+  },
+  {
+    "name": "海北市",
+    "pinyin": "",
+    "index": "H"
+  },
+  {
+    "name": "果洛市",
+    "pinyin": "",
+    "index": "G"
+  },
+  {
+    "name": "西宁市",
+    "pinyin": "",
+    "index": "X"
+  },
+  {
+    "name": "中卫市",
+    "pinyin": "",
+    "index": "Z"
+  },
+  {
+    "name": "吴忠市",
+    "pinyin": "",
+    "index": "W"
+  },
+  {
+    "name": "石嘴山市",
+    "pinyin": "",
+    "index": "S"
+  },
+  {
+    "name": "固原市",
+    "pinyin": "",
+    "index": "G"
+  },
+  {
+    "name": "银川市",
+    "pinyin": "",
+    "index": "Y"
+  },
+  {
+    "name": "兴安盟",
+    "pinyin": "",
+    "index": "X"
+  },
+  {
+    "name": "锡林郭勒盟",
+    "pinyin": "",
+    "index": "X"
+  },
+  {
+    "name": "乌兰察布市",
+    "pinyin": "",
+    "index": "W"
+  },
+  {
+    "name": "乌海市",
+    "pinyin": "",
+    "index": "W"
+  },
+  {
+    "name": "通辽市",
+    "pinyin": "",
+    "index": "T"
+  },
+  {
+    "name": "呼伦贝尔市",
+    "pinyin": "",
+    "index": "H"
+  },
+  {
+    "name": "鄂尔多斯市",
+    "pinyin": "",
+    "index": "E"
+  },
+  {
+    "name": "赤峰市",
+    "pinyin": "",
+    "index": "C"
+  },
+  {
+    "name": "包头市",
+    "pinyin": "",
+    "index": "B"
+  },
+  {
+    "name": "巴彦淖尔盟市",
+    "pinyin": "",
+    "index": "B"
+  },
+  {
+    "name": "阿拉善盟市",
+    "pinyin": "",
+    "index": "A"
+  },
+  {
+    "name": "呼和浩特市",
+    "pinyin": "",
+    "index": "H"
+  },
+  {
+    "name": "营口市",
+    "pinyin": "",
+    "index": "Y"
+  },
+  {
+    "name": "铁岭市",
+    "pinyin": "",
+    "index": "T"
+  },
+  {
+    "name": "盘锦市",
+    "pinyin": "",
+    "index": "P"
+  },
+  {
+    "name": "辽阳市",
+    "pinyin": "",
+    "index": "L"
+  },
+  {
+    "name": "锦州市",
+    "pinyin": "",
+    "index": "J"
+  },
+  {
+    "name": "葫芦岛市",
+    "pinyin": "",
+    "index": "H"
+  },
+  {
+    "name": "阜新市",
+    "pinyin": "",
+    "index": "F"
+  },
+  {
+    "name": "抚顺市",
+    "pinyin": "",
+    "index": "F"
+  },
+  {
+    "name": "丹东市",
+    "pinyin": "",
+    "index": "D"
+  },
+  {
+    "name": "朝阳市",
+    "pinyin": "",
+    "index": "C"
+  },
+  {
+    "name": "本溪市",
+    "pinyin": "",
+    "index": "B"
+  },
+  {
+    "name": "鞍山市",
+    "pinyin": "",
+    "index": "A"
+  },
+  {
+    "name": "大连市",
+    "pinyin": "",
+    "index": "D"
+  },
+  {
+    "name": "沈阳市",
+    "pinyin": "",
+    "index": "S"
+  },
+  {
+    "name": "鹰潭市",
+    "pinyin": "",
+    "index": "Y"
+  },
+  {
+    "name": "宜春市",
+    "pinyin": "",
+    "index": "Y"
+  },
+  {
+    "name": "新余市",
+    "pinyin": "",
+    "index": "X"
+  },
+  {
+    "name": "上饶市",
+    "pinyin": "",
+    "index": "S"
+  },
+  {
+    "name": "萍乡市",
+    "pinyin": "",
+    "index": "P"
+  },
+  {
+    "name": "九江市",
+    "pinyin": "",
+    "index": "J"
+  },
+  {
+    "name": "景德镇市",
+    "pinyin": "",
+    "index": "J"
+  },
+  {
+    "name": "吉安市",
+    "pinyin": "",
+    "index": "J"
+  },
+  {
+    "name": "赣州市",
+    "pinyin": "",
+    "index": "G"
+  },
+  {
+    "name": "抚州市",
+    "pinyin": "",
+    "index": "F"
+  },
+  {
+    "name": "南昌市",
+    "pinyin": "",
+    "index": "N"
+  },
+  {
+    "name": "昆山",
+    "pinyin": "",
+    "index": "K"
+  },
+  {
+    "name": "镇江市",
+    "pinyin": "",
+    "index": "Z"
+  },
+  {
+    "name": "扬州市",
+    "pinyin": "",
+    "index": "Y"
+  },
+  {
+    "name": "盐城市",
+    "pinyin": "",
+    "index": "Y"
+  },
+  {
+    "name": "徐州市",
+    "pinyin": "",
+    "index": "X"
+  },
+  {
+    "name": "泰州市",
+    "pinyin": "",
+    "index": "T"
+  },
+  {
+    "name": "宿迁市",
+    "pinyin": "",
+    "index": "S"
+  },
+  {
+    "name": "南通市",
+    "pinyin": "",
+    "index": "N"
+  },
+  {
+    "name": "连云港市",
+    "pinyin": "",
+    "index": "L"
+  },
+  {
+    "name": "淮安市",
+    "pinyin": "",
+    "index": "H"
+  },
+  {
+    "name": "常州市",
+    "pinyin": "",
+    "index": "C"
+  },
+  {
+    "name": "无锡市",
+    "pinyin": "",
+    "index": "W"
+  },
+  {
+    "name": "苏州市",
+    "pinyin": "",
+    "index": "S"
+  },
+  {
+    "name": "南京市",
+    "pinyin": "",
+    "index": "N"
+  },
+  {
+    "name": "延边市",
+    "pinyin": "",
+    "index": "Y"
+  },
+  {
+    "name": "通化市",
+    "pinyin": "",
+    "index": "T"
+  },
+  {
+    "name": "松原市",
+    "pinyin": "",
+    "index": "S"
+  },
+  {
+    "name": "四平市",
+    "pinyin": "",
+    "index": "S"
+  },
+  {
+    "name": "辽源市",
+    "pinyin": "",
+    "index": "L"
+  },
+  {
+    "name": "白山市",
+    "pinyin": "",
+    "index": "B"
+  },
+  {
+    "name": "白城市",
+    "pinyin": "",
+    "index": "B"
+  },
+  {
+    "name": "吉林市",
+    "pinyin": "",
+    "index": "J"
+  },
+  {
+    "name": "长春市",
+    "pinyin": "",
+    "index": "C"
+  },
+  {
+    "name": "株洲市",
+    "pinyin": "",
+    "index": "Z"
+  },
+  {
+    "name": "岳阳市",
+    "pinyin": "",
+    "index": "Y"
+  },
+  {
+    "name": "永州市",
+    "pinyin": "",
+    "index": "Y"
+  },
+  {
+    "name": "益阳市",
+    "pinyin": "",
+    "index": "Y"
+  },
+  {
+    "name": "湘西市",
+    "pinyin": "",
+    "index": "X"
+  },
+  {
+    "name": "湘潭市",
+    "pinyin": "",
+    "index": "X"
+  },
+  {
+    "name": "邵阳市",
+    "pinyin": "",
+    "index": "S"
+  },
+  {
+    "name": "娄底市",
+    "pinyin": "",
+    "index": "L"
+  },
+  {
+    "name": "怀化市",
+    "pinyin": "",
+    "index": "H"
+  },
+  {
+    "name": "衡阳市",
+    "pinyin": "",
+    "index": "H"
+  },
+  {
+    "name": "郴州市",
+    "pinyin": "",
+    "index": "C"
+  },
+  {
+    "name": "常德市",
+    "pinyin": "",
+    "index": "C"
+  },
+  {
+    "name": "张家界市",
+    "pinyin": "",
+    "index": "Z"
+  },
+  {
+    "name": "长沙市",
+    "pinyin": "",
+    "index": "C"
+  },
+  {
+    "name": "恩施市",
+    "pinyin": "",
+    "index": "E"
+  },
+  {
+    "name": "宜昌市",
+    "pinyin": "",
+    "index": "Y"
+  },
+  {
+    "name": "孝感市",
+    "pinyin": "",
+    "index": "X"
+  },
+  {
+    "name": "襄樊市",
+    "pinyin": "",
+    "index": "X"
+  },
+  {
+    "name": "咸宁市",
+    "pinyin": "",
+    "index": "X"
+  },
+  {
+    "name": "天门市",
+    "pinyin": "",
+    "index": "T"
+  },
+  {
+    "name": "随州市",
+    "pinyin": "",
+    "index": "S"
+  },
+  {
+    "name": "十堰市",
+    "pinyin": "",
+    "index": "S"
+  },
+  {
+    "name": "神农架林区市",
+    "pinyin": "",
+    "index": "S"
+  },
+  {
+    "name": "潜江市",
+    "pinyin": "",
+    "index": "Q"
+  },
+  {
+    "name": "荆州市",
+    "pinyin": "",
+    "index": "J"
+  },
+  {
+    "name": "荆门市",
+    "pinyin": "",
+    "index": "J"
+  },
+  {
+    "name": "黄石市",
+    "pinyin": "",
+    "index": "H"
+  },
+  {
+    "name": "黄冈市",
+    "pinyin": "",
+    "index": "H"
+  },
+  {
+    "name": "鄂州市",
+    "pinyin": "",
+    "index": "E"
+  },
+  {
+    "name": "仙桃市",
+    "pinyin": "",
+    "index": "X"
+  },
+  {
+    "name": "武汉市",
+    "pinyin": "",
+    "index": "W"
+  },
+  {
+    "name": "伊春市",
+    "pinyin": "",
+    "index": "Y"
+  },
+  {
+    "name": "绥化市",
+    "pinyin": "",
+    "index": "S"
+  },
+  {
+    "name": "双鸭山市",
+    "pinyin": "",
+    "index": "S"
+  },
+  {
+    "name": "齐齐哈尔",
+    "pinyin": "",
+    "index": "Q"
+  },
+  {
+    "name": "七台河市",
+    "pinyin": "",
+    "index": "Q"
+  },
+  {
+    "name": "牡丹江市",
+    "pinyin": "",
+    "index": "M"
+  },
+  {
+    "name": "佳木斯",
+    "pinyin": "",
+    "index": "J"
+  },
+  {
+    "name": "鸡西市",
+    "pinyin": "",
+    "index": "J"
+  },
+  {
+    "name": "黑河市",
+    "pinyin": "",
+    "index": "H"
+  },
+  {
+    "name": "鹤岗市",
+    "pinyin": "",
+    "index": "H"
+  },
+  {
+    "name": "大兴安岭",
+    "pinyin": "",
+    "index": "D"
+  },
+  {
+    "name": "大庆市",
+    "pinyin": "",
+    "index": "D"
+  },
+  {
+    "name": "哈尔滨市",
+    "pinyin": "",
+    "index": "H"
+  },
+  {
+    "name": "濮阳市",
+    "pinyin": "",
+    "index": "P"
+  },
+  {
+    "name": "漯河市",
+    "pinyin": "",
+    "index": "L"
+  },
+  {
+    "name": "驻马店",
+    "pinyin": "",
+    "index": "Z"
+  },
+  {
+    "name": "周口市",
+    "pinyin": "",
+    "index": "Z"
+  },
+  {
+    "name": "许昌市",
+    "pinyin": "",
+    "index": "X"
+  },
+  {
+    "name": "信阳市",
+    "pinyin": "",
+    "index": "X"
+  },
+  {
+    "name": "新乡市",
+    "pinyin": "",
+    "index": "X"
+  },
+  {
+    "name": "商丘市",
+    "pinyin": "",
+    "index": "S"
+  },
+  {
+    "name": "三门峡",
+    "pinyin": "",
+    "index": "S"
+  },
+  {
+    "name": "平顶山",
+    "pinyin": "",
+    "index": "P"
+  },
+  {
+    "name": "南阳市",
+    "pinyin": "",
+    "index": "N"
+  },
+  {
+    "name": "焦作市",
+    "pinyin": "",
+    "index": "J"
+  },
+  {
+    "name": "济源市",
+    "pinyin": "",
+    "index": "J"
+  },
+  {
+    "name": "鹤壁市",
+    "pinyin": "",
+    "index": "H"
+  },
+  {
+    "name": "安阳市",
+    "pinyin": "",
+    "index": "A"
+  },
+  {
+    "name": "开封市",
+    "pinyin": "",
+    "index": "K"
+  },
+  {
+    "name": "洛阳市",
+    "pinyin": "",
+    "index": "L"
+  },
+  {
+    "name": "郑州市",
+    "pinyin": "",
+    "index": "Z"
+  },
+  {
+    "name": "张家口市",
+    "pinyin": "",
+    "index": "Z"
+  },
+  {
+    "name": "邢台市",
+    "pinyin": "",
+    "index": "X"
+  },
+  {
+    "name": "唐山市",
+    "pinyin": "",
+    "index": "T"
+  },
+  {
+    "name": "秦皇岛",
+    "pinyin": "",
+    "index": "Q"
+  },
+  {
+    "name": "廊坊市",
+    "pinyin": "",
+    "index": "L"
+  },
+  {
+    "name": "衡水市",
+    "pinyin": "",
+    "index": "H"
+  },
+  {
+    "name": "邯郸市",
+    "pinyin": "",
+    "index": "H"
+  },
+  {
+    "name": "承德市",
+    "pinyin": "",
+    "index": "C"
+  },
+  {
+    "name": "沧州市",
+    "pinyin": "",
+    "index": "C"
+  },
+  {
+    "name": "保定市",
+    "pinyin": "",
+    "index": "B"
+  },
+  {
+    "name": "石家庄市",
+    "pinyin": "",
+    "index": "S"
+  },
+  {
+    "name": "儋州",
+    "pinyin": "",
+    "index": "D"
+  },
+  {
+    "name": "五指山",
+    "pinyin": "",
+    "index": "W"
+  },
+  {
+    "name": "文昌",
+    "pinyin": "",
+    "index": "W"
+  },
+  {
+    "name": "万宁",
+    "pinyin": "",
+    "index": "W"
+  },
+  {
+    "name": "屯昌县",
+    "pinyin": "",
+    "index": "T"
+  },
+  {
+    "name": "琼中",
+    "pinyin": "",
+    "index": "Q"
+  },
+  {
+    "name": "琼海",
+    "pinyin": "",
+    "index": "Q"
+  },
+  {
+    "name": "陵水",
+    "pinyin": "",
+    "index": "L"
+  },
+  {
+    "name": "临高县",
+    "pinyin": "",
+    "index": "L"
+  },
+  {
+    "name": "乐东",
+    "pinyin": "",
+    "index": "L"
+  },
+  {
+    "name": "东方市",
+    "pinyin": "",
+    "index": "D"
+  },
+  {
+    "name": "定安县",
+    "pinyin": "",
+    "index": "D"
+  },
+  {
+    "name": "澄迈县",
+    "pinyin": "",
+    "index": "C"
+  },
+  {
+    "name": "昌江市",
+    "pinyin": "",
+    "index": "C"
+  },
+  {
+    "name": "保亭市",
+    "pinyin": "",
+    "index": "B"
+  },
+  {
+    "name": "白沙市",
+    "pinyin": "",
+    "index": "B"
+  },
+  {
+    "name": "三亚市",
+    "pinyin": "",
+    "index": "S"
+  },
+  {
+    "name": "海口市",
+    "pinyin": "",
+    "index": "H"
+  },
+  {
+    "name": "遵义市",
+    "pinyin": "",
+    "index": "Z"
+  },
+  {
+    "name": "铜仁市",
+    "pinyin": "",
+    "index": "T"
+  },
+  {
+    "name": "黔西南市",
+    "pinyin": "",
+    "index": "Q"
+  },
+  {
+    "name": "黔南市",
+    "pinyin": "",
+    "index": "Q"
+  },
+  {
+    "name": "黔东南市",
+    "pinyin": "",
+    "index": "Q"
+  },
+  {
+    "name": "六盘水市",
+    "pinyin": "",
+    "index": "L"
+  },
+  {
+    "name": "毕节市",
+    "pinyin": "",
+    "index": "B"
+  },
+  {
+    "name": "安顺市",
+    "pinyin": "",
+    "index": "A"
+  },
+  {
+    "name": "贵阳市",
+    "pinyin": "",
+    "index": "G"
+  },
+  {
+    "name": "玉林市",
+    "pinyin": "",
+    "index": "Y"
+  },
+  {
+    "name": "梧州市",
+    "pinyin": "",
+    "index": "W"
+  },
+  {
+    "name": "钦州市",
+    "pinyin": "",
+    "index": "Q"
+  },
+  {
+    "name": "柳州市",
+    "pinyin": "",
+    "index": "L"
+  },
+  {
+    "name": "来宾市",
+    "pinyin": "",
+    "index": "L"
+  },
+  {
+    "name": "贺州市",
+    "pinyin": "",
+    "index": "H"
+  },
+  {
+    "name": "河池市",
+    "pinyin": "",
+    "index": "H"
+  },
+  {
+    "name": "贵港市",
+    "pinyin": "",
+    "index": "G"
+  },
+  {
+    "name": "防城港市",
+    "pinyin": "",
+    "index": "F"
+  },
+  {
+    "name": "崇左市",
+    "pinyin": "",
+    "index": "C"
+  },
+  {
+    "name": "北海市",
+    "pinyin": "",
+    "index": "B"
+  },
+  {
+    "name": "百色市",
+    "pinyin": "",
+    "index": "B"
+  },
+  {
+    "name": "桂林市",
+    "pinyin": "",
+    "index": "G"
+  },
+  {
+    "name": "南宁市",
+    "pinyin": "",
+    "index": "N"
+  },
+  {
+    "name": "珠海市",
+    "pinyin": "",
+    "index": "Z"
+  },
+  {
+    "name": "中山市",
+    "pinyin": "",
+    "index": "Z"
+  },
+  {
+    "name": "肇庆市",
+    "pinyin": "",
+    "index": "Z"
+  },
+  {
+    "name": "湛江市",
+    "pinyin": "",
+    "index": "Z"
+  },
+  {
+    "name": "云浮市",
+    "pinyin": "",
+    "index": "Y"
+  },
+  {
+    "name": "阳江市",
+    "pinyin": "",
+    "index": "Y"
+  },
+  {
+    "name": "韶关市",
+    "pinyin": "",
+    "index": "S"
+  },
+  {
+    "name": "汕尾市",
+    "pinyin": "",
+    "index": "S"
+  },
+  {
+    "name": "汕头市",
+    "pinyin": "",
+    "index": "S"
+  },
+  {
+    "name": "清远市",
+    "pinyin": "",
+    "index": "Q"
+  },
+  {
+    "name": "梅州市",
+    "pinyin": "",
+    "index": "M"
+  },
+  {
+    "name": "茂名市",
+    "pinyin": "",
+    "index": "M"
+  },
+  {
+    "name": "揭阳市",
+    "pinyin": "",
+    "index": "J"
+  },
+  {
+    "name": "江门市",
+    "pinyin": "",
+    "index": "J"
+  },
+  {
+    "name": "惠州市",
+    "pinyin": "",
+    "index": "H"
+  },
+  {
+    "name": "河源市",
+    "pinyin": "",
+    "index": "H"
+  },
+  {
+    "name": "佛山市",
+    "pinyin": "",
+    "index": "F"
+  },
+  {
+    "name": "东莞市",
+    "pinyin": "",
+    "index": "D"
+  },
+  {
+    "name": "潮州市",
+    "pinyin": "",
+    "index": "C"
+  },
+  {
+    "name": "深圳市",
+    "pinyin": "",
+    "index": "S"
+  },
+  {
+    "name": "广州市",
+    "pinyin": "",
+    "index": "G"
+  },
+  {
+    "name": "张掖市",
+    "pinyin": "",
+    "index": "Z"
+  },
+  {
+    "name": "武威市",
+    "pinyin": "",
+    "index": "W"
+  },
+  {
+    "name": "天水市",
+    "pinyin": "",
+    "index": "T"
+  },
+  {
+    "name": "庆阳市",
+    "pinyin": "",
+    "index": "Q"
+  },
+  {
+    "name": "平凉市",
+    "pinyin": "",
+    "index": "P"
+  },
+  {
+    "name": "陇南市",
+    "pinyin": "",
+    "index": "L"
+  },
+  {
+    "name": "临夏回族自治州",
+    "pinyin": "",
+    "index": "L"
+  },
+  {
+    "name": "酒泉市",
+    "pinyin": "",
+    "index": "J"
+  },
+  {
+    "name": "金昌市",
+    "pinyin": "",
+    "index": "J"
+  },
+  {
+    "name": "嘉峪关市",
+    "pinyin": "",
+    "index": "J"
+  },
+  {
+    "name": "甘南市",
+    "pinyin": "",
+    "index": "G"
+  },
+  {
+    "name": "定西市",
+    "pinyin": "",
+    "index": "D"
+  },
+  {
+    "name": "白银市",
+    "pinyin": "",
+    "index": "B"
+  },
+  {
+    "name": "兰州市",
+    "pinyin": "",
+    "index": "L"
+  },
+  {
+    "name": "漳州市",
+    "pinyin": "",
+    "index": "Z"
+  },
+  {
+    "name": "厦门市",
+    "pinyin": "",
+    "index": "X"
+  },
+  {
+    "name": "三明市",
+    "pinyin": "",
+    "index": "S"
+  },
+  {
+    "name": "泉州市",
+    "pinyin": "",
+    "index": "Q"
+  },
+  {
+    "name": "莆田市",
+    "pinyin": "",
+    "index": "P"
+  },
+  {
+    "name": "宁德市",
+    "pinyin": "",
+    "index": "N"
+  },
+  {
+    "name": "南平市",
+    "pinyin": "",
+    "index": "N"
+  },
+  {
+    "name": "龙岩市",
+    "pinyin": "",
+    "index": "L"
+  },
+  {
+    "name": "福州市",
+    "pinyin": "",
+    "index": "F"
+  },
+  {
+    "name": "合肥市",
+    "pinyin": "",
+    "index": "H"
+  },
+  {
+    "name": "亳州市",
+    "pinyin": "",
+    "index": "H"
+  },
+  {
+    "name": "宣城市",
+    "pinyin": "",
+    "index": "X"
+  },
+  {
+    "name": "芜湖市",
+    "pinyin": "",
+    "index": "W"
+  },
+  {
+    "name": "铜陵市",
+    "pinyin": "",
+    "index": "T"
+  },
+  {
+    "name": "宿州市",
+    "pinyin": "",
+    "index": "S"
+  },
+  {
+    "name": "马鞍山市",
+    "pinyin": "",
+    "index": "M"
+  },
+  {
+    "name": "六安市",
+    "pinyin": "",
+    "index": "L"
+  },
+  {
+    "name": "黄山市",
+    "pinyin": "",
+    "index": "H"
+  },
+  {
+    "name": "淮南市",
+    "pinyin": "",
+    "index": "H"
+  },
+  {
+    "name": "淮北市",
+    "pinyin": "",
+    "index": "H"
+  },
+  {
+    "name": "阜阳市",
+    "pinyin": "",
+    "index": "F"
+  },
+  {
+    "name": "滁州市",
+    "pinyin": "",
+    "index": "C"
+  },
+  {
+    "name": "池州市",
+    "pinyin": "",
+    "index": "C"
+  },
+  {
+    "name": "巢湖市",
+    "pinyin": "",
+    "index": "C"
+  },
+  {
+    "name": "蚌埠市",
+    "pinyin": "",
+    "index": "B"
+  },
+  {
+    "name": "安庆市",
+    "pinyin": "",
+    "index": "A"
+  },
+  {
+    "name": "北京市",
+    "pinyin": "",
+    "index": "B"
+  }
+]

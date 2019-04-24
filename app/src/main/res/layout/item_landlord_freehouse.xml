@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:background="@android:color/white"
+              android:layout_height="match_parent">
+
+    <include layout="@layout/item_room"/>
+
+    <include layout="@layout/include_view_line"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="@dimen/dp_10">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/common_text_size_small"
+            android:textColor="@android:color/black"
+            android:text="@string/freehouse_item_snap_password"/>
+
+        <TextView
+            android:id="@+id/tv_password"
+            android:layout_width="0dp"
+            android:layout_weight="1.0"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/common_text_size_small"
+            android:textColor="@color/common_title"
+            android:text="123456"/>
+
+        <Button
+            android:id="@+id/btn_copy"
+            style="@style/main_button"
+            android:text="@string/freehouse_item_copy_password"/>
+
+    </LinearLayout>
+</LinearLayout>

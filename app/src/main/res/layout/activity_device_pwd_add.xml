@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/style_bg_page">
+<include layout="@layout/include_title_text"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/dp_56"
+        android:background="@color/color_ffffff"
+        android:layout_marginTop="@dimen/dp_1">
+
+
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dp_15"
+    android:layout_marginTop="@dimen/dp_15"
+    android:text="@string/pwd_add_tips_1"
+    android:textColor="@color/text_gray"
+    android:textSize="@dimen/sp_13"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/dp_15"
+        android:textSize="@dimen/sp_17"
+        android:text="@string/forget_password_new"
+        android:textColor="@color/color_000000"/>
+
+    <com.jungly.gridpasswordview.GridPasswordView
+        android:id="@+id/pswView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:layout_below="@+id/tv_input"
+        android:layout_marginLeft="@dimen/dp_15"
+        android:layout_marginRight="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginBottom="@dimen/dp_20"
+        app:gpvGridColor="#ffffff"
+        app:gpvLineColor="@color/common_drivder_line"
+        app:gpvLineWidth="1dp"
+        app:gpvPasswordLength="6"
+        app:gpvPasswordTransformation="*"
+        app:gpvPasswordType="numberPassword"
+        app:gpvTextColor="@color/color_black"
+        app:gpvTextSize="20sp"
+        android:visibility="gone"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginBottom="@dimen/dp_20">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:focusable="false">
+
+            <TextView
+                android:id="@+id/tv_pwd_1"
+                style="@style/tv_open_new_pwd" />
+
+            <TextView
+                android:id="@+id/tv_pwd_2"
+                style="@style/tv_open_new_pwd" />
+
+            <TextView
+                android:id="@+id/tv_pwd_3"
+                style="@style/tv_open_new_pwd" />
+
+            <TextView
+                android:id="@+id/tv_pwd_4"
+                style="@style/tv_open_new_pwd" />
+
+            <TextView
+                android:id="@+id/tv_pwd_5"
+                style="@style/tv_open_new_pwd" />
+
+            <TextView
+                android:id="@+id/tv_pwd_6"
+                style="@style/tv_open_new_pwd"
+                android:background="@drawable/shape_bg_pwd_stroke"/>
+        </LinearLayout>
+        <EditText
+            android:id="@+id/ed_input"
+            android:layout_width="300dp"
+            android:layout_height="@dimen/dp_50"
+            android:inputType="numberPassword"
+            android:maxLength="6"
+            android:layout_centerHorizontal="true"
+            android:cursorVisible="false"
+            android:visibility="visible"
+            android:background="@null"
+            android:focusable="true"
+            android:focusableInTouchMode="true"/>
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_20">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_32"
+            android:gravity="center"
+            android:textSize="@dimen/sp_17"
+            android:text="@string/useful_life"
+            android:textColor="@color/color_000000"/>
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="@dimen/dp_15"
+            android:layout_marginRight="@dimen/dp_15">
+            <RadioButton
+                android:id="@+id/activity_addDevicePwd_rb_hours"
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20"
+                android:layout_marginBottom="@dimen/dp_28"
+                android:layout_marginTop="@dimen/dp_6"
+                android:checked="true"
+                android:button="@null"
+                android:background="@drawable/selector_rbtn_pay_checke_agree"/>
+            <RadioButton
+                android:id="@+id/activity_addDevicePwd_rb_days"
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20"
+                android:layout_marginBottom="@dimen/dp_28"
+                android:layout_marginTop="@dimen/dp_6"
+                android:button="@null"
+                android:background="@drawable/selector_rbtn_pay_checke_agree"/>
+            <RadioButton
+                android:id="@+id/activity_addDevicePwd_rb_forever"
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20"
+                android:background="@drawable/selector_rbtn_pay_checke_agree"
+                android:button="@null"/>
+        </RadioGroup>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/activity_addDevicePwd_edt_hours"
+                    android:layout_width="@dimen/dp_100"
+                    android:layout_height="@dimen/dp_32"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:layout_marginBottom="@dimen/dp_20"
+                    android:inputType="number"
+                    android:padding="@dimen/dp_5"
+                    android:gravity="center"
+                    android:maxLength="3"
+                    android:background="#F7F7F7"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_32"
+                    android:gravity="center"
+                    android:textSize="@dimen/sp_17"
+                    android:text="@string/hours"
+                    android:textColor="@color/color_000000"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pwd_add_tips_2"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/sp_13"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/activity_addDevicePwd_edt_days"
+                    android:layout_width="@dimen/dp_100"
+                    android:layout_height="@dimen/dp_32"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:layout_marginBottom="@dimen/dp_22"
+                    android:inputType="number"
+                    android:padding="@dimen/dp_5"
+                    android:gravity="center"
+                    android:maxLength="3"
+                    android:background="#F7F7F7"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_32"
+                    android:gravity="center"
+                    android:textSize="@dimen/sp_17"
+                    android:text="@string/day"
+                    android:textColor="@color/color_000000"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pwd_add_tips_2"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/sp_13"/>
+            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_24"
+                android:layout_gravity="center_vertical"
+                android:text="@string/forever"
+                android:textSize="@dimen/sp_17"
+                android:textColor="@color/color_000000"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

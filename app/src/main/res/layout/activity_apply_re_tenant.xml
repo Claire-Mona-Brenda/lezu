@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/style_bg_page"
+    android:orientation="vertical"
+    tools:context="com.konka.renting.tenant.payrent.view.ApplyReTenantActivity">
+
+    <include layout="@layout/include_title_text" />
+
+    <LinearLayout
+        android:id="@+id/ll_checkin_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/color_ffffff"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10"
+            android:paddingBottom="@dimen/dp_10"
+            android:text="@string/start_rent"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/style_text_context" />
+
+        <TextView
+            android:id="@+id/tv_chenckin_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_ffffff"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10"
+            android:paddingBottom="@dimen/dp_10"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/style_text_context" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_checkout_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/color_ffffff"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10"
+            android:paddingBottom="@dimen/dp_10"
+            android:text="@string/end_rent"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/style_text_context" />
+
+        <TextView
+            android:id="@+id/tv_checkout_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_1"
+            android:background="@color/color_ffffff"
+            android:drawableRight="@mipmap/icon_arrow"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10"
+            android:paddingBottom="@dimen/dp_10"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/style_text_context" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@android:color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginLeft="3dp"
+            android:layout_weight="0"
+            android:ems="7"
+            android:paddingLeft="@dimen/dp_10"
+            android:text="手机号码"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/lib_house_edit_text" />
+
+        <EditText
+            android:id="@+id/activity_apply_tenant_edit_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_toRightOf="@id/text18"
+            android:layout_weight="2"
+            android:background="@null"
+            android:hint="手机号码"
+            android:inputType="number"
+            android:maxLength="11"
+            android:textColor="@color/color_000000"
+            android:textSize="@dimen/lib_house_edit_text" />
+
+        <TextView
+            android:id="@+id/activity_apply_tenant_tv_getSecurityCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/dp_1"
+            android:layout_weight="0"
+            android:background="@drawable/shape_house"
+            android:gravity="center"
+            android:padding="@dimen/dp_5"
+            android:text="获取验证码"
+            android:textColor="@color/common_title" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="1dp"
+        android:background="@android:color/white">
+
+        <TextView
+            android:id="@+id/textview16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="3dp"
+            android:ems="7"
+            android:paddingLeft="@dimen/dp_10"
+            android:text="短信验证码"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/lib_house_edit_text" />
+
+        <EditText
+            android:id="@+id/activity_apply_tenant_edit_securityCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/textview16"
+            android:background="@null"
+            android:hint="请输入短信验证码"
+            android:inputType="number"
+            android:textSize="@dimen/lib_house_edit_text" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:background="@android:color/white">
+
+        <EditText
+            android:id="@+id/activity_apply_tenant_edit_mark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_marginTop="@dimen/dp_50"
+            android:layout_marginRight="@dimen/dp_5"
+            android:background="#f0f2f1"
+            android:gravity="left"
+            android:hint="备注留言"
+            android:inputType="text"
+            android:minHeight="@dimen/dp_100"
+            android:padding="@dimen/dp_10"
+            android:textSize="@dimen/lib_house_edit_text" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/color_ffffff" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_ffffff">
+
+        <Button
+            android:id="@+id/btn_commit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:background="@drawable/shape_red"
+            android:text="申请续租"
+            android:textColor="@color/color_ffffff"
+            android:textSize="@dimen/sp_15" />
+    </LinearLayout>
+</LinearLayout>

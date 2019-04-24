@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/combined_shape"
+    android:gravity="center_horizontal">
+
+    <RelativeLayout
+        android:id="@+id/popup_rl_del_gateway"
+        style="@style/rl_setting_house_info">
+
+        <TextView
+            android:id="@+id/popup_tv_del_gateway"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/dp_12"
+            android:text="@string/del_gateway"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/sp_14" />
+
+        <View
+            style="@style/view_setting_house_info"
+            android:layout_alignBottom="@+id/popup_tv_del_gateway"
+            android:layout_marginTop="@dimen/dp_12" />
+    </RelativeLayout>
+
+</LinearLayout>

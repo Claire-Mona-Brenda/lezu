@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/title_bg"
+
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_item_height"
+        android:background="@color/common_title">
+
+        <TextView
+            android:textSize="@dimen/common_text_size_middle"
+            android:textColor="@android:color/white"
+            android:id="@+id/text_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="房产"
+            />
+
+
+
+
+
+        <Button
+            android:textColor="@android:color/white"
+            android:background="@null"
+            android:id="@+id/button_query"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="4dp"
+            android:gravity="right|center_vertical"
+            android:text="切换城市" />
+
+
+
+
+
+    </RelativeLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <com.amap.api.maps.MapView
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:id="@+id/location"
+            android:layout_gravity="right|bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/lib_map_loc"
+            />
+
+        <EditText
+            android:id="@+id/ct_search"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_30"
+            android:layout_gravity="top|center_horizontal"
+            android:layout_margin="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_20"
+            android:background="@drawable/shape_search_bg"
+            android:drawableLeft="@mipmap/icon_search"
+            android:drawablePadding="@dimen/dp_10"
+            android:focusable="true"
+            android:hint="请输入要搜索的房屋"
+            android:paddingLeft="@dimen/dp_20"
+            android:textSize="@dimen/lib_house_edit_text">
+
+            <requestFocus />
+        </EditText>
+        <LinearLayout
+            android:layout_marginBottom="@dimen/dp_10"
+            android:layout_gravity="bottom"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/shape_map_s"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingRight="@dimen/dp_10"
+                    android:ems="4"
+                    android:textColor="@color/color_ffffff"
+                    android:background="#905a5c5f"
+                    android:text="短租"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="@dimen/dp_5"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/shape_map_l"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingRight="@dimen/dp_5"
+                    android:ems="4"
+                    android:textColor="@color/color_ffffff"
+                    android:background="#905a5c5f"
+                    android:text="长租"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="@dimen/dp_5"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/shape_map_nor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_gravity="center_vertical"
+                    android:ems="4"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingRight="@dimen/dp_5"
+                    android:gravity="center"
+                    android:textColor="@color/color_ffffff"
+                    android:background="#905a5c5f"
+                    android:text="已出租"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+
+
+</LinearLayout>

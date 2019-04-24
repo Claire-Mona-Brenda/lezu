@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_title_text"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60"
+        android:paddingLeft="@dimen/dp_20"
+        android:paddingRight="@dimen/dp_10"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/common_margin"
+        android:background="@android:color/white">
+
+        <TextView
+            android:id="@+id/tv_old_pwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/common_text_size_small"
+            android:textColor="@android:color/black"
+            android:layout_gravity="center_vertical"
+            android:text="@string/vercode_txt"/>
+
+        <EditText
+            android:id="@+id/et_old_pwd"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="numberPassword"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:background="@color/color_ffffff"
+
+            android:layout_gravity="center_vertical"/>
+        <TextView
+            android:id="@+id/m_get_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/get_code"
+            android:textSize="@dimen/sp_13"
+            android:background="@drawable/shape_red"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/color_ffffff"
+            android:layout_gravity="center_vertical"
+            android:paddingBottom="@dimen/dp_5"
+            android:paddingTop="@dimen/dp_5"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10"
+            android:layout_alignBaseline="@+id/input_code"
+            android:layout_marginRight="@dimen/dp_5"/>
+
+    </LinearLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:background="@android:color/white"
+        android:paddingLeft="@dimen/dp_20"
+        android:src="@color/common_drivder_line"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60"
+        android:paddingLeft="@dimen/dp_20"
+        android:paddingRight="@dimen/dp_10"
+        android:orientation="horizontal"
+        android:background="@android:color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/common_text_size_small"
+            android:textColor="@android:color/black"
+            android:layout_gravity="center_vertical"
+            android:text="@string/new_pwd"/>
+        <EditText
+            android:id="@+id/et_new_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberPassword"
+
+            android:layout_marginLeft="@dimen/dp_10"
+            android:background="@color/color_ffffff"
+            android:layout_gravity="center_vertical"/>
+
+    </LinearLayout>
+</LinearLayout>

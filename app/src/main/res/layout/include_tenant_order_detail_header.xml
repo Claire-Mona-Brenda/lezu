@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_ffffff"
+        android:paddingBottom="@dimen/dp_10">
+
+        <TextView
+            android:id="@+id/tv_wait_confirm"
+            style="@style/tv_order_info_header_status" />
+
+        <TextView
+            android:id="@+id/tv_order_num_title"
+            style="@style/tv_order_info_header_text_1"
+            android:layout_below="@+id/tv_wait_confirm"
+            android:text="@string/order_number_title" />
+
+        <TextView
+            android:id="@+id/tv_order_num"
+            style="@style/tv_order_info_header_text_2"
+            android:layout_alignTop="@+id/tv_order_num_title"
+            android:layout_toRightOf="@+id/tv_order_num_title"
+            android:textColorHighlight="#CCCCCC"
+            android:textIsSelectable="true"/>
+
+        <TextView
+            android:id="@+id/tv_pay_title"
+            style="@style/tv_order_info_header_text_1"
+            android:layout_below="@+id/tv_order_num_title"
+            android:text="@string/pay_time" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            style="@style/tv_order_info_header_text_2"
+            android:layout_alignTop="@+id/tv_pay_title"
+            android:layout_toRightOf="@+id/tv_pay_title" />
+
+        <TextView
+            android:id="@+id/tv_service_fee"
+            style="@style/tv_order_info_header_text_1"
+            android:layout_below="@+id/tv_pay_title"
+            android:text="@string/renter_sever_end_time"
+             />
+
+        <TextView
+            android:id="@+id/tv_service_time"
+            style="@style/tv_order_info_header_text_2"
+            android:layout_alignTop="@+id/tv_service_fee"
+            android:layout_toRightOf="@+id/tv_service_fee"
+            />
+
+        <TextView
+            android:id="@+id/tv_rent_type_hint"
+            style="@style/tv_order_info_header_text_1"
+            android:layout_below="@+id/tv_service_fee"
+            android:text="@string/renter_rent_type"
+            />
+
+        <TextView
+            android:id="@+id/tv_rent_type"
+            style="@style/tv_order_info_header_text_2"
+            android:layout_alignTop="@+id/tv_rent_type_hint"
+            android:layout_toRightOf="@+id/tv_rent_type_hint"
+             />
+        <TextView
+            android:id="@+id/tv_rent_money_hint"
+            style="@style/tv_order_info_header_text_1"
+            android:layout_below="@+id/tv_rent_type_hint"
+            android:text="@string/renter_rent_money"
+            />
+
+        <TextView
+            android:id="@+id/tv_rent_money"
+            style="@style/tv_order_info_header_text_2"
+            android:layout_alignTop="@+id/tv_rent_money_hint"
+            android:layout_toRightOf="@+id/tv_rent_money_hint"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@color/color_ffffff">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_10"
+            app:cardCornerRadius="@dimen/dp_5"
+            app:cardElevation="0dp"
+            app:cardUseCompatPadding="false">
+
+            <ImageView
+                android:id="@+id/icon_room"
+                style="@style/img_order_info_header_photo" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/tv_address"
+            style="@style/tv_order_info_header_address"
+            android:layout_toRightOf="@+id/card" />
+
+        <TextView
+            android:id="@+id/tv_tv_start_time_l"
+            style="@style/tv_order_info_header_time_1"
+            android:layout_below="@+id/tv_address"
+            android:layout_toRightOf="@+id/card"
+            android:text="@string/renter_start_time" />
+
+        <TextView
+            android:id="@+id/tv_start_time"
+            style="@style/tv_order_info_header_time_2"
+            android:layout_alignTop="@+id/tv_tv_start_time_l"
+            android:layout_toRightOf="@+id/tv_tv_start_time_l" />
+
+        <TextView
+            android:id="@+id/tv_end_time_l"
+            style="@style/tv_order_info_header_time_1"
+            android:layout_below="@+id/tv_tv_start_time_l"
+            android:layout_toRightOf="@+id/card"
+            android:text="@string/renter_end_time" />
+
+        <TextView
+            android:id="@+id/tv_end_time"
+            style="@style/tv_order_info_header_time_2"
+            android:layout_alignTop="@+id/tv_end_time_l"
+            android:layout_toRightOf="@+id/tv_end_time_l" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/lin_landord"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_1"
+        android:background="@color/color_ffffff"
+        android:orientation="horizontal">
+
+
+
+        <TextView
+            style="@style/tv_order_info_header_landlord"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:text="房东：" />
+
+        <TextView
+            android:id="@+id/tv_landlord_name"
+            style="@style/tv_order_info_header_landlord" />
+
+        <TextView
+            android:id="@+id/tv_landlord_phone"
+            style="@style/tv_order_info_header_landlord_phone" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/re_tenant"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_1"
+        android:background="@color/color_ffffff">
+
+
+        <TextView
+            android:id="@+id/tv_tenant"
+            style="@style/tv_order_info_header_tenant"
+            android:text="@string/text_tenant" />
+
+        <TextView
+            android:id="@+id/tv_tenant_num"
+            style="@style/tv_order_info_header_tenant_man"
+            android:layout_toRightOf="@+id/tv_tenant" />
+
+        <TextView
+            style="@style/tv_order_info_header_tenant_man"
+            android:layout_toRightOf="@+id/tv_tenant_num"
+            android:text="@string/man"
+            android:textColor="@color/text_black" />
+
+        <LinearLayout
+            android:id="@+id/iv_grid_image"
+            style="@style/ll_order_info_header_tentant_imgs"
+            android:layout_below="@+id/tv_tenant" />
+
+        <TextView
+            android:id="@+id/tv_tenant_manager"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_grid_image"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:background="@drawable/shape_white"
+            android:paddingLeft="@dimen/dp_15"
+            android:paddingTop="@dimen/dp_5"
+            android:paddingRight="@dimen/dp_15"
+            android:paddingBottom="@dimen/dp_5"
+            android:text="@string/tenant_manager"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/sp_12" />
+
+    </RelativeLayout>
+</LinearLayout>

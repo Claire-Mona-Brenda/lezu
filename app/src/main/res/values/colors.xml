@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <!--common-->
+    <color name="common_title">#ff7500</color>
+    <color name="common_bg">#EFEFEF</color>
+    <color name="common_bg_gray">#EFEFEF</color>
+    <color name="main_bg_gray">#E8e8e8</color>
+
+    <color name="common_drivder_line">#E7E7E7</color>
+
+    <color name="common_light_gray">#929292</color>
+    <color name="common_title_color">#FF4707</color>
+    <!--个人中心-->
+    <color name="color_ffffff">#FFFFFF</color>
+    <color name="color_000000">#000000</color>
+    <color name="title_back">#FF4707</color>
+    <color name="color_999999">#999999</color>
+    <color name="color_FBFBFB">#FBFBFB</color>
+    <color name="color_797979">#797979</color>
+    <color name="color_418AEC">#418AEC</color>
+    <color name="color_404143">#404143</color>
+    <color name="color_F4F4F4">#F4F4F4</color>
+    <color name="color_F2F2F2">#F2F2F2</color>
+    <color name="color_c0c0c0">#c0c0c0</color>
+    <color name="color_d0d0d0">#d0d0d0</color>
+    <color name="color_666666">#666666</color>
+    <color name="color_333333">#333333</color>
+    <color name="color_181818">#181818</color>
+    <color name="lib_landlord_house">#FF4707</color>
+    <color name="color_4A8EF7">#4A8EF7</color>
+    <color name="color_rent">#feea2d</color>
+    <color name="color_water">#ffb853</color>
+    <color name="color_ele">#ff7b34</color>
+    <color name="color_property">#89e3fd</color>
+    <color name="color_lj">#07cefe</color>
+    <color name="color_net">#50a0ff</color>
+    <color name="color_ff640c">#ff640c</color>
+    <color name="color_f0f0f0">#f0f0f0</color>
+    <color name="navpage">#FFE1E8EB</color>
+
+
+    <color name="color_nor">#f8cd02</color>
+
+    <color name="color_e7e7e7">#e7e7e7</color>
+    <color name="color_black">#000000</color>
+    <color name="color_eeeeee">#EEEEEE</color>
+    <color name="color_515151">#515151</color>
+    <color name="color_929292">#929292</color>
+    <color name="color_E50113">#E50113</color>
+    <color name="color_fafafa">#fafafa</color>
+    <color name="color_f1f1f1">#f1f1f1</color>
+    <color name="color_translate">#00000000</color>
+    <color name="install_list_bg">#EFF0F4</color>
+    <color name="install_time_color">#929292</color>
+    <color name="color_00a077">#00a077</color>
+    <color name="color_e50113">#E50113</color>
+    <color name="color_f98die">#F98D1E</color>
+    <color name="color_009f78">#009F78</color>
+    <color name="cor_000100">#000100</color>
+    <color name="color_cccccc">#CCCCCC</color>
+
+    <!--*******************************************************************************************************************************-->
+    <color name="style_main">#ff7500</color>
+
+    <color name="text_black">#333333</color>
+    <color name="text_gray">#999999</color>
+    <color name="text_ren">#FF4707</color>
+    <color name="text_blue">#4A90E1</color>
+    <color name="text_org">#ff7500</color>
+    <color name="text_white">#ffffff</color>
+    <color name="text_light_gray">#E5E5E5</color>
+
+    <color name="style_bg_page">#efefef</color>
+    <color name="style_bg_card_1">#fafafa</color>
+    <color name="style_bg_card_2">#ffffff</color>
+    <color name="style_line">#efefef</color>
+    <color name="style_point_ren">#FF0A0A</color>
+    <color name="style_bg_black_transparency">#44000000</color>
+    <color name="style_bg_rectangle_strock">#C9C9C9</color>
+
+    <color name="color_long">#FFFF4707</color>
+    <color name="color_short">#FF8FC320</color>
+</resources>

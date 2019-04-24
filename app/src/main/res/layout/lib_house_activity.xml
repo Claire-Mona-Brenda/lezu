@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/layout_opendoor"
+    android:orientation="vertical"
+    android:background="@color/color_ffffff">
+
+    <RelativeLayout
+        android:id="@+id/title_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_ffffff">
+
+        <TextView
+            android:id="@+id/text_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/landlord_main_house"
+            android:padding="@dimen/dp_11"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/style_text_title"/>
+
+
+        <TextView
+            android:id="@+id/button_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/dp_15"
+            android:background="@null"
+            android:text="@string/add_bank"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/style_text_context" />
+
+
+    </RelativeLayout>
+
+
+
+
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title_bg"
+        android:background="@color/main_bg_gray"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+            <LinearLayout
+                android:id="@+id/gop"
+                android:layout_marginTop="150dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_100"
+                    android:layout_height="@dimen/dp_100"
+                    android:src="@mipmap/nodata" />
+
+                <TextView
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:text="@string/house_emty_warm"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/style_text_context"/>
+
+                <Button
+                    android:id="@+id/add_house"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_50"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/shape_button"
+                    android:text="@string/add_house"
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+
+                android:id="@+id/listView1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/dp_1"
+                android:cacheColorHint="@null"
+                android:clickable="true"
+                android:focusable="true"
+
+                />
+        </LinearLayout>
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+
+</RelativeLayout>

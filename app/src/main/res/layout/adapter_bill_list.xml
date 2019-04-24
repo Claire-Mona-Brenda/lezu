@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/adapter_rl_mon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:background="@color/style_bg_card_1"
+        android:paddingLeft="@dimen/dp_20"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_20"
+        android:paddingBottom="@dimen/dp_10">
+
+        <TextView
+            android:id="@+id/adapter_tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="本月"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/style_text_context" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/style_bg_card_2">
+
+        <TextView
+            android:id="@+id/adapter_tv_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_10"
+            android:text="房租"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/style_text_context" />
+
+        <TextView
+            android:id="@+id/adapter_tv_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/adapter_tv_type"
+            android:layout_alignParentRight="true"
+            android:paddingRight="@dimen/dp_20"
+            android:text="+ 1234"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/style_text_title" />
+
+        <TextView
+            android:id="@+id/adapter_tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/adapter_tv_type"
+            android:layout_alignLeft="@+id/adapter_tv_type"
+            android:text="2018-10-18  18:15:00"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/style_text_tips" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:layout_below="@+id/adapter_tv_date"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@color/style_line" />
+    </RelativeLayout>
+</LinearLayout>

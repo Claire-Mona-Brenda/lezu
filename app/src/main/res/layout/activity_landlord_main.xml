@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:id="@+id/main_layout">
+
+    <FrameLayout
+        android:id="@+id/frame_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.0"/>
+<View
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_1"
+    android:background="@color/style_line"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@android:color/white"
+        android:gravity="top"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <!--<TextView-->
+            <!--android:id="@+id/tv_main"-->
+            <!--style="@style/main_bottom_text"-->
+            <!--android:drawableTop="@drawable/navigation_home"-->
+            <!--android:text="@string/main_main"-->
+            <!--/>-->
+        <TextView
+            android:id="@+id/tv_user"
+            style="@style/main_bottom_text"
+            android:drawableTop="@drawable/navigation_user"
+            android:text="@string/main_user"/>
+
+        <TextView
+            android:id="@+id/tv_order"
+            style="@style/main_bottom_text"
+            android:drawableTop="@drawable/navigation_order"
+            android:text="@string/landlord_main_order"/>
+
+        <TextView
+            android:id="@+id/tv_house"
+            style="@style/main_bottom_text"
+            android:drawableTop="@drawable/navigation_house"
+            android:text="@string/landlord_main_house"/>
+
+
+    </LinearLayout>
+
+</LinearLayout>

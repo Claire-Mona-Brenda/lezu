@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/color_ffffff">
+    <ImageView
+        android:id="@+id/img_back"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
+        android:gravity="center_vertical"
+        android:padding="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_20"
+       android:src="@mipmap/lib_map_win_close"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login_verify_title"
+        android:textColor="@color/text_black"
+        android:textSize="@dimen/style_text_title"
+        android:layout_marginTop="@dimen/dp_20"
+        android:paddingLeft="@dimen/dp_40"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_gray"
+        android:textSize="@dimen/style_text_tips"
+        android:text="@string/login_verify_title_tips"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingLeft="@dimen/dp_40"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_marginTop="@dimen/dp_60"
+        android:paddingLeft="@dimen/dp_40"
+        android:paddingRight="@dimen/dp_40">
+
+        <ImageView
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:src="@mipmap/login_phone_icon" />
+        <EditText
+            android:id="@+id/edit_phone"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:hint="@string/login_phone_hint"
+            android:maxLength="11"
+            android:inputType="number"
+            android:textSize="@dimen/common_text_size_small"
+            android:textColor="@color/text_black"/>
+        <Button
+            android:id="@+id/tv_getVerify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp_10"
+            android:background="@null"
+            android:text="@string/regist_get_verfication_num"
+            android:textColor="@color/selected_text_enable_color_black_org"
+            android:textSize="@dimen/common_text_size_small" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:layout_marginLeft="@dimen/dp_40"
+        android:layout_marginRight="@dimen/dp_40"
+        android:background="@color/common_drivder_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:layout_marginTop="@dimen/dp_10"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:paddingLeft="@dimen/dp_40"
+        android:paddingRight="@dimen/dp_40">
+        <ImageView
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:src="@mipmap/login_mail_icon" />
+
+        <EditText
+            android:id="@+id/edit_verify"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:hint="@string/regist_verfication_num_hint"
+            android:inputType="number"
+            android:textSize="@dimen/common_text_size_small"
+            android:textColor="@color/text_black"/>
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:layout_marginLeft="@dimen/dp_40"
+        android:layout_marginRight="@dimen/dp_40"
+        android:background="@color/common_drivder_line" />
+
+    <Button
+        android:id="@+id/btn_login"
+        android:enabled="false"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
+        android:layout_marginLeft="@dimen/dp_40"
+        android:layout_marginRight="@dimen/dp_40"
+        android:layout_marginTop="@dimen/dp_60"
+        android:background="@drawable/selector_btn_enable_org_tran"
+        android:text="@string/login"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/common_text_size_small" />
+
+
+
+</LinearLayout>

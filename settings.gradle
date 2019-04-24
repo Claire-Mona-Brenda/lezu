@@ -1,0 +1,2 @@
+include ':app', ':citypicker', ':citypickerview', ':android-pickers', ':library', ':ocr_ui', ':faceplatform', ':faceplatform-ui'
+project(':citypickerview').projectDir = new File('citypickerview')

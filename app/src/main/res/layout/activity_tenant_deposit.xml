@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_title_text"/>
+    <ImageView
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="@dimen/dp_100"
+        android:src="@mipmap/icon_deposit"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_50"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tenant_deposit"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_20"
+        android:textSize="@dimen/sp_15"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color_000000"
+        android:textSize="@dimen/sp_30"
+        android:text="@string/money"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/tv_deposit"/>
+</LinearLayout>

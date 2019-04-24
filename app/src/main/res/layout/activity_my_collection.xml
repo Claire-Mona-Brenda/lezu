@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:background="@color/style_bg_page">
+
+    <include layout="@layout/include_title_white" />
+
+    <RelativeLayout
+        android:id="@+id/activity_collection_rl_warm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/dp_20"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_10">
+        <TextView
+            android:id="@+id/tv_warn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/style_text_context"
+            android:textColor="@color/text_black"
+            android:text="*"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="30dp"
+            android:layout_toLeftOf="@+id/activity_collection_tv_know"
+            android:layout_toRightOf="@+id/tv_warn"
+            android:text="@string/collection_warn_tips"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/style_text_tips" />
+        <TextView
+            android:id="@+id/activity_collection_tv_know"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_button_gray"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/style_text_tips"
+            android:textColor="@color/text_black"
+            android:paddingLeft="@dimen/dp_20"
+            android:paddingRight="@dimen/dp_20"
+            android:paddingTop="@dimen/dp_5"
+            android:paddingBottom="@dimen/dp_5"
+            android:layout_marginRight="@dimen/dp_20"
+            android:text="@string/collection_warn_tips_know"/>
+    </RelativeLayout>
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/activity_collection_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dp_1"
+        android:layout_below="@+id/title">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/activity_collection_recycle_mycollection"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+
+</LinearLayout>

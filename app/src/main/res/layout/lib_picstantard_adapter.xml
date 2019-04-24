@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?><!--  <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_marginTop="10dp"
+    android:orientation="vertical"
+    app:cardBackgroundColor="#ffffff"
+    app:cardCornerRadius="20dp"
+    android:background="#fff"
+    app:contentPadding="0dp" >  -->
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="120dp"
+    android:paddingBottom="5dp"
+    android:paddingTop="5dp">
+
+    <FrameLayout
+        android:padding="@dimen/dp_4"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+
+            android:scaleType="fitXY"
+            android:id="@+id/content_img"
+            android:layout_width="100dp"
+            android:layout_height="80dp" />
+
+    </FrameLayout>
+    <ImageView
+        android:layout_gravity="right"
+        android:src="@mipmap/lib_del"
+        android:visibility="gone"
+        android:id="@+id/del"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <ImageView
+        android:src="@mipmap/lib_house_add"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:id="@+id/content_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</FrameLayout>
+
+    <!-- </androidx.cardview.widget.CardView> -->

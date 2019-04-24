@@ -1,0 +1,196 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.mob.sdk'
+MobSDK {
+    appKey "23a56e4ec4bb6"
+    appSecret "13c146c5cb3ca4ae3f7a8d9d835ed271"
+
+    ShareSDK {
+        //平台配置信息
+        devInfo {
+            WechatMoments {
+                id 1
+                sortId 1
+                appId "wx41ae0e6e386d1607"
+                appSecret "13c146c5cb3ca4ae3f7a8d9d835ed271"
+                bypassApproval false
+                enable true
+            }
+            Wechat {
+                id 2
+                sortId 2
+                appId "wx41ae0e6e386d1607"
+                appSecret "13c146c5cb3ca4ae3f7a8d9d835ed271"
+                bypassApproval false
+                enable true
+            }
+            QQ {
+                id 3
+                sortId 3
+                appId "101472351"
+                appKey "9f2a4e0969725e5f2aaa132d97e99f0d"
+                bypassApproval false
+                shareByAppClient true
+                enable true
+            }
+        }
+    }
+
+}
+android {
+    compileSdkVersion 28
+    buildToolsVersion = '28.0.3'
+
+    defaultConfig {
+        applicationId "com.konka.renting"
+        minSdkVersion 17
+        targetSdkVersion 28
+        versionCode 9
+        versionName "2.3.1"
+        multiDexEnabled true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "x86_64"
+        }
+        manifestPlaceholders = [
+                GETUI_APP_ID    : "I0dfajVHIH6A4TGyg2I4f",
+                GETUI_APP_KEY   : "9Ac2cvwOOp60V9HYfTAOw7",
+                GETUI_APP_SECRET: "gbuXtwwmFa8y6MY3YFIQZ6"
+        ]
+
+
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
+
+    dexOptions {
+        jumboMode true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            debuggable = true
+        }
+    }
+    signingConfigs {
+        release {
+            keyAlias 'konka'
+            keyPassword '1qaz2wsx'
+            storeFile file('D:\\Android\\keystore\\konka.keystore')
+            storePassword '1qaz2wsx'
+        }
+        debug {
+            keyAlias 'konka'
+            keyPassword '1qaz2wsx'
+            storeFile file('D:\\Android\\keystore\\konka.keystore')
+            storePassword '1qaz2wsx'
+        }
+        config {
+            keyAlias 'konka'
+            keyPassword '1qaz2wsx'
+            storeFile file('D:\\Android\\keystore\\konka.keystore')
+            storePassword '1qaz2wsx'
+        }
+    }
+    dexOptions {
+        preDexLibraries = false
+    }
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+        // ... and any other excludes go here
+    }
+    packagingOptions {
+        doNotStrip '*/mips/*.so'
+        doNotStrip '*/mips64/*.so'
+    }
+    productFlavors {
+    }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility='1.8'
+    }
+}
+
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    testImplementation 'junit:junit:4.12'
+    implementation 'com.yanzhenjie:permission:2.0.0-rc3'
+    implementation 'com.tbruyelle.rxpermissions:rxpermissions:0.9.4@aar'
+    implementation 'com.jakewharton:butterknife:10.1.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+    implementation 'io.reactivex:rxjava:1.3.0'
+    implementation 'io.reactivex:rxandroid:1.2.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.7.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.12.0'
+    implementation 'com.github.mcxtzhang:all-base-adapter:V1.5.2'
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-7'
+    implementation 'com.readystatesoftware.systembartint:systembartint:1.0.4'
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-7'
+    implementation 'com.jude:rollviewpager:1.4.6'
+    implementation 'com.github.mcxtzhang:all-base-adapter:V1.5.2'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.1'
+    implementation files('libs/isoviewer-1.0-RC-27.jar')
+    implementation 'com.zhihu.android:matisse:0.4.3'
+    implementation 'com.jzxiang.pickerview:TimePickerDialog:1.0.1'
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:5.1.6'
+    implementation project(':citypicker')
+    //    implementation files('libs/AMap_Location_V3.8.0_20180201.jar')
+    implementation 'com.getui:sdk:2.12.3.0'
+    implementation files('libs/alipaySdk-20180403.jar')
+    //    compile 'liji.library.dev:citypickerview:3.1.6'
+    //    compile 'com.github.vondear:RxTools:v1.7.8.1'
+    implementation files('libs/ormlite-android-5.0.jar')
+    implementation files('libs/ormlite-core-5.0.jar')
+
+    implementation 'cn.yipianfengye.android:zxing-library:2.2'
+//    implementation 'com.mylhyl:zxingscanner:2.1.0'
+    implementation 'com.github.jakob-grabner:Circle-Progress-View:v1.3'
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation project(':citypickerview')
+    implementation 'com.jungly:gridPasswordView:0.3'
+    implementation files('libs/ocr-sdk.jar')
+    implementation project(path: ':ocr_ui')
+    implementation project(path: ':faceplatform-ui')
+    implementation 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.3.0'
+    implementation 'id.zelory:compressor:2.1.0'
+    //    implementation 'com.henry:calendarview:1.1.2'
+    //    implementation 'com.github.addappcn:android-pickers:1.0.3'
+    //3D地图so及jar
+    implementation 'com.amap.api:3dmap:6.5.0'
+    //定位功能
+    implementation 'com.amap.api:location:4.5.1'
+    //阿里UltraViewPager循环Viewpager
+    implementation('com.alibaba.android:ultraviewpager:1.0.7.7@aar') {
+        transitive = true
+    }
+    //    implementation 'cn.bingoogolapple:bga-photopicker:1.2.8@aar'
+    //    implementation 'cn.bingoogolapple:bga-baseadapter:1.2.7@aar'
+    implementation project(':android-pickers')
+    implementation project(':faceplatform')
+    implementation project(':library')
+//    implementation "com.android.support:exifinterface:28.0.0"
+//    implementation 'com.android.support:support-media-compat:28.0.0'
+//    implementation 'com.android.support:animated-vector-drawable:28.0.0'
+//    implementation 'androidx.lifecycle:lifecycle-runtime:2.1.0-alpha04'
+}
