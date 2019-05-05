@@ -111,7 +111,6 @@
                     android:layout_alignTop="@+id/tv_conn_tips"
                     android:layout_marginStart="@dimen/dp_1"
                     android:layout_toEndOf="@+id/tv_conn_tips"
-                    android:text="@string/gateway_conn_2G"
                     android:textColor="@color/text_black"
                     android:textSize="@dimen/sp_15"
                     android:visibility="gone" />

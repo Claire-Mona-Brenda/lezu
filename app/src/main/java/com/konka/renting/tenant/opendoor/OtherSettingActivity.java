@@ -71,6 +71,10 @@ public class OtherSettingActivity extends BaseActivity {
     LinearLayout llIc;
     @BindView(R.id.activity_other_setting_tv_ic)
     TextView tvIc;
+    @BindView(R.id.activity_other_setting_ll_sync)
+    LinearLayout llSync;
+    @BindView(R.id.activity_other_setting_tv_sync)
+    TextView tvSync;
 
     final int QUERY_TIME_MAX = 10;
 
@@ -135,7 +139,7 @@ public class OtherSettingActivity extends BaseActivity {
 
     @OnClick({R.id.iv_back, R.id.activity_other_setting_tv_open_pwd, R.id.activity_other_setting_tv_key_pwd,
             R.id.activity_other_setting_tv_gateway_setting, R.id.activity_other_setting_tv_gateway_restart,
-            R.id.activity_other_setting_tv_fingerprint, R.id.activity_other_setting_tv_ic})
+            R.id.activity_other_setting_tv_fingerprint, R.id.activity_other_setting_tv_ic,R.id.activity_other_setting_ll_sync})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back://返回
@@ -176,6 +180,9 @@ public class OtherSettingActivity extends BaseActivity {
                 break;
             case R.id.activity_other_setting_tv_ic://管理IC卡
                 ClockSetManageActivity.toActivity(this, ClockSetManageActivity.TYPE_IC_CARD, openDoorListbean.getRoom_id());
+                break;
+            case R.id.activity_other_setting_ll_sync://同步服务费时间
+                showSyncSeverPopup();
                 break;
 
         }
@@ -368,6 +375,23 @@ public class OtherSettingActivity extends BaseActivity {
         showPopup(popupWindow);
 
     }
+    /**
+     * 是否同步服务费时间
+     */
+    private void showSyncSeverPopup() {
+        popupWindow = new CommonPopupWindow.Builder(this)
+                .setTitle(getString(R.string.tips))
+                .setContent(getString(R.string.tips_info_sync_device_content))
+                .setRightBtnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popupWindow.dismiss();
+                        syncServiceExpire();
+                    }
+                })
+                .create();
+        showPopup(popupWindow);
+    }
 
 
     private void showPopup(PopupWindow popupWindow) {
@@ -483,6 +507,35 @@ public class OtherSettingActivity extends BaseActivity {
                         } else {
                             showToast(dataInfo.msg());
                         }
+                    }
+                });
+        addSubscrebe(subscription);
+    }
+
+    /**
+     * 同步服务费
+     */
+    private void syncServiceExpire() {
+
+        showLoadingDialog();
+        Subscription subscription = SecondRetrofitHelper.getInstance().sync_service_expire(openDoorListbean.getRoom_id(), openDoorListbean.getDevice_id())
+                .compose(RxUtil.<DataInfo>rxSchedulerHelper())
+                .subscribe(new CommonSubscriber<DataInfo>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        doFailed();
+                        showError(e.getMessage());
+                        dismiss();
+                    }
+
+                    @Override
+                    public void onNext(DataInfo dataInfo) {
+                        if (dataInfo.success()) {
+                            showToast(getString(R.string.please_info_lock_setting_sync_device));
+                        } else {
+                            showToast("服务费同步：" + dataInfo.msg());
+                        }
+                        dismiss();
                     }
                 });
         addSubscrebe(subscription);

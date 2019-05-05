@@ -97,7 +97,7 @@ public class OpenFragment extends BaseFragment {
     private final int LOADMORE = 2;
 
     private final String KEY_ORDER_ID = "key_open_order_id";
-    private final int CAN_OPEN_TIME = 10;
+    private final int CAN_OPEN_TIME = 15;
 
     private int queryTime = 0;
     private int page;

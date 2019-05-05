@@ -251,6 +251,8 @@ public class MainActivity extends BaseMainActivity {
                     public void call(Boolean aBoolean) {
                         if (aBoolean) {
                             checkVersion();
+                        }else{
+                            showToast(getString(R.string.no_permissions));
                         }
                     }
                 });

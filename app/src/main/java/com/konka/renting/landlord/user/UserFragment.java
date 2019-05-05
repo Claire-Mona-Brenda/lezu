@@ -1,5 +1,6 @@
 package com.konka.renting.landlord.user;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -37,6 +38,7 @@ import com.konka.renting.utils.PhoneUtil;
 import com.konka.renting.utils.RxUtil;
 import com.konka.renting.utils.UIUtils;
 import com.squareup.picasso.Picasso;
+import com.tbruyelle.rxpermissions.RxPermissions;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

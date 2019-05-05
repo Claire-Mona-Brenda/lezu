@@ -17,6 +17,7 @@ import com.konka.renting.base.BaseActivity;
 import com.konka.renting.bean.DataInfo;
 import com.konka.renting.bean.HouseDetailsInfoBean;
 import com.konka.renting.bean.QueryPwdBean;
+import com.konka.renting.http.RetrofitHelper;
 import com.konka.renting.http.SecondRetrofitHelper;
 import com.konka.renting.http.subscriber.CommonSubscriber;
 import com.konka.renting.landlord.gateway.GatewaySettingActivity;
@@ -76,6 +77,10 @@ public class OpenManageActivity extends BaseActivity {
     TextView tvSetGateway;
     @BindView(R.id.activity_open_manage_rl_set_gateway)
     RelativeLayout rlSetGateway;
+    @BindView(R.id.activity_open_manage_tv_sync_service)
+    TextView tvSyncService;
+    @BindView(R.id.activity_open_manage_rl_sync_service)
+    RelativeLayout rlSyncService;
 
     final int QUERY_TIME_MAX = 10;
 
@@ -106,7 +111,7 @@ public class OpenManageActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.iv_back, R.id.activity_open_manage_rl_manage_pwd,
+    @OnClick({R.id.iv_back, R.id.activity_open_manage_rl_manage_pwd, R.id.activity_open_manage_rl_sync_service,
             R.id.activity_open_manage_rl_set_pwd, R.id.activity_open_manage_rl_temporary_pwd,
             R.id.activity_open_manage_rl_key_pwd, R.id.activity_open_manage_rl_fingerPrint,
             R.id.activity_open_manage_rl_ic_card, R.id.activity_open_manage_rl_set_gateway})
@@ -167,6 +172,14 @@ public class OpenManageActivity extends BaseActivity {
                 } else {
                     showTips(getString(R.string.tips_get_authority_content));
                 }
+                break;
+            case R.id.activity_open_manage_rl_sync_service://同步服务费时间
+                if (bean.getRoom_status() < 6) {
+                    showSyncSeverPopup();
+                } else {
+                    showTips(getString(R.string.tips_get_authority_content));
+                }
+
                 break;
         }
     }
@@ -233,6 +246,25 @@ public class OpenManageActivity extends BaseActivity {
                         keyPwdPopupwindow.setPwd(getString(R.string.tips_loading));
                         showKeyPwdPopup();
                         passwordRefresh();
+                    }
+                })
+                .create();
+        showPopup(commonPopupWindow);
+    }
+
+    /**
+     * 是否同步服务费时间
+     */
+    private void showSyncSeverPopup() {
+        commonPopupWindow = new CommonPopupWindow.Builder(this)
+                .setTitle(getString(R.string.tips))
+                .setContent(getString(R.string.tips_info_sync_device_content))
+                .setRightBtnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+//                        commonPopupWindow.setOnDismissListener(null);
+                        commonPopupWindow.dismiss();
+                        syncServiceExpire();
                     }
                 })
                 .create();
@@ -337,7 +369,7 @@ public class OpenManageActivity extends BaseActivity {
                     public void onNext(DataInfo<QueryPwdBean> info) {
                         if (info.success()) {
                             if (TextUtils.isEmpty(info.data().getId())) {
-                                queryTime=0;
+                                queryTime = 0;
                                 keyPwdPopupwindow.setPwd(info.data().getPassword());
                             } else {
                                 queryTime = QUERY_TIME_MAX;
@@ -347,6 +379,35 @@ public class OpenManageActivity extends BaseActivity {
                             showToast(info.msg());
                         }
 
+                    }
+                });
+        addSubscrebe(subscription);
+    }
+
+    /**
+     * 同步服务费
+     */
+    private void syncServiceExpire() {
+
+        showLoadingDialog();
+        Subscription subscription = SecondRetrofitHelper.getInstance().sync_service_expire(bean.getRoom_id(), bean.getDevice_id())
+                .compose(RxUtil.<DataInfo>rxSchedulerHelper())
+                .subscribe(new CommonSubscriber<DataInfo>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        dismiss();
+                        doFailed();
+                        showError(e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(DataInfo dataInfo) {
+                        if (dataInfo.success()) {
+                            showToast(getString(R.string.please_info_lock_setting_sync_device));
+                        } else {
+                            showToast("服务费同步：" + dataInfo.msg());
+                        }
+                        dismiss();
                     }
                 });
         addSubscrebe(subscription);

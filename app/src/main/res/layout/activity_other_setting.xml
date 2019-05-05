@@ -163,6 +163,33 @@
             android:background="@color/style_line" />
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/activity_other_setting_ll_sync"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_ffffff"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/activity_other_setting_tv_sync"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_60"
+            android:drawableEnd="@mipmap/right"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/dp_28"
+            android:paddingEnd="@dimen/dp_33"
+            android:text="@string/open_sync_service"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/sp_13" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:layout_marginStart="@dimen/dp_28"
+            android:background="@color/style_line"
+            android:visibility="gone"/>
+    </LinearLayout>
+
 
 
 </LinearLayout>

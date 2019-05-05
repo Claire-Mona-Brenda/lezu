@@ -1963,4 +1963,12 @@ public interface KonkaApiService {
     Observable<DataInfo<PageDataBean<DeviceInfo>>> getDeviceList(@Field("room_id") String room_id,
                                                                  @Field("page") String page);
 
+    /**
+     * 同步服务费
+     */
+    @FormUrlEncoded
+    @POST("index.php/api/device/sync_service_expire")
+    Observable<DataInfo> sync_service_expire(@Field("room_id") String room_id,
+                                                                 @Field("device_id") String device_id);
+
 }

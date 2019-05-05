@@ -184,6 +184,7 @@
     <string name="rmb">￥</string>
     <string name="balance_pay">钱包支付</string>
     <string name="please_balance_pay">是否从钱包余额中扣除</string>
+    <string name="no_permissions">未取得相机相关权限，请在手机设置启用相机相关权限后再进行操作</string>
 
     <!--房客(tenant)-->
     <string name="tenant_main_findroom">找房</string>
@@ -506,6 +507,7 @@
     <string name="open_fingerprint">指纹管理</string>
     <string name="open_ic_card">IC卡管理</string>
     <string name="open_remote">遥控器管理</string>
+    <string name="open_sync_service">同步门锁服务费时间</string>
     <string name="open_gateway_restart">重启网关</string>
     <string name="pwd_restart">重置密码</string>
     <string name="popup_warm_pwd_time">遇到问题？戳我～</string>
@@ -526,6 +528,8 @@
     <string name="tips_refresh_pwd">是否重新设置密码？</string>
 
     <string name="tips_loading">请求中..</string>
+    <string name="please_info_lock_setting_sync_device">设备正在同步信息，请在20秒后再操作设备</string>
+    <string name="tips_info_sync_device_content">如果发生服务费未到期，而门锁提示“服务费已过期”，请点击此项确定进行门锁信息同步。</string>
 
     <!--获取管理员密码-->
     <string name="get_manage_pwd_authority">获取管理员密码</string>
@@ -553,6 +557,7 @@
     <string name="alipay">支付宝</string>
     <string name="wxpay">微信</string>
     <string name="otherpay">钱包余额</string>
+    <string name="warm_no_choose_sever_type">未选择支付套餐</string>
 
     <string name="tips_pay_other">是否使用钱包余额支付？</string>
 
@@ -739,7 +744,8 @@
     <string name="please_gateway_restart_success_wait">网关正在重启\n需要约30秒钟恢复，期间请勿操作</string>
     <string name="please_gateway_restart_fail">网关网络通讯状态差，网关重启失败</string>
     <string name="popup_sure_change_wifi">确定要修改Wi-Fi吗？</string>
-    
+    <string name="popup_sure_change_same_wifi">WiFi未作修改,是否重复设置？</string>
+
     <!--如何绑定设备操作-->
     <string name="title_how_to_bind">设备绑定</string>
     <string name="how_bind_device_name_1">智能门锁 K44</string>

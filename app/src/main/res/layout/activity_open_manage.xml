@@ -217,4 +217,34 @@
             android:background="@color/style_line"
             android:layout_below="@+id/activity_open_manage_tv_ic_card"/>
     </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/activity_open_manage_rl_sync_service"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_ffffff"
+        android:paddingStart="@dimen/dp_28"
+        android:paddingEnd="@dimen/dp_1">
+        <TextView
+            android:id="@+id/activity_open_manage_tv_sync_service"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/style_text_context"
+            android:textColor="@color/text_black"
+            android:text="@string/open_sync_service"
+            android:layout_marginTop="@dimen/dp_23"
+            android:layout_marginBottom="@dimen/dp_20"/>
+        <ImageView
+            android:layout_width="@dimen/dp_14"
+            android:layout_height="@dimen/dp_14"
+            android:src="@mipmap/right"
+            android:layout_marginEnd="@dimen/dp_32"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:background="@color/style_line"
+            android:layout_below="@+id/activity_open_manage_tv_sync_service"
+            android:visibility="gone"/>
+    </RelativeLayout>
 </LinearLayout>

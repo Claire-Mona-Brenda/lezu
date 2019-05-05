@@ -1,5 +1,6 @@
 package com.konka.renting.tenant.user;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,6 +37,7 @@ import com.konka.renting.utils.PhoneUtil;
 import com.konka.renting.utils.RxUtil;
 import com.konka.renting.utils.UIUtils;
 import com.squareup.picasso.Picasso;
+import com.tbruyelle.rxpermissions.RxPermissions;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

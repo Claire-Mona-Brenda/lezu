@@ -295,6 +295,10 @@ public class PaySeverActivity extends BaseActivity implements IPayResCall, PaySt
                 this.finish();
                 break;
             case R.id.next:
+                if(mList==null||mList.size()==0){
+                    showToast(R.string.warm_no_choose_sever_type);
+                    return;
+                }
                 KonkaApplication.getInstance().curPay = this;
                 if (mode==3){
                     showOtherPayPopup();

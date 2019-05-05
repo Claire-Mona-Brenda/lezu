@@ -38,7 +38,10 @@ import com.konka.renting.http.SecondRetrofitHelper;
 import com.konka.renting.http.subscriber.CommonSubscriber;
 import com.konka.renting.utils.RxBus;
 import com.konka.renting.utils.RxUtil;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.tbruyelle.rxpermissions.RxPermissions;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -227,30 +230,49 @@ public class UserInfoActivity extends BaseActivity implements CustompopupWindow.
             case R.id.iv_back:
                 finish();
                 break;
-            case R.id.re_revise_photo://头像
-                setPhoto(1);
-                type = 1;
-                break;
-            case R.id.re_sex://性别
-//            change_sex();
-            case R.id.re_age://年龄
-//            showDatePicker();
-            case R.id.rl_name://姓名
-            case R.id.re_idcard://身份证号码
-            case R.id.rl_idcard_photo://身份证照片
-            case R.id.re_face://实名制认证
-                changeReal();
-                break;
-            case R.id.re_bind://修改手机
-                if (bean.getIs_identity() != 1)
-                    NewFaceDectectActivity.toActivity(this, 1);
-                else
-                    showWarmDialog(3);
-                break;
             case R.id.tv_right://保存
 //                updateInfo();
                 break;
         }
+        RxPermissions rxPermission = new RxPermissions(mActivity);
+        rxPermission.request(
+                Manifest.permission.CAMERA,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+        )
+                .subscribe(new Action1<Boolean>() {
+                    @Override
+                    public void call(Boolean aBoolean) {
+                        if (aBoolean) {
+                            switch (view.getId()) {
+                                case R.id.re_revise_photo://头像
+                                    setPhoto(1);
+                                    type = 1;
+                                    break;
+                                case R.id.re_sex://性别
+//            change_sex();
+                                case R.id.re_age://年龄
+//            showDatePicker();
+                                case R.id.rl_name://姓名
+                                case R.id.re_idcard://身份证号码
+                                case R.id.rl_idcard_photo://身份证照片
+                                case R.id.re_face://实名制认证
+                                    changeReal();
+                                    break;
+                                case R.id.re_bind://修改手机
+                                    if (bean.getIs_identity() != 1)
+                                        NewFaceDectectActivity.toActivity(mActivity, 1);
+                                    else
+                                        showWarmDialog(3);
+                                    break;
+
+                            }
+                        }else{
+                            showToast(getString(R.string.no_permissions));
+                        }
+                    }
+                });
+
     }
 
     public void change_sex() {
@@ -562,13 +584,15 @@ public class UserInfoActivity extends BaseActivity implements CustompopupWindow.
                             }
                             if (type == 2) {
                                 frontName = uploadRecordBeanDataInfo.data().getFilename();
-                                Picasso.get().load(file).into(mIvFront);
+                                Picasso.get().load(file).memoryPolicy(MemoryPolicy.NO_CACHE)
+                                        .networkPolicy(NetworkPolicy.NO_CACHE).into(mIvFront);
                                 mTvFront.setVisibility(View.GONE);
                                 mIvFront.setVisibility(View.VISIBLE);
                             }
                             if (type == 3) {
                                 backName = uploadRecordBeanDataInfo.data().getFilename();
-                                Picasso.get().load(file).into(mIvBack);
+                                Picasso.get().load(file).memoryPolicy(MemoryPolicy.NO_CACHE)
+                                        .networkPolicy(NetworkPolicy.NO_CACHE).into(mIvBack);
                                 mTvBack.setVisibility(View.GONE);
                                 mIvBack.setVisibility(View.VISIBLE);
                             }
@@ -599,7 +623,8 @@ public class UserInfoActivity extends BaseActivity implements CustompopupWindow.
 
                         dismiss();
                         if (dataInfo.success()) {
-                            Picasso.get().load(picPath).placeholder(R.mipmap.touxiang).error(R.mipmap.touxiang).into(mIvHeader);
+                            Picasso.get().load(picPath).placeholder(R.mipmap.touxiang).error(R.mipmap.touxiang).memoryPolicy(MemoryPolicy.NO_CACHE)
+                                    .networkPolicy(NetworkPolicy.NO_CACHE).into(mIvHeader);
                             showToast(dataInfo.msg());
                             RxBus.getDefault().post(new UpdateEvent());
                         } else {

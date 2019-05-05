@@ -243,10 +243,11 @@ public class GatewaySettingActivity extends BaseActivity implements CompoundButt
                     } else if (pwd.length() > 0 && pwd.length() < 8) {
                         showWiFiPwdTipsPopup(getString(R.string.please_input_wifi_pwd_more));
                     } else if (name.equals(wifiName) && pwd.equals(wifiPwd)) {
-                        showToast(getString(R.string.please_input_wifi_pwd_same));
-                        btnSave.setText(R.string.common_set);
-                        enableToSetWiFi(false);
-                        btnSave.setSelected(false);
+//                        showToast(getString(R.string.please_input_wifi_pwd_same));
+//                        btnSave.setText(R.string.common_set);
+//                        enableToSetWiFi(false);
+//                        btnSave.setSelected(false);
+                        showSetWiFiSame(name, pwd);
                     } else {
                         setWiFi(name, pwd);
                     }
@@ -377,6 +378,21 @@ public class GatewaySettingActivity extends BaseActivity implements CompoundButt
                         edtPwd.setFocusable(true);
                         edtPwd.requestFocus();
                         popupWindow.dismiss();
+                    }
+                })
+                .create();
+        showPopup(popupWindow);
+    }
+
+    private void showSetWiFiSame(final String name,final String pwd) {
+        popupWindow = new CommonPopupWindow.Builder(this)
+                .setTitle(getString(R.string.tips))
+                .setContent(getString(R.string.popup_sure_change_same_wifi))
+                .setRightBtnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popupWindow.dismiss();
+                        setWiFi(name, pwd);
                     }
                 })
                 .create();
@@ -682,7 +698,7 @@ public class GatewaySettingActivity extends BaseActivity implements CompoundButt
         btnSave.setEnabled(!isConning);
         btnRestart.setEnabled(!isConning);
         btnRestart.setText(isConning ? R.string.connecting : R.string.restart);
-        if (isConning || btnSave.getText().toString().equals(getString(R.string.common_set))) {
+        if ( btnSave.getText().toString().equals(getString(R.string.common_set))) {
             enableToSetWiFi(false);
         } else {
             enableToSetWiFi(true);

@@ -536,6 +536,8 @@ public class HouseEditActivity extends BaseActivity {
 //                                startActivityForResult(intent, 2);
                                 selectPhoto();
                             }
+                        }else{
+                            showToast(getString(R.string.no_permissions));
                         }
                     }
                 });

@@ -1196,4 +1196,11 @@ public class SecondRetrofitHelper {
     public Observable<DataInfo<PageDataBean<DeviceInfo>>> getDeviceList(String room_id,String page) {
         return mApiService.getDeviceList(room_id,page);
     }
+
+    /**
+     * 同步服务费
+     */
+    public Observable<DataInfo> sync_service_expire(String room_id,String device_id) {
+        return mApiService.sync_service_expire(room_id,device_id);
+    }
 }

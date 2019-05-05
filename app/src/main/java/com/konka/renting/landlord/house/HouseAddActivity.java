@@ -346,6 +346,8 @@ public class HouseAddActivity extends BaseActivity {
 //                                startActivityForResult(intent, REQUEST_CODE_CHOOSE_PHOTO);
                                 selectPhoto();
                             }
+                        }else{
+                            showToast(getString(R.string.no_permissions));
                         }
                     }
                 });
@@ -852,8 +854,8 @@ public class HouseAddActivity extends BaseActivity {
                 .setRightBtnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        commonPopupWindow.dismiss();
                         finish();
+                        commonPopupWindow.dismiss();
                     }
                 })
                 .create();

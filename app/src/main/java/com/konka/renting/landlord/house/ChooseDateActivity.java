@@ -59,10 +59,10 @@ public class ChooseDateActivity extends BaseActivity {
         DayPickerView.DataModel dataModel = new DayPickerView.DataModel();
         dataModel.yearStart = cal.get(Calendar.YEAR);
         dataModel.monthStart = cal.get(Calendar.MONTH);
-        dataModel.monthCount = 24;
+        dataModel.monthCount = 36;
         dataModel.defTag = "";
         dataModel.leastDaysNum = 1;
-        dataModel.mostDaysNum = 100;
+        dataModel.mostDaysNum = 2000;
 //        SimpleMonthAdapter.SelectedDays<SimpleMonthAdapter.CalendarDay> ss = new SimpleMonthAdapter.SelectedDays<SimpleMonthAdapter.CalendarDay>();
 //        ss.setFirst(new SimpleMonthAdapter.CalendarDay(cal, "123"));
 //        dataModel.selectedDays = ss;
