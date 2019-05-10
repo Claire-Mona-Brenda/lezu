@@ -147,7 +147,7 @@ public class CertificationActivity extends BaseActivity {
                 });
     }
 
-    @OnClick({R.id.iv_back, R.id.iv_idcard_head, R.id.iv_idcard_back,  R.id.btn_commit})
+    @OnClick({R.id.iv_back, R.id.iv_idcard_head, R.id.iv_idcard_back, R.id.btn_commit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -426,10 +426,14 @@ public class CertificationActivity extends BaseActivity {
                 if (result != null) {
                     //alertText("", result.toString());
                     if (result.getIdCardSide().equals(IDCardParams.ID_CARD_SIDE_FRONT)) {
-                        mEtIdcard.setText(result.getIdNumber().toString());
-                        mEtName.setText(result.getName().toString());
-                        sex = result.getGender().toString().equals("男") ? "1" : "2";
-                        birthDay = result.getBirthday().toString();
+                        if (result.getIdNumber() != null && !TextUtils.isEmpty(result.getIdNumber().toString()))
+                            mEtIdcard.setText(result.getIdNumber().toString());
+                        if (result.getName() != null && !TextUtils.isEmpty(result.getName().toString()))
+                            mEtName.setText(result.getName().toString());
+                        if (result.getGender() != null && !TextUtils.isEmpty(result.getGender().toString()))
+                            sex = result.getGender().toString().equals("男") ? "1" : "2";
+                        if (result.getBirthday() != null && !TextUtils.isEmpty(result.getBirthday().toString()))
+                            birthDay = result.getBirthday().toString();
                     }
 
 

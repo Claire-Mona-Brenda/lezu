@@ -1,10 +1,13 @@
 package com.konka.renting.http;
 
+import android.app.ActivityManager;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.konka.renting.KonkaApplication;
+import com.konka.renting.R;
 import com.konka.renting.base.BaseActivity;
 import com.konka.renting.base.BaseApplication;
 import com.konka.renting.bean.AddRentingBean;
@@ -36,6 +39,7 @@ import com.konka.renting.bean.MachineInfo;
 import com.konka.renting.bean.MessageListBean;
 import com.konka.renting.bean.MoneyBean;
 import com.konka.renting.bean.NativePwdBean;
+import com.konka.renting.bean.OpenCityBean;
 import com.konka.renting.bean.OpenDoorListbean;
 import com.konka.renting.bean.OrderInfo;
 import com.konka.renting.bean.PageDataBean;
@@ -60,12 +64,17 @@ import com.konka.renting.bean.TenantUserinfoBean;
 import com.konka.renting.bean.UploadPicBean;
 import com.konka.renting.bean.UserInfoBean;
 import com.konka.renting.bean.UserProtocolBean;
+import com.konka.renting.event.LogInAgainEvent;
+import com.konka.renting.event.NoNetworkEvent;
 import com.konka.renting.http.api.KonkaApiService;
 import com.konka.renting.landlord.house.entity.DicEntity;
+import com.konka.renting.landlord.house.widget.ShowToastUtil;
 import com.konka.renting.login.LoginInfo;
 import com.konka.renting.login.LoginNewActivity;
 import com.konka.renting.utils.AppManager;
 import com.konka.renting.utils.NetWorkUtil;
+import com.konka.renting.utils.RxBus;
+import com.lljjcoder.style.citylist.Toast.ToastUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -135,6 +144,7 @@ public class SecondRetrofitHelper {
                             .cacheControl(CacheControl.FORCE_CACHE) // FORCE_CACHE只取本地的缓存 FORCE_NETWORK常量用来强制使用网络请求
                             .header("x-access-token", getToken()) // <-- this is the important line
                             .build();
+                    RxBus.getDefault().post(new NoNetworkEvent());
                 } else {
                     if (!TextUtils.isEmpty(getToken())) {
                         Request.Builder requestBuilder = request.newBuilder()
@@ -224,6 +234,7 @@ public class SecondRetrofitHelper {
                 }
                 // 这里与后台约定的状态码700表示登录超时【后台是java，客户端自己维护cookie，没有token机制。但此处如果刷新token，方法也一样】
                 if (j != null && j.optInt("status") == -1) {
+                    RxBus.getDefault().post(new LogInAgainEvent());
                     Log.e(TAG, "--->登录失效，自动重新登录");
                     if (BaseActivity.getForegroundActivity() != null) {
                         LoginUserBean.getInstance().reset();
@@ -236,7 +247,7 @@ public class SecondRetrofitHelper {
                         AppManager.getInstance().killAllBeyondActivity(LoginNewActivity.class);
                     }
 
-                    throw new RuntimeException("请重新登录");
+                    throw new RuntimeException("登录失效，请重新登录");
                     // 判断是否登录成功了
 
                 }
@@ -517,6 +528,13 @@ public class SecondRetrofitHelper {
      */
     public Observable<DataInfo<List<CityBean>>> getRegionList(String region_id, String type) {
         return mApiService.getRegionList(region_id, type);
+    }
+
+    /**
+     * 获取开通城市列表
+     */
+    public Observable<DataInfo<List<OpenCityBean>>> getCityList() {
+        return mApiService.getCityList();
     }
 
     /**

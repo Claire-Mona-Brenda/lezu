@@ -153,7 +153,6 @@
                     android:layout_alignTop="@+id/tv_power_tips"
                     android:layout_marginStart="@dimen/dp_1"
                     android:layout_toEndOf="@+id/tv_power_tips"
-                    android:text="@string/yes"
                     android:textColor="@color/text_black"
                     android:textSize="@dimen/sp_15"
                     android:visibility="gone" />

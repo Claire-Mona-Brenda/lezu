@@ -142,7 +142,7 @@
                     android:digits="0123456789"
                     android:hint="@string/house_public_input_money"
                     android:inputType="number"
-                    android:minEms="6"
+                    android:maxEms="6"
                     android:textSize="@dimen/style_text_context" />
 
                 <TextView

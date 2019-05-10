@@ -40,7 +40,7 @@ public class HouseDetailsInfoBean implements Parcelable {
     private String address;
     private int total_floor;
     private int floor;
-    private int measure_area;
+    private float measure_area;
     private List<HouseConfigBean> config;
     private String remark;
     private String explain;
@@ -72,7 +72,7 @@ public class HouseDetailsInfoBean implements Parcelable {
         address = in.readString();
         total_floor = in.readInt();
         floor = in.readInt();
-        measure_area = in.readInt();
+        measure_area = in.readFloat();
         config = in.createTypedArrayList(HouseConfigBean.CREATOR);
         remark=in.readString();
         explain = in.readString();
@@ -157,11 +157,11 @@ public class HouseDetailsInfoBean implements Parcelable {
         this.floor = floor;
     }
 
-    public int getMeasure_area() {
+    public float getMeasure_area() {
         return measure_area;
     }
 
-    public void setMeasure_area(int measure_area) {
+    public void setMeasure_area(float measure_area) {
         this.measure_area = measure_area;
     }
 
@@ -356,7 +356,7 @@ public class HouseDetailsInfoBean implements Parcelable {
         dest.writeString(address);
         dest.writeInt(total_floor);
         dest.writeInt(floor);
-        dest.writeInt(measure_area);
+        dest.writeFloat(measure_area);
         dest.writeTypedList(config);
         dest.writeString(remark);
         dest.writeString(explain);

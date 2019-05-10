@@ -142,6 +142,11 @@ public class AgentChooseWidget implements View.OnClickListener,
 //			value=cur_item.value;
 
 //		jiaWindow.close();
+
+        if(chose_widegt!=null){
+            chose_widegt.setText(cur_item.getAgent_name());
+            chose_widegt.setTag(cur_item.getAgent_id());
+        }
         if(itemSelect!=null){
             itemSelect.itemSelect(cur_item.getAgent_id());
         }
@@ -149,11 +154,6 @@ public class AgentChooseWidget implements View.OnClickListener,
             itemSelect2.itemSelect2(cur_item.getAgent_name());
         }
         dialog.dismiss();
-        if(chose_widegt!=null){
-            chose_widegt.setText(cur_item.getAgent_name());
-            chose_widegt.setTag(cur_item.getAgent_id());
-        }
-
 
 
     }

@@ -96,8 +96,7 @@
             android:id="@+id/tv_after_the_process"
             style="@style/user_view_item"
             android:drawableLeft="@mipmap/my_about_icon"
-            android:text="@string/after_the_process"
-            android:visibility="gone"/>
+            android:text="@string/after_the_process" />
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_10"

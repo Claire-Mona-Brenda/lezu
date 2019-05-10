@@ -88,7 +88,7 @@ public class OrderFragment extends BaseFragment {
         fragmentList.add(CheckinFragment.newInstance());   // 入住中
         fragmentList.add(CheckoutFragment.newInstance());
         fragmentList.add(ExpireFragment.newInstance());
-        FragmentManager manager = getActivity().getSupportFragmentManager();
+        FragmentManager manager = getChildFragmentManager();
         BillVPAdapter adapter = new BillVPAdapter(manager, fragmentList, listTab);
         mVpOrder.setAdapter(adapter);
         mTabOrder.setupWithViewPager(mVpOrder);

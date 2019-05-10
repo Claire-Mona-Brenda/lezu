@@ -43,6 +43,7 @@ import com.konka.renting.bean.MessageListBean;
 import com.konka.renting.bean.MoneyBean;
 import com.konka.renting.bean.MyBankBean;
 import com.konka.renting.bean.NativePwdBean;
+import com.konka.renting.bean.OpenCityBean;
 import com.konka.renting.bean.OpenDoorListInfo;
 import com.konka.renting.bean.OpenDoorListbean;
 import com.konka.renting.bean.OrderBean;
@@ -1227,6 +1228,13 @@ public interface KonkaApiService {
     @GET("index.php/api/region/getRegionList")
     Observable<DataInfo<List<CityBean>>> getRegionList(@Query("region_id") String region_id,
                                                        @Query("type") String type);
+
+    /**
+     * 获取开通城市列表
+     *
+     */
+    @GET("index.php/api/region/getCityList")
+    Observable<DataInfo<List<OpenCityBean>>> getCityList();
 
     /**
      * 上传图片

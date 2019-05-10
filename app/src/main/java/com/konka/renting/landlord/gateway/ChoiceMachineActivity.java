@@ -40,10 +40,12 @@ public class ChoiceMachineActivity extends BaseActivity {
     private List<MachineInfo> mMachineInfos;
 
     private String mRoomId;
+    private int status;
 
-    public static void toActivity(Activity context, String room_id) {
+    public static void toActivity(Activity context, String room_id,int status) {
         Intent intent = new Intent(context, ChoiceMachineActivity.class);
         intent.putExtra("room_id", room_id);
+        intent.putExtra("status", status);
         context.startActivity(intent);
     }
 
@@ -57,6 +59,7 @@ public class ChoiceMachineActivity extends BaseActivity {
 //        mIvRight.setImageResource(R.mipmap.device_icon_scan);
         setTitleText(R.string.device_model_title);
         mRoomId = getIntent().getStringExtra("room_id");
+        status = getIntent().getIntExtra("status", 0);
         mMachineInfos = new ArrayList<>();
         mChoiceDeviceAdapter = new ChoiceDeviceAdapter(this, mMachineInfos);
 
@@ -64,7 +67,7 @@ public class ChoiceMachineActivity extends BaseActivity {
         mListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                GatewayListActivity.toActivity(mActivity, mRoomId,mMachineInfos.get(position));
+                GatewayListActivity.toActivity(mActivity, mRoomId,mMachineInfos.get(position),status);
                 finish();
             }
         });

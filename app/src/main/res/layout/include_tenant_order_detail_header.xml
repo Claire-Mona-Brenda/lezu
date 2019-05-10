@@ -207,7 +207,8 @@
             android:paddingBottom="@dimen/dp_5"
             android:text="@string/tenant_manager"
             android:textColor="@color/text_black"
-            android:textSize="@dimen/sp_12" />
+            android:textSize="@dimen/sp_12"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 </LinearLayout>

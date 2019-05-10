@@ -15,7 +15,12 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.text.Editable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.TextWatcher;
+import android.text.style.RelativeSizeSpan;
+import android.text.style.SuperscriptSpan;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -92,6 +97,8 @@ public class HouseAddActivity extends BaseActivity {
     EditText eEditFloorSum;
     @BindView(R.id.activity_addHouse_tv_type)
     TextView tvType;
+    @BindView(R.id.text19)
+    TextView tvAreaTips;
     @BindView(R.id.activity_addHouse_edit_area)
     EditText editArea;
     @BindView(R.id.activity_addHouse_edit_agent)
@@ -172,6 +179,8 @@ public class HouseAddActivity extends BaseActivity {
         roomTypeChooseWidget = new RoomTypeChooseWidget(this, RoomTypeChooseWidget.ROOM_TYPE, tvType);
         agentChooseWidget = new AgentChooseWidget(this, AgentChooseWidget.AGENT_TYPE, tvAgent);
 
+        tvAreaTips.setText(getArea(tvAreaTips.getText().toString() + "/"));
+
         getCity("1", CITY_PROVINCE);
         initListener();
         initConfit();
@@ -215,9 +224,76 @@ public class HouseAddActivity extends BaseActivity {
     private void initListener() {
         editName.addTextChangedListener(textWatcher);
         editAddressMore.addTextChangedListener(textWatcher);
-        editFloor.addTextChangedListener(textWatcher);
         eEditFloorSum.addTextChangedListener(textWatcher);
-        editArea.addTextChangedListener(textWatcher);
+
+        editArea.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String area = editArea.getText().toString();
+                if (area.startsWith(".")) {
+                    area = area.replace(".", "");
+                    editArea.setText(area);
+                    editArea.setSelection(area.length());
+                } else if (area.startsWith("0") && area.length() > 1 && !area.startsWith("0.")) {
+                    editArea.setText("0");
+                    editArea.setSelection(1);
+                } else if (area.contains(".")) {
+                    int index = area.indexOf(".");
+                    if (index < area.length() - 1) {
+                        String a=area.substring(index+1, area.length());
+                        if (a.contains(".")){
+                            area = area.substring(0, index ) +"."+ a.replace(".","");
+                            editArea.setText(area);
+                            editArea.setSelection(area.length());
+                        }else if(index==5){
+                            area=area.substring(0,index);
+                            editArea.setText(area);
+                            editArea.setSelection(area.length());
+                        }
+
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                isSumbit();
+            }
+        });
+
+        editFloor.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String floor = editFloor.getText().toString();
+                if (floor.length() > 1) {
+                    String str = floor.substring(1, floor.length());
+                    if (str.contains("-") || str.contains("b") || str.contains("B")) {
+                        floor = floor.charAt(0) + str.replace("-", "").replace("b", "").replace("B", "");
+                        editFloor.setText(floor);
+                        editFloor.setSelection(floor.length());
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                isSumbit();
+            }
+        });
 
         roomTypeChooseWidget.setItemSelect(new RoomTypeChooseWidget.ItemSelect() {
             @Override
@@ -346,7 +422,7 @@ public class HouseAddActivity extends BaseActivity {
 //                                startActivityForResult(intent, REQUEST_CODE_CHOOSE_PHOTO);
                                 selectPhoto();
                             }
-                        }else{
+                        } else {
                             showToast(getString(R.string.no_permissions));
                         }
                     }
@@ -598,10 +674,10 @@ public class HouseAddActivity extends BaseActivity {
         int f;
         if (floor.startsWith("B") || floor.startsWith("b") || floor.startsWith("-")) {
             f = -Integer.valueOf(floor.replace("B", "").replace("b", "").replace("-", ""));
-        }else if (floor.contains("B")||floor.contains("b")||floor.contains("-")){
-            f=0;
-        }else{
-            f=Integer.valueOf(floor);
+        } else if (floor.contains("B") || floor.contains("b") || floor.contains("-")) {
+            f = 0;
+        } else {
+            f = Integer.valueOf(floor);
         }
         return f;
     }
@@ -880,5 +956,17 @@ public class HouseAddActivity extends BaseActivity {
                 getWindow().setAttributes(lp);
             }
         });
+    }
+
+    private SpannableStringBuilder getArea(String area) {
+        SpannableString m2 = new SpannableString("m2");
+        m2.setSpan(new RelativeSizeSpan(0.5f), 1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);//一半大小
+        m2.setSpan(new SuperscriptSpan(), 1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);   //上标
+
+        SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(area);
+        spannableStringBuilder.append(m2);
+
+        return spannableStringBuilder;
+
     }
 }

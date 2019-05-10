@@ -133,6 +133,10 @@ public class RoomTypeChooseWidget implements View.OnClickListener,
 //			value=cur_item.value;
 
 //		jiaWindow.close();
+        if(chose_widegt!=null){
+            chose_widegt.setText(cur_item.getName());
+            chose_widegt.setTag(cur_item.getRoom_type_id());
+        }
         if(itemSelect!=null){
             itemSelect.itemSelect(cur_item.getRoom_type_id());
         }
@@ -140,10 +144,6 @@ public class RoomTypeChooseWidget implements View.OnClickListener,
             itemSelect2.itemSelect2(cur_item.getName());
         }
         dialog.dismiss();
-        if(chose_widegt!=null){
-            chose_widegt.setText(cur_item.getName());
-            chose_widegt.setTag(cur_item.getRoom_type_id());
-        }
 
 
 

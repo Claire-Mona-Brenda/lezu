@@ -4,9 +4,9 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:layout_width="@dimen/dp_30"
-        android:layout_height="@dimen/dp_30"
-        android:src="@mipmap/icon_photo"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
+        android:src="@mipmap/touxiang"
         android:id="@+id/iv_header"
         android:scaleType="centerCrop"
         android:layout_marginTop="@dimen/dp_10"
@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:text="@string/text_tenant_manager"
         android:layout_centerVertical="true"
-        android:textSize="@dimen/sp_13"
+        android:textSize="@dimen/sp_14"
         android:textColor="@color/color_333333"
         android:layout_toRightOf="@+id/iv_header"
         android:id="@+id/tv_title"
@@ -52,7 +52,7 @@
         android:id="@+id/tv_satus"
         android:textColor="@color/color_333333"/>
     <TextView
-        android:layout_width="@dimen/dp_50"
+        android:layout_width="@dimen/dp_60"
         android:layout_height="wrap_content"
         android:textColor="@color/color_ffffff"
         android:background="@drawable/shape_button_stroke"
@@ -60,7 +60,7 @@
         android:paddingTop="@dimen/dp_5"
         android:paddingBottom="@dimen/dp_5"
         android:gravity="center"
-        android:textSize="@dimen/sp_13"
+        android:textSize="@dimen/sp_14"
         android:text="@string/manager"
 
         android:id="@+id/tv_manager"

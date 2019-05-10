@@ -15,7 +15,13 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.text.Editable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.TextWatcher;
+import android.text.style.RelativeSizeSpan;
+import android.text.style.SuperscriptSpan;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -94,6 +100,8 @@ public class HouseEditActivity extends BaseActivity {
     EditText eEditFloorSum;
     @BindView(R.id.activity_addHouse_tv_type)
     TextView tvType;
+    @BindView(R.id.text19)
+    TextView tvAreaTips;
     @BindView(R.id.activity_addHouse_edit_area)
     EditText editArea;
     @BindView(R.id.activity_addHouse_edit_agent)
@@ -181,6 +189,7 @@ public class HouseEditActivity extends BaseActivity {
         roomTypeChooseWidget = new RoomTypeChooseWidget(this, RoomTypeChooseWidget.ROOM_TYPE, tvType);
         agentChooseWidget = new AgentChooseWidget(this, AgentChooseWidget.AGENT_TYPE, tvAgent);
 
+        tvAreaTips.setText(getArea(tvAreaTips.getText().toString() + "/"));
 
         getData();
         getCity("1", CITY_PROVINCE);
@@ -189,6 +198,8 @@ public class HouseEditActivity extends BaseActivity {
         initConfit();
         getHouseConfig();
         isSumbit();
+
+
     }
 
     private void getData() {
@@ -212,7 +223,7 @@ public class HouseEditActivity extends BaseActivity {
         editConfit.setText(bean.getRemark().equals("") ? "无" : bean.getRemark());
         editIntroduce.setText(bean.getExplain().equals("") ? "无" : bean.getExplain());
 
-        List<String> list= bean.getImage();
+        List<String> list = bean.getImage();
         int size = list.size();
         for (int i = 0; i < size; i++) {
             String[] files = list.get(i).split("/");
@@ -237,7 +248,7 @@ public class HouseEditActivity extends BaseActivity {
             case 2://待安装认证
                 editName.setEnabled(true);
                 tvType.setEnabled(true);
-                tvAgent.setEnabled(false);
+                tvAgent.setEnabled(true);
                 tvAddress.setEnabled(true);
                 editAddressMore.setEnabled(true);
                 eEditFloorSum.setEnabled(true);
@@ -269,9 +280,75 @@ public class HouseEditActivity extends BaseActivity {
     private void initListener() {
         editName.addTextChangedListener(textWatcher);
         editAddressMore.addTextChangedListener(textWatcher);
-        editFloor.addTextChangedListener(textWatcher);
         eEditFloorSum.addTextChangedListener(textWatcher);
-        editArea.addTextChangedListener(textWatcher);
+
+        editArea.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String area = editArea.getText().toString();
+                if (area.startsWith(".")) {
+                    area = area.replace(".", "");
+                    editArea.setText(area);
+                    editArea.setSelection(area.length());
+                } else if (area.startsWith("0") && area.length() > 1 && !area.startsWith("0.")) {
+                    editArea.setText("0");
+                    editArea.setSelection(1);
+                } else if (area.contains(".")) {
+                    int index = area.indexOf(".");
+                    if (index < area.length() - 1) {
+                        String a=area.substring(index+1, area.length());
+                        if (a.contains(".")){
+                            area = area.substring(0, index ) +"."+ a.replace(".","");
+                            editArea.setText(area);
+                            editArea.setSelection(area.length());
+                        }
+                    }else if(index==5){
+                        area=area.substring(0,index);
+                        editArea.setText(area);
+                        editArea.setSelection(area.length());
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                isSumbit();
+            }
+        });
+
+        editFloor.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String floor = editFloor.getText().toString();
+                if (floor.length() > 1) {
+                    String str = floor.substring(1, floor.length());
+                    if (str.contains("-") || str.contains("b") || str.contains("B")) {
+                        floor = floor.charAt(0) + str.replace("-", "").replace("b", "").replace("B", "");
+                        editFloor.setText(floor);
+                        editFloor.setSelection(floor.length());
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                isSumbit();
+            }
+        });
 
         roomTypeChooseWidget.setItemSelect(new RoomTypeChooseWidget.ItemSelect() {
             @Override
@@ -536,7 +613,7 @@ public class HouseEditActivity extends BaseActivity {
 //                                startActivityForResult(intent, 2);
                                 selectPhoto();
                             }
-                        }else{
+                        } else {
                             showToast(getString(R.string.no_permissions));
                         }
                     }
@@ -572,12 +649,12 @@ public class HouseEditActivity extends BaseActivity {
                 roomTypeChooseWidget.showPopWindow();
                 break;
             case R.id.activity_addHouse_edit_agent:
-//                if (cityBean.getRegion_id() != null ) {
-//                    agentChooseWidget.setCity_id(cityBean.getRegion_id() == null ? "" : cityBean.getRegion_id());
-//                    agentChooseWidget.showPopWindow();
-//                }else {
-//                    showToast(R.string.add_house_edit_address);
-//                }
+                if (cityBean.getRegion_id() != null) {
+                    agentChooseWidget.setCity_id(cityBean.getRegion_id() == null ? "" : cityBean.getRegion_id());
+                    agentChooseWidget.showPopWindow();
+                } else {
+                    showToast(R.string.add_house_edit_address);
+                }
                 break;
             case R.id.submit:
                 sumbit();
@@ -588,13 +665,13 @@ public class HouseEditActivity extends BaseActivity {
     private void sumbit() {
         int floor = Integer.valueOf(editFloor.getText().toString());
         int floorSum = getFloor(eEditFloorSum.getText().toString());
-        if (floor==0){
+        if (floor == 0) {
             ShowToastUtil.showNormalToast(this, getString(R.string.warm_house_floor_0));
             return;
-        }else if (floorSum==0){
+        } else if (floorSum == 0) {
             ShowToastUtil.showNormalToast(this, getString(R.string.warm_house_floor_sum_0));
             return;
-        }else if (floor > floorSum) {
+        } else if (floor > floorSum) {
             ShowToastUtil.showNormalToast(this, getString(R.string.warm_house_floor_sum));
             return;
         }
@@ -609,7 +686,7 @@ public class HouseEditActivity extends BaseActivity {
         int len = confitList.size();
         for (int i = 0; i < len; i++) {
             HouseConfigBean bean = confitList.get(i);
-            if (bean.getStatus()==1) {
+            if (bean.getStatus() == 1) {
                 if (!config.equals(""))
                     config += ",";
                 config += bean.getId();
@@ -663,7 +740,7 @@ public class HouseEditActivity extends BaseActivity {
             submit.setEnabled(false);
             return false;
         }
-        if (tvAddress.getText().equals("")) {
+        if (tvAddress.getText().toString().equals("")) {
             submit.setEnabled(false);
             return false;
         }
@@ -679,7 +756,7 @@ public class HouseEditActivity extends BaseActivity {
             submit.setEnabled(false);
             return false;
         }
-        if (tvType.getText().equals("")) {
+        if (tvType.getText().toString().equals("")) {
             submit.setEnabled(false);
             return false;
         }
@@ -687,7 +764,7 @@ public class HouseEditActivity extends BaseActivity {
             submit.setEnabled(false);
             return false;
         }
-        if (tvAgent.getText().equals("")) {
+        if (tvAgent.getText().toString().equals("")) {
             submit.setEnabled(false);
             return false;
         }
@@ -703,10 +780,10 @@ public class HouseEditActivity extends BaseActivity {
         int f;
         if (floor.startsWith("B") || floor.startsWith("b") || floor.startsWith("-")) {
             f = -Integer.valueOf(floor.replace("B", "").replace("b", "").replace("-", ""));
-        }else if (floor.contains("B")||floor.contains("b")||floor.contains("-")){
-            f=0;
-        }else{
-            f=Integer.valueOf(floor);
+        } else if (floor.contains("B") || floor.contains("b") || floor.contains("-")) {
+            f = 0;
+        } else {
+            f = Integer.valueOf(floor);
         }
         return f;
     }
@@ -759,7 +836,7 @@ public class HouseEditActivity extends BaseActivity {
                 File f = saveBitmap(imageFileName, imageBitmap);
                 picCurSum++;
                 uploadPic(f, imageFileName);
-            } else if (requestCode == REQUEST_CODE_CHOOSE_PHOTO){
+            } else if (requestCode == REQUEST_CODE_CHOOSE_PHOTO) {
                 if (data != null) {
 //                    Uri selectedImageUri = data.getData();
 //                    if (selectedImageUri != null) {
@@ -983,5 +1060,17 @@ public class HouseEditActivity extends BaseActivity {
                 getWindow().setAttributes(lp);
             }
         });
+    }
+
+    private SpannableStringBuilder getArea(String area) {
+        SpannableString m2 = new SpannableString("m2");
+        m2.setSpan(new RelativeSizeSpan(0.5f), 1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);//一半大小
+        m2.setSpan(new SuperscriptSpan(), 1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);   //上标
+
+        SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(area);
+        spannableStringBuilder.append(m2);
+
+        return spannableStringBuilder;
+
     }
 }

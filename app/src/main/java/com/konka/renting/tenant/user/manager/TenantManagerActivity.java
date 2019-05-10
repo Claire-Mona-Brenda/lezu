@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -96,8 +97,11 @@ public class TenantManagerActivity extends BaseActivity {
                             mAdapter.notifyDataSetChanged();
                             tvName.setText(dataInfo.data().getMember().getReal_name());
                             tvPhone.setText(dataInfo.data().getMember().getPhone());
-                            if (!dataInfo.data().getMember().getHeadimgurl().equals(""))
+                            if (!TextUtils.isEmpty(dataInfo.data().getMember().getHeadimgurl()))
                                 Picasso.get().load(dataInfo.data().getMember().getHeadimgurl()).into(ivPhoto);
+                            else{
+                                Picasso.get().load(R.mipmap.touxiang).into(ivPhoto);
+                            }
                         } else {
                             showToast(dataInfo.msg());
                         }
@@ -111,6 +115,7 @@ public class TenantManagerActivity extends BaseActivity {
             @Override
             public void convert(ViewHolder viewHolder, final TenantRenterListBean.ListBean s, int i) {
                 viewHolder.setText(R.id.tv_name, s.getReal_name());
+                ImageView imgHeader=viewHolder.getView(R.id.iv_header);
                 TextView tvStatus = viewHolder.getView(R.id.tv_satus);
                 TextView tvAgree = viewHolder.getView(R.id.tv_agree);
                 TextView tvRefuse = viewHolder.getView(R.id.tv_refuse);
@@ -118,6 +123,11 @@ public class TenantManagerActivity extends BaseActivity {
                 TextView tvRemove = viewHolder.getView(R.id.tv_remove);
                 TextView tvPhone = viewHolder.getView(R.id.tv_phone);
                 tvPhone.setText(s.getPhone());
+                if (!TextUtils.isEmpty(s.getHeadimgurl()))
+                    Picasso.get().load(s.getHeadimgurl()).into(ivPhoto);
+                else{
+                    Picasso.get().load(R.mipmap.touxiang).into(ivPhoto);
+                }
                 if (s.getStatus() == 0) {
                     tvStatus.setVisibility(View.GONE);
                     tvPhone.setVisibility(View.VISIBLE);

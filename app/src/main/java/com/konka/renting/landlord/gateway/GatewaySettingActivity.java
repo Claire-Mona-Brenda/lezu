@@ -133,7 +133,11 @@ public class GatewaySettingActivity extends BaseActivity implements CompoundButt
         room_id = getIntent().getStringExtra("room_id");
         gatewayId = getIntent().getStringExtra("gatewayId");
         type = getIntent().getIntExtra("type", TYPE_LANDLORD);
-        gatewayVersion = Integer.valueOf(getIntent().getStringExtra("gatewayVersion"));
+        try{
+            gatewayVersion=Integer.valueOf(getIntent().getStringExtra("gatewayVersion"));
+        }catch (Exception e){
+            gatewayVersion=2;
+        }
 
         setTitleText(R.string.gateway_info);
 
@@ -175,6 +179,7 @@ public class GatewaySettingActivity extends BaseActivity implements CompoundButt
         addRxBusSubscribe(EditGatwayEvent.class, new Action1<EditGatwayEvent>() {
             @Override
             public void call(EditGatwayEvent editGatwayEvent) {
+                gatewayName=editGatwayEvent.name;
                 tvGatewayName.setText(editGatwayEvent.name);
             }
         });
@@ -233,6 +238,9 @@ public class GatewaySettingActivity extends BaseActivity implements CompoundButt
                 }
                 if (btnSave.getText().toString().equals(getString(R.string.common_set))) {
                     enableToSetWiFi(true);
+                    edtWifi.setSelection(edtWifi.getText().toString().length());
+                    edtWifi.setFocusable(true);
+                    edtWifi.requestFocus();
                     btnSave.setSelected(true);
                     btnSave.setText(R.string.common_save);
                 } else {
@@ -495,7 +503,7 @@ public class GatewaySettingActivity extends BaseActivity implements CompoundButt
                             wifiName = dataInfo.data().getWifi_name();
                             wifiPwd = dataInfo.data().getWifi_password();
                             edtWifi.setText(dataInfo.data().getWifi_name());
-                            edtWifi.setSelection(dataInfo.data().getWifi_name().length());
+//                            edtWifi.setSelection(dataInfo.data().getWifi_name().length());
                             edtPwd.setText(dataInfo.data().getWifi_password());
                         } else {
                             isConning(true);

@@ -340,11 +340,11 @@ public class DeviceListActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.iv_right:
-                ChoiceMachineActivity.toActivity(this, mRoomId);
+                ChoiceMachineActivity.toActivity(this, mRoomId,status);
 //                GatewayListActivity.toActivity(mActivity, mRoomId);
                 break;
             case R.id.btn_add:
-                ChoiceMachineActivity.toActivity(this, mRoomId);
+                ChoiceMachineActivity.toActivity(this, mRoomId,status);
 //                GatewayListActivity.toActivity(mActivity, mRoomId);
                 break;
         }

@@ -234,15 +234,16 @@ public class HomeFragment extends BaseFragment {
         addRxBusSubscribe(City.class, new Action1<City>() {
             @Override
             public void call(City city) {
-                mTvLocation.setText(city.getName());
-                location(city.getName());
+                if (!TextUtils.isEmpty(city.getCode())) {
+                    mTvLocation.setText(city.getName());
+                    location(city);
+                }
             }
         });
-
-        mTvLocation.setText(LocationUtils.getInstance().name);
-
+        if (!TextUtils.isEmpty(LocationUtils.getInstance().city_id)) {
+            mTvLocation.setText(LocationUtils.getInstance().name);
+        }
         if (!LocationUtils.isChoiceCity()) {
-            Log.e(TAG, "init: isChoiceCity");
             RxPermissions rxPermissions = new RxPermissions(mActivity);
             rxPermissions.request(
                     Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -417,7 +418,7 @@ public class HomeFragment extends BaseFragment {
 
     private void getData(int type) {
         LocationInfo locationInfo = LocationUtils.getInstance();
-        String city_id = locationInfo == null ? "" : locationInfo.city_id;
+        String city_id = locationInfo.city_id;
         getBannerListData();
         getHotHoustListData(type, city_id);
     }
@@ -504,27 +505,34 @@ public class HomeFragment extends BaseFragment {
     }
 
 
-    private void location(String city_name) {
-        Subscription subscription = RetrofitHelper.getInstance().location(city_name)
-                .compose(RxUtil.<DataInfo<KInfo<LocationInfo>>>rxSchedulerHelper())
-                .subscribe(new CommonSubscriber<DataInfo<KInfo<LocationInfo>>>() {
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(DataInfo<KInfo<LocationInfo>> kInfoDataInfo) {
-                        if (kInfoDataInfo.success()) {
-                            LocationUtils.save(kInfoDataInfo.data().info);
-                            Log.e(TAG, "onNext: lng" + LocationUtils.getInstance().lng);
-                            Log.e(TAG, "onNext: lat" + LocationUtils.getInstance().lat);
-                            mSmartRefreshLayout.autoRefresh();
-                            RxBus.getDefault().post(new LocationRefreshEvent());
-                        }
-                    }
-                });
-        addSubscrebe(subscription);
+    private void location(City city) {
+//        Subscription subscription = RetrofitHelper.getInstance().location(city.getName())
+//                .compose(RxUtil.<DataInfo<KInfo<LocationInfo>>>rxSchedulerHelper())
+//                .subscribe(new CommonSubscriber<DataInfo<KInfo<LocationInfo>>>() {
+//                    @Override
+//                    public void onError(Throwable e) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onNext(DataInfo<KInfo<LocationInfo>> kInfoDataInfo) {
+//                        if (kInfoDataInfo.success()) {
+//                            LocationUtils.save(kInfoDataInfo.data().info);
+//                            Log.e(TAG, "onNext: lng" + LocationUtils.getInstance().lng);
+//                            Log.e(TAG, "onNext: lat" + LocationUtils.getInstance().lat);
+//                            mSmartRefreshLayout.autoRefresh();
+//                            RxBus.getDefault().post(new LocationRefreshEvent());
+//                        }
+//                    }
+//                });
+//        addSubscrebe(subscription);
+        LocationInfo locationInfo = new LocationInfo();
+        locationInfo.name = city.getName();
+        locationInfo.city_id = city.getCode();
+        locationInfo.pinyin = city.getPinyin();
+        LocationUtils.save(locationInfo);
+        mSmartRefreshLayout.autoRefresh();
+        RxBus.getDefault().post(new LocationRefreshEvent());
     }
 
 

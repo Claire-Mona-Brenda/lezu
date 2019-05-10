@@ -212,8 +212,8 @@
                         android:id="@+id/activity_addHouse_edit_area"
                         android:layout_toRightOf="@id/text19"
                         android:inputType="number"
-                        android:digits="0123456789"
-                        android:maxLength="4"/>
+                        android:digits="0123456789."
+                        android:maxLength="6"/>
 
 
                 </RelativeLayout>

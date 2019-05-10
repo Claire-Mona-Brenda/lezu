@@ -48,11 +48,13 @@ public class GatewayListActivity extends BaseActivity {
     private MachineInfo mMachineInfo;
 
     private String mRoomId;
+    private int status;
 
-    public static void toActivity(Context context, String room_id,MachineInfo machineInfo) {
+    public static void toActivity(Context context, String room_id,MachineInfo machineInfo,int status) {
         Intent intent = new Intent(context, GatewayListActivity.class);
         intent.putExtra(MachineInfo.class.getSimpleName(), machineInfo);
         intent.putExtra("room_id", room_id);
+        intent.putExtra("status", status);
         context.startActivity(intent);
     }
 
@@ -65,6 +67,7 @@ public class GatewayListActivity extends BaseActivity {
     public void init() {
         mMachineInfo = getIntent().getParcelableExtra(MachineInfo.class.getSimpleName());
         mRoomId = getIntent().getStringExtra("room_id");
+        status = getIntent().getIntExtra("status", 0);
 
         setTitleText(R.string.title_activity_gateway_list);
         setRightText(R.string.common_add);
@@ -79,6 +82,8 @@ public class GatewayListActivity extends BaseActivity {
         mGatewayInfoCommonAdapter = new CommonAdapter<GatewayInfo>(this, mGatewayInfos, R.layout.item_gateway) {
             @Override
             public void convert(ViewHolder viewHolder, final GatewayInfo gatewayInfo, final int i) {
+                if (status>=6)
+                    viewHolder.setVisible(R.id.tv_manage,false);
                 viewHolder.setText(R.id.tv_name, gatewayInfo.getGateway_name());
                 switch (gatewayInfo.getNetwork()){
                     case 1:
@@ -91,7 +96,13 @@ public class GatewayListActivity extends BaseActivity {
                         viewHolder.setText(R.id.tv_connect_way,getString(R.string.gateway_conn_Ethernet));
                         break;
                 }
-                viewHolder.setImageResource(R.id.img_gateway,Integer.valueOf(gatewayInfo.getGateway_version())<4?R.mipmap.wangguan_1_72px_png:R.mipmap.wangguan_2_72px_png);
+                int gateway_version;
+                try{
+                    gateway_version=Integer.valueOf(gatewayInfo.getGateway_version());
+                }catch (Exception e){
+                    gateway_version=2;
+                }
+                viewHolder.setImageResource(R.id.img_gateway,gateway_version<4?R.mipmap.wangguan_1_72px_png:R.mipmap.wangguan_2_72px_png);
                 TextView mTvManage = viewHolder.getView(R.id.tv_manage);
                 mTvManage.setOnClickListener(new View.OnClickListener() {
                     @Override

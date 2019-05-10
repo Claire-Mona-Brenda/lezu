@@ -19,9 +19,12 @@ import com.igexin.sdk.PushManager;
 import com.konka.renting.R;
 import com.konka.renting.base.BaseMainActivity;
 import com.konka.renting.bean.AppConfigBean;
+import com.konka.renting.bean.CityBean;
+import com.konka.renting.bean.CityInfo;
 import com.konka.renting.bean.DataInfo;
 import com.konka.renting.bean.LandlordUserDetailsInfoBean;
 import com.konka.renting.bean.LoginUserBean;
+import com.konka.renting.bean.OpenCityBean;
 import com.konka.renting.event.LocationEvent;
 import com.konka.renting.event.RefreshFindRoomEvent;
 import com.konka.renting.http.RetrofitHelper;
@@ -195,7 +198,7 @@ public class TenantMainActivity extends BaseMainActivity {
             }
         });
 //        getServerCity();
-//        getAllCity();
+        getAllCity();
 //        Log.e("mobile", LoginUserBean.getInstance().getMobile());
 
         PushManager.getInstance().bindAlias(this, LoginUserBean.getInstance().getMobile());
@@ -204,26 +207,56 @@ public class TenantMainActivity extends BaseMainActivity {
     }
 
     private void getAllCity() {
-        Subscription subscription = RetrofitHelper.getInstance().getAllLetterCity()
-                .compose(RxUtil.<DataInfo<DicEntity>>rxSchedulerHelper())
-                .subscribe(new CommonSubscriber<DataInfo<DicEntity>>() {
+//        Subscription subscription = RetrofitHelper.getInstance().getAllLetterCity()
+//                .compose(RxUtil.<DataInfo<DicEntity>>rxSchedulerHelper())
+//                .subscribe(new CommonSubscriber<DataInfo<DicEntity>>() {
+//                    @Override
+//                    public void onError(Throwable e) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onNext(DataInfo<DicEntity> cityInfoDataInfo) {
+//                        if (cityInfoDataInfo.success()) {
+//                            mAllCities.clear();
+//                            int size = cityInfoDataInfo.data().lists.size();
+//                            for (int i = 0; i < size; i++) {
+//                                DicEntity.Content content = cityInfoDataInfo.data().lists.get(i);
+//                                City city = new City(content.name, "", content.index, content.index);
+//                                mAllCities.add(city);
+//                            }
+//
+//                        }
+//                    }
+//                });
+        Subscription subscription = SecondRetrofitHelper.getInstance().getCityList()
+                .compose(RxUtil.<DataInfo<List<OpenCityBean>>>rxSchedulerHelper())
+                .subscribe(new CommonSubscriber<DataInfo<List<OpenCityBean>>>() {
                     @Override
                     public void onError(Throwable e) {
 
                     }
 
                     @Override
-                    public void onNext(DataInfo<DicEntity> cityInfoDataInfo) {
-                        if (cityInfoDataInfo.success()) {
+                    public void onNext(DataInfo<List<OpenCityBean>> info) {
+                        if (info.success()){
                             mAllCities.clear();
-                            int size = cityInfoDataInfo.data().lists.size();
-                            for (int i = 0; i < size; i++) {
-                                DicEntity.Content content = cityInfoDataInfo.data().lists.get(i);
-                                City city = new City(content.name, "", content.index, content.index);
-                                mAllCities.add(city);
+                            mCities.clear();
+                            List<OpenCityBean> list=info.data();
+                            if (list!=null) {
+                                int size = info.data().size();
+                                for (int i = 0; i <size; i++) {
+                                    OpenCityBean openCityBean=list.get(i);
+                                    City city=new City(openCityBean.getCity_name(),openCityBean.getProvince()+"",openCityBean.getPinyin(),openCityBean.getCity_id()+"");
+                                    mAllCities.add(city);
+                                    if (openCityBean.getIs_hot()==1){
+                                        HotCity hotCity = new HotCity(openCityBean.getCity_name(), openCityBean.getProvince() + "", openCityBean.getCity_id() + "");
+                                        mCities.add(hotCity);
+                                    }
+                                }
                             }
-
                         }
+
                     }
                 });
         addSubscrebe(subscription);
@@ -235,7 +268,7 @@ public class TenantMainActivity extends BaseMainActivity {
                 .setFragmentManager(getSupportFragmentManager())    //此方法必须调用
                 .enableAnimation(true)    //启用动画效果
 //                .setAnimationStyle(anim)	//自定义动画
-                .setLocatedCity(new LocatedCity("北京市", "北京市", "101210101"))  //APP自身已定位的城市，默认为null（定位失败）
+//                .setLocatedCity(null)  //APP自身已定位的城市，默认为null（定位失败）
                 .setHotCities(mCities)    //指定热门城市
                 .setAllCities(mAllCities)
                 .setOnPickListener(new OnPickListener() {

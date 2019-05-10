@@ -3,6 +3,8 @@ package com.konka.renting.landlord.gateway;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -72,6 +74,28 @@ public class EditGatewayActivity extends BaseActivity {
         mTvName.setText(gatewayName);
         mTvName.setSelection(gatewayName.length());
         mTvName.requestFocus();
+
+        mTvName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().contains(" ")) {
+                    String str = s.toString().replace(" ","");
+                    mTvName.setText(str);
+                    mTvName.setSelection(str.length());
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     @OnClick({R.id.iv_back, R.id.tv_right})

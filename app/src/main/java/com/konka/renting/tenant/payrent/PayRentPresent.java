@@ -201,7 +201,7 @@ public class PayRentPresent extends BasePresenter {
         final SmartRefreshLayout refreshLayout = parent.findViewById(R.id.refreshLayout);
         recyclerView = parent.findViewById(R.id.listView1);
         LinearLayoutManager lm = new LinearLayoutManager(parent.getContext());
-        lm.setOrientation(LinearLayoutManager.VERTICAL);
+        lm.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(lm);
         if (st.equals("0")) {
             payHouseAdapter0 = new PayHouseAdapter(context, list0);

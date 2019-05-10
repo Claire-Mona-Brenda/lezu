@@ -104,7 +104,13 @@ public class UserGatewayListActivity extends BaseActivity {
                         viewHolder.setText(R.id.tv_connect_way, getString(R.string.gateway_conn_Ethernet));
                         break;
                 }
-                viewHolder.setImageResource(R.id.img_gateway, Integer.valueOf(gatewayInfo.getGateway_version()) < 4 ? R.mipmap.wangguan_1_72px_png : R.mipmap.wangguan_2_72px_png);
+                int gatewayVersion ;
+                try{
+                    gatewayVersion=Integer.valueOf(gatewayInfo.getGateway_version());
+                }catch (Exception e){
+                    gatewayVersion=2;
+                }
+                viewHolder.setImageResource(R.id.img_gateway, gatewayVersion < 4 ? R.mipmap.wangguan_1_72px_png : R.mipmap.wangguan_2_72px_png);
                 viewHolder.setVisible(R.id.tv_manage, false);
 
 

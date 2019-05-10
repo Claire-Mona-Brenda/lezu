@@ -20,6 +20,7 @@ import com.konka.renting.bean.PayRentRefreshEvent;
 import com.konka.renting.bean.RenterOrderInfoBean;
 import com.konka.renting.http.SecondRetrofitHelper;
 import com.konka.renting.http.subscriber.CommonSubscriber;
+import com.konka.renting.landlord.order.OrderDetailTenanterDesDialog;
 import com.konka.renting.tenant.user.manager.TenantManagerActivity;
 import com.konka.renting.utils.RxBus;
 import com.konka.renting.utils.RxUtil;
@@ -110,6 +111,7 @@ public class TenantOrderDetailActivity extends BaseActivity {
     private String order_id;
     RenterOrderInfoBean orderDetailInfo;
     private String type;
+    private OrderDetailTenanterDesDialog mTenanterDesDialog;
 //    PayOrder payOrder;
 
     public static void toActivity(Context context, String order_id, String type) {
@@ -206,11 +208,19 @@ public class TenantOrderDetailActivity extends BaseActivity {
                 lp.setMargins(UIUtils.dip2px(5), 0, 0, 0);
                 imageView.setLayoutParams(lp);
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                if (!dataInfo.getMember().get(i).getThumb_headimgurl().equals(""))
-                    Picasso.get().load(dataInfo.getMember().get(i).getThumb_headimgurl()).into(imageView);
+                String url=dataInfo.getMember().get(i).getThumb_headimgurl();
+                if (!TextUtils.isEmpty(url))
+                    Picasso.get().load(url).into(imageView);
                 else
-                    Picasso.get().load(R.mipmap.fangchan_jiazai).into(imageView);
+                    Picasso.get().load(R.mipmap.touxiang).into(imageView);
                 mIvGridImage.addView(imageView);
+                RenterOrderInfoBean.MemberBean member=dataInfo.getMember().get(i);
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        toDes(member);
+                    }
+                });
             }
         } else
             mTvTenantNum.setText("0");
@@ -346,6 +356,13 @@ public class TenantOrderDetailActivity extends BaseActivity {
 
     }
 
+    private void toDes(RenterOrderInfoBean.MemberBean member) {
+        if (mTenanterDesDialog == null) {
+            mTenanterDesDialog = new OrderDetailTenanterDesDialog(mActivity);
+        }
+        mTenanterDesDialog.show(member);
+    }
+
 
     @OnClick({R.id.iv_back, R.id.tv_apply_check_out, R.id.tv_cancel_check_out, R.id.tv_tenant_manager, R.id.tv_public_joint_rent, R.id.tv_cancel_joint_rent})
     public void onViewClicked(View view) {
@@ -396,7 +413,7 @@ public class TenantOrderDetailActivity extends BaseActivity {
 
                         dismiss();
                         if (dataInfo.success()) {
-                            showToast(dataInfo.msg());
+                            doSuccess();
                             RxBus.getDefault().post(new UpdateRentingEvent());
                             finish();
                         } else {
@@ -423,7 +440,7 @@ public class TenantOrderDetailActivity extends BaseActivity {
                     public void onNext(DataInfo dataInfo) {
                         dismiss();
                         if (dataInfo.success()) {
-                            showToast(dataInfo.msg());
+                            doSuccess();
                             RxBus.getDefault().post(new CncelCheckoutEvent());
                             finish();
                         } else {
@@ -453,7 +470,6 @@ public class TenantOrderDetailActivity extends BaseActivity {
                     public void onNext(DataInfo dataInfo) {
                         dismiss();
                         if (dataInfo.success()) {
-                            showToast(dataInfo.msg());
                             if (jointRentType.equals("1")) {
                                 mTvPublicJointRent.setVisibility(View.GONE);
                                 mTvCancelJointRent.setVisibility(View.VISIBLE);

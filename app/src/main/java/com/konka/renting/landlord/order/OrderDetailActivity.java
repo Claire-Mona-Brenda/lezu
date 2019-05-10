@@ -179,10 +179,10 @@ public class OrderDetailActivity extends BaseActivity {
                 lp.setMargins(UIUtils.dip2px(6), 0, 0, 0);
                 imageView.setLayoutParams(lp);
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                if (!url.getThumb_headimgurl().equals(""))
+                if (!TextUtils.isEmpty(url.getThumb_headimgurl()))
                     Picasso.get().load(url.getThumb_headimgurl()).error(R.mipmap.fangchan_jiazai).into(imageView);
                 else
-                    Picasso.get().load(R.mipmap.fangchan_jiazai).into(imageView);
+                    Picasso.get().load(R.mipmap.touxiang).into(imageView);
                 mIvGridImage.addView(imageView);
                 imageView.setOnClickListener(new View.OnClickListener() {
                     @Override

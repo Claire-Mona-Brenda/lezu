@@ -11,6 +11,8 @@
     <string name="main_user">我的</string>
 
     <string name="login">登录</string>
+    <string name="log_in_again">登录失效，请重新登录</string>
+    <string name="no_NetworkConnected">网络异常，请检查网络</string>
 
     <!--个人中心-->
 
@@ -379,7 +381,12 @@
     <string name="forget_password_new_hint">请输入新密码</string>
     <string name="forget_password_sure">再次确认</string>
     <string name="forget_password_sure_hint">请再次输入密码</string>
-    
+
+    <!--城市定位-->
+    <string name="choose_city">选择城市</string>
+    <string name="open_location_service">手机未开启位置服务,请在设置里将位置服务打开</string>
+    <string name="to_open_location_service">去设置</string>
+
     <!--房东房产-->
     <string name="add_house">添加房产</string>
     <string name="house_id">房间编号：</string>

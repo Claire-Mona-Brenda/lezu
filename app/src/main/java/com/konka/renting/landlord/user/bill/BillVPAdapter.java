@@ -17,7 +17,7 @@ public class BillVPAdapter extends FragmentPagerAdapter {
 
     public BillVPAdapter(FragmentManager fm, List<Fragment> fragments, List<String> listTitle) {
         super(fm);
-        this.fragmentList=fragments;
+        this.fragmentList = fragments;
         this.listTitle = listTitle;
     }
 

@@ -61,7 +61,7 @@ public class AMapHelp implements AMapLocationListener {
                 Log.e(TAG, "onLocationChanged: " + amapLocation.getCityCode());
 
                 LocationInfo locationInfo = new LocationInfo();
-                locationInfo.city_id = amapLocation.getCityCode();
+//                locationInfo.city_id = amapLocation.getCityCode();
                 locationInfo.name = amapLocation.getCity();
                 locationInfo.lng = amapLocation.getLongitude();
                 locationInfo.lat = amapLocation.getLatitude();

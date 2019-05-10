@@ -76,6 +76,8 @@ public class HouseInfoActivity extends BaseActivity {
     TextView tvRentType;
     @BindView(R.id.activity_info_tv_create_time)
     TextView tvCreateTime;
+    @BindView(R.id.activity_info_tv_create_time_right)
+    TextView tvCreateTimeRight;
     @BindView(R.id.activity_house_info_tv_type)
     TextView tvType;
     @BindView(R.id.activity_house_info_tv_area)
@@ -237,8 +239,10 @@ public class HouseInfoActivity extends BaseActivity {
                                 tvRentType.setText(bean.getType() == 1 ? R.string.short_rent : R.string.long_rent);
                                 tvRentType.setSelected(bean.getType() == 2);
                                 tvRentType.setVisibility(View.VISIBLE);
+                                tvCreateTimeRight.setVisibility(View.VISIBLE);
                             } else {
                                 tvRentType.setVisibility(View.GONE);
+                                tvCreateTimeRight.setVisibility(View.GONE);
                             }
 
                             viewPagerAdapter = new PicViewPagerAdapter(HouseInfoActivity.this, imageList);

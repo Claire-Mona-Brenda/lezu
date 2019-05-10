@@ -3,6 +3,7 @@ package com.konka.renting.landlord.order;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -76,10 +77,10 @@ public class OrderDetailTenanterDesDialog extends BaseDialog {
 
     public void show(final RenterOrderInfoBean.MemberBean member) {
         if (member.getHeadimgurl() != null)
-            if (!member.getHeadimgurl().equals(""))
+            if (!TextUtils.isEmpty(member.getHeadimgurl()))
                 Picasso.get().load(member.getHeadimgurl()).into(mViewHolder.mIvPhoto);
         else
-                Picasso.get().load(R.mipmap.fangchan_jiazai).into(mViewHolder.mIvPhoto);
+                Picasso.get().load(R.mipmap.touxiang).into(mViewHolder.mIvPhoto);
         if (member.getReal_name() != null)
             mViewHolder.mTvName.setText(member.getReal_name());
         if (member.getSex().equals("1"))

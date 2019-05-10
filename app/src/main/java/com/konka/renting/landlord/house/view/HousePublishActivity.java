@@ -4,6 +4,8 @@ package com.konka.renting.landlord.house.view;
 import android.content.Context;
 import android.content.Intent;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -74,6 +76,27 @@ public class HousePublishActivity extends BaseActivity implements CompoundButton
         type = 2;
         tvUnit.setText(R.string.public_house_pay_unit_mon);
         tvPayDate.setText(R.string.public_house_pay_mon);
+
+        editMoney.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String num=editMoney.getText().toString();
+                if (num.startsWith("0")){
+                    editMoney.setText("");
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
 

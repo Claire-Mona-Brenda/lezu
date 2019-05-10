@@ -191,7 +191,6 @@ public class HouseProxy implements HouseContract.IMissionView, HouseAdapter.Miss
                             }
                             list.addAll(dataInfo.data().getList());
                             missionadapter.notifyDataSetChanged();
-                            RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) addHouse.getLayoutParams();
                             if (missionadapter.getItemCount() < 1) {
                                 gop.setVisibility(View.VISIBLE);
                                 button_add.setVisibility(View.GONE);
