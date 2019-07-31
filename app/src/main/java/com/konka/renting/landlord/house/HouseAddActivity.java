@@ -18,6 +18,7 @@ import android.text.Editable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.SuperscriptSpan;
@@ -49,6 +50,7 @@ import com.konka.renting.landlord.house.widget.IPopBack;
 import com.konka.renting.landlord.house.widget.PicRecordWidget;
 import com.konka.renting.landlord.house.widget.PicassoEngine;
 import com.konka.renting.landlord.house.widget.ShowToastUtil;
+import com.konka.renting.utils.CacheUtils;
 import com.konka.renting.utils.PictureUtils;
 import com.konka.renting.utils.RxUtil;
 import com.konka.renting.widget.CommonPopupWindow;
@@ -207,7 +209,22 @@ public class HouseAddActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         int size = confitList.size();
-                        Picasso.get().load(houseConfigBean.getStatus() == 1 ? houseConfigBean.getUn_selected_logo() : houseConfigBean.getSelected_logo()).into(img);
+                        if (houseConfigBean.getStatus() == 1) {
+                            if (CacheUtils.checkFileExist(houseConfigBean.getUn_selected_logo())) {
+                                Picasso.get().load(CacheUtils.getFile(houseConfigBean.getUn_selected_logo())).into(img);
+                            } else if (!TextUtils.isEmpty(houseConfigBean.getUn_selected_logo())) {
+                                CacheUtils.saveFile(houseConfigBean.getUn_selected_logo(), mActivity);
+                                Picasso.get().load(houseConfigBean.getUn_selected_logo()).into(img);
+                            }
+                        } else {
+                            if (CacheUtils.checkFileExist(houseConfigBean.getSelected_logo())) {
+                                Picasso.get().load(CacheUtils.getFile(houseConfigBean.getSelected_logo())).into(img);
+                            } else if (!TextUtils.isEmpty(houseConfigBean.getSelected_logo())) {
+                                CacheUtils.saveFile(houseConfigBean.getSelected_logo(), mActivity);
+                                Picasso.get().load(houseConfigBean.getSelected_logo()).into(img);
+                            }
+                        }
+//                        Picasso.get().load(houseConfigBean.getStatus() == 1 ? houseConfigBean.getUn_selected_logo() : houseConfigBean.getSelected_logo()).into(img);
                         for (int i = 0; i < size; i++) {
                             if (confitList.get(i).getId() == houseConfigBean.getId()) {
                                 confitList.get(i).setStatus(houseConfigBean.getStatus() == 0 ? 1 : 0);
@@ -245,13 +262,13 @@ public class HouseAddActivity extends BaseActivity {
                 } else if (area.contains(".")) {
                     int index = area.indexOf(".");
                     if (index < area.length() - 1) {
-                        String a=area.substring(index+1, area.length());
-                        if (a.contains(".")){
-                            area = area.substring(0, index ) +"."+ a.replace(".","");
+                        String a = area.substring(index + 1, area.length());
+                        if (a.contains(".")) {
+                            area = area.substring(0, index) + "." + a.replace(".", "");
                             editArea.setText(area);
                             editArea.setSelection(area.length());
-                        }else if(index==5){
-                            area=area.substring(0,index);
+                        } else if (index == 5) {
+                            area = area.substring(0, index);
                             editArea.setText(area);
                             editArea.setSelection(area.length());
                         }
@@ -547,8 +564,18 @@ public class HouseAddActivity extends BaseActivity {
                             int size = dataInfo.data().size();
                             for (int i = 0; i < size; i++) {
                                 HouseConfigBean bean = dataInfo.data().get(i);
-                                Picasso.get().load(bean.getSelected_logo()).fetch();
-                                Picasso.get().load(bean.getUn_selected_logo()).fetch();
+                                if (CacheUtils.checkFileExist(bean.getSelected_logo())) {
+                                    Picasso.get().load(CacheUtils.getFile(bean.getSelected_logo())).fetch();
+                                } else if (!TextUtils.isEmpty(bean.getSelected_logo())) {
+                                    CacheUtils.saveFile(bean.getSelected_logo(), mActivity);
+                                    Picasso.get().load(bean.getSelected_logo()).fetch();
+                                }
+                                if (CacheUtils.checkFileExist(bean.getUn_selected_logo())) {
+                                    Picasso.get().load(CacheUtils.getFile(bean.getUn_selected_logo())).fetch();
+                                } else if (!TextUtils.isEmpty(bean.getUn_selected_logo())) {
+                                    CacheUtils.saveFile(bean.getUn_selected_logo(), mActivity);
+                                    Picasso.get().load(bean.getUn_selected_logo()).fetch();
+                                }
                             }
                             confitList.clear();
                             confitList.addAll(dataInfo.data());

@@ -7,6 +7,7 @@ import android.os.Build;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.SuperscriptSpan;
 import android.view.Gravity;
@@ -38,6 +39,7 @@ import com.konka.renting.event.UpdataHouseInfoEvent;
 import com.konka.renting.http.SecondRetrofitHelper;
 import com.konka.renting.http.subscriber.CommonSubscriber;
 import com.konka.renting.landlord.house.view.HouseInfoSettingPopupwindow;
+import com.konka.renting.utils.CacheUtils;
 import com.konka.renting.utils.RxUtil;
 import com.konka.renting.utils.UIUtils;
 import com.konka.renting.widget.KeyPwdPopup;
@@ -199,7 +201,22 @@ public class HouseInfoActivity extends BaseActivity {
                 viewHolder.setText(R.id.tv_config_name, houseConfigBean.getName());
                 viewHolder.setSelected(R.id.tv_config_name, houseConfigBean.getStatus() == 1);
                 ImageView img = viewHolder.getView(R.id.check_config);
-                Picasso.get().load(houseConfigBean.getStatus() == 0 ? houseConfigBean.getUn_own_logo() : houseConfigBean.getOwn_logo()).into(img);
+                if (houseConfigBean.getStatus() == 0) {
+                    if (CacheUtils.checkFileExist(houseConfigBean.getUn_own_logo())) {
+                        Picasso.get().load(CacheUtils.getFile(houseConfigBean.getUn_own_logo())).into(img);
+                    } else if (!TextUtils.isEmpty(houseConfigBean.getUn_own_logo())) {
+                        CacheUtils.saveFile(houseConfigBean.getUn_own_logo(), mActivity);
+                        Picasso.get().load(houseConfigBean.getUn_own_logo()).into(img);
+                    }
+                } else {
+                    if (CacheUtils.checkFileExist(houseConfigBean.getOwn_logo())) {
+                        Picasso.get().load(CacheUtils.getFile(houseConfigBean.getOwn_logo())).into(img);
+                    } else if (!TextUtils.isEmpty(houseConfigBean.getOwn_logo())) {
+                        CacheUtils.saveFile(houseConfigBean.getOwn_logo(), mActivity);
+                        Picasso.get().load(houseConfigBean.getOwn_logo()).into(img);
+                    }
+                }
+//                Picasso.get().load(houseConfigBean.getStatus() == 0 ? houseConfigBean.getUn_own_logo() : houseConfigBean.getOwn_logo()).into(img);
             }
         };
         mRecyclerConfig.setAdapter(confitAdapter);
@@ -419,9 +436,12 @@ public class HouseInfoActivity extends BaseActivity {
             ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             imageView.setLayoutParams(lp);
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            if (imageList.get(position) != null && !imageList.get(position).equals(""))
-                Picasso.get().load(imageList.get(position)).placeholder(R.mipmap.fangchan_jiazai).into(imageView);
-            else
+            if (CacheUtils.checkFileExist(imageList.get(position))) {
+                Picasso.get().load(CacheUtils.getFile(imageList.get(position))).placeholder(R.mipmap.fangchan_jiazai).error(R.mipmap.fangchan_jiazai).into(imageView);
+            } else if (!TextUtils.isEmpty(imageList.get(position))) {
+                CacheUtils.saveFile(imageList.get(position), mActivity);
+                Picasso.get().load(imageList.get(position)).placeholder(R.mipmap.fangchan_jiazai).error(R.mipmap.fangchan_jiazai).into(imageView);
+            } else
                 Picasso.get().load(R.mipmap.fangchan_jiazai).placeholder(R.mipmap.fangchan_jiazai).into(imageView);
             container.addView(imageView);
             return imageView;

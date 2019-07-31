@@ -76,38 +76,38 @@ public class AllCommentActivity extends Activity implements OnLoadmoreListener, 
         mCompositeSubscription.add(subscription);
     }
     public void getData(){
-        rx.Observable<DataInfo<CommentTemp>> observable = null;
-        observable = RetrofitHelper.getInstance().getRoomCommentList(roomInfo,p);
-        //    ShowToastUtil.showLoadingDialog(context);
-        Subscription subscription = (observable
-                .compose(RxUtil.<DataInfo<CommentTemp>>rxSchedulerHelper())
-                .subscribe(new CommonSubscriber<DataInfo<CommentTemp>>() {
-                    @Override
-                    public void onError(Throwable e) {
-//                        dismiss();
-//                        doFailed();
-                        Log.d("jia", "");
-                        e.printStackTrace();
-                    }
-
-                    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-                    @Override
-                    public void onNext(DataInfo<CommentTemp> homeInfoDataInfo) {
-//                        dismiss();
-
-                        if (homeInfoDataInfo.success()) {
-                            list.addAll(homeInfoDataInfo.data().commentList);
-
-                            allCommentAdapter.notifyDataSetChanged();
-                        } else {
-
-//                            showToast(homeInfoDataInfo.msg());
-                        }
-                        refresh.finishRefresh();
-//                        ShowToastUtil.dismiss();
-                    }
-                }));
-        addSubscrebe(subscription);
+//        rx.Observable<DataInfo<CommentTemp>> observable = null;
+//        observable = RetrofitHelper.getInstance().getRoomCommentList(roomInfo,p);
+//        //    ShowToastUtil.showLoadingDialog(context);
+//        Subscription subscription = (observable
+//                .compose(RxUtil.<DataInfo<CommentTemp>>rxSchedulerHelper())
+//                .subscribe(new CommonSubscriber<DataInfo<CommentTemp>>() {
+//                    @Override
+//                    public void onError(Throwable e) {
+////                        dismiss();
+////                        doFailed();
+//                        Log.d("jia", "");
+//                        e.printStackTrace();
+//                    }
+//
+//                    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+//                    @Override
+//                    public void onNext(DataInfo<CommentTemp> homeInfoDataInfo) {
+////                        dismiss();
+//
+//                        if (homeInfoDataInfo.success()) {
+//                            list.addAll(homeInfoDataInfo.data().commentList);
+//
+//                            allCommentAdapter.notifyDataSetChanged();
+//                        } else {
+//
+////                            showToast(homeInfoDataInfo.msg());
+//                        }
+//                        refresh.finishRefresh();
+////                        ShowToastUtil.dismiss();
+//                    }
+//                }));
+//        addSubscrebe(subscription);
     }
     @Override
     public void onLoadmore(RefreshLayout refreshlayout) {

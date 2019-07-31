@@ -210,27 +210,27 @@ public abstract class BaseBillFragment extends BaseFragment {
     }
     private void collection(String order_no) {
 
-        showLoadingDialog();
-        Subscription subscription = RetrofitHelper.getInstance().reminderRent(order_no)
-                .compose(RxUtil.<DataInfo>rxSchedulerHelper())
-                .subscribe(new CommonSubscriber<DataInfo>() {
-                    @Override
-                    public void onError(Throwable e) {
-                        dismiss();
-                        doFailed();
-                    }
-
-                    @Override
-                    public void onNext(DataInfo dataInfo) {
-
-                        dismiss();
-                        if (dataInfo.success()){
-                            showToast(dataInfo.msg());
-                        }else {
-                            showToast(dataInfo.msg());
-                        }
-                    }
-                });
-        addSubscrebe(subscription);
+//        showLoadingDialog();
+//        Subscription subscription = RetrofitHelper.getInstance().reminderRent(order_no)
+//                .compose(RxUtil.<DataInfo>rxSchedulerHelper())
+//                .subscribe(new CommonSubscriber<DataInfo>() {
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        dismiss();
+//                        doFailed();
+//                    }
+//
+//                    @Override
+//                    public void onNext(DataInfo dataInfo) {
+//
+//                        dismiss();
+//                        if (dataInfo.success()){
+//                            showToast(dataInfo.msg());
+//                        }else {
+//                            showToast(dataInfo.msg());
+//                        }
+//                    }
+//                });
+//        addSubscrebe(subscription);
     }
 }

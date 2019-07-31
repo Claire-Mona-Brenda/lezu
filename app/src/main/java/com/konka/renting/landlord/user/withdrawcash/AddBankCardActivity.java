@@ -82,57 +82,57 @@ public class AddBankCardActivity extends BaseActivity {
         mobile = mEtMobile.getText().toString();
         showError(name+cardnumber+id+mobile);
         showLoadingDialog();
-        Subscription subscription = RetrofitHelper.getInstance().addBankCard(name, cardnumber, id, mobile)
-                .compose(RxUtil.<AddBankInfo>rxSchedulerHelper())
-                .subscribe(new CommonSubscriber<AddBankInfo>() {
-                    @Override
-                    public void onError(Throwable e) {
-                        dismiss();
-                        doFailed();
-                        showError(e.getMessage());
-                    }
-
-                    @Override
-                    public void onNext(AddBankInfo addBankBeanDataInfo) {
-
-                        dismiss();
-                        if (addBankBeanDataInfo.getStatus() == 1) {
-                            showToast(addBankBeanDataInfo.getInfo());
-                            RxBus.getDefault().post(new AddBankEvent());
-                            finish();
-                        } else {
-                            showToast(addBankBeanDataInfo.getInfo());
-                        }
-                    }
-                });
-        addSubscrebe(subscription);
+//        Subscription subscription = RetrofitHelper.getInstance().addBankCard(name, cardnumber, id, mobile)
+//                .compose(RxUtil.<AddBankInfo>rxSchedulerHelper())
+//                .subscribe(new CommonSubscriber<AddBankInfo>() {
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        dismiss();
+//                        doFailed();
+//                        showError(e.getMessage());
+//                    }
+//
+//                    @Override
+//                    public void onNext(AddBankInfo addBankBeanDataInfo) {
+//
+//                        dismiss();
+//                        if (addBankBeanDataInfo.getStatus() == 1) {
+//                            showToast(addBankBeanDataInfo.getInfo());
+//                            RxBus.getDefault().post(new AddBankEvent());
+//                            finish();
+//                        } else {
+//                            showToast(addBankBeanDataInfo.getInfo());
+//                        }
+//                    }
+//                });
+//        addSubscrebe(subscription);
     }
 
     private void getIssueBank(String number) {
-        showLoadingDialog();
-        Subscription subscription = RetrofitHelper.getInstance().getIssueBank(number)
-                .compose(RxUtil.<DataInfo<GetIssueBankBean>>rxSchedulerHelper())
-                .subscribe(new CommonSubscriber<DataInfo<GetIssueBankBean>>() {
-                    @Override
-                    public void onError(Throwable e) {
-                        dismiss();
-                        doFailed();
-                        showError(e.getMessage());
-                    }
-
-                    @Override
-                    public void onNext(DataInfo<GetIssueBankBean> getIssueBankBeanDataInfo) {
-
-                        dismiss();
-                        if (getIssueBankBeanDataInfo.success()) {
-                            mTvTypeSelect.setText(getIssueBankBeanDataInfo.data().name);
-                            id = getIssueBankBeanDataInfo.data().id;
-                        } else {
-                            showToast(getIssueBankBeanDataInfo.msg());
-                        }
-                    }
-                });
-        addSubscrebe(subscription);
+//        showLoadingDialog();
+//        Subscription subscription = RetrofitHelper.getInstance().getIssueBank(number)
+//                .compose(RxUtil.<DataInfo<GetIssueBankBean>>rxSchedulerHelper())
+//                .subscribe(new CommonSubscriber<DataInfo<GetIssueBankBean>>() {
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        dismiss();
+//                        doFailed();
+//                        showError(e.getMessage());
+//                    }
+//
+//                    @Override
+//                    public void onNext(DataInfo<GetIssueBankBean> getIssueBankBeanDataInfo) {
+//
+//                        dismiss();
+//                        if (getIssueBankBeanDataInfo.success()) {
+//                            mTvTypeSelect.setText(getIssueBankBeanDataInfo.data().name);
+//                            id = getIssueBankBeanDataInfo.data().id;
+//                        } else {
+//                            showToast(getIssueBankBeanDataInfo.msg());
+//                        }
+//                    }
+//                });
+//        addSubscrebe(subscription);
     }
 
 }

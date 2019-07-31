@@ -90,36 +90,36 @@ public class AlreadyPayFragment extends BaseFragment {
             page = 1;
         else
             page = page + 1;
-        Subscription subscription = RetrofitHelper.getInstance().getBill(1, page)
-                .compose(RxUtil.<DataInfo<ListInfo<BillBean>>>rxSchedulerHelper())
-                .subscribe(new CommonSubscriber<DataInfo<ListInfo<BillBean>>>() {
-                    @Override
-                    public void onError(Throwable e) {
-                        if (type == REFRESH)
-                            mRefresh.finishRefresh();
-                        else
-                            mRefresh.finishLoadmore();
-                        doFailed();
-                    }
-
-                    @Override
-                    public void onNext(DataInfo<ListInfo<BillBean>> listInfoDataInfo) {
-                        if (type == REFRESH) {
-                            mRefresh.finishRefresh();
-                            mData.clear();
-                        } else
-                            mRefresh.finishLoadmore();
-                        Log.e("size",listInfoDataInfo.data().lists.size()+"");
-                        if (listInfoDataInfo.success()){
-                            mData.addAll(listInfoDataInfo.data().lists);
-                            mAdapter.notifyDataSetChanged();
-                        }else {
-                            showToast(listInfoDataInfo.msg());
-                        }
-
-                    }
-                });
-        addSubscrebe(subscription);
+//        Subscription subscription = RetrofitHelper.getInstance().getBill(1, page)
+//                .compose(RxUtil.<DataInfo<ListInfo<BillBean>>>rxSchedulerHelper())
+//                .subscribe(new CommonSubscriber<DataInfo<ListInfo<BillBean>>>() {
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        if (type == REFRESH)
+//                            mRefresh.finishRefresh();
+//                        else
+//                            mRefresh.finishLoadmore();
+//                        doFailed();
+//                    }
+//
+//                    @Override
+//                    public void onNext(DataInfo<ListInfo<BillBean>> listInfoDataInfo) {
+//                        if (type == REFRESH) {
+//                            mRefresh.finishRefresh();
+//                            mData.clear();
+//                        } else
+//                            mRefresh.finishLoadmore();
+//                        Log.e("size",listInfoDataInfo.data().lists.size()+"");
+//                        if (listInfoDataInfo.success()){
+//                            mData.addAll(listInfoDataInfo.data().lists);
+//                            mAdapter.notifyDataSetChanged();
+//                        }else {
+//                            showToast(listInfoDataInfo.msg());
+//                        }
+//
+//                    }
+//                });
+//        addSubscrebe(subscription);
     }
     private void initList() {
         mAdapter = new CommonAdapter<BillBean>(getContext(), mData, R.layout.item_list_already_pay) {

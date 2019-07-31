@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,7 @@ import com.konka.renting.landlord.house.CreateOrderActivity;
 import com.konka.renting.landlord.house.IHouseRefresh;
 import com.konka.renting.landlord.house.PaySeverActivity;
 import com.konka.renting.landlord.house.widget.ShowToastUtil;
+import com.konka.renting.utils.CacheUtils;
 import com.konka.renting.widget.CommonPopupWindow;
 import com.squareup.picasso.Picasso;
 
@@ -71,9 +73,12 @@ public class HouseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         nvHolder.tvId.setText(houseOrderInfoBean.getRoom_no());
         nvHolder.tvAdress.setText(houseOrderInfoBean.getRoom_name());
         nvHolder.tvSeverEndTime.setText(houseOrderInfoBean.getService_date().equals("0") ? (houseOrderInfoBean.getRoom_status()<3?context.getString(R.string.house_sever_end_time_emty):context.getString(R.string.house_sever_end_time_end)) : houseOrderInfoBean.getService_date());
-        if (houseOrderInfoBean.getThumb_image() != null && !houseOrderInfoBean.getThumb_image().equals(""))
-            Picasso.get().load(houseOrderInfoBean.getImage()).placeholder(R.mipmap.fangchan_jiazai).into(nvHolder.imageView);
-        else
+        if (CacheUtils.checkFileExist(houseOrderInfoBean.getThumb_image())){
+            Picasso.get().load(CacheUtils.getFile(houseOrderInfoBean.getThumb_image())).placeholder(R.mipmap.fangchan_jiazai).error(R.mipmap.fangchan_jiazai).into(nvHolder.imageView);
+        }else if (!TextUtils.isEmpty(houseOrderInfoBean.getThumb_image())) {
+            CacheUtils.saveFile(houseOrderInfoBean.getThumb_image(),context);
+            Picasso.get().load(houseOrderInfoBean.getThumb_image()).placeholder(R.mipmap.fangchan_jiazai).error(R.mipmap.fangchan_jiazai).into(nvHolder.imageView);
+        }else
             Picasso.get().load(R.mipmap.fangchan_jiazai).placeholder(R.mipmap.fangchan_jiazai).into(nvHolder.imageView);
         nvHolder.tvRentType.setVisibility(View.GONE);
         switch (houseOrderInfoBean.getRoom_status()) {

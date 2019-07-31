@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ import com.konka.renting.landlord.user.userinfo.UpdateEvent;
 import com.konka.renting.landlord.user.userinfo.UserInfoActivity;
 import com.konka.renting.login.LoginNewActivity;
 import com.konka.renting.tenant.TenantMainActivity;
+import com.konka.renting.utils.CacheUtils;
 import com.konka.renting.utils.PhoneUtil;
 import com.konka.renting.utils.RxUtil;
 import com.konka.renting.utils.UIUtils;
@@ -164,14 +166,17 @@ public class TenantUserFragment extends BaseFragment {
                                     tel = str;
                                 }
                                 tvUserPhone.setText(tel);
-                                if (dataInfo.data().getThumb_headimgurl() != null)
-                                    if (!dataInfo.data().getThumb_headimgurl().isEmpty()) {
-                                        Picasso.get().load(dataInfo.data().getThumb_headimgurl()).
-                                                placeholder(R.mipmap.touxiang).error(R.mipmap.touxiang).into(mIconUserPhoto);
-                                    } else {
-                                        Picasso.get().load(R.mipmap.touxiang).
-                                                placeholder(R.mipmap.touxiang).error(R.mipmap.touxiang).into(mIconUserPhoto);
-                                    }
+                                if (CacheUtils.checkFileExist(dataInfo.data().getThumb_headimgurl())) {
+                                    Picasso.get().load(CacheUtils.getFile(dataInfo.data().getThumb_headimgurl())).
+                                            placeholder(R.mipmap.touxiang).error(R.mipmap.touxiang).into(mIconUserPhoto);
+                                } else if (!TextUtils.isEmpty(dataInfo.data().getThumb_headimgurl())) {
+                                    CacheUtils.saveFile(dataInfo.data().getThumb_headimgurl(), getActivity());
+                                    Picasso.get().load(dataInfo.data().getThumb_headimgurl()).
+                                            placeholder(R.mipmap.touxiang).error(R.mipmap.touxiang).into(mIconUserPhoto);
+                                } else {
+                                    Picasso.get().load(R.mipmap.touxiang).
+                                            placeholder(R.mipmap.touxiang).error(R.mipmap.touxiang).into(mIconUserPhoto);
+                                }
                             }
                         } else {
                             showToast(dataInfo.msg());
@@ -205,7 +210,7 @@ public class TenantUserFragment extends BaseFragment {
                 break;
             case R.id.tv_after_the_process://售后流程
 //                WebviewActivity.toActivity(getContext(), WebType.WEB_ABOUT);
-                AfterProcessActivity.toActivity(getContext(),((TenantMainActivity)getActivity()).mAppConfigBean.getDisclaimer());
+                AfterProcessActivity.toActivity(getContext(), ((TenantMainActivity) getActivity()).mAppConfigBean.getDisclaimer());
                 break;
             case R.id.tv_quit://退出登录
                 new AlertDialog.Builder(getActivity()).setTitle(R.string.login_out).setMessage("是否退出登录")

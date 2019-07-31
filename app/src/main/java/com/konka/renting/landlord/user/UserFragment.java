@@ -3,6 +3,7 @@ package com.konka.renting.landlord.user;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,7 @@ import com.konka.renting.landlord.user.withdrawcash.WithdrawcashActivity;
 import com.konka.renting.login.ForgetPasswordActivity;
 import com.konka.renting.login.LoginInfo;
 import com.konka.renting.login.LoginNewActivity;
+import com.konka.renting.utils.CacheUtils;
 import com.konka.renting.utils.PhoneUtil;
 import com.konka.renting.utils.RxUtil;
 import com.konka.renting.utils.UIUtils;
@@ -63,6 +65,8 @@ public class UserFragment extends BaseFragment {
     TextView mTvMessageSum;
     private LandlordUserBean userInfoBean;
 
+    String urlPic;
+
     public UserFragment() {
     }
 
@@ -81,7 +85,6 @@ public class UserFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        init();
         View view = inflater.inflate(R.layout.fragment_user, container, false);
         unbinder = ButterKnife.bind(this, view);
         ViewGroup viewGroup = (ViewGroup) mIconUserPhoto.getParent();
@@ -89,6 +92,9 @@ public class UserFragment extends BaseFragment {
         lp.height += UIUtils.getStatusHeight();
         viewGroup.setLayoutParams(lp);
         viewGroup.setPadding(viewGroup.getPaddingLeft(), viewGroup.getPaddingTop() + UIUtils.getStatusHeight(), viewGroup.getPaddingRight(), viewGroup.getPaddingBottom());
+
+        init();
+
         return view;
     }
 
@@ -158,15 +164,24 @@ public class UserFragment extends BaseFragment {
                                     tel = str;
                                 }
                                 mTvUserPhone.setText(tel);
-                                if (userInfoBeanDataInfo.data().getHeadimgurl() != null)
-                                    if (!userInfoBeanDataInfo.data().getThumb_headimgurl().isEmpty()) {
-                                        Picasso.get().load(userInfoBeanDataInfo.data().getThumb_headimgurl()).
-                                                placeholder(R.mipmap.touxiang).error(R.mipmap.touxiang).into(mIconUserPhoto);
+                                if (userInfoBeanDataInfo.data().getThumb_headimgurl() != null
+                                        && !userInfoBeanDataInfo.data().getThumb_headimgurl().equals(urlPic == null ? "" : urlPic)) {
+                                    if (!TextUtils.isEmpty(userInfoBeanDataInfo.data().getThumb_headimgurl())) {
+                                        if (CacheUtils.checkFileExist(userInfoBeanDataInfo.data().getThumb_headimgurl())) {
+                                            Picasso.get().load(CacheUtils.getFile(userInfoBeanDataInfo.data().getThumb_headimgurl())).
+                                                    placeholder(R.mipmap.touxiang).error(R.mipmap.touxiang).into(mIconUserPhoto);
+                                        } else {
+                                            CacheUtils.saveFile(userInfoBeanDataInfo.data().getThumb_headimgurl(), getActivity());
+                                            Picasso.get().load(userInfoBeanDataInfo.data().getThumb_headimgurl()).
+                                                    placeholder(R.mipmap.touxiang).error(R.mipmap.touxiang).into(mIconUserPhoto);
+                                        }
                                     } else {
                                         Picasso.get().load(R.mipmap.touxiang).
                                                 placeholder(R.mipmap.touxiang).error(R.mipmap.touxiang).into(mIconUserPhoto);
                                     }
-                                mTvMoney.setText((int)Float.parseFloat(userInfoBeanDataInfo.data().getBalance())+"");
+                                }
+                                urlPic = userInfoBeanDataInfo.data().getThumb_headimgurl();
+                                mTvMoney.setText((int) Float.parseFloat(userInfoBeanDataInfo.data().getBalance()) + "");
                             }
                             userInfoBean = userInfoBeanDataInfo.data();
                         } else {
@@ -221,7 +236,7 @@ public class UserFragment extends BaseFragment {
                 break;
             case R.id.tv_after_the_process://售后流程
 //                WebviewActivity.toActivity(getActivity(), WebType.WEB_ABOUT);
-                AfterProcessActivity.toActivity(getContext(),((MainActivity)getActivity()).mAppConfigBean.getDisclaimer());
+                AfterProcessActivity.toActivity(getContext(), ((MainActivity) getActivity()).mAppConfigBean.getDisclaimer());
                 break;
             case R.id.tv_login_out://退出登录
 

@@ -29,6 +29,7 @@ public class OpenDoorListbean implements Parcelable {
     private String start_time;
     private String end_time;
     private String gateway_id;
+    private String gateway_version;
     private String device_id;
     private String service_time;
     private String room_name;
@@ -44,6 +45,7 @@ public class OpenDoorListbean implements Parcelable {
         start_time = in.readString();
         end_time = in.readString();
         gateway_id = in.readString();
+        gateway_version = in.readString();
         device_id = in.readString();
         service_time = in.readString();
         room_name = in.readString();
@@ -111,6 +113,14 @@ public class OpenDoorListbean implements Parcelable {
 
     public void setGateway_id(String gateway_id) {
         this.gateway_id = gateway_id;
+    }
+
+    public String getGateway_version() {
+        return gateway_version;
+    }
+
+    public void setGateway_version(String gateway_version) {
+        this.gateway_version = gateway_version;
     }
 
     public String getDevice_id() {
@@ -182,6 +192,7 @@ public class OpenDoorListbean implements Parcelable {
         dest.writeString(start_time);
         dest.writeString(end_time);
         dest.writeString(gateway_id);
+        dest.writeString(gateway_version);
         dest.writeString(device_id);
         dest.writeString(service_time);
         dest.writeString(room_name);

@@ -43,7 +43,7 @@ public class CommonPopupWindow extends PopupWindow {
         this.setContentView(mView); //设置View
         this.setWidth(WindowManager.LayoutParams.WRAP_CONTENT);  //弹出窗宽度
         this.setHeight(WindowManager.LayoutParams.WRAP_CONTENT); //弹出高度
-        this.setFocusable(false);  //弹出窗可触摸
+        this.setFocusable(true);  //弹出窗可触摸
         this.setBackgroundDrawable(new ColorDrawable(0x00000000));   //设置背景透明
 //        this.setAnimationStyle(R.style.mypopupwindow_anim_style);   //弹出动画
 

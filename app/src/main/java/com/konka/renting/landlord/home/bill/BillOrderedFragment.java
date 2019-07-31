@@ -21,7 +21,8 @@ public class BillOrderedFragment extends BaseBillFragment {
 
     @Override
     Observable<DataInfo<ListInfo<OrderInfo>>> getObservable(int page) {
-        return RetrofitHelper.getInstance().getOrdered(page);
+//        return RetrofitHelper.getInstance().getOrdered(page);
+        return null;
     }
 
     @Override

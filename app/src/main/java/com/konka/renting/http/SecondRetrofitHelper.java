@@ -243,13 +243,12 @@ public class SecondRetrofitHelper {
                         } else {
                             LoginNewActivity.toTenantActivity(BaseActivity.getForegroundActivity());
                         }
-                        BaseActivity.getForegroundActivity().finish();
+                        if (BaseActivity.getForegroundActivity() != null)
+                            BaseActivity.getForegroundActivity().finish();
                         AppManager.getInstance().killAllBeyondActivity(LoginNewActivity.class);
                     }
-
                     throw new RuntimeException("登录失效，请重新登录");
                     // 判断是否登录成功了
-
                 }
                 return response;
             }
@@ -1139,7 +1138,7 @@ public class SecondRetrofitHelper {
 
     /**
      * 查询 管理员密码 锁孔密码 临时密码
-     *
+     * <p>
      * pwd_type 密码类型 0 管理员密码 1 临时密码 9 锁孔密码
      */
     public Observable<DataInfo<QueryPwdBean>> lockPwd(String room_id, String pwd_type) {
@@ -1148,7 +1147,7 @@ public class SecondRetrofitHelper {
 
     /**
      * 刷新 管理员密码 锁孔密码
-     *
+     * <p>
      * pwd_type 密码类型 0 管理员密码  9 锁孔密码
      */
     public Observable<DataInfo<QueryPwdBean>> passwordRefresh(String room_id, String pwd_type) {
@@ -1157,7 +1156,7 @@ public class SecondRetrofitHelper {
 
     /**
      * 设置门锁密码
-     *
+     * <p>
      * pwd_type 密码类型 1 临时密码 2普通密码    默认 2
      */
     public Observable<DataInfo<QueryPwdBean>> setPassword(String room_id, String device_id, String password, String hours, String pwd_type, String name) {
@@ -1211,14 +1210,14 @@ public class SecondRetrofitHelper {
     /**
      * 获取设备列表
      */
-    public Observable<DataInfo<PageDataBean<DeviceInfo>>> getDeviceList(String room_id,String page) {
-        return mApiService.getDeviceList(room_id,page);
+    public Observable<DataInfo<PageDataBean<DeviceInfo>>> getDeviceList(String room_id, String page) {
+        return mApiService.getDeviceList(room_id, page);
     }
 
     /**
      * 同步服务费
      */
-    public Observable<DataInfo> sync_service_expire(String room_id,String device_id) {
-        return mApiService.sync_service_expire(room_id,device_id);
+    public Observable<DataInfo> sync_service_expire(String room_id, String device_id) {
+        return mApiService.sync_service_expire(room_id, device_id);
     }
 }

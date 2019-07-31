@@ -108,6 +108,8 @@ public class OpenManageActivity extends BaseActivity {
 
         tvTitle.setText(R.string.house_info_setting_open_manage);
 
+        rlManagePwd.setVisibility(bean.getRoom_status() == 6 ? View.GONE : View.VISIBLE);
+
 
     }
 

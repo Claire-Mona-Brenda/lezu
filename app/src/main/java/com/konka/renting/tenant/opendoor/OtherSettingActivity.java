@@ -2,6 +2,7 @@ package com.konka.renting.tenant.opendoor;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -22,6 +23,7 @@ import com.konka.renting.event.ToGetPwdTimeEvent;
 import com.konka.renting.http.SecondRetrofitHelper;
 import com.konka.renting.http.subscriber.CommonSubscriber;
 import com.konka.renting.landlord.gateway.GatewaySettingActivity;
+import com.konka.renting.landlord.gateway.ManagePwdActivity;
 import com.konka.renting.landlord.house.widget.ShowToastUtil;
 import com.konka.renting.utils.RxUtil;
 import com.konka.renting.widget.CommonPopupWindow;
@@ -30,6 +32,7 @@ import com.konka.renting.widget.KeyPwdPopup;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
 import rx.Subscription;
@@ -75,6 +78,10 @@ public class OtherSettingActivity extends BaseActivity {
     LinearLayout llSync;
     @BindView(R.id.activity_other_setting_tv_sync)
     TextView tvSync;
+    @BindView(R.id.activity_other_setting_ll_manage_pwd)
+    LinearLayout llManagePwd;
+    @BindView(R.id.activity_other_setting_tv_manage_pwd)
+    TextView tvManagePwd;
 
     final int QUERY_TIME_MAX = 10;
 
@@ -128,6 +135,8 @@ public class OtherSettingActivity extends BaseActivity {
                 break;
         }
 
+        llManagePwd.setVisibility(openDoorListbean.getStatus() > 2 ? View.VISIBLE : View.GONE);
+
         addRxBusSubscribe(ToGetPwdTimeEvent.class, new Action1<ToGetPwdTimeEvent>() {
             @Override
             public void call(ToGetPwdTimeEvent toGetPwdTimeEvent) {
@@ -139,7 +148,8 @@ public class OtherSettingActivity extends BaseActivity {
 
     @OnClick({R.id.iv_back, R.id.activity_other_setting_tv_open_pwd, R.id.activity_other_setting_tv_key_pwd,
             R.id.activity_other_setting_tv_gateway_setting, R.id.activity_other_setting_tv_gateway_restart,
-            R.id.activity_other_setting_tv_fingerprint, R.id.activity_other_setting_tv_ic,R.id.activity_other_setting_ll_sync})
+            R.id.activity_other_setting_tv_fingerprint, R.id.activity_other_setting_tv_ic,
+            R.id.activity_other_setting_ll_sync, R.id.activity_other_setting_tv_manage_pwd})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back://返回
@@ -160,7 +170,7 @@ public class OtherSettingActivity extends BaseActivity {
                 }
                 break;
             case R.id.activity_other_setting_tv_key_pwd://钥匙孔密码
-                if (queryKeyPwdTime <=0 || queryKeyPwdTime >= 10) {
+                if (queryKeyPwdTime <= 0 || queryKeyPwdTime >= 10) {
                     showKeyPwdPopup();
                     keyPwdPopupwindow.setPwd(getString(R.string.tips_loading));
                     getKeyPwd();
@@ -169,11 +179,14 @@ public class OtherSettingActivity extends BaseActivity {
                 }
                 break;
             case R.id.activity_other_setting_tv_gateway_setting://设置网关
-                GatewaySettingActivity.toActivity(this, openDoorListbean.getRoom_id(), openDoorListbean.getGateway_id(), "3", GatewaySettingActivity.TYPE_TENANT);
-
+                GatewaySettingActivity.toActivity(this, openDoorListbean.getRoom_id(), openDoorListbean.getGateway_id(), openDoorListbean.getGateway_version(), GatewaySettingActivity.TYPE_TENANT);
                 break;
             case R.id.activity_other_setting_tv_gateway_restart://重启网关
                 showReboot();
+                break;
+            case R.id.activity_other_setting_tv_manage_pwd://管理员密码
+                if (openDoorListbean.getStatus() > 2)
+                    ManagePwdActivity.toActivity(this, openDoorListbean.getRoom_id());
                 break;
             case R.id.activity_other_setting_tv_fingerprint://管理指纹
                 ClockSetManageActivity.toActivity(this, ClockSetManageActivity.TYPE_FINGERPRINT, openDoorListbean.getRoom_id());
@@ -375,6 +388,7 @@ public class OtherSettingActivity extends BaseActivity {
         showPopup(popupWindow);
 
     }
+
     /**
      * 是否同步服务费时间
      */
@@ -476,7 +490,7 @@ public class OtherSettingActivity extends BaseActivity {
                     public void onNext(DataInfo<QueryPwdBean> info) {
                         if (info.success()) {
                             if (TextUtils.isEmpty(info.data().getId())) {
-                                queryKeyPwdTime=0;
+                                queryKeyPwdTime = 0;
                                 keyPwdPopupwindow.setPwd(info.data().getPassword());
                             } else {
                                 queryKeyPwdTime = QUERY_TIME_MAX;

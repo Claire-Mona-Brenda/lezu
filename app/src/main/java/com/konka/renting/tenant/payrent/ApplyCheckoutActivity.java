@@ -88,30 +88,30 @@ public class ApplyCheckoutActivity extends BaseActivity {
         }
     }
     private void applyCheckout(){
-        showLoadingDialog();
-        Subscription subscription = RetrofitHelper.getInstance().updateRenting(ordernum,mEtCheckoutReson.getText().toString(),"2")
-                .compose(RxUtil.<DataInfo>rxSchedulerHelper())
-                .subscribe(new CommonSubscriber<DataInfo>() {
-                    @Override
-                    public void onError(Throwable e) {
-                        dismiss();
-                        doFailed();
-                        showError(e.getMessage());
-                    }
-
-                    @Override
-                    public void onNext(DataInfo dataInfo) {
-
-                        dismiss();
-                        if (dataInfo.success()){
-                            showToast(dataInfo.msg());
-                            RxBus.getDefault().post(new UpdateRentingEvent());
-                            finish();
-                        }else {
-                            showToast(dataInfo.msg());
-                        }
-                    }
-                });
-        addSubscrebe(subscription);
+//        showLoadingDialog();
+//        Subscription subscription = RetrofitHelper.getInstance().updateRenting(ordernum,mEtCheckoutReson.getText().toString(),"2")
+//                .compose(RxUtil.<DataInfo>rxSchedulerHelper())
+//                .subscribe(new CommonSubscriber<DataInfo>() {
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        dismiss();
+//                        doFailed();
+//                        showError(e.getMessage());
+//                    }
+//
+//                    @Override
+//                    public void onNext(DataInfo dataInfo) {
+//
+//                        dismiss();
+//                        if (dataInfo.success()){
+//                            showToast(dataInfo.msg());
+//                            RxBus.getDefault().post(new UpdateRentingEvent());
+//                            finish();
+//                        }else {
+//                            showToast(dataInfo.msg());
+//                        }
+//                    }
+//                });
+//        addSubscrebe(subscription);
     }
 }

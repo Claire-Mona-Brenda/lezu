@@ -113,10 +113,10 @@ import rx.Observable;
 public interface KonkaApiService {
 
     //    String HOST = "http://let.tuokemao.com/";
-    String HOST = "https://let.youlejiakeji.com/";
-//    String HOST = "https://lettest.youlejiakeji.com/";
-//    String SecondHost = "https://lezuxiaowo-test.youlejiakeji.com";
-    String SecondHost = "https://lezuxiaowo.youlejiakeji.com";
+//    String HOST = "https://let.youlejiakeji.com/";
+    String HOST = "https://lettest.youlejiakeji.com/";
+    String SecondHost = "https://lezuxiaowo-test.youlejiakeji.com";
+//    String SecondHost = "https://lezuxiaowo.youlejiakeji.com";
 
 
     @FormUrlEncoded
