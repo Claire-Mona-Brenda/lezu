@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/style_bg_card_1"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/pop_check_config_tv_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingStart="@dimen/dp_16"
+            android:paddingEnd="@dimen/dp_16"
+            android:text="@string/common_cancel"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/sp_16" />
+
+        <TextView
+            android:id="@+id/pop_check_config_tv_sure"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:gravity="center"
+            android:paddingStart="@dimen/dp_16"
+            android:paddingEnd="@dimen/dp_16"
+            android:text="@string/common_sure"
+            android:textColor="@color/text_org"
+            android:textSize="@dimen/sp_16" />
+    </RelativeLayout>
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/pop_check_config_srl_config"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_330">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/pop_check_config_rv_config"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+</LinearLayout>

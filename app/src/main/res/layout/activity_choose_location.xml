@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_title_text" />
+
+    <com.amap.api.maps.MapView
+        android:id="@+id/activity_choose_location_mapview"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_400">
+
+    </com.amap.api.maps.MapView>
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/activity_choose_location_srv_location"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/activity_choose_location_rv_location"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+             android:paddingTop="@dimen/dp_10"
+            android:paddingBottom="@dimen/dp_10"/>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+</LinearLayout>

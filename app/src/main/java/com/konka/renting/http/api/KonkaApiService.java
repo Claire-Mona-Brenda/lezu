@@ -29,6 +29,7 @@ import com.konka.renting.bean.GetIssueBankBean;
 import com.konka.renting.bean.HomeInfo;
 import com.konka.renting.bean.HouseConfigBean;
 import com.konka.renting.bean.HouseDetailsInfoBean;
+import com.konka.renting.bean.HouseDetailsInfoBean2;
 import com.konka.renting.bean.HouseOrderInfoBean;
 import com.konka.renting.bean.IdCardFrontbean;
 import com.konka.renting.bean.Img;
@@ -113,10 +114,10 @@ import rx.Observable;
 public interface KonkaApiService {
 
     //    String HOST = "http://let.tuokemao.com/";
-//    String HOST = "https://let.youlejiakeji.com/";
-    String HOST = "https://lettest.youlejiakeji.com/";
-    String SecondHost = "https://lezuxiaowo-test.youlejiakeji.com";
-//    String SecondHost = "https://lezuxiaowo.youlejiakeji.com";
+    String HOST = "https://let.youlejiakeji.com/";
+//    String HOST = "https://lettest.youlejiakeji.com/";
+//    String SecondHost = "https://lezuxiaowo-test.youlejiakeji.com";
+    String SecondHost = "https://lezuxiaowo.youlejiakeji.com";
 
 
     @FormUrlEncoded
@@ -1285,6 +1286,27 @@ public interface KonkaApiService {
             @Field("image") String image);
 
     /**
+     * 申请添加房产(2.3.4版本以后)
+     */
+    @FormUrlEncoded
+    @POST("index.php/api/room/add_2_3_4")
+    Observable<DataInfo> addRoom2(
+            @Field("room_name") String room_name,
+            @Field("room_type") String room_type,
+            @Field("room_config_id") String room_config_id,
+            @Field("province") String province,
+            @Field("city") String city,
+            @Field("area") String area,
+            @Field("address") String address,
+            @Field("total_floor") String total_floor,
+            @Field("floor") String floor,
+            @Field("measure_area") String measure_area,
+            @Field("remark") String remark,
+            @Field("image") String image,
+            @Field("lng") String lng,
+            @Field("lat") String lat);
+
+    /**
      * 获取房东端房产列表
      *
      * @page 页数 默认1
@@ -1300,6 +1322,15 @@ public interface KonkaApiService {
     @FormUrlEncoded
     @POST("index.php/api/room/info")
     Observable<DataInfo<HouseDetailsInfoBean>> getHouseInfo(@Field("room_id") String room_id);
+
+    /**
+     * 房东端房产详情(2.3.4版本以后)
+     *
+     * @room_id 房屋id
+     */
+    @FormUrlEncoded
+    @POST("index.php/api/room/info_2_3_4")
+    Observable<DataInfo<HouseDetailsInfoBean2>> getHouseInfo2(@Field("room_id") String room_id);
 
     /**
      * 申请删除房产
@@ -1331,6 +1362,28 @@ public interface KonkaApiService {
             @Field("remark") String remark,
             @Field("explain") String explain,
             @Field("image") String image);
+
+    /**
+     * 编辑房产（2.3.4版本以后）
+     */
+    @FormUrlEncoded
+    @POST("index.php/api/room/edit_2_3_4")
+    Observable<DataInfo> editRoom2(
+            @Field("room_id") String room_id,
+            @Field("room_name") String room_name,
+            @Field("room_type_id") String room_type,
+            @Field("room_config_id") String room_config_id,
+            @Field("province") String province,
+            @Field("city") String city,
+            @Field("area") String area,
+            @Field("address") String address,
+            @Field("total_floor") String total_floor,
+            @Field("floor") String floor,
+            @Field("measure_area") String measure_area,
+            @Field("remark") String remark,
+            @Field("image") String image,
+            @Field("lng") String lng,
+            @Field("lat") String lat);
 
     /**
      * 发布房产

@@ -204,7 +204,7 @@
     <string name="please_choose_device">请选择你要切换的设备</string>
     <string name="confirm">确定</string>
 
-    <string name="pwd_useful_life">密码使用有效期剩余：</string>
+    <string name="pwd_useful_life">有效期截止：</string>
     <string name="forever">永久</string>
     <string name="please_pwd_txt">正在使用的开锁密码</string>
     <string name="pwd_add_tips_1">设置开锁密码后，可以通过输入密码来开锁</string>
@@ -450,13 +450,47 @@
     <string name="add_house_house_submit_tips_1">*每项房产安装门锁设备需要支付200元安装费用*</string>
 
     <string name="unit_m2">平方米</string>
-    
+    <string name="unit_m2_1">平方</string>
+
     <string name="warm_house_floor_sum">填写的楼层数不能大于总楼层数</string>
     <string name="warm_house_floor_0">填写正确的楼层数</string>
     <string name="warm_house_floor_sum_0">填写的总楼层数不能为0</string>
 
     <string name="warm_house_give_up_add">是否放弃添加？</string>
     <string name="warm_house_give_up_edit">是否放弃编辑？</string>
+
+    <string name="add_house_flow_address">填写地址</string>
+    <string name="add_house_flow_info">房产信息</string>
+    <string name="add_house_flow_introduce">房屋介绍</string>
+    <string name="add_house_flow_finish">完成</string>
+
+    <string name="add_house_fill_address">填写房屋地址</string>
+    <string name="add_house_fill_address_tips">具体填写以下地址信息，租客才能更准确的找到您的房屋位置哦！</string>
+    <string name="add_house_choose_location">选择定位</string>
+    <string name="add_house_choose_location_tips">请选择房屋定位</string>
+    <string name="add_house_choose_real_location">楼栋门牌</string>
+    <string name="add_house_choose_real_location_tips">例：福德公寓3栋412</string>
+
+    <string name="title_choose_location">选择定位</string>
+    <string name="please_fill_real_location">请填写楼栋门牌</string>
+
+    <string name="add_house_fill_info">填写房屋信息</string>
+    <string name="add_house_fill_info_tips"> 填写正确的信息，有助于房屋的出租</string>
+    <string name="add_house_house_info_name">房屋名称</string>
+    <string name="add_house_house_info_name_tips">例：乔雅花园一期2栋203</string>
+    <string name="add_house_house_info_house_type">户型</string>
+    <string name="add_house_confit">家电配置</string>
+
+    <string name="add_house_fill_info_more">完善信息</string>
+    <string name="add_house_fill_info_more_tips">填写介绍，完善您的房屋信息</string>
+    <string name="add_house_introduce_house">房屋介绍（选填）</string>
+    <string name="add_house_introduce_house_tips">例：全新家具家电，朝南采光很好，交通方,近地铁站。</string>
+    <string name="tips_add_pic_num_mast">添加图片数量不能超过%s张</string>
+    <string name="please_add_pic">请至少请上传一张图片</string>
+
+    <string name="add_success_1">添加成功！</string>
+    <string name="bind_clock_dev">绑定门锁设备</string>
+    <string name="house_info_start_rent">发布房产</string>
 
     <!--房产详情-->
     <string name="house_info_title">房产详情</string>

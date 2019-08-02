@@ -62,7 +62,7 @@ public class GatewayConnectionActivity extends BaseActivity {
 
     private String mRoomId;
 
-    public static void toActivity(Context context, GatewayInfo gatewayInfo, MachineInfo machineInfo,String room_id) {
+    public static void toActivity(Context context, GatewayInfo gatewayInfo, MachineInfo machineInfo, String room_id) {
         Intent intent = new Intent(context, GatewayConnectionActivity.class);
         intent.putExtra(MachineInfo.class.getSimpleName(), machineInfo);
         intent.putExtra(GatewayInfo.class.getSimpleName(), gatewayInfo);
@@ -107,7 +107,7 @@ public class GatewayConnectionActivity extends BaseActivity {
         mRoomId = getIntent().getStringExtra("room_id");
 
         imgGateway.setImageResource(Integer.valueOf(mGatewayInfo.getGateway_version()) > 3 ? R.mipmap.wangguan_2_116px_png : R.mipmap.wangguan_1_116px_png);
-        tvControl.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG );
+        tvControl.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
 
         pbProgress.setMax(MAX);
         pbProgress.setProgress(MAX);
@@ -195,6 +195,9 @@ public class GatewayConnectionActivity extends BaseActivity {
                     public void onNext(DataInfo<ServerDeviceInfo> dataInfo) {
                         if (dataInfo.success()) {
                             addDevice(dataInfo.data().device_no);
+                        } else if (dataInfo.code() == -1001) {
+                            showToast(dataInfo.msg());
+                            finish();
                         } else {
 //                            showToast(dataInfo.msg());
 //                            BindGatewayFaildedActivity.toActivity(mActivity);

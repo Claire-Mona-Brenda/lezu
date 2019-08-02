@@ -29,6 +29,7 @@ import com.konka.renting.bean.GatewayInfo;
 import com.konka.renting.bean.HomeInfo;
 import com.konka.renting.bean.HouseConfigBean;
 import com.konka.renting.bean.HouseDetailsInfoBean;
+import com.konka.renting.bean.HouseDetailsInfoBean2;
 import com.konka.renting.bean.HouseOrderInfoBean;
 import com.konka.renting.bean.KInfo;
 import com.konka.renting.bean.LandlordUserBean;
@@ -598,6 +599,20 @@ public class SecondRetrofitHelper {
     }
 
     /**
+     * 添加房产(2.3.4版本以后)
+     */
+    public Observable<DataInfo> addRoom2(String room_name, String room_type, String room_config_id,
+                                         String province, String city, String area,
+                                         String address, String total_floor, String floor,
+                                         String measure_area, String remark, String image,
+                                         String lng, String lat) {
+        return mApiService.addRoom2(room_name, room_type, room_config_id,
+                province, city, area, address,
+                total_floor, floor, measure_area,
+                remark, image, lng, lat);
+    }
+
+    /**
      * 编辑房产
      */
     public Observable<DataInfo> editRoom(String room_id,
@@ -618,6 +633,18 @@ public class SecondRetrofitHelper {
         return mApiService.editRoom(room_id, room_name, room_type_id, agent_id, province_id, city_id, area_id, address, total_floor, floor, measure_area, room_config_id, remark, explain, image);
     }
 
+    /**
+     * 编辑房产(2.3.4版本以后)
+     */
+    public Observable<DataInfo> editRoom2(String room_id, String room_name, String room_type, String room_config_id,
+                                          String province, String city, String area, String address,
+                                          String total_floor, String floor, String measure_area,
+                                          String remark, String image, String lng, String lat) {
+        return mApiService.editRoom2(room_id, room_name, room_type, room_config_id,
+                province, city, area, address,
+                total_floor, floor, measure_area, remark,
+                image, lng, lat);
+    }
 
     /**
      * 获取房东端房产列表
@@ -631,6 +658,13 @@ public class SecondRetrofitHelper {
      */
     public Observable<DataInfo<HouseDetailsInfoBean>> getHouseInfo(String room_id) {
         return mApiService.getHouseInfo(room_id);
+    }
+
+    /**
+     * 获取房东端房产详情(2.3.4版本以后)
+     */
+    public Observable<DataInfo<HouseDetailsInfoBean2>> getHouseInfo2(String room_id) {
+        return mApiService.getHouseInfo2(room_id);
     }
 
     /**

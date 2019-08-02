@@ -32,8 +32,6 @@
             android:id="@+id/item_device_pwd_tv_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/dp_10"
-            android:text="3天"
             android:textColor="@color/color_000000"/>
     </LinearLayout>
         <TextView

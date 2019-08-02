@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/dp_116"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_4"
+        android:layout_centerInParent="true"
+        app:cardCornerRadius="@dimen/dp_4"
+        app:cardElevation="0dp"
+        app:cardUseCompatPadding="false">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/adapter_add_house_introduce_img_pic"
+            android:layout_width="@dimen/dp_108"
+            android:layout_height="@dimen/dp_80"
+            android:src="@mipmap/fangchan_jiazai"
+            android:scaleType="centerCrop" />
+    </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/adapter_add_house_introduce_img_del"
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
+        android:src="@mipmap/icon_delete"
+        android:layout_alignParentEnd="true"/>
+</RelativeLayout>

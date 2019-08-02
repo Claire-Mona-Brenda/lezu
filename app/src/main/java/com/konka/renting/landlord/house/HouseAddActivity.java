@@ -588,8 +588,8 @@ public class HouseAddActivity extends BaseActivity {
     }
 
     private void sumbit() {
-        int floor = Integer.valueOf(editFloor.getText().toString());
-        int floorSum = getFloor(eEditFloorSum.getText().toString());
+        int floor = getFloor(editFloor.getText().toString());
+        int floorSum = Integer.valueOf(eEditFloorSum.getText().toString());
         if (floor == 0) {
             ShowToastUtil.showNormalToast(this, getString(R.string.warm_house_floor_0));
             return;

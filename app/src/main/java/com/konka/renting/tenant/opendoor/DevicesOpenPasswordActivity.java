@@ -164,14 +164,15 @@ public class DevicesOpenPasswordActivity extends BaseActivity {
                 if (bean.getEnd_time().equals("0"))
                     time = getString(R.string.forever);
                 else {
-                    try {
-                        Date beginTime = CurrentTime.parse(bean.getStart_time());
-                        Date endTime = CurrentTime.parse(bean.getEnd_time());
-                        float days = (float) (endTime.getTime() - beginTime.getTime()) / (24 * 60 * 60 * 1000);
-                        time = days < 1 ? (endTime.getTime() - beginTime.getTime()) / (60 * 60 * 1000) + "小时" : (int) days + "天";
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
+                    time = bean.getEnd_time();
+//                    try {
+//                        Date beginTime = CurrentTime.parse(bean.getStart_time());
+//                        Date endTime = CurrentTime.parse(bean.getEnd_time());
+//                        float days = (float) (endTime.getTime() - beginTime.getTime()) / (24 * 60 * 60 * 1000);
+//                        time = days < 1 ? (endTime.getTime() - beginTime.getTime()) / (60 * 60 * 1000) + "小时" : (int) days + "天";
+//                    } catch (ParseException e) {
+//                        e.printStackTrace();
+//                    }
                 }
                 viewHolder.setText(R.id.adapter_device_item_tv_pwd, bean.getPassword());
                 viewHolder.setText(R.id.item_device_pwd_tv_time, time);
@@ -312,7 +313,7 @@ public class DevicesOpenPasswordActivity extends BaseActivity {
             case R.id.activity_device_open_pwd_img_add://添加密码
                 if (mData.size() < 7) {
                     AddDevicesOpenPwdActivity.toActivity(this, deviceId, room_id);
-                }else{
+                } else {
                     showToast(R.string.warm_no_to_add_pwd_more);
                 }
                 break;

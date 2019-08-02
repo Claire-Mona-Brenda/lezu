@@ -35,8 +35,7 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:replace="android:name"
-        >
+        tools:replace="android:name">
         <!--android:appComponentFactory=""-->
         <!--tools:replace="android:appComponentFactory"-->
         <!--android:extractNativeLibs="true"-->
@@ -94,9 +93,9 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustNothing" />
         <activity
             android:name=".login.SplashActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/FullScreenTheme"
-            android:launchMode="singleTask">
+            android:theme="@style/FullScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -105,14 +104,14 @@
         </activity>
         <activity
             android:name=".landlord.MainActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/DefaultCityPickerTheme"
-            android:launchMode="singleTask"/>
+            android:theme="@style/DefaultCityPickerTheme" />
         <activity
             android:name=".tenant.TenantMainActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/DefaultCityPickerTheme"
-            android:launchMode="singleTask"/>
+            android:theme="@style/DefaultCityPickerTheme" />
         <activity
             android:name=".landlord.user.incomeprofile.IncomeProfileActivity"
             android:screenOrientation="portrait" />
@@ -131,20 +130,21 @@
         <activity
             android:name=".landlord.user.tenantdeposit.TenantDepositActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".landlord.user.tenant.HouseTenantListActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+        <activity
+            android:name=".landlord.user.tenant.HouseTenantListActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.user.bill.BillActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.user.collection.MyCollectionActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.user.message.MessageActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.user.myorder.MyOrderActivity"
             android:screenOrientation="portrait" />
@@ -156,38 +156,60 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.house.TemporaryPwdActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.house.PaySeverActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.house.HouseEditActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.house.HouseAddActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".landlord.house.activity.AddHouseAddressActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.house.activity.ChooseLocationActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.house.activity.AddHouseInfoActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.house.activity.AddHouseIntroduceActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.house.activity.AddHouseCompleteActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".landlord.house.HouseInfoActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.house.PicViewPagerActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.house.view.HousePublishActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.house.view.SZLSActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.user.userinfo.UserInfoActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.home.tenanter.TenantListActivity"
             android:screenOrientation="portrait" />
@@ -206,20 +228,20 @@
             android:theme="@style/LoginFullScreenTheme" />
         <activity
             android:name=".login.RegistActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".login.UserProtocolActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".login.ForgetPasswordActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.home.bill.BillListActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.user.bill.BillInfoActivity"
             android:screenOrientation="portrait" />
@@ -237,28 +259,28 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.house.CreateOrderActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
 
         </activity>
         <activity
             android:name=".landlord.house.ChooseDateActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.order.PwsOrderDetailsActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
 
         </activity>
         <activity
             android:name=".tenant.findroom.roominfo.ReqRoomActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".tenant.findroom.roominfo.RoomInfoActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".tenant.payrent.view.RoomPayCGActivity"
             android:screenOrientation="portrait" />
@@ -283,8 +305,8 @@
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".landlord.house.view.BailPayActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.house.view.PaySuccessActivity"
             android:screenOrientation="portrait" />
@@ -299,12 +321,12 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".tenant.user.manager.TenantManagerActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.order.OrderDetailActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.user.withdrawcash.SelectBankCardActivity"
             android:screenOrientation="portrait" />
@@ -323,12 +345,14 @@
         <activity
             android:name=".landlord.user.userinfo.CertificationActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".landlord.user.other.AfterProcessActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
-        <activity android:name=".landlord.user.other.DisclaimerActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+        <activity
+            android:name=".landlord.user.other.AfterProcessActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.user.other.DisclaimerActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.order.RefundsActivity"
             android:screenOrientation="portrait" />
@@ -346,12 +370,12 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.user.userinfo.BindMobileActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.gateway.ChoiceMachineActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.gateway.GatewayListActivity"
             android:screenOrientation="portrait" />
@@ -360,36 +384,36 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.gateway.BindGatewayActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.gateway.UserGatewayListActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.gateway.GatewayDetailActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.gateway.EditGatewayActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.gateway.GatewaySettingActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.gateway.ChooseWiFiActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.gateway.GatewayConnectionActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.gateway.HowBindingActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.gateway.ScanQrCodeActivity"
             android:screenOrientation="portrait" />
@@ -401,19 +425,19 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.gateway.BindGatewayDesActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.gateway.DeviceListActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.user.userinfo.IdCardExampleActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".tenant.payrent.TenantOrderDetailActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".login.RegistPasswordActivity"
             android:screenOrientation="portrait" />
@@ -428,15 +452,16 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.user.withdrawcash.RechargeActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.user.setting.WebviewActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
-        <activity android:name=".landlord.user.ProblemActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.user.ProblemActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".tenant.payrent.view.ApplyReTenantActivity"
             android:screenOrientation="portrait" />
@@ -475,8 +500,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".tenant.opendoor.DevicesOpenPasswordActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".tenant.findroom.roominfo.AllCommentActivity"
             android:screenOrientation="portrait" />
@@ -541,8 +566,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.home.WebViewActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.user.userinfo.NewFaceDectectActivity"
             android:screenOrientation="portrait" />
