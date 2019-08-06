@@ -36,15 +36,18 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amap.api.services.core.PoiItem;
 import com.konka.renting.R;
 import com.konka.renting.base.BaseActivity;
 import com.konka.renting.bean.DataInfo;
 import com.konka.renting.bean.HouseConfigBean;
 import com.konka.renting.bean.HouseDetailsInfoBean;
+import com.konka.renting.bean.HouseDetailsInfoBean2;
 import com.konka.renting.bean.UploadPicBean;
 import com.konka.renting.event.UpdataHouseInfoEvent;
 import com.konka.renting.http.SecondRetrofitHelper;
 import com.konka.renting.http.subscriber.CommonSubscriber;
+import com.konka.renting.landlord.house.activity.ChooseLocationActivity;
 import com.konka.renting.landlord.house.data.MissionEnity;
 import com.konka.renting.landlord.house.view.AgentChooseWidget;
 import com.konka.renting.landlord.house.view.RoomTypeChooseWidget;
@@ -106,10 +109,10 @@ public class HouseEditActivity extends BaseActivity {
     TextView tvAreaTips;
     @BindView(R.id.activity_addHouse_edit_area)
     EditText editArea;
-    @BindView(R.id.activity_addHouse_edit_agent)
-    TextView tvAgent;
-    @BindView(R.id.activity_addHouse_edit_confit)
-    EditText editConfit;
+    //    @BindView(R.id.activity_addHouse_edit_agent)
+//    TextView tvAgent;
+//    @BindView(R.id.activity_addHouse_edit_confit)
+//    EditText editConfit;
     @BindView(R.id.activity_editHouse_recylerview_Config)
     RecyclerView mRecyclerConfig;
     @BindView(R.id.activity_addHouse_edit_introduce)
@@ -122,34 +125,30 @@ public class HouseEditActivity extends BaseActivity {
     private final int REQUEST_CODE_CHOOSE_CAMERA = 101;
     private final int REQUEST_CODE_CHOOSE_PHOTO = 102;
     private final int PHOTO_REQUEST_CODE = 111;   //  是否开启相机权限
-    private final int PHOTO_MAX_SUM = 5;   //  添加图片的最大数量
+    private final int PHOTO_MAX_SUM = 6;   //  添加图片的最大数量
     private final int CITY_PROVINCE = 201;//获取省
     private final int CITY_CITY = 202;//获取市
     private final int CITY_DISTRICT = 203;//获取区
 
-    private List<com.konka.renting.bean.CityBean> provinceList = new ArrayList<>();
-    private List<com.konka.renting.bean.CityBean> cityList = new ArrayList<>();
-    private List<com.konka.renting.bean.CityBean> districtList = new ArrayList<>();
-
-    private List<String> provinceStrings = new ArrayList<>();
-    private List<String> cityStrings = new ArrayList<>();
-    private List<String> districtStrings = new ArrayList<>();
+    ArrayList<String> firstList = new ArrayList<>();
+    ArrayList<String> secondList = new ArrayList<>();
+    ArrayList<String> thirdList = new ArrayList<>();
+    int mFirst;
+    int mSecond;
+    int mThird;
 
     private int picCurSum = 0;
+
+    PoiItem mPoiItem;
 
     RxPermissions rxPermissions;
     LinkagePicker picker;
     LinkagePicker.DataProvider provider;
     CommonPopupWindow commonPopupWindow;
 
-    private com.konka.renting.bean.CityBean provinceBean = new com.konka.renting.bean.CityBean();//选择的省份
-    private com.konka.renting.bean.CityBean cityBean = new com.konka.renting.bean.CityBean();//选择的城市
-    private com.konka.renting.bean.CityBean districtBean = new com.konka.renting.bean.CityBean();//选择的区镇
     private List<UploadPicBean> uploadPicBeans = new ArrayList<>();
-    private RoomTypeChooseWidget roomTypeChooseWidget;
-    private AgentChooseWidget agentChooseWidget;
 
-    private HouseDetailsInfoBean bean;
+    private HouseDetailsInfoBean2 bean;
     private CommonAdapter<HouseConfigBean> confitAdapter;
     private List<HouseConfigBean> confitList;
 
@@ -170,7 +169,7 @@ public class HouseEditActivity extends BaseActivity {
         }
     };
 
-    public static void toActivity(Context context, HouseDetailsInfoBean bean) {
+    public static void toActivity(Context context, HouseDetailsInfoBean2 bean) {
         Intent intent = new Intent(context, HouseEditActivity.class);
         intent.putExtra("HouseDetailsInfoBean", bean);
         context.startActivity(intent);
@@ -188,16 +187,23 @@ public class HouseEditActivity extends BaseActivity {
         bean = getIntent().getParcelableExtra("HouseDetailsInfoBean");
 
         confitList = bean.getConfig();
-        roomTypeChooseWidget = new RoomTypeChooseWidget(this, RoomTypeChooseWidget.ROOM_TYPE, tvType);
-        agentChooseWidget = new AgentChooseWidget(this, AgentChooseWidget.AGENT_TYPE, tvAgent);
-
         tvAreaTips.setText(getArea(tvAreaTips.getText().toString() + "/"));
 
+        addRxBusSubscribe(ChooseLocationEvent.class, new Action1<ChooseLocationEvent>() {
+            @Override
+            public void call(ChooseLocationEvent event) {
+                mPoiItem = event.getPoiItem();
+                tvAddress.setText(mPoiItem.getSnippet());
+                tvAddress.setTextColor(getResources().getColor(R.color.text_black));
+                isSumbit();
+            }
+        });
+
         getData();
-        getCity("1", CITY_PROVINCE);
         initEnable();
         initListener();
         initConfit();
+        initPicker();
         getHouseConfig();
         isSumbit();
 
@@ -207,23 +213,21 @@ public class HouseEditActivity extends BaseActivity {
     private void getData() {
 
         editName.setText(bean.getRoom_name());
-        tvType.setTag(bean.getRoom_type().getId());
-        tvType.setText(bean.getRoom_type().getName());
-        tvAgent.setText(bean.getAgent().getAgent_name());
-        tvAgent.setTag(bean.getAgent().getId());
-        provinceBean.setName(bean.getProvince_name().getRegion_name());
-        provinceBean.setRegion_id(bean.getProvince_name().getId() + "");
-        cityBean.setName(bean.getCity_name().getRegion_name());
-        cityBean.setRegion_id(bean.getCity_name().getId() + "");
-        districtBean.setName(bean.getArea_name().getRegion_name());
-        districtBean.setRegion_id(bean.getArea_name().getId() + "");
-        tvAddress.setText(provinceBean.getName() + " " + cityBean.getName() + " " + districtBean.getName());
-        editAddressMore.setText(bean.getAddress());
+        if (bean.getRoom_type() != null && bean.getRoom_type().contains("_")) {
+            String[] t = bean.getRoom_type().split("_");
+            mFirst = Integer.valueOf(t[0]);
+            mSecond = Integer.valueOf(t[1]);
+            mThird = Integer.valueOf(t[2]);
+            tvType.setText(mFirst + " 室 " + mThird + " 厅" + (mSecond == 0 ? "" : " " + mSecond + " 卫"));
+        }
+        if (!TextUtils.isEmpty(bean.getMap_address())) {
+            tvAddress.setText(bean.getMap_address() == null ? "" : bean.getMap_address());
+            editAddressMore.setText(bean.getAddress());
+        }
         editFloor.setText(bean.getFloor() + "");
         eEditFloorSum.setText(bean.getTotal_floor() + "");
         editArea.setText(bean.getMeasure_area() + "");
-        editConfit.setText(bean.getRemark().equals("") ? "无" : bean.getRemark());
-        editIntroduce.setText(bean.getExplain().equals("") ? "无" : bean.getExplain());
+        editIntroduce.setText(TextUtils.isEmpty(bean.getRemark()) ? "无" : bean.getRemark());
 
         List<String> list = bean.getImage();
         int size = list.size();
@@ -235,7 +239,7 @@ public class HouseEditActivity extends BaseActivity {
             uploadPicBean.setUrl(list.get(i));
             uploadPicBeans.add(uploadPicBean);
             MissionEnity missionEnity = new MissionEnity();
-            missionEnity.imgpath = bean.getThumb_image().get(i);
+            missionEnity.imgpath = list.get(i);
             missionEnity.imgname = fileName;
             missionEnity.isNet = true;
             pic.addImg(missionEnity);
@@ -250,13 +254,13 @@ public class HouseEditActivity extends BaseActivity {
             case 2://待安装认证
                 editName.setEnabled(true);
                 tvType.setEnabled(true);
-                tvAgent.setEnabled(true);
+//                tvAgent.setEnabled(true);
                 tvAddress.setEnabled(true);
                 editAddressMore.setEnabled(true);
                 eEditFloorSum.setEnabled(true);
                 editFloor.setEnabled(true);
                 editArea.setEnabled(true);
-                editConfit.setEnabled(true);
+//                editConfit.setEnabled(true);
                 editIntroduce.setEnabled(true);
                 pic.setEnabled(true);
                 break;
@@ -266,13 +270,13 @@ public class HouseEditActivity extends BaseActivity {
             case 6://已入住
                 editName.setEnabled(false);
                 tvType.setEnabled(false);
-                tvAgent.setEnabled(false);
+//                tvAgent.setEnabled(false);
                 tvAddress.setEnabled(false);
                 editAddressMore.setEnabled(false);
                 eEditFloorSum.setEnabled(false);
                 editFloor.setEnabled(false);
                 editArea.setEnabled(false);
-                editConfit.setEnabled(true);
+//                editConfit.setEnabled(true);
                 editIntroduce.setEnabled(true);
                 pic.setEnabled(true);
                 break;
@@ -348,19 +352,6 @@ public class HouseEditActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                isSumbit();
-            }
-        });
-
-        roomTypeChooseWidget.setItemSelect(new RoomTypeChooseWidget.ItemSelect() {
-            @Override
-            public void itemSelect(String type) {
-                isSumbit();
-            }
-        });
-        agentChooseWidget.setItemSelect(new AgentChooseWidget.ItemSelect() {
-            @Override
-            public void itemSelect(String type) {
                 isSumbit();
             }
         });
@@ -474,147 +465,69 @@ public class HouseEditActivity extends BaseActivity {
         return -1;
     }
 
-    private void initCityPicker() {
-        if (provider == null) {
-            provider = new LinkagePicker.DataProvider() {
-
-                @Override
-                public boolean isOnlyTwo() {
-                    return false;
-                }
-
-                @Override
-                public List<String> provideFirstData() {
-                    if (provinceStrings.size() == 0)
-                        provinceStrings.add("");
-                    return provinceStrings;
-                }
-
-                @Override
-                public List<String> provideSecondData(int firstIndex) {
-                    if (cityStrings.size() == 0)
-                        cityStrings.add("");
-                    return cityStrings;
-                }
-
-                @Override
-                public List<String> provideThirdData(int firstIndex, int secondIndex) {
-                    if (districtStrings.size() == 0)
-                        districtStrings.add("");
-                    return districtStrings;
-                }
-
-            };
+    private void initPicker() {
+        for (int i = 0; i < 10; i++) {
+            firstList.add(i + " 室");
+            secondList.add(i + " 卫");
+            thirdList.add(i + " 厅");
         }
-        if (picker == null) {
-            picker = new LinkagePicker(this, provider);
-            picker.setCanLoop(false);
-            picker.setTitleText("选择地区");
-            if (provinceStrings.size() > 0) {
-                picker.setSelectedIndex(provinceStrings.indexOf(provinceBean.getName()), 0);
-            }
-            picker.setOnMoreItemPickListener(new OnMoreItemPickListener<String>() {
-
-                @Override
-                public void onItemPicked(String first, String second, String third) {
-                    tvAddress.setText(first + " " + second + " " + third);
-                    tvAgent.setText("");
-
-                    int p = provinceStrings.indexOf(first);
-                    provinceBean.setName(provinceList.get(p).getName());
-                    provinceBean.setRegion_id(provinceList.get(p).getRegion_id());
-
-                    int c = cityStrings.indexOf(second);
-                    cityBean.setName(cityList.get(c).getName());
-                    cityBean.setRegion_id(cityList.get(c).getRegion_id());
-
-                    int d = districtStrings.indexOf(third);
-                    districtBean.setName(districtList.get(d).getName());
-                    districtBean.setRegion_id(districtList.get(d).getRegion_id());
-                    isSumbit();
-                }
-            });
-            picker.setOnMoreWheelListener(new OnMoreWheelListener() {
-                @Override
-                public void onFirstWheeled(int index, String item) {
-                    if (provinceList.size() > 0)
-                        getCity(provinceList.get(index).getRegion_id(), CITY_CITY);
-                }
-
-                @Override
-                public void onSecondWheeled(int index, String item) {
-                    if (cityList.size() > 0)
-                        getCity(cityList.get(index).getRegion_id(), CITY_DISTRICT);
-                }
-
-                @Override
-                public void onThirdWheeled(int index, String item) {
-
-                }
-            });
-        }
-        picker.show();
+        onLinkagePicker();
     }
 
-    private void getCity(String region_id, final int type) {
-        String str = "1";
-        switch (type) {
-            case CITY_PROVINCE:
-                str = "1";
-                break;
-            case CITY_CITY:
-                str = "2";
-                break;
-            case CITY_DISTRICT:
-                str = "3";
-                break;
-        }
-        Subscription subscription = SecondRetrofitHelper.getInstance().getRegionList(region_id, str)
-                .compose(RxUtil.<DataInfo<List<com.konka.renting.bean.CityBean>>>rxSchedulerHelper())
-                .subscribe(new CommonSubscriber<DataInfo<List<com.konka.renting.bean.CityBean>>>() {
-                    @Override
-                    public void onError(Throwable e) {
-                        e.printStackTrace();
-                    }
+    public void onLinkagePicker() {
+        provider = new LinkagePicker.DataProvider() {
 
-                    @Override
-                    public void onNext(DataInfo<List<com.konka.renting.bean.CityBean>> dataInfo) {
-                        if (dataInfo.success()) {
-                            switch (type) {
-                                case CITY_PROVINCE:
-                                    provinceList.clear();
-                                    provinceList.addAll(dataInfo.data());
-                                    provinceStrings.clear();
-                                    int size1 = provinceList.size();
-                                    for (int i = 0; i < size1; i++) {
-                                        provinceStrings.add(provinceList.get(i).getName());
-                                    }
-                                    break;
-                                case CITY_CITY:
-                                    cityList.clear();
-                                    cityList.addAll(dataInfo.data());
-                                    cityStrings.clear();
-                                    int size2 = cityList.size();
-                                    for (int i = 0; i < size2; i++) {
-                                        cityStrings.add(cityList.get(i).getName());
-                                    }
-                                    picker.updataSecond();
-                                    break;
-                                case CITY_DISTRICT:
-                                    districtList.clear();
-                                    districtList.addAll(dataInfo.data());
-                                    districtStrings.clear();
-                                    int size3 = districtList.size();
-                                    for (int i = 0; i < size3; i++) {
-                                        districtStrings.add(districtList.get(i).getName());
-                                    }
-                                    picker.updataThirdView();
-                                    break;
-                            }
-                        }
-                    }
-                });
-        addSubscrebe(subscription);
+            @Override
+            public boolean isOnlyTwo() {
+                return false;
+            }
+
+            @Override
+            public List<String> provideFirstData() {
+                return firstList;
+            }
+
+            @Override
+            public List<String> provideSecondData(int firstIndex) {
+                return secondList;
+            }
+
+            @Override
+            public List<String> provideThirdData(int firstIndex, int secondIndex) {
+                return thirdList;
+            }
+
+        };
+        picker = new LinkagePicker(this, provider);
+        picker.setCanLoop(false);
+        picker.setCanLinkage(false);
+        picker.setOnMoreItemPickListener(new OnMoreItemPickListener<String>() {
+
+            @Override
+            public void onItemPicked(String first, String second, String third) {
+                mFirst = Integer.valueOf(first.charAt(0) + "");
+                mSecond = Integer.valueOf(second.charAt(0) + "");
+                mThird = Integer.valueOf(third.charAt(0) + "");
+                tvType.setText(first + " " + second + " " + third);
+                isSumbit();
+            }
+        });
+        picker.setOnMoreWheelListener(new OnMoreWheelListener() {
+            @Override
+            public void onFirstWheeled(int index, String item) {
+
+            }
+
+            @Override
+            public void onSecondWheeled(int index, String item) {
+
+            }
+
+            @Override
+            public void onThirdWheeled(int index, String item) {
+
+            }
+        });
 
     }
 
@@ -663,25 +576,17 @@ public class HouseEditActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.iv_back, R.id.activity_addHouse_tv_address, R.id.activity_addHouse_tv_type, R.id.activity_addHouse_edit_agent, R.id.submit})
+    @OnClick({R.id.iv_back, R.id.activity_addHouse_tv_address, R.id.activity_addHouse_tv_type, R.id.submit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
                 showBack();
                 break;
             case R.id.activity_addHouse_tv_address:
-                initCityPicker();
+                ChooseLocationActivity.toActivity(this);
                 break;
             case R.id.activity_addHouse_tv_type:
-                roomTypeChooseWidget.showPopWindow();
-                break;
-            case R.id.activity_addHouse_edit_agent:
-                if (cityBean.getRegion_id() != null) {
-                    agentChooseWidget.setCity_id(cityBean.getRegion_id() == null ? "" : cityBean.getRegion_id());
-                    agentChooseWidget.showPopWindow();
-                } else {
-                    showToast(R.string.add_house_edit_address);
-                }
+                picker.show();
                 break;
             case R.id.submit:
                 sumbit();
@@ -720,23 +625,25 @@ public class HouseEditActivity extends BaseActivity {
             }
 
         }
+        String room_type = mFirst + "_" + mSecond + "_" + mThird;
         showLoadingDialog();
         Subscription subscription = SecondRetrofitHelper.getInstance()
-                .editRoom(bean.getRoom_id(),
+                .editRoom2(bean.getRoom_id(),
                         editName.getText().toString(),
-                        tvType.getTag().toString(),
-                        tvAgent.getTag().toString(),
-                        provinceBean.getRegion_id(),
-                        cityBean.getRegion_id(),
-                        districtBean.getRegion_id(),
-                        editAddressMore.getText().toString(),
-                        eEditFloorSum.getText().toString(),
-                        editFloor.getText().toString(),
-                        editArea.getText().toString(),
+                        room_type,
                         config,
-                        editConfit.getText().toString(),
+                        mPoiItem.getProvinceName(),
+                        mPoiItem.getCityName(),
+                        mPoiItem.getAdName(),
+                        mPoiItem.getSnippet(),
+                        editAddressMore.getText().toString(),
+                        floorSum + "",
+                        floor + "",
+                        editArea.getText().toString(),
                         editIntroduce.getText().toString(),
-                        img)
+                        img,
+                        mPoiItem.getLatLonPoint().getLongitude() + "",
+                        mPoiItem.getLatLonPoint().getLatitude() + "")
                 .compose(RxUtil.<DataInfo>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo>() {
                     @Override
@@ -788,10 +695,6 @@ public class HouseEditActivity extends BaseActivity {
             return false;
         }
         if (editArea.getText().toString().equals("")) {
-            submit.setEnabled(false);
-            return false;
-        }
-        if (tvAgent.getText().toString().equals("")) {
             submit.setEnabled(false);
             return false;
         }

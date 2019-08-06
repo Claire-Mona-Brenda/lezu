@@ -48,7 +48,7 @@
         <TextView
             android:id="@+id/popup_tv_binddevice"
             style="@style/textview_setting_house_info"
-            android:text="@string/house_info_setting_binddevice"
+            android:text="@string/house_info_setting_device_list"
             android:layout_toRightOf="@+id/popup_img_binddevice"/>
         <View
             style="@style/view_setting_house_info"

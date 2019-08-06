@@ -16,6 +16,7 @@ import com.konka.renting.R;
 import com.konka.renting.base.BaseActivity;
 import com.konka.renting.bean.DataInfo;
 import com.konka.renting.bean.HouseDetailsInfoBean;
+import com.konka.renting.bean.HouseDetailsInfoBean2;
 import com.konka.renting.bean.QueryPwdBean;
 import com.konka.renting.http.RetrofitHelper;
 import com.konka.renting.http.SecondRetrofitHelper;
@@ -89,11 +90,11 @@ public class OpenManageActivity extends BaseActivity {
     private CommonSurePopupWindow commonTipsPopup;
 
     int queryTime = QUERY_TIME_MAX;
-    HouseDetailsInfoBean bean;
+    HouseDetailsInfoBean2 bean;
 
-    public static void toActivity(Context context, HouseDetailsInfoBean bean) {
+    public static void toActivity(Context context, HouseDetailsInfoBean2 bean) {
         Intent intent = new Intent(context, OpenManageActivity.class);
-        intent.putExtra(HouseDetailsInfoBean.class.getSimpleName(), bean);
+        intent.putExtra(HouseDetailsInfoBean2.class.getSimpleName(), bean);
         context.startActivity(intent);
     }
 
@@ -104,7 +105,7 @@ public class OpenManageActivity extends BaseActivity {
 
     @Override
     public void init() {
-        bean = getIntent().getParcelableExtra(HouseDetailsInfoBean.class.getSimpleName());
+        bean = getIntent().getParcelableExtra(HouseDetailsInfoBean2.class.getSimpleName());
 
         tvTitle.setText(R.string.house_info_setting_open_manage);
 

@@ -202,7 +202,14 @@ public class HomeFragment extends BaseFragment {
                 viewHolder.setText(R.id.tv_title, bean.getRoom_name());
 
                 String description = getString(R.string.roomlist_description_des);
-                description = String.format(description, bean.getRoom_type(), bean.getMeasure_area() + "", bean.getFloor() + "", bean.getTotal_floor() + "");
+                String room_type ;
+                if (bean.getRoom_type() != null && bean.getRoom_type().contains("_")) {
+                    String[] t = bean.getRoom_type().split("_");
+                    room_type = t[0] + "室" + t[2] + "厅" + (t[1].equals("0") ? "" : t[1] + "卫");
+                } else {
+                    room_type = bean.getRoom_type();
+                }
+                description = String.format(description, room_type, bean.getMeasure_area() + "", bean.getFloor() + "", bean.getTotal_floor() + "");
 
                 viewHolder.setText(R.id.tv_date, description);
 

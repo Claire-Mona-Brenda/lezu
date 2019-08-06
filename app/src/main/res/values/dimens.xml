@@ -93,8 +93,10 @@
     <dimen name="dp_280">280dp</dimen>
     <dimen name="dp_290">290dp</dimen>
     <dimen name="dp_300">300dp</dimen>
+    <dimen name="dp_320">320dp</dimen>
     <dimen name="dp_330">330dp</dimen>
     <dimen name="dp_350">350dp</dimen>
+    <dimen name="dp_363">363dp</dimen>
     <dimen name="dp_400">400dp</dimen>
 
     <dimen name="lib_house_edit_text">13sp</dimen>

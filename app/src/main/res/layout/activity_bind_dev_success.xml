@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_title_text"/>
+
+    <include layout="@layout/include_view_line"/>
+
+    <TextView
+        android:id="@+id/tv_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_50"
+        android:drawablePadding="@dimen/dp_25"
+        android:drawableTop="@mipmap/icon_success"
+        android:gravity="center"
+        android:text="@string/device_bind_success"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/sp_16"
+        />
+
+        <Button
+            android:id="@+id/btn_red_back"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common_item_height"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_70"
+            android:background="@drawable/shape_main_stroke"
+            android:text="@string/common_sure"
+            android:textColor="@color/text_org"
+            android:textSize="@dimen/common_text_size_middle"/>
+        <Button
+            android:id="@+id/btn_pay"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common_item_height"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/dp_20"
+            android:background="@drawable/shape_red"
+            android:text="@string/pay_all_money"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/common_text_size_middle"/>
+</LinearLayout>

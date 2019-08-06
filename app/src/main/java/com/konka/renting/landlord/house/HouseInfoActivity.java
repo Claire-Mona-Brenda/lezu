@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -26,12 +27,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.amap.api.maps.AMap;
+import com.amap.api.maps.CameraUpdate;
+import com.amap.api.maps.CameraUpdateFactory;
+import com.amap.api.maps.MapView;
+import com.amap.api.maps.model.BitmapDescriptorFactory;
+import com.amap.api.maps.model.CameraPosition;
+import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.MarkerOptions;
 import com.google.android.material.appbar.AppBarLayout;
 import com.konka.renting.R;
 import com.konka.renting.base.BaseActivity;
 import com.konka.renting.bean.DataInfo;
 import com.konka.renting.bean.HouseConfigBean;
 import com.konka.renting.bean.HouseDetailsInfoBean;
+import com.konka.renting.bean.HouseDetailsInfoBean2;
 import com.konka.renting.bean.NativePwdBean;
 import com.konka.renting.event.HouseInfoSettingPopupEvent;
 import com.konka.renting.event.LandlordHouseInfoEvent;
@@ -39,6 +49,7 @@ import com.konka.renting.event.UpdataHouseInfoEvent;
 import com.konka.renting.http.SecondRetrofitHelper;
 import com.konka.renting.http.subscriber.CommonSubscriber;
 import com.konka.renting.landlord.house.view.HouseInfoSettingPopupwindow;
+import com.konka.renting.tenant.findroom.map.Constants;
 import com.konka.renting.utils.CacheUtils;
 import com.konka.renting.utils.RxUtil;
 import com.konka.renting.utils.UIUtils;
@@ -86,8 +97,6 @@ public class HouseInfoActivity extends BaseActivity {
     TextView tvArea;
     @BindView(R.id.activity_house_info_tv_floor)
     TextView tvFloor;
-    @BindView(R.id.activity_house_info_tv_confit)
-    TextView tvConfit;
     @BindView(R.id.activity_house_info_recylerview_Config)
     RecyclerView mRecyclerConfig;
     @BindView(R.id.activity_house_info_tv_introduce)
@@ -98,6 +107,8 @@ public class HouseInfoActivity extends BaseActivity {
     RecyclerView recyclerOfficial;
     @BindView(R.id.activity_house_info_tv_address)
     TextView tvAddress;
+    @BindView(R.id.activity_house_info_mapview_address)
+    MapView mapView;
 
     String room_id;
     List<String> imageList;
@@ -105,9 +116,11 @@ public class HouseInfoActivity extends BaseActivity {
     PagerAdapter viewPagerAdapter;
     HouseInfoSettingPopupwindow mPopupwindow;
     KeyPwdPopup keyPwdPopup;
-    HouseDetailsInfoBean bean;
+    HouseDetailsInfoBean2 bean;
     private CommonAdapter<HouseConfigBean> confitAdapter;
     private List<HouseConfigBean> confitList;
+
+    private AMap aMap;
 
     public static void toActivity(Context context, String room_id) {
         Intent intent = new Intent(context, HouseInfoActivity.class);
@@ -186,9 +199,36 @@ public class HouseInfoActivity extends BaseActivity {
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mapView.onCreate(savedInstanceState);// 此方法必须重写
+        aMap = mapView.getMap();
+
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
+        mapView.onResume();
         getData();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mapView.onPause();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mapView.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mapView.onDestroy();
     }
 
     private void initConfit() {
@@ -224,9 +264,9 @@ public class HouseInfoActivity extends BaseActivity {
 
 
     private void getData() {
-        Subscription subscription = (SecondRetrofitHelper.getInstance().getHouseInfo(room_id)
-                .compose(RxUtil.<DataInfo<HouseDetailsInfoBean>>rxSchedulerHelper())
-                .subscribe(new CommonSubscriber<DataInfo<HouseDetailsInfoBean>>() {
+        Subscription subscription = (SecondRetrofitHelper.getInstance().getHouseInfo2(room_id)
+                .compose(RxUtil.<DataInfo<HouseDetailsInfoBean2>>rxSchedulerHelper())
+                .subscribe(new CommonSubscriber<DataInfo<HouseDetailsInfoBean2>>() {
                     @Override
                     public void onError(Throwable e) {
                         doFailed();
@@ -234,7 +274,7 @@ public class HouseInfoActivity extends BaseActivity {
 
                     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
                     @Override
-                    public void onNext(DataInfo<HouseDetailsInfoBean> dataInfo) {
+                    public void onNext(DataInfo<HouseDetailsInfoBean2> dataInfo) {
                         if (dataInfo.success()) {
                             imgSetting.setVisibility(View.VISIBLE);
                             bean = dataInfo.data();
@@ -245,13 +285,16 @@ public class HouseInfoActivity extends BaseActivity {
                             tvRentPay.setText("¥" + (int) Float.parseFloat(bean.getHousing_price()));
                             tvRentPayUnit.setText(bean.getType() == 1 ? "/天" : "/月");
                             tvCreateTime.setText(bean.getTime());
-                            tvType.setText(bean.getRoom_type().getName());
+                            if (bean.getRoom_type() != null && bean.getRoom_type().contains("_")) {
+                                String[] t = bean.getRoom_type().split("_");
+                                tvType.setText(t[0] + "室" + t[2] + "厅" + (t[1].equals("0") ? "" : t[1] + "卫"));
+                            } else {
+                                tvType.setText(bean.getRoom_type());
+                            }
                             tvArea.setText(getArea(bean.getMeasure_area() + ""));
                             tvFloor.setText(bean.getFloor() + "/" + bean.getTotal_floor() + getString(R.string.house_info_floor_unit));
-                            tvConfit.setText((bean.getRemark() == null || bean.getRemark().equals("")) ? "暂无信息" : bean.getRemark());
-
-                            tvIntroduce.setText(bean.getExplain().equals("") ? "暂无信息" : bean.getExplain());
-                            tvAddress.setText(bean.getProvince_name().getRegion_name() + bean.getCity_name().getRegion_name() + bean.getArea_name().getRegion_name() + bean.getAddress());
+                            tvIntroduce.setText(TextUtils.isEmpty(bean.getRemark()) ? "暂无信息" : bean.getRemark());
+                            tvAddress.setText(bean.getProvince() + bean.getCity() + bean.getArea() + bean.getMap_address() + bean.getAddress());
                             if (bean.getRoom_status() >= 4) {
                                 tvRentType.setText(bean.getType() == 1 ? R.string.short_rent : R.string.long_rent);
                                 tvRentType.setSelected(bean.getType() == 2);
@@ -303,7 +346,7 @@ public class HouseInfoActivity extends BaseActivity {
                                 confitAdapter.notifyDataSetChanged();
                             if (mPopupwindow != null)
                                 mPopupwindow.setBean(bean);
-
+                            changeCamera();
                         } else {
                             showToast(dataInfo.msg());
                         }
@@ -323,6 +366,17 @@ public class HouseInfoActivity extends BaseActivity {
                 showSettingDialog();
                 break;
         }
+    }
+
+    private void changeCamera() {
+        LatLng latLng = new LatLng(Double.valueOf(bean.getLat()), Double.valueOf(bean.getLng()));
+        aMap.moveCamera(
+                CameraUpdateFactory.newCameraPosition(new CameraPosition(
+                        latLng, 15, 30, 30)));
+        aMap.clear();
+        aMap.addMarker(new MarkerOptions().position(latLng)
+                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.location_icon)));
+
     }
 
     private void showSettingDialog() {

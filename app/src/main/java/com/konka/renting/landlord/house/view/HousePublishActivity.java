@@ -137,17 +137,10 @@ public class HousePublishActivity extends BaseActivity implements CompoundButton
     }
 
     public void submitData() {
-        Subscription subscription = (SecondRetrofitHelper.getInstance().publishHouse(
+        Subscription subscription = (SecondRetrofitHelper.getInstance().publishHouse2(
                 room_id,
                 type + "",
-                editMoney.getText().toString(),
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                ""
+                editMoney.getText().toString()
         )
                 .compose(RxUtil.<DataInfo>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo>() {

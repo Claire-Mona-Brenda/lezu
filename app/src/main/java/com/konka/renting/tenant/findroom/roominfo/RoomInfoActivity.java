@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,6 +20,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.amap.api.maps.AMap;
+import com.amap.api.maps.CameraUpdateFactory;
+import com.amap.api.maps.MapView;
+import com.amap.api.maps.model.BitmapDescriptorFactory;
+import com.amap.api.maps.model.CameraPosition;
+import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.MarkerOptions;
 import com.google.android.material.appbar.AppBarLayout;
 import com.konka.renting.R;
 import com.konka.renting.base.BaseActivity;
@@ -62,8 +70,9 @@ public class RoomInfoActivity extends BaseActivity implements OnClickListener {
     TextView tvRoomName;
     TextView room_no;
     TextView comment_num;
-    TextView tvImgSum, tvRoomMoney, tvRoomMoneyUnit, tvRentType, tvRoomPublicTime, tvRoomType, tvRoomArea, tvRoomFloor, tvRoomIntroduce, tvRoomConfit, tvRoomAddress;
+    TextView tvImgSum, tvRoomMoney, tvRoomMoneyUnit, tvRentType, tvRoomPublicTime, tvRoomType, tvRoomArea, tvRoomFloor, tvRoomIntroduce, tvRoomAddress;
     //    RoomInfo roomInfo;
+    MapView mapView;
     PicstandardWidget picstandardWidget;
     AutoGridView autoGridView;
     private CompositeSubscription mCompositeSubscription;
@@ -75,6 +84,8 @@ public class RoomInfoActivity extends BaseActivity implements OnClickListener {
     PagerAdapter viewPagerAdapter;
     private CommonAdapter<HouseConfigBean> confitAdapter;
     private List<HouseConfigBean> confitList;
+
+    AMap aMap;
 
     public static void toActivity(Context context, String roomid) {
         Intent intent = new Intent(context, RoomInfoActivity.class);
@@ -130,6 +141,39 @@ public class RoomInfoActivity extends BaseActivity implements OnClickListener {
         });
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mapView.onCreate(savedInstanceState);// 此方法必须重写
+        aMap = mapView.getMap();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mapView.onResume();
+        getData();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mapView.onPause();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mapView.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mapView.onDestroy();
+    }
+
     private void initData() {
         mAppBarLayout = findViewById(R.id.activity_room_info_appbarlayout);
         picstandardWidget = findViewById(R.id.stantard);
@@ -148,9 +192,9 @@ public class RoomInfoActivity extends BaseActivity implements OnClickListener {
         tvRoomArea = (TextView) findViewById(R.id.tv_room_area);
         tvRoomFloor = (TextView) findViewById(R.id.tv_room_floor);
         tvRoomIntroduce = (TextView) findViewById(R.id.tv_room_introduce);
-        tvRoomConfit = (TextView) findViewById(R.id.tv_room_confit);
         mRecyclerConfig = (RecyclerView) findViewById(R.id.activity_room_info_recylerview_Config);
         tvRoomAddress = (TextView) findViewById(R.id.tv_room_address);
+        mapView = findViewById(R.id.room_info_mapview);
         room_no = (TextView) findViewById(R.id.room_no);
         comment_num = (TextView) findViewById(R.id.comment_num);
         autoGridView = (AutoGridView) findViewById(R.id.auto_grid);
@@ -188,6 +232,7 @@ public class RoomInfoActivity extends BaseActivity implements OnClickListener {
                                 confitList.addAll(dataInfo.data().getConfig());
                             }
                             bindData();
+                            changeCamera();
                         }
                     }
                 }));
@@ -209,11 +254,15 @@ public class RoomInfoActivity extends BaseActivity implements OnClickListener {
     public void bindData() {
         bottom_views.setVisibility(View.VISIBLE);
         tvRoomPublicTime.setText(infoBean.getTime().split(" ")[0] + " 发布");
-        tvRoomType.setText(infoBean.getRoom_type());
+        if (infoBean.getRoom_type() != null && infoBean.getRoom_type().contains("_")) {
+            String[] t = infoBean.getRoom_type().split("_");
+            tvRoomType.setText(t[0] + "室" + t[2] + "厅" + (t[1].equals("0") ? "" : t[1] + "卫"));
+        } else {
+            tvRoomType.setText(infoBean.getRoom_type());
+        }
         tvRoomArea.setText(infoBean.getMeasure_area() + "平米");
         tvRoomFloor.setText(infoBean.getFloor() + "/" + infoBean.getTotal_floor() + "层");
-        tvRoomIntroduce.setText(infoBean.getExplain());
-        tvRoomConfit.setText(infoBean.getRemark() == null ? "" : infoBean.getRemark());
+        tvRoomIntroduce.setText(TextUtils.isEmpty(infoBean.getRemark())?"无":infoBean.getRemark());
         tvRoomAddress.setText(infoBean.getAddress());
         room_no.setText(infoBean.getRoom_no());
         tvImgSum.setText("1/" + imageList.size());
@@ -378,6 +427,18 @@ public class RoomInfoActivity extends BaseActivity implements OnClickListener {
         }
 
     }
+
+    private void changeCamera() {
+        LatLng latLng = new LatLng(Double.valueOf(infoBean.getLat()), Double.valueOf(infoBean.getLng()));
+        aMap.moveCamera(
+                CameraUpdateFactory.newCameraPosition(new CameraPosition(
+                        latLng, 15, 30, 30)));
+        aMap.clear();
+        aMap.addMarker(new MarkerOptions().position(latLng)
+                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.location_icon)));
+
+    }
+
 
     public void req_join() {
         Subscription subscription = SecondRetrofitHelper.getInstance().jointRentApply(infoBean.getRoom_id())

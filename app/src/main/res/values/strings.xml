@@ -490,6 +490,7 @@
 
     <string name="add_success_1">添加成功！</string>
     <string name="bind_clock_dev">绑定门锁设备</string>
+    <string name="bind_dev">绑定设备</string>
     <string name="house_info_start_rent">发布房产</string>
 
     <!--房产详情-->
@@ -507,6 +508,7 @@
     <string name="house_info_setting_paysetting">安装付费</string>
     <string name="house_info_setting_edit">编辑房产</string>
     <string name="house_info_setting_binddevice">绑定设备</string>
+    <string name="house_info_setting_device_list">设备列表</string>
     <string name="house_info_setting_gateway">网关列表</string>
     <string name="house_info_setting_key_pwd">钥匙孔密码</string>
     <string name="house_info_setting_open_manage">开门管理</string>
@@ -592,6 +594,7 @@
     <!--支付-->
     <string name="pay_setting">安装付费</string>
     <string name="pay_sever_title">服务续费</string>
+    <string name="pay_all_money">缴纳费用</string>
     <string name="pay">付款</string>
     <string name="pay_choose_type">选择支付方式</string>
     <string name="pay_choose_sever_type">选择续费套餐</string>
@@ -601,6 +604,16 @@
     <string name="warm_no_choose_sever_type">未选择支付套餐</string>
 
     <string name="tips_pay_other">是否使用钱包余额支付？</string>
+    
+    <string name="install_pay">设备安装费</string>
+    <string name="install_pay_code">推广码</string>
+    <string name="please_input_install_pay_code">请输入推广码</string>
+    <string name="discounts">优惠</string>
+    <string name="total">总共</string>
+    <string name="all_total">合计：</string>
+
+    <string name="error_no_install_pay">未获取到安装费信息</string>
+    <string name="error_no_choose_sever_type">未获取到服务费套餐信息</string>
 
     <!--我的-->
     <string name="my_money">我的资产</string>
@@ -786,6 +799,17 @@
     <string name="please_gateway_restart_fail">网关网络通讯状态差，网关重启失败</string>
     <string name="popup_sure_change_wifi">确定要修改Wi-Fi吗？</string>
     <string name="popup_sure_change_same_wifi">WiFi未作修改,是否重复设置？</string>
+
+    <!--设备-->
+    <string name="no_gateway">还没有网关</string>
+    <string name="no_dev">还没有设备</string>
+    <string name="add_gateway">添加网关</string>
+    <string name="add_dev">添加设备</string>
+    <string name="my_gateway">我的网关</string>
+    <string name="my_dev">我的设备</string>
+    <string name="my_dev_name">出租屋智能门锁</string>
+    <string name="my_dev_type">门锁</string>
+    <string name="please_add_gateway">请先添加网关</string>
 
     <!--如何绑定设备操作-->
     <string name="title_how_to_bind">设备绑定</string>

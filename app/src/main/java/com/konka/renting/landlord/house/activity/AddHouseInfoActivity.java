@@ -7,6 +7,7 @@ import android.text.Editable;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -80,16 +81,16 @@ public class AddHouseInfoActivity extends BaseActivity {
 
     PoiItem mPoiItem;
     String address;
+    List<HouseConfigBean> configList;
+    CheckHouseConfigPopup mConfigPopup;
     ArrayList<String> firstList = new ArrayList<>();
     ArrayList<String> secondList = new ArrayList<>();
     ArrayList<String> thirdList = new ArrayList<>();
-    List<HouseConfigBean> configList;
-    CheckHouseConfigPopup mConfigPopup;
     int mFirst;
     int mSecond;
     int mThird;
 
-    public static void toActivity(Context context, PoiItem mPoiItem,String address) {
+    public static void toActivity(Context context, PoiItem mPoiItem, String address) {
         Intent intent = new Intent(context, AddHouseInfoActivity.class);
         intent.putExtra(PoiItem.class.getSimpleName(), mPoiItem);
         intent.putExtra("address", address);
@@ -104,7 +105,7 @@ public class AddHouseInfoActivity extends BaseActivity {
     @Override
     public void init() {
         mPoiItem = getIntent().getParcelableExtra(PoiItem.class.getSimpleName());
-        address=getIntent().getStringExtra("address");
+        address = getIntent().getStringExtra("address");
 
         tvTitle.setText(R.string.add_house);
         tvTitle.setTypeface(Typeface.SANS_SERIF);
@@ -284,7 +285,7 @@ public class AddHouseInfoActivity extends BaseActivity {
             }
 
         }
-        AddHouseIntroduceActivity.toActivity(this, mPoiItem,address, name,room_type,config,floorSum,floor,area );
+        AddHouseIntroduceActivity.toActivity(this, mPoiItem, address, name, room_type, config, floorSum, floor, area);
     }
 
     private int getFloor(String floor) {
@@ -330,9 +331,9 @@ public class AddHouseInfoActivity extends BaseActivity {
 
             @Override
             public void onItemPicked(String first, String second, String third) {
-                mFirst = Integer.valueOf(first.charAt(0));
-                mSecond = Integer.valueOf(second.charAt(0));
-                mThird = Integer.valueOf(third.charAt(0));
+                mFirst = Integer.valueOf(first.charAt(0)+"");
+                mSecond = Integer.valueOf(second.charAt(0)+"");
+                mThird = Integer.valueOf(third.charAt(0)+"");
                 mTvHouseType.setText(first + " " + second + " " + third);
             }
         });

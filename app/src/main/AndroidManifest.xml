@@ -188,7 +188,19 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".landlord.house.activity.AddHouseCompleteActivity"
+        android:name=".landlord.house.activity.AddHouseCompleteActivity"
+        android:launchMode="singleTop"
+        android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.house.activity.DevListActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.house.activity.BindDevSuccessActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.house.activity.PayAllMoneyActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
 

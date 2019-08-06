@@ -1,6 +1,7 @@
 package com.konka.renting.http.api;
 
 import com.konka.renting.bean.AddBankInfo;
+import com.konka.renting.bean.AddHouseBean;
 import com.konka.renting.bean.AddRentingBean;
 import com.konka.renting.bean.AgentBean;
 import com.konka.renting.bean.AlipayBean;
@@ -55,6 +56,7 @@ import com.konka.renting.bean.PageDataBean;
 import com.konka.renting.bean.PayBean;
 import com.konka.renting.bean.PayOrder;
 import com.konka.renting.bean.ProfileBean;
+import com.konka.renting.bean.PromotionCodeBean;
 import com.konka.renting.bean.PwdBean;
 import com.konka.renting.bean.PwsOrderDetailsBean;
 import com.konka.renting.bean.QueryPwdBean;
@@ -114,10 +116,10 @@ import rx.Observable;
 public interface KonkaApiService {
 
     //    String HOST = "http://let.tuokemao.com/";
-    String HOST = "https://let.youlejiakeji.com/";
-//    String HOST = "https://lettest.youlejiakeji.com/";
-//    String SecondHost = "https://lezuxiaowo-test.youlejiakeji.com";
-    String SecondHost = "https://lezuxiaowo.youlejiakeji.com";
+//    String HOST = "https://let.youlejiakeji.com/";
+    String HOST = "https://lettest.youlejiakeji.com/";
+    String SecondHost = "https://lezuxiaowo-test.youlejiakeji.com";
+//    String SecondHost = "https://lezuxiaowo.youlejiakeji.com";
 
 
     @FormUrlEncoded
@@ -1232,7 +1234,6 @@ public interface KonkaApiService {
 
     /**
      * 获取开通城市列表
-     *
      */
     @GET("index.php/api/region/getCityList")
     Observable<DataInfo<List<OpenCityBean>>> getCityList();
@@ -1285,26 +1286,6 @@ public interface KonkaApiService {
             @Field("explain") String explain,
             @Field("image") String image);
 
-    /**
-     * 申请添加房产(2.3.4版本以后)
-     */
-    @FormUrlEncoded
-    @POST("index.php/api/room/add_2_3_4")
-    Observable<DataInfo> addRoom2(
-            @Field("room_name") String room_name,
-            @Field("room_type") String room_type,
-            @Field("room_config_id") String room_config_id,
-            @Field("province") String province,
-            @Field("city") String city,
-            @Field("area") String area,
-            @Field("address") String address,
-            @Field("total_floor") String total_floor,
-            @Field("floor") String floor,
-            @Field("measure_area") String measure_area,
-            @Field("remark") String remark,
-            @Field("image") String image,
-            @Field("lng") String lng,
-            @Field("lat") String lat);
 
     /**
      * 获取房东端房产列表
@@ -1313,6 +1294,7 @@ public interface KonkaApiService {
      */
     @GET("index.php/api/room/index")
     Observable<DataInfo<PageDataBean<HouseOrderInfoBean>>> getRoomList(@Query("page") String page);
+
 
     /**
      * 房东端房产详情
@@ -1323,14 +1305,6 @@ public interface KonkaApiService {
     @POST("index.php/api/room/info")
     Observable<DataInfo<HouseDetailsInfoBean>> getHouseInfo(@Field("room_id") String room_id);
 
-    /**
-     * 房东端房产详情(2.3.4版本以后)
-     *
-     * @room_id 房屋id
-     */
-    @FormUrlEncoded
-    @POST("index.php/api/room/info_2_3_4")
-    Observable<DataInfo<HouseDetailsInfoBean2>> getHouseInfo2(@Field("room_id") String room_id);
 
     /**
      * 申请删除房产
@@ -1363,27 +1337,6 @@ public interface KonkaApiService {
             @Field("explain") String explain,
             @Field("image") String image);
 
-    /**
-     * 编辑房产（2.3.4版本以后）
-     */
-    @FormUrlEncoded
-    @POST("index.php/api/room/edit_2_3_4")
-    Observable<DataInfo> editRoom2(
-            @Field("room_id") String room_id,
-            @Field("room_name") String room_name,
-            @Field("room_type_id") String room_type,
-            @Field("room_config_id") String room_config_id,
-            @Field("province") String province,
-            @Field("city") String city,
-            @Field("area") String area,
-            @Field("address") String address,
-            @Field("total_floor") String total_floor,
-            @Field("floor") String floor,
-            @Field("measure_area") String measure_area,
-            @Field("remark") String remark,
-            @Field("image") String image,
-            @Field("lng") String lng,
-            @Field("lat") String lat);
 
     /**
      * 发布房产
@@ -1916,8 +1869,8 @@ public interface KonkaApiService {
     @FormUrlEncoded
     @POST("index.php/api/device/finger_ic_list")
     Observable<DataInfo<PageDataBean<ClockSetManagerItemBean>>> getFingerIcList(@Field("room_id") String room_id,
-                                                                  @Field("type") String type,
-                                                                  @Field("page") String page);
+                                                                                @Field("type") String type,
+                                                                                @Field("page") String page);
 
     /**
      * ic卡 指纹 重命名
@@ -1952,7 +1905,7 @@ public interface KonkaApiService {
     @FormUrlEncoded
     @POST("index.php/api/device/password_refresh")
     Observable<DataInfo<QueryPwdBean>> passwordRefresh(@Field("room_id") String room_id,
-                                               @Field("pwd_type") String pwd_type);
+                                                       @Field("pwd_type") String pwd_type);
 
     /**
      * 设置门锁密码
@@ -2030,6 +1983,106 @@ public interface KonkaApiService {
     @FormUrlEncoded
     @POST("index.php/api/device/sync_service_expire")
     Observable<DataInfo> sync_service_expire(@Field("room_id") String room_id,
-                                                                 @Field("device_id") String device_id);
+                                             @Field("device_id") String device_id);
 
+
+    /*********************************************2.3.4版本以后新接口*****************************************************/
+    /**
+     * 申请添加房产(2.3.4版本以后)
+     */
+    @FormUrlEncoded
+    @POST("index.php/api/room/add_2_3_4")
+    Observable<DataInfo<AddHouseBean>> addRoom2(
+            @Field("room_name") String room_name,
+            @Field("room_type") String room_type,
+            @Field("room_config_id") String room_config_id,
+            @Field("province") String province,
+            @Field("city") String city,
+            @Field("area") String area,
+            @Field("map_address") String map_address,
+            @Field("address") String address,
+            @Field("total_floor") String total_floor,
+            @Field("floor") String floor,
+            @Field("measure_area") String measure_area,
+            @Field("remark") String remark,
+            @Field("image") String image,
+            @Field("lng") String lng,
+            @Field("lat") String lat);
+
+    /**
+     * 编辑房产（2.3.4版本以后）
+     */
+    @FormUrlEncoded
+    @POST("index.php/api/room/edit_2_3_4")
+    Observable<DataInfo> editRoom2(
+            @Field("room_id") String room_id,
+            @Field("room_name") String room_name,
+            @Field("room_type") String room_type,
+            @Field("room_config_id") String room_config_id,
+            @Field("province") String province,
+            @Field("city") String city,
+            @Field("area") String area,
+            @Field("map_address") String map_address,
+            @Field("address") String address,
+            @Field("total_floor") String total_floor,
+            @Field("floor") String floor,
+            @Field("measure_area") String measure_area,
+            @Field("remark") String remark,
+            @Field("image") String image,
+            @Field("lng") String lng,
+            @Field("lat") String lat);
+
+    /**
+     * 获取房东端房产列表(2.3.4版本以后)
+     *
+     * @page 页数 默认1
+     */
+    @GET("index.php/api/room/list_2_3_4")
+    Observable<DataInfo<PageDataBean<HouseOrderInfoBean>>> getRoomList2(@Query("page") String page,
+                                                                        @Query("keyword") String keyword);
+
+    /**
+     * 房东端房产详情(2.3.4版本以后)
+     *
+     * @room_id 房屋id
+     */
+    @FormUrlEncoded
+    @POST("index.php/api/room/info_2_3_4")
+    Observable<DataInfo<HouseDetailsInfoBean2>> getHouseInfo2(@Field("room_id") String room_id);
+
+    /**
+     * 发布房产(2.3.4版本以后)
+     */
+    @FormUrlEncoded
+    @POST("index.php/api/room/publish_2_3_4")
+    Observable<DataInfo> publishHouse2(
+            @Field("room_id") String room_id,//房屋id
+            @Field("type") String type,//1短租 2长租
+            @Field("housing_price") String housing_price//租金
+    );
+
+    /**
+     * 获取房屋配置列表(2.3.4版本以后)
+     */
+    @GET("index.php/api/room/roomConfig_2_3_4")
+    Observable<DataInfo<List<HouseConfigBean>>> getRoomConfigList2();
+
+    /**
+     * 推广码查询(2.3.4版本以后)
+     *
+     * @code 推广码
+     */
+    @FormUrlEncoded
+    @POST("index.php/api/fee/promotionCodeDetail")
+    Observable<DataInfo<PromotionCodeBean>> promotionCodeDetail(@Field("code") String code);
+
+    /**
+     * 安装费支付(2.3.4版本以后)
+     */
+    @FormUrlEncoded
+    @POST("index.php/api/pay/installOrderPay_2_3_4")
+    Observable<DataInfo<PayBean>> installOrderPay2(@Field("payment") String payment,//1微信 2支付宝 3余额
+                                                   @Field("room_id") String room_id,//房屋id
+                                                   @Field("code_id") String code_id,//推广码id
+                                                   @Field("service_charge_id") String service_charge_id);//服务费id
 }

@@ -16,9 +16,11 @@ import com.konka.renting.bean.DataInfo;
 import com.konka.renting.bean.GatewayInfo;
 import com.konka.renting.bean.MachineInfo;
 import com.konka.renting.bean.ServerDeviceInfo;
+import com.konka.renting.event.BindDevSuccessEvent;
 import com.konka.renting.event.RefreshDeviceEvent;
 import com.konka.renting.http.SecondRetrofitHelper;
 import com.konka.renting.http.subscriber.CommonSubscriber;
+import com.konka.renting.landlord.house.activity.BindDevSuccessActivity;
 import com.konka.renting.utils.RxBus;
 import com.konka.renting.utils.RxUtil;
 
@@ -61,12 +63,16 @@ public class GatewayConnectionActivity extends BaseActivity {
     private GatewayInfo mGatewayInfo;
 
     private String mRoomId;
+    boolean is_Install;
+    boolean isFirst;
 
-    public static void toActivity(Context context, GatewayInfo gatewayInfo, MachineInfo machineInfo, String room_id) {
+    public static void toActivity(Context context, GatewayInfo gatewayInfo, MachineInfo machineInfo, String room_id, boolean is_Install, boolean isFirst) {
         Intent intent = new Intent(context, GatewayConnectionActivity.class);
         intent.putExtra(MachineInfo.class.getSimpleName(), machineInfo);
         intent.putExtra(GatewayInfo.class.getSimpleName(), gatewayInfo);
         intent.putExtra("room_id", room_id);
+        intent.putExtra("is_Install", is_Install);
+        intent.putExtra("isFirst", isFirst);
         context.startActivity(intent);
     }
 
@@ -105,6 +111,8 @@ public class GatewayConnectionActivity extends BaseActivity {
         mMachineInfo = getIntent().getParcelableExtra(MachineInfo.class.getSimpleName());
         mGatewayInfo = getIntent().getParcelableExtra(GatewayInfo.class.getSimpleName());
         mRoomId = getIntent().getStringExtra("room_id");
+        is_Install = getIntent().getBooleanExtra("is_Install", false);
+        isFirst = getIntent().getBooleanExtra("isFirst", false);
 
         imgGateway.setImageResource(Integer.valueOf(mGatewayInfo.getGateway_version()) > 3 ? R.mipmap.wangguan_2_116px_png : R.mipmap.wangguan_1_116px_png);
         tvControl.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
@@ -250,9 +258,10 @@ public class GatewayConnectionActivity extends BaseActivity {
                     @Override
                     public void onNext(DataInfo dataInfo) {
                         if (dataInfo.success()) {
-                            doSuccess();
                             RxBus.getDefault().post(new RefreshDeviceEvent());
-                            BindGatewaySuccessActivity.toActivity(mActivity);
+                            if (isFirst)
+                                RxBus.getDefault().post(new BindDevSuccessEvent());
+                            BindDevSuccessActivity.toActivity(mActivity, mRoomId, is_Install);
                             finish();
                         } else {
                             showToast(dataInfo.msg());

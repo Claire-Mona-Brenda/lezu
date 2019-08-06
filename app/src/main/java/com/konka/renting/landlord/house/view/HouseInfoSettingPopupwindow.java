@@ -18,6 +18,7 @@ import androidx.appcompat.app.AlertDialog;
 import com.konka.renting.R;
 import com.konka.renting.bean.DataInfo;
 import com.konka.renting.bean.HouseDetailsInfoBean;
+import com.konka.renting.bean.HouseDetailsInfoBean2;
 import com.konka.renting.event.LandlordHouseInfoEvent;
 import com.konka.renting.event.UpdataHouseInfoEvent;
 import com.konka.renting.http.SecondRetrofitHelper;
@@ -27,6 +28,7 @@ import com.konka.renting.landlord.gateway.UserGatewayListActivity;
 import com.konka.renting.landlord.house.HouseEditActivity;
 import com.konka.renting.landlord.house.OpenManageActivity;
 import com.konka.renting.landlord.house.TemporaryPwdActivity;
+import com.konka.renting.landlord.house.activity.DevListActivity;
 import com.konka.renting.utils.RxBus;
 import com.konka.renting.utils.RxUtil;
 
@@ -34,7 +36,7 @@ import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
 public class HouseInfoSettingPopupwindow extends PopupWindow implements View.OnClickListener {
-    HouseDetailsInfoBean bean;
+    HouseDetailsInfoBean2 bean;
     Context mContext;
     private View mView;
     private RelativeLayout rlPay;//安装付费
@@ -47,7 +49,7 @@ public class HouseInfoSettingPopupwindow extends PopupWindow implements View.OnC
 
     protected CompositeSubscription mCompositeSubscription;
 
-    public HouseInfoSettingPopupwindow(Context context, HouseDetailsInfoBean infoBean) {
+    public HouseInfoSettingPopupwindow(Context context, HouseDetailsInfoBean2 infoBean) {
         super(context);
         this.bean = infoBean;
         this.mContext = context;
@@ -76,7 +78,7 @@ public class HouseInfoSettingPopupwindow extends PopupWindow implements View.OnC
 
     }
 
-    public void setBean(HouseDetailsInfoBean bean) {
+    public void setBean(HouseDetailsInfoBean2 bean) {
         this.bean = bean;
     }
 
@@ -84,62 +86,96 @@ public class HouseInfoSettingPopupwindow extends PopupWindow implements View.OnC
         switch (status) {
             case 0:
             case 1://未缴纳安装费
-                rlPay.setVisibility(View.VISIBLE);
-                rlEdit.setVisibility(View.VISIBLE);
-                rlBind.setVisibility(View.GONE);
-                rlGateway.setVisibility(View.GONE);
-                rlOpenManage.setVisibility(View.GONE);
-                rlDel.setVisibility(View.VISIBLE);
-                rlPwd.setVisibility(View.GONE);
-                break;
+//                rlPay.setVisibility(View.VISIBLE);
+//                rlEdit.setVisibility(View.VISIBLE);
+//                rlBind.setVisibility(View.VISIBLE);
+//                rlGateway.setVisibility(View.GONE);
+//                rlOpenManage.setVisibility(View.GONE);
+//                rlDel.setVisibility(View.VISIBLE);
+//                rlPwd.setVisibility(View.GONE);
+//                break;
             case 2://待安装认证
-                rlPay.setVisibility(View.GONE);
-                rlEdit.setVisibility(View.VISIBLE);
-                rlBind.setVisibility(View.VISIBLE);
-                rlGateway.setVisibility(TextUtils.isEmpty(bean.getDevice_id()) ? View.VISIBLE : View.GONE);
-                rlOpenManage.setVisibility(View.VISIBLE);
-                rlDel.setVisibility(View.VISIBLE);
-                rlPwd.setVisibility(View.GONE);
-                break;
+//                rlPay.setVisibility(View.GONE);
+//                rlEdit.setVisibility(View.VISIBLE);
+//                rlBind.setVisibility(View.VISIBLE);
+//                rlGateway.setVisibility( View.GONE);
+//                rlOpenManage.setVisibility(View.VISIBLE);
+//                rlDel.setVisibility(View.VISIBLE);
+//                rlPwd.setVisibility(View.GONE);
+//                break;
             case 3://待发布
-                rlPay.setVisibility(View.GONE);
+
                 rlEdit.setVisibility(View.VISIBLE);
                 rlBind.setVisibility(View.VISIBLE);
-                rlGateway.setVisibility(TextUtils.isEmpty(bean.getDevice_id()) ? View.VISIBLE : View.GONE);
-                rlOpenManage.setVisibility(View.VISIBLE);
+                rlGateway.setVisibility(View.GONE);
+
                 rlDel.setVisibility(View.VISIBLE);
                 rlPwd.setVisibility(View.GONE);
+                if (TextUtils.isEmpty(bean.getDevice_id())) {
+                    rlOpenManage.setVisibility(View.GONE);
+                    rlPay.setVisibility(View.GONE);
+                } else if (bean.getIs_install() == 0) {
+                    rlOpenManage.setVisibility(View.VISIBLE);
+                    rlPay.setVisibility(View.GONE);
+                }else{
+                    rlOpenManage.setVisibility(View.VISIBLE);
+                    rlPay.setVisibility(View.VISIBLE);
+                }
                 break;
             case 4://已发布
-                rlPay.setVisibility(View.GONE);
+                if (TextUtils.isEmpty(bean.getDevice_id())) {
+                    rlOpenManage.setVisibility(View.GONE);
+                    rlPay.setVisibility(View.GONE);
+                } else if (bean.getIs_install() == 0) {
+                    rlOpenManage.setVisibility(View.VISIBLE);
+                    rlPay.setVisibility(View.GONE);
+                }else{
+                    rlOpenManage.setVisibility(View.VISIBLE);
+                    rlPay.setVisibility(View.VISIBLE);
+                }
                 rlEdit.setVisibility(View.GONE);
                 rlBind.setVisibility(View.VISIBLE);
-                rlGateway.setVisibility(TextUtils.isEmpty(bean.getDevice_id()) ? View.VISIBLE : View.GONE);
-                rlOpenManage.setVisibility(View.VISIBLE);
+                rlGateway.setVisibility(View.GONE);
                 rlDel.setVisibility(View.GONE);
-                rlPwd.setVisibility(View.VISIBLE);
+                rlPwd.setVisibility(View.GONE);
                 break;
             case 5://已确定
-                rlPay.setVisibility(View.GONE);
+                if (TextUtils.isEmpty(bean.getDevice_id())) {
+                    rlOpenManage.setVisibility(View.GONE);
+                    rlPay.setVisibility(View.GONE);
+                } else if (bean.getIs_install() == 0) {
+                    rlOpenManage.setVisibility(View.VISIBLE);
+                    rlPay.setVisibility(View.GONE);
+                }else{
+                    rlOpenManage.setVisibility(View.VISIBLE);
+                    rlPay.setVisibility(View.VISIBLE);
+                }
                 rlEdit.setVisibility(View.GONE);
                 rlBind.setVisibility(View.VISIBLE);
-                rlGateway.setVisibility(TextUtils.isEmpty(bean.getDevice_id()) ? View.VISIBLE : View.GONE);
-                rlOpenManage.setVisibility(View.VISIBLE);
+                rlGateway.setVisibility( View.GONE);
                 rlDel.setVisibility(View.GONE);
-                rlPwd.setVisibility(View.VISIBLE);
+                rlPwd.setVisibility(View.GONE);
                 break;
             case 6://已出租
-                rlPay.setVisibility(View.GONE);
+                if (TextUtils.isEmpty(bean.getDevice_id())) {
+                    rlOpenManage.setVisibility(View.GONE);
+                    rlPay.setVisibility(View.GONE);
+                } else if (bean.getIs_install() == 0) {
+                    rlOpenManage.setVisibility(View.VISIBLE);
+                    rlPay.setVisibility(View.GONE);
+                }else{
+                    rlOpenManage.setVisibility(View.VISIBLE);
+                    rlPay.setVisibility(View.VISIBLE);
+                }
                 rlEdit.setVisibility(View.GONE);
                 rlBind.setVisibility(View.VISIBLE);
-                rlGateway.setVisibility(TextUtils.isEmpty(bean.getDevice_id()) ? View.VISIBLE : View.GONE);
-                rlOpenManage.setVisibility(View.VISIBLE);
+                rlGateway.setVisibility( View.GONE);
                 rlDel.setVisibility(View.GONE);
                 rlPwd.setVisibility(View.GONE);
                 break;
         }
-        rlPwd.setVisibility(View.GONE);
-        rlOpenManage.setVisibility(TextUtils.isEmpty(bean.getDevice_id()) ? View.GONE : View.VISIBLE);
+//        rlPwd.setVisibility(View.GONE);
+//        rlOpenManage.setVisibility(TextUtils.isEmpty(bean.getDevice_id()) ? View.GONE : View.VISIBLE);
 
     }
 
@@ -179,11 +215,13 @@ public class HouseInfoSettingPopupwindow extends PopupWindow implements View.OnC
                 dismiss();
                 break;
             case R.id.popup_rl_binddevice://绑定设备
-                DeviceListActivity.toActivity(mContext, bean.getRoom_id() + "", bean.getRoom_status());
+//                DeviceListActivity.toActivity(mContext, bean.getRoom_id() + "", bean.getRoom_status());
+                DevListActivity.toActivity(mContext, bean.getRoom_id() + "", bean.getRoom_status(), bean.getIs_install() == 0, false);
                 dismiss();
                 break;
             case R.id.popup_rl_gateway://网关列表
-                UserGatewayListActivity.toActivity(mContext, bean.getRoom_id() + "");
+//                UserGatewayListActivity.toActivity(mContext, bean.getRoom_id() + "");
+                DevListActivity.toActivity(mContext, bean.getRoom_id() + "", bean.getRoom_status(), bean.getIs_install() == 0, false);
                 dismiss();
                 break;
             case R.id.popup_rl_open_manage://开门管理

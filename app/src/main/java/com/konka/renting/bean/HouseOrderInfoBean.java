@@ -31,6 +31,7 @@ public class HouseOrderInfoBean implements Parcelable {
     private String service_date;//		服务费到期时间
     private String device_id;//设备id
     private String gateway_id;//网关id
+    private int is_install;//0未缴纳安装费 1已缴纳安装费
 
     protected HouseOrderInfoBean(Parcel in) {
         room_id = in.readInt();
@@ -45,6 +46,7 @@ public class HouseOrderInfoBean implements Parcelable {
         service_date = in.readString();
         device_id = in.readString();
         gateway_id = in.readString();
+        is_install = in.readInt();
     }
 
     public static final Creator<HouseOrderInfoBean> CREATOR = new Creator<HouseOrderInfoBean>() {
@@ -163,6 +165,14 @@ public class HouseOrderInfoBean implements Parcelable {
         this.gateway_id = gateway_id;
     }
 
+    public int getIs_install() {
+        return is_install;
+    }
+
+    public void setIs_install(int is_install) {
+        this.is_install = is_install;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -182,5 +192,6 @@ public class HouseOrderInfoBean implements Parcelable {
         dest.writeString(service_date);
         dest.writeString(device_id);
         dest.writeString(gateway_id);
+        dest.writeInt(is_install);
     }
 }

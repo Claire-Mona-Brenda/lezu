@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.amap.api.services.core.PoiItem;
 import com.konka.renting.R;
 import com.konka.renting.base.BaseActivity;
+import com.konka.renting.bean.AddHouseBean;
 import com.konka.renting.bean.DataInfo;
 import com.konka.renting.bean.HouseConfigBean;
 import com.konka.renting.bean.UploadPicBean;
@@ -92,7 +93,7 @@ public class AddHouseIntroduceActivity extends BaseActivity {
 
     private final int REQUEST_CODE_CHOOSE_CAMERA = 101;//图片来源选择相机
     private final int REQUEST_CODE_CHOOSE_PHOTO = 102;//图片来源选择图库
-    private final int PHOTO_MAX_SUM = 5;   //  添加图片的最大数量
+    private final int PHOTO_MAX_SUM = 6;   //  添加图片的最大数量
 
 
     RxPermissions rxPermissions;
@@ -390,7 +391,8 @@ public class AddHouseIntroduceActivity extends BaseActivity {
                         mPoiItem.getProvinceName(),
                         mPoiItem.getCityName(),
                         mPoiItem.getAdName(),
-                        mPoiItem.getSnippet() + address,
+                        mPoiItem.getSnippet() ,
+                        address,
                         total_floor,
                         floor,
                         measure_area,
@@ -398,8 +400,8 @@ public class AddHouseIntroduceActivity extends BaseActivity {
                         img,
                         mPoiItem.getLatLonPoint().getLongitude() + "",
                         mPoiItem.getLatLonPoint().getLatitude() + "")
-                .compose(RxUtil.<DataInfo>rxSchedulerHelper())
-                .subscribe(new CommonSubscriber<DataInfo>() {
+                .compose(RxUtil.<DataInfo<AddHouseBean>>rxSchedulerHelper())
+                .subscribe(new CommonSubscriber<DataInfo<AddHouseBean>>() {
                     @Override
                     public void onError(Throwable e) {
                         dismiss();
@@ -407,10 +409,10 @@ public class AddHouseIntroduceActivity extends BaseActivity {
                     }
 
                     @Override
-                    public void onNext(DataInfo dataInfo) {
+                    public void onNext(DataInfo<AddHouseBean> dataInfo) {
                         dismiss();
                         if (dataInfo.success()) {
-                            AddHouseCompleteActivity.toActivity(mActivity);
+                            AddHouseCompleteActivity.toActivity(mActivity,uploadPicBeans.get(0).getThumb_url(),mPoiItem.getSnippet() + address,room_type,measure_area,floor,dataInfo.data().getRoom_id());
                             RxBus.getDefault().post(new AddHouseCompleteEvent());
                             finish();
                         } else {

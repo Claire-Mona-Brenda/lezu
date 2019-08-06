@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/dp_330"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:gravity="center_horizontal">
+<TextView
+    android:layout_width="@dimen/dp_330"
+    android:layout_height="@dimen/dp_56"
+    android:background="@color/style_main"
+    android:gravity="center"
+    android:textColor="@color/text_white"
+    android:textSize="@dimen/sp_14"
+    android:text="@string/please_input_install_pay_code"/>
+    <EditText
+        android:id="@+id/pop_generalize_edt_code"
+        android:layout_width="@dimen/dp_200"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_50"
+        android:maxLength="20"
+        android:textSize="@dimen/sp_20"
+        android:textColor="@color/text_black"
+        android:textStyle="bold"
+        android:typeface="sans"
+        android:gravity="center"/>
+    <Button
+        android:id="@+id/pop_generalize_btn_sure"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44"
+        android:layout_marginStart="@dimen/dp_36"
+        android:layout_marginEnd="@dimen/dp_36"
+        android:layout_marginTop="@dimen/dp_45"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:background="@drawable/shape_button_main"
+        android:textColor="@color/text_white"
+        android:textSize="@dimen/sp_14"
+        android:text="@string/common_sure"/>
+</LinearLayout>

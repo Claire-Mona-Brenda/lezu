@@ -118,9 +118,9 @@ public class HouseProxy implements HouseContract.IMissionView, HouseAdapter.Miss
 //                    }
 //                });
                 if (LoginUserBean.getInstance().getIs_lodge_identity().equals("1")) {
-                    Intent intent = new Intent(context, HouseAddActivity.class);
-                    context.startActivity(intent);
-//                    AddHouseAddressActivity.toActivity(mActivity);
+//                    Intent intent = new Intent(context, HouseAddActivity.class);
+//                    context.startActivity(intent);
+                    AddHouseAddressActivity.toActivity(mActivity);
                 } else {
                     NewFaceDectectActivity.toActivity(context, 1);
                 }
@@ -131,9 +131,9 @@ public class HouseProxy implements HouseContract.IMissionView, HouseAdapter.Miss
             @Override
             public void onClick(View view) {
                 if (LoginUserBean.getInstance().getIs_lodge_identity().equals("1")) {
-                    Intent intent = new Intent(context, HouseAddActivity.class);
-                    context.startActivity(intent);
-//                    AddHouseAddressActivity.toActivity(mActivity);
+//                    Intent intent = new Intent(context, HouseAddActivity.class);
+//                    context.startActivity(intent);
+                    AddHouseAddressActivity.toActivity(mActivity);
                 } else {
                     NewFaceDectectActivity.toActivity(context, 1);
                 }
@@ -164,7 +164,7 @@ public class HouseProxy implements HouseContract.IMissionView, HouseAdapter.Miss
     }
 
     private void getRoomList() {
-        Subscription subscription = (SecondRetrofitHelper.getInstance().getRoomList(offset + "")
+        Subscription subscription = (SecondRetrofitHelper.getInstance().getRoomList2(offset + "")
                 .compose(RxUtil.<DataInfo<PageDataBean<HouseOrderInfoBean>>>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo<PageDataBean<HouseOrderInfoBean>>>() {
                     @Override

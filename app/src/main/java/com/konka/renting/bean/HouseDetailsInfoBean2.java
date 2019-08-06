@@ -38,6 +38,7 @@ public class HouseDetailsInfoBean2 implements Parcelable {
     private String room_id;
     private String room_no;
     private String room_name;
+    private String map_address;
     private String address;
     private int total_floor;
     private int floor;
@@ -50,6 +51,7 @@ public class HouseDetailsInfoBean2 implements Parcelable {
     private int type;
     private String time;
     private int is_del;
+    private int is_install;//0未缴纳安装费 1已缴纳安装费
     private int service_status;
     private String service_date;
     private String device_id;
@@ -71,6 +73,7 @@ public class HouseDetailsInfoBean2 implements Parcelable {
         room_id = in.readString();
         room_no = in.readString();
         room_name = in.readString();
+        map_address = in.readString();
         address = in.readString();
         total_floor = in.readInt();
         floor = in.readInt();
@@ -83,6 +86,7 @@ public class HouseDetailsInfoBean2 implements Parcelable {
         type = in.readInt();
         time = in.readString();
         is_del = in.readInt();
+        is_install = in.readInt();
         service_status = in.readInt();
         service_date = in.readString();
         device_id = in.readString();
@@ -100,15 +104,15 @@ public class HouseDetailsInfoBean2 implements Parcelable {
         thumb_auth_image = in.createStringArrayList();
     }
 
-    public static final Creator<HouseDetailsInfoBean> CREATOR = new Creator<HouseDetailsInfoBean>() {
+    public static final Creator<HouseDetailsInfoBean2> CREATOR = new Creator<HouseDetailsInfoBean2>() {
         @Override
-        public HouseDetailsInfoBean createFromParcel(Parcel in) {
-            return new HouseDetailsInfoBean(in);
+        public HouseDetailsInfoBean2 createFromParcel(Parcel in) {
+            return new HouseDetailsInfoBean2(in);
         }
 
         @Override
-        public HouseDetailsInfoBean[] newArray(int size) {
-            return new HouseDetailsInfoBean[size];
+        public HouseDetailsInfoBean2[] newArray(int size) {
+            return new HouseDetailsInfoBean2[size];
         }
     };
 
@@ -142,6 +146,14 @@ public class HouseDetailsInfoBean2 implements Parcelable {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getMap_address() {
+        return map_address;
+    }
+
+    public void setMap_address(String map_address) {
+        this.map_address = map_address;
     }
 
     public int getTotal_floor() {
@@ -230,6 +242,14 @@ public class HouseDetailsInfoBean2 implements Parcelable {
 
     public void setIs_del(int is_del) {
         this.is_del = is_del;
+    }
+
+    public int getIs_install() {
+        return is_install;
+    }
+
+    public void setIs_install(int is_install) {
+        this.is_install = is_install;
     }
 
     public int getService_status() {
@@ -364,6 +384,7 @@ public class HouseDetailsInfoBean2 implements Parcelable {
         dest.writeString(room_id);
         dest.writeString(room_no);
         dest.writeString(room_name);
+        dest.writeString(map_address);
         dest.writeString(address);
         dest.writeInt(total_floor);
         dest.writeInt(floor);
@@ -376,6 +397,7 @@ public class HouseDetailsInfoBean2 implements Parcelable {
         dest.writeInt(type);
         dest.writeString(time);
         dest.writeInt(is_del);
+        dest.writeInt(is_install);
         dest.writeInt(service_status);
         dest.writeString(service_date);
         dest.writeString(device_id);

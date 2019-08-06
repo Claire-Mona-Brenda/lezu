@@ -22,6 +22,7 @@ import com.google.gson.Gson;
 import com.konka.renting.KonkaApplication;
 import com.konka.renting.R;
 import com.konka.renting.base.BaseActivity;
+import com.konka.renting.base.BaseApplication;
 import com.konka.renting.base.IPayResCall;
 import com.konka.renting.bean.DataInfo;
 import com.konka.renting.bean.PayBean;
@@ -91,7 +92,7 @@ public class PaySeverActivity extends BaseActivity implements IPayResCall, PaySt
         intent.putExtra("room_id", room_id);
         intent.putExtra("address", address);
         intent.putExtra("service_date", service_date);
-        intent.putExtra("isLandlord",isLandlord);
+        intent.putExtra("isLandlord", isLandlord);
         context.startActivity(intent);
     }
 
@@ -106,9 +107,9 @@ public class PaySeverActivity extends BaseActivity implements IPayResCall, PaySt
         room_id = getIntent().getStringExtra("room_id");
         address = getIntent().getStringExtra("address");
         service_date = getIntent().getStringExtra("service_date");
-        isLandlord=getIntent().getIntExtra("isLandlord",TYPE_LANDLORD);
+        isLandlord = getIntent().getIntExtra("isLandlord", TYPE_LANDLORD);
 
-        switch (isLandlord){
+        switch (isLandlord) {
             case TYPE_LANDLORD:
                 gCard.setVisibility(View.VISIBLE);
                 break;
@@ -124,6 +125,12 @@ public class PaySeverActivity extends BaseActivity implements IPayResCall, PaySt
         initPay();
         getData();
         alipay.setChecked(true);
+    }
+
+    @Override
+    protected void onDestroy() {
+        ((BaseApplication) getApplication()).curPay = null;
+        super.onDestroy();
     }
 
     private void initRecycle() {
@@ -295,14 +302,14 @@ public class PaySeverActivity extends BaseActivity implements IPayResCall, PaySt
                 this.finish();
                 break;
             case R.id.next:
-                if(mList==null||mList.size()==0){
+                if (mList == null || mList.size() == 0) {
                     showToast(R.string.warm_no_choose_sever_type);
                     return;
                 }
                 KonkaApplication.getInstance().curPay = this;
-                if (mode==3){
+                if (mode == 3) {
                     showOtherPayPopup();
-                }else {
+                } else {
                     pay();
                 }
                 break;
@@ -346,7 +353,7 @@ public class PaySeverActivity extends BaseActivity implements IPayResCall, PaySt
         public void onBindViewHolder(@NonNull PaySeverAdapter.VH vh, final int i) {
             SeverPayListBean bean = mList.get(i);
             vh.ll.setSelected(service_charge_id == i);
-            vh.price.setText("¥" + (int)Float.parseFloat(bean.getPrice()));
+            vh.price.setText("¥" + (int) Float.parseFloat(bean.getPrice()));
             vh.date.setText(bean.getName());
             vh.ll.setOnClickListener(new View.OnClickListener() {
                 @Override

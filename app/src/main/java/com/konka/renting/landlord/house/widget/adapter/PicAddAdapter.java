@@ -27,7 +27,7 @@ public class PicAddAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     Context context;
     MissionitemClick mic;
     IPopBack iPopBack;
-    int picNumMax = 5;
+    int picNumMax = 6;
 
     public PicAddAdapter(Context context, List<MissionEnity> list) {
         // TODO Auto-generated constructor stub

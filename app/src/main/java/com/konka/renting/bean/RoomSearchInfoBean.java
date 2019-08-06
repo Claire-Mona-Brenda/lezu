@@ -60,6 +60,8 @@ public class RoomSearchInfoBean implements Parcelable {
     private String member_name;
     private String member_phone;
     private String room_type;
+    private String lng;
+    private String lat;
     private List<String> image;
     private List<String> auth_image;
     private List<String> thumb_auth_image;
@@ -93,6 +95,8 @@ public class RoomSearchInfoBean implements Parcelable {
         member_name = in.readString();
         member_phone = in.readString();
         room_type = in.readString();
+        lng = in.readString();
+        lat = in.readString();
         image = in.createStringArrayList();
         auth_image = in.createStringArrayList();
         thumb_auth_image = in.createStringArrayList();
@@ -312,6 +316,22 @@ public class RoomSearchInfoBean implements Parcelable {
         this.room_type = room_type;
     }
 
+    public String getLng() {
+        return lng;
+    }
+
+    public void setLng(String lng) {
+        this.lng = lng;
+    }
+
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
     public List<String> getImage() {
         return image;
     }
@@ -385,6 +405,8 @@ public class RoomSearchInfoBean implements Parcelable {
         dest.writeString(member_name);
         dest.writeString(member_phone);
         dest.writeString(room_type);
+        dest.writeString(lng);
+        dest.writeString(lat);
         dest.writeStringList(image);
         dest.writeStringList(auth_image);
         dest.writeStringList(thumb_auth_image);

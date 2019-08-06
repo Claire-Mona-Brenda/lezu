@@ -10,6 +10,7 @@ import com.konka.renting.KonkaApplication;
 import com.konka.renting.R;
 import com.konka.renting.base.BaseActivity;
 import com.konka.renting.base.BaseApplication;
+import com.konka.renting.bean.AddHouseBean;
 import com.konka.renting.bean.AddRentingBean;
 import com.konka.renting.bean.AgentBean;
 import com.konka.renting.bean.AppConfigBean;
@@ -45,6 +46,7 @@ import com.konka.renting.bean.OpenDoorListbean;
 import com.konka.renting.bean.OrderInfo;
 import com.konka.renting.bean.PageDataBean;
 import com.konka.renting.bean.PayBean;
+import com.konka.renting.bean.PromotionCodeBean;
 import com.konka.renting.bean.PwdBean;
 import com.konka.renting.bean.PwsOrderDetailsBean;
 import com.konka.renting.bean.QueryPwdBean;
@@ -598,19 +600,6 @@ public class SecondRetrofitHelper {
                 image);
     }
 
-    /**
-     * 添加房产(2.3.4版本以后)
-     */
-    public Observable<DataInfo> addRoom2(String room_name, String room_type, String room_config_id,
-                                         String province, String city, String area,
-                                         String address, String total_floor, String floor,
-                                         String measure_area, String remark, String image,
-                                         String lng, String lat) {
-        return mApiService.addRoom2(room_name, room_type, room_config_id,
-                province, city, area, address,
-                total_floor, floor, measure_area,
-                remark, image, lng, lat);
-    }
 
     /**
      * 编辑房产
@@ -633,18 +622,6 @@ public class SecondRetrofitHelper {
         return mApiService.editRoom(room_id, room_name, room_type_id, agent_id, province_id, city_id, area_id, address, total_floor, floor, measure_area, room_config_id, remark, explain, image);
     }
 
-    /**
-     * 编辑房产(2.3.4版本以后)
-     */
-    public Observable<DataInfo> editRoom2(String room_id, String room_name, String room_type, String room_config_id,
-                                          String province, String city, String area, String address,
-                                          String total_floor, String floor, String measure_area,
-                                          String remark, String image, String lng, String lat) {
-        return mApiService.editRoom2(room_id, room_name, room_type, room_config_id,
-                province, city, area, address,
-                total_floor, floor, measure_area, remark,
-                image, lng, lat);
-    }
 
     /**
      * 获取房东端房产列表
@@ -660,12 +637,6 @@ public class SecondRetrofitHelper {
         return mApiService.getHouseInfo(room_id);
     }
 
-    /**
-     * 获取房东端房产详情(2.3.4版本以后)
-     */
-    public Observable<DataInfo<HouseDetailsInfoBean2>> getHouseInfo2(String room_id) {
-        return mApiService.getHouseInfo2(room_id);
-    }
 
     /**
      * 申请删除房产
@@ -1253,5 +1224,78 @@ public class SecondRetrofitHelper {
      */
     public Observable<DataInfo> sync_service_expire(String room_id, String device_id) {
         return mApiService.sync_service_expire(room_id, device_id);
+    }
+
+    /*********************************************2.3.4版本以后新接口*****************************************************/
+    /**
+     * 添加房产(2.3.4版本以后)
+     */
+    public Observable<DataInfo<AddHouseBean>> addRoom2(String room_name, String room_type, String room_config_id,
+                                                       String province, String city, String area, String map_address,
+                                                       String address, String total_floor, String floor,
+                                                       String measure_area, String remark, String image,
+                                                       String lng, String lat) {
+        return mApiService.addRoom2(room_name, room_type, room_config_id,
+                province, city, area, map_address, address,
+                total_floor, floor, measure_area,
+                remark, image, lng, lat);
+    }
+
+    /**
+     * 编辑房产(2.3.4版本以后)
+     */
+    public Observable<DataInfo> editRoom2(String room_id, String room_name, String room_type, String room_config_id,
+                                          String province, String city, String area, String map_address, String address,
+                                          String total_floor, String floor, String measure_area,
+                                          String remark, String image, String lng, String lat) {
+        return mApiService.editRoom2(room_id, room_name, room_type, room_config_id,
+                province, city, area, map_address, address,
+                total_floor, floor, measure_area, remark,
+                image, lng, lat);
+    }
+
+    /**
+     * 获取房东端房产列表(2.3.4版本以后)
+     */
+    public Observable<DataInfo<PageDataBean<HouseOrderInfoBean>>> getRoomList2(String page) {
+        return mApiService.getRoomList2(page, "");
+    }
+
+    /**
+     * 获取房东端房产详情(2.3.4版本以后)
+     */
+    public Observable<DataInfo<HouseDetailsInfoBean2>> getHouseInfo2(String room_id) {
+        return mApiService.getHouseInfo2(room_id);
+    }
+
+    /**
+     * 发布房产(2.3.4版本以后)
+     */
+    public Observable<DataInfo> publishHouse2(String room_id, String type, String housing_price) {
+        return mApiService.publishHouse2(room_id, type, housing_price);
+    }
+
+    /**
+     * 获取房屋配置列表(2.3.4版本以后)
+     */
+    public Observable<DataInfo<List<HouseConfigBean>>> getRoomConfigList2() {
+        return mApiService.getRoomConfigList2();
+    }
+
+    /**
+     * 推广码查询(2.3.4版本以后)
+     *
+     * @code 推广码
+     */
+    public Observable<DataInfo<PromotionCodeBean>> promotionCodeDetail(String code) {
+        return mApiService.promotionCodeDetail(code);
+    }
+
+    /**
+     *  安装费支付(2.3.4版本以后)
+     *
+     */
+    public Observable<DataInfo<PayBean>> installOrderPay2(String payment,String room_id,String code_id,String service_charge_id) {
+        return mApiService.installOrderPay2(payment,room_id, code_id, service_charge_id);
     }
 }

@@ -150,7 +150,7 @@ public class GatewayListActivity extends BaseActivity {
         mListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                GatewayConnectionActivity.toActivity(mActivity,mGatewayInfos.get(position),mMachineInfo, mRoomId);
+                GatewayConnectionActivity.toActivity(mActivity,mGatewayInfos.get(position),mMachineInfo, mRoomId,false,false);
                 finish();
             }
         });
