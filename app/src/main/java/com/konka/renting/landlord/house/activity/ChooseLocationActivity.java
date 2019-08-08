@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.location.Location;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Interpolator;
@@ -31,6 +32,16 @@ import com.amap.api.services.core.AMapException;
 import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.core.SuggestionCity;
+import com.amap.api.services.district.DistrictItem;
+import com.amap.api.services.district.DistrictResult;
+import com.amap.api.services.district.DistrictSearch;
+import com.amap.api.services.district.DistrictSearchQuery;
+import com.amap.api.services.geocoder.GeocodeAddress;
+import com.amap.api.services.geocoder.GeocodeQuery;
+import com.amap.api.services.geocoder.GeocodeResult;
+import com.amap.api.services.geocoder.GeocodeSearch;
+import com.amap.api.services.geocoder.RegeocodeQuery;
+import com.amap.api.services.geocoder.RegeocodeResult;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.konka.renting.R;
@@ -38,19 +49,25 @@ import com.konka.renting.base.BaseActivity;
 import com.konka.renting.landlord.house.ChooseLocationEvent;
 import com.konka.renting.utils.RxBus;
 import com.konka.renting.utils.UIUtils;
+import com.lljjcoder.utils.PinYinUtils;
 import com.mcxtzhang.commonadapter.rv.CommonAdapter;
 import com.mcxtzhang.commonadapter.rv.ViewHolder;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.zaaach.citypicker.CityPicker;
+import com.zaaach.citypicker.adapter.OnPickListener;
+import com.zaaach.citypicker.model.City;
+import com.zaaach.citypicker.model.HotCity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import rx.functions.Action1;
 
-public class ChooseLocationActivity extends BaseActivity implements PoiSearch.OnPoiSearchListener {
+public class ChooseLocationActivity extends BaseActivity implements PoiSearch.OnPoiSearchListener, DistrictSearch.OnDistrictSearchListener, GeocodeSearch.OnGeocodeSearchListener {
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.iv_back)
@@ -61,12 +78,27 @@ public class ChooseLocationActivity extends BaseActivity implements PoiSearch.On
     ImageView ivRight;
     @BindView(R.id.lin_title)
     FrameLayout linTitle;
+    @BindView(R.id.tv_location)
+    TextView tvLocation;
+    @BindView(R.id.tv_search)
+    TextView tvSearch;
     @BindView(R.id.activity_choose_location_mapview)
     MapView mMapview;
     @BindView(R.id.activity_choose_location_rv_location)
     RecyclerView mRvLocation;
     @BindView(R.id.activity_choose_location_srv_location)
     SmartRefreshLayout mSrvLocation;
+
+    public final String COUNTRY = "country"; // 行政区划，国家级
+
+    public final String PROVINCE = "province"; // 行政区划，省级
+
+    public final String CITY = "city"; // 行政区划，市级
+
+    public final String DISTRICT = "district"; // 行政区划，区级
+
+    public final String BUSINESS = "biz_area"; // 行政区划，商圈级
+
 
     private final int STROKE_COLOR = Color.argb(0, 3, 145, 255);
     private final int FILL_COLOR = Color.argb(0, 0, 0, 180);
@@ -80,8 +112,16 @@ public class ChooseLocationActivity extends BaseActivity implements PoiSearch.On
     private PoiSearch.Query query;// Poi查询条件类
     private PoiSearch poiSearch;
     private List<PoiItem> poiItems;// poi数据
+    private List<HotCity> mCities = new ArrayList<>();
+    private List<City> mAllCities = new ArrayList<>();
+
+    //当前选中的级别
+    private String selectedLevel = COUNTRY;
 
     CommonAdapter<PoiItem> commonAdapter;
+    PinYinUtils pinYinUtils;
+    GeocodeSearch geocoderSearch;
+    City city;
 
 
     public static void toActivity(Context context) {
@@ -97,11 +137,15 @@ public class ChooseLocationActivity extends BaseActivity implements PoiSearch.On
     @Override
     public void init() {
         tvTitle.setText(R.string.title_choose_location);
-        tvRight.setText(R.string.common_sure);
-        tvRight.setTextColor(getResources().getColor(R.color.text_blue));
-        tvRight.setVisibility(View.VISIBLE);
+//        tvRight.setText(R.string.common_sure);
+//        tvRight.setTextColor(getResources().getColor(R.color.text_blue));
+//        tvRight.setVisibility(View.VISIBLE);
 
         poiItems = new ArrayList<>();
+        pinYinUtils = new PinYinUtils();
+        pinYinUtils.getCharPinYin('a');
+        geocoderSearch = new GeocodeSearch(this);
+        geocoderSearch.setOnGeocodeSearchListener(this);
 
         commonAdapter = new CommonAdapter<PoiItem>(this, poiItems, R.layout.adapter_choose_location) {
             @Override
@@ -132,6 +176,13 @@ public class ChooseLocationActivity extends BaseActivity implements PoiSearch.On
             }
         });
 
+        addRxBusSubscribe(ChooseLocationEvent.class, new Action1<ChooseLocationEvent>() {
+            @Override
+            public void call(ChooseLocationEvent event) {
+                finish();
+            }
+        });
+
     }
 
     @Override
@@ -144,6 +195,7 @@ public class ChooseLocationActivity extends BaseActivity implements PoiSearch.On
         setupLocationStyle();
         initListener();
         aMap.moveCamera(CameraUpdateFactory.zoomTo(16));
+        initCity();
 
     }
 
@@ -151,6 +203,9 @@ public class ChooseLocationActivity extends BaseActivity implements PoiSearch.On
         aMap.setOnMyLocationChangeListener(new AMap.OnMyLocationChangeListener() {
             @Override
             public void onMyLocationChange(Location location) {
+                // 第一个参数表示一个Latlng，第二参数表示范围多少米，第三个参数表示是火系坐标系还是GPS原生坐标系
+                RegeocodeQuery query = new RegeocodeQuery(new LatLonPoint(location.getLatitude(), location.getLongitude()), 200, GeocodeSearch.AMAP);
+                geocoderSearch.getFromLocationAsyn(query);
             }
         });
         aMap.setOnMapLoadedListener(new AMap.OnMapLoadedListener() {
@@ -280,7 +335,7 @@ public class ChooseLocationActivity extends BaseActivity implements PoiSearch.On
      * 开始进行poi搜索
      */
     protected void doSearchQuery() {
-        query = new PoiSearch.Query("", "120000", "");// 第一个参数表示搜索字符串，第二个参数表示poi搜索类型，第三个参数表示poi搜索区域（空字符串代表全国）
+        query = new PoiSearch.Query("", "120000", city == null ? "" : city.getName());// 第一个参数表示搜索字符串，第二个参数表示poi搜索类型，第三个参数表示poi搜索区域（空字符串代表全国）
         query.setPageSize(10);// 设置每页最多返回多少条poiitem
         query.setPageNum(currentPage);// 设置查第一页
 
@@ -294,13 +349,19 @@ public class ChooseLocationActivity extends BaseActivity implements PoiSearch.On
         }
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_right})
+    @OnClick({R.id.iv_back, R.id.tv_right, R.id.tv_location, R.id.tv_search})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
                 finish();
                 break;
             case R.id.tv_right:
+                break;
+            case R.id.tv_location:
+                selectionCity();
+                break;
+            case R.id.tv_search:
+                SearchAddressActivity.toActivity(this, (ArrayList<City>) mAllCities, (ArrayList<HotCity>) mCities, city);
                 break;
         }
     }
@@ -333,6 +394,133 @@ public class ChooseLocationActivity extends BaseActivity implements PoiSearch.On
 
     @Override
     public void onPoiItemSearched(PoiItem poiItem, int i) {
+
+    }
+
+    /**
+     * 初始化
+     */
+    private void initCity() {
+
+        // 设置行政区划查询监听
+        DistrictSearch districtSearch = new DistrictSearch(this);
+        districtSearch.setOnDistrictSearchListener(this);
+        // 查询中国的区划
+        DistrictSearchQuery query = new DistrictSearchQuery();
+        query.setKeywords("中国");
+        query.setPageSize(50);
+        districtSearch.setQuery(query);
+        // 异步查询行政区
+        districtSearch.searchDistrictAsyn();
+
+    }
+
+    /**
+     * 查询省级以下城市
+     */
+    private void searchCity(DistrictItem districtItem) {
+        // 设置行政区划查询监听
+        DistrictSearch districtSearch = new DistrictSearch(this);
+        districtSearch.setOnDistrictSearchListener(this);
+        // 查询中国的区划
+        DistrictSearchQuery query = new DistrictSearchQuery();
+        query.setKeywords(districtItem.getName());
+        districtSearch.setQuery(query);
+        // 异步查询行政区
+        districtSearch.searchDistrictAsyn();
+
+    }
+
+    private void selectionCity() {
+        CityPicker.getInstance()
+                .setFragmentManager(getSupportFragmentManager())    //此方法必须调用
+                .enableAnimation(true)    //启用动画效果
+//                .setAnimationStyle(anim)	//自定义动画
+//                .setLocatedCity(null)  //APP自身已定位的城市，默认为null（定位失败）
+                .setHotCities(mCities)    //指定热门城市
+                .setAllCities(mAllCities)
+                .setOnPickListener(new OnPickListener() {
+                    @Override
+                    public void onPick(int position, City data) {
+                        if (data == null)
+                            return;
+                        if (!TextUtils.isEmpty(data.getName())) {
+                            city = data;
+                            tvLocation.setText(data.getName());
+                            // name表示地址，第二个参数表示查询城市，中文或者中文全拼，citycode、adcode
+                            GeocodeQuery query = new GeocodeQuery(data.getProvince() + data.getName(), data.getName());
+
+                            geocoderSearch.getFromLocationNameAsyn(query);
+                        }
+                    }
+
+
+                    @Override
+                    public void onLocate() {
+                        //开始定位，这里模拟一下定位
+
+                    }
+                })
+                .show();
+    }
+
+    /**
+     * 返回District（行政区划）异步处理的结果
+     */
+    @Override
+    public void onDistrictSearched(DistrictResult result) {
+        if (result != null) {
+            if (result.getAMapException().getErrorCode() == AMapException.CODE_AMAP_SUCCESS) {
+                if (selectedLevel.equals(COUNTRY)) {
+                    selectedLevel = CITY;
+                    List<DistrictItem> district = result.getDistrict().get(0).getSubDistrict();
+                    for (int i = 0; i < district.size(); i++) {
+                        DistrictItem districtItem = district.get(i);
+                        searchCity(districtItem);
+                    }
+                } else if (selectedLevel.equals(CITY)) {
+                    DistrictItem item = result.getDistrict().get(0);
+                    List<DistrictItem> district = item.getSubDistrict();
+                    for (int i = 0; i < district.size(); i++) {
+                        DistrictItem districtItem = district.get(i);
+                        City city = new City(districtItem.getName(), item.getName(), pinYinUtils.getStringPinYin(districtItem.getName()), item.getCitycode());
+                        mAllCities.add(city);
+
+                    }
+                }
+            } else {
+
+            }
+        }
+    }
+
+
+    /**
+     * 逆地理编码（坐标转地址）结果回调
+     */
+    @Override
+    public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {
+        String c = regeocodeResult.getRegeocodeAddress().getCity();
+        if (!TextUtils.isEmpty(c)) {
+            tvLocation.setText(c);
+            city = new City(c, regeocodeResult.getRegeocodeAddress().getProvince(), pinYinUtils.getStringPinYin(c), regeocodeResult.getRegeocodeAddress().getCityCode());
+        }
+    }
+
+    /**
+     * 地理编码（地址转坐标）
+     */
+    @Override
+    public void onGeocodeSearched(GeocodeResult geocodeResult, int i) {
+        GeocodeAddress address = geocodeResult.getGeocodeAddressList().get(0);
+        changeCamera(address.getLatLonPoint().getLatitude(), address.getLatLonPoint().getLongitude());
+    }
+
+    private void changeCamera(double lat, double lng) {
+        LatLng latLng = new LatLng(lat, lng);
+        aMap.moveCamera(
+                CameraUpdateFactory.newCameraPosition(new CameraPosition(
+                        latLng, 15, 30, 30)));
 
     }
 }

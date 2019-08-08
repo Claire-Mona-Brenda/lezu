@@ -116,10 +116,10 @@ public class HouseInfoSettingPopupwindow extends PopupWindow implements View.OnC
                     rlPay.setVisibility(View.GONE);
                 } else if (bean.getIs_install() == 0) {
                     rlOpenManage.setVisibility(View.VISIBLE);
-                    rlPay.setVisibility(View.GONE);
+                    rlPay.setVisibility(View.VISIBLE);
                 }else{
                     rlOpenManage.setVisibility(View.VISIBLE);
-                    rlPay.setVisibility(View.VISIBLE);
+                    rlPay.setVisibility(View.GONE);
                 }
                 break;
             case 4://已发布
@@ -128,10 +128,10 @@ public class HouseInfoSettingPopupwindow extends PopupWindow implements View.OnC
                     rlPay.setVisibility(View.GONE);
                 } else if (bean.getIs_install() == 0) {
                     rlOpenManage.setVisibility(View.VISIBLE);
-                    rlPay.setVisibility(View.GONE);
+                    rlPay.setVisibility(View.VISIBLE);
                 }else{
                     rlOpenManage.setVisibility(View.VISIBLE);
-                    rlPay.setVisibility(View.VISIBLE);
+                    rlPay.setVisibility(View.GONE);
                 }
                 rlEdit.setVisibility(View.GONE);
                 rlBind.setVisibility(View.VISIBLE);
@@ -145,10 +145,10 @@ public class HouseInfoSettingPopupwindow extends PopupWindow implements View.OnC
                     rlPay.setVisibility(View.GONE);
                 } else if (bean.getIs_install() == 0) {
                     rlOpenManage.setVisibility(View.VISIBLE);
-                    rlPay.setVisibility(View.GONE);
+                    rlPay.setVisibility(View.VISIBLE);
                 }else{
                     rlOpenManage.setVisibility(View.VISIBLE);
-                    rlPay.setVisibility(View.VISIBLE);
+                    rlPay.setVisibility(View.GONE);
                 }
                 rlEdit.setVisibility(View.GONE);
                 rlBind.setVisibility(View.VISIBLE);
@@ -162,10 +162,10 @@ public class HouseInfoSettingPopupwindow extends PopupWindow implements View.OnC
                     rlPay.setVisibility(View.GONE);
                 } else if (bean.getIs_install() == 0) {
                     rlOpenManage.setVisibility(View.VISIBLE);
-                    rlPay.setVisibility(View.GONE);
+                    rlPay.setVisibility(View.VISIBLE);
                 }else{
                     rlOpenManage.setVisibility(View.VISIBLE);
-                    rlPay.setVisibility(View.VISIBLE);
+                    rlPay.setVisibility(View.GONE);
                 }
                 rlEdit.setVisibility(View.GONE);
                 rlBind.setVisibility(View.VISIBLE);

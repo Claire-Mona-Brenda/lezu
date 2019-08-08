@@ -405,7 +405,11 @@ public class OpenFragment extends BaseFragment {
                 break;
             case R.id.frame_open_rl_renew://续交服务费
                 OpenDoorListbean listbean = mData.get(current);
-                PaySeverActivity.toActivity(getContext(), listbean.getRoom_id(), listbean.getRoom_name(), listbean.getService_time(), 2);
+                if (listbean.getIs_install()==1){
+                    PaySeverActivity.toActivity(getContext(), listbean.getRoom_id(), listbean.getRoom_name(), listbean.getService_time(), 2);
+                }else{
+                    showToast(getString(R.string.please_talk_pay_install));
+                }
                 break;
 //            case R.id.frame_open_tv_pwd://长租设置门锁开锁密码
 //                if (mData.get(current).getStatus() > 2 && !mData.get(current).getDevice_id().equals("")) {
@@ -426,14 +430,13 @@ public class OpenFragment extends BaseFragment {
 //                }
 //                break;
             case R.id.frame_open_tv_long_other_setting://长租其他功能
-                OtherSettingActivity.toActivity(getContext(),0,mData.get(current));
+                OtherSettingActivity.toActivity(getContext(), 0, mData.get(current));
                 break;
             case R.id.frame_open_tv_short_other_setting://短租其他功能
-                OtherSettingActivity.toActivity(getContext(),1,mData.get(current));
+                OtherSettingActivity.toActivity(getContext(), 1, mData.get(current));
                 break;
         }
     }
-
 
 
     private void checkPwd() {
@@ -490,7 +493,7 @@ public class OpenFragment extends BaseFragment {
         btnOpen.setBackground(animation);
         animation.start();
         OpenDoorListbean listbean = mData.get(current);
-        canOpenTime=CAN_OPEN_TIME;
+        canOpenTime = CAN_OPEN_TIME;
         controlOpenTime();
         Subscription subscription = SecondRetrofitHelper.getInstance().openDoor(listbean.getRoom_id(), listbean.getGateway_id(), listbean.getDevice_id())
                 .compose(RxUtil.<DataInfo>rxSchedulerHelper())
@@ -501,11 +504,15 @@ public class OpenFragment extends BaseFragment {
 
                     @Override
                     public void onNext(DataInfo dataInfo) {
+                        if (!dataInfo.success()) {
+                            showToast(dataInfo.msg());
+                        }
                     }
                 });
         addSubscrebe(subscription);
     }
-/*************************************************倒计时处理**************************************************************/
+
+    /*************************************************倒计时处理**************************************************************/
     private void controlOpenTime() {
         if (canOpenTime <= 0) {
             btnOpen.setClickable(true);

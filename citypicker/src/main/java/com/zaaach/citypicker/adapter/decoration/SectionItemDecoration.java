@@ -32,16 +32,16 @@ public class SectionItemDecoration extends RecyclerView.ItemDecoration {
         TypedValue typedValue = new TypedValue();
 
         context.getTheme().resolveAttribute(R.attr.cpSectionBackground, typedValue, true);
-        mBgColor = context.getResources().getColor(typedValue.resourceId);
+        mBgColor = context.getResources().getColor(R.color.cp_color_section_bg);
 
         context.getTheme().resolveAttribute(R.attr.cpSectionHeight, typedValue, true);
-        mSectionHeight = context.getResources().getDimensionPixelSize(typedValue.resourceId);
+        mSectionHeight = context.getResources().getDimensionPixelSize(R.dimen.cp_section_height);
 
         context.getTheme().resolveAttribute(R.attr.cpSectionTextSize, typedValue, true);
-        mTextSize = context.getResources().getDimensionPixelSize(typedValue.resourceId);
+        mTextSize = context.getResources().getDimensionPixelSize(R.dimen.cp_section_text_size);
 
         context.getTheme().resolveAttribute(R.attr.cpSectionTextColor, typedValue, true);
-        mTextColor = context.getResources().getColor(typedValue.resourceId);
+        mTextColor = context.getResources().getColor(R.color.cp_color_gray);
 
         mBgPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mBgPaint.setColor(mBgColor);

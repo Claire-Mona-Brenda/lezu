@@ -15,13 +15,13 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:background="@null"
-        android:hint="?attr/cpSearchHintText"
-        android:maxLength="20"
+        android:hint="@string/cp_search_hint_text"
+        android:maxLength="40"
         android:maxLines="1"
-        android:textCursorDrawable="?attr/cpSearchCursorDrawable"
-        android:textColor="?attr/cpSearchTextColor"
-        android:textColorHint="?attr/cpSearchHintTextColor"
-        android:textSize="?attr/cpSearchTextSize" />
+        android:textCursorDrawable="@color/cp_color_gray_dark"
+        android:textColor="@color/cp_color_gray_dark"
+        android:textColorHint="@color/cp_color_gray_light"
+        android:textSize="@dimen/cp_search_text_size" />
 
     <ImageView
         android:id="@+id/cp_clear_all"
@@ -30,7 +30,7 @@
         android:padding="2dp"
         android:visibility="gone"
         android:scaleType="fitCenter"
-        android:src="?attr/cpClearTextIcon" />
+        android:src="@mipmap/cp_icon_clear_all" />
 
     <Space
         android:layout_width="6dp"
@@ -50,6 +50,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/cp_cancel"
-        android:textColor="?attr/cpCancelTextColor"
-        android:textSize="?attr/cpCancelTextSize" />
+        android:textColor="@color/cp_color_gray"
+        android:textSize="@dimen/cp_cancel_text_size" />
 </LinearLayout>

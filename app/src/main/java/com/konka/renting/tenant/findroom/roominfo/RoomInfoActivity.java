@@ -262,7 +262,7 @@ public class RoomInfoActivity extends BaseActivity implements OnClickListener {
         }
         tvRoomArea.setText(infoBean.getMeasure_area() + "平米");
         tvRoomFloor.setText(infoBean.getFloor() + "/" + infoBean.getTotal_floor() + "层");
-        tvRoomIntroduce.setText(TextUtils.isEmpty(infoBean.getRemark())?"无":infoBean.getRemark());
+        tvRoomIntroduce.setText(TextUtils.isEmpty(infoBean.getRemark())?"暂无介绍":infoBean.getRemark());
         tvRoomAddress.setText(infoBean.getAddress());
         room_no.setText(infoBean.getRoom_no());
         tvImgSum.setText("1/" + imageList.size());

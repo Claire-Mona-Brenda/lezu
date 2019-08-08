@@ -220,7 +220,7 @@ public class AddHouseIntroduceActivity extends BaseActivity {
                 }
                 break;
             case R.id.activity_add_house_introduce_ll_pic:
-                if (uploadPicBeans.size() < 5) {
+                if (uploadPicBeans.size() < PHOTO_MAX_SUM) {
                     addImg();
                 } else {
                     showToast(String.format(getString(R.string.tips_add_pic_num_mast), PHOTO_MAX_SUM + ""));

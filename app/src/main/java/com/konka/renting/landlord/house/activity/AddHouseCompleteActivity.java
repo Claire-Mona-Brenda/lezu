@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.konka.renting.R;
 import com.konka.renting.base.BaseActivity;
 import com.konka.renting.event.BindDevSuccessEvent;
+import com.konka.renting.event.HousePublishEvent;
 import com.konka.renting.landlord.house.view.HousePublishActivity;
 import com.squareup.picasso.Picasso;
 
@@ -94,16 +95,22 @@ public class AddHouseCompleteActivity extends BaseActivity {
             Picasso.get().load(R.mipmap.fangchan_jiazai).into(mImgPic);
         }
         mTvName.setText(address);
-        SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(area);
+        SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder();
         String[] type = room_type.split("_");
-        spannableStringBuilder.append( type[0] + "室" + type[2] + "厅" + (type[1].equals("0") ? "" : type[1] + "卫") + "/");
-        spannableStringBuilder.append( getArea(area));
-        spannableStringBuilder.append( "/" + floor + "楼");
+        spannableStringBuilder.append(type[0] + "室" + type[2] + "厅" + (type[1].equals("0") ? "" : type[1] + "卫") + "/");
+        spannableStringBuilder.append(getArea(area));
+        spannableStringBuilder.append("/" + floor + "楼");
         mTvInfo.setText(spannableStringBuilder);
 
         addRxBusSubscribe(BindDevSuccessEvent.class, new Action1<BindDevSuccessEvent>() {
             @Override
             public void call(BindDevSuccessEvent bindDevSuccessEvent) {
+                finish();
+            }
+        });
+        addRxBusSubscribe(HousePublishEvent.class, new Action1<HousePublishEvent>() {
+            @Override
+            public void call(HousePublishEvent housePublishEvent) {
                 finish();
             }
         });

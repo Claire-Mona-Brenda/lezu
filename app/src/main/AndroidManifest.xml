@@ -203,6 +203,11 @@
             android:name=".landlord.house.activity.PayAllMoneyActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.house.activity.SearchAddressActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+
 
         <activity
             android:name=".landlord.house.HouseInfoActivity"

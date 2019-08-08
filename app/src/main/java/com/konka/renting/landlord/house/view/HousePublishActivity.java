@@ -17,9 +17,11 @@ import android.widget.TextView;
 import com.konka.renting.R;
 import com.konka.renting.base.BaseActivity;
 import com.konka.renting.bean.DataInfo;
+import com.konka.renting.event.HousePublishEvent;
 import com.konka.renting.http.SecondRetrofitHelper;
 import com.konka.renting.http.subscriber.CommonSubscriber;
 import com.konka.renting.landlord.house.widget.ShowToastUtil;
+import com.konka.renting.utils.RxBus;
 import com.konka.renting.utils.RxUtil;
 
 import butterknife.BindView;
@@ -152,6 +154,7 @@ public class HousePublishActivity extends BaseActivity implements CompoundButton
                     @Override
                     public void onNext(DataInfo homeInfoDataInfo) {
                         if (homeInfoDataInfo.success()) {
+                            RxBus.getDefault().post(new HousePublishEvent());
                             HousePublishActivity.this.finish();
                             ShowToastUtil.showSuccessToast(HousePublishActivity.this, homeInfoDataInfo.msg());
                         } else {

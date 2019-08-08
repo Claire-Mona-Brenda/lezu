@@ -22,7 +22,6 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.SuperscriptSpan;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -41,7 +40,6 @@ import com.konka.renting.R;
 import com.konka.renting.base.BaseActivity;
 import com.konka.renting.bean.DataInfo;
 import com.konka.renting.bean.HouseConfigBean;
-import com.konka.renting.bean.HouseDetailsInfoBean;
 import com.konka.renting.bean.HouseDetailsInfoBean2;
 import com.konka.renting.bean.UploadPicBean;
 import com.konka.renting.event.UpdataHouseInfoEvent;
@@ -49,8 +47,6 @@ import com.konka.renting.http.SecondRetrofitHelper;
 import com.konka.renting.http.subscriber.CommonSubscriber;
 import com.konka.renting.landlord.house.activity.ChooseLocationActivity;
 import com.konka.renting.landlord.house.data.MissionEnity;
-import com.konka.renting.landlord.house.view.AgentChooseWidget;
-import com.konka.renting.landlord.house.view.RoomTypeChooseWidget;
 import com.konka.renting.landlord.house.widget.IPopBack;
 import com.konka.renting.landlord.house.widget.PicRecordWidget;
 import com.konka.renting.landlord.house.widget.PicassoEngine;
@@ -60,6 +56,7 @@ import com.konka.renting.utils.PictureUtils;
 import com.konka.renting.utils.RxBus;
 import com.konka.renting.utils.RxUtil;
 import com.konka.renting.widget.CommonPopupWindow;
+import com.konka.renting.widget.ThreeChoosePicker;
 import com.mcxtzhang.commonadapter.rv.CommonAdapter;
 import com.mcxtzhang.commonadapter.rv.ViewHolder;
 import com.squareup.picasso.Picasso;
@@ -80,7 +77,6 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.addapp.pickers.listeners.OnMoreItemPickListener;
 import cn.addapp.pickers.listeners.OnMoreWheelListener;
-import cn.addapp.pickers.picker.LinkagePicker;
 import id.zelory.compressor.Compressor;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -109,10 +105,6 @@ public class HouseEditActivity extends BaseActivity {
     TextView tvAreaTips;
     @BindView(R.id.activity_addHouse_edit_area)
     EditText editArea;
-    //    @BindView(R.id.activity_addHouse_edit_agent)
-//    TextView tvAgent;
-//    @BindView(R.id.activity_addHouse_edit_confit)
-//    EditText editConfit;
     @BindView(R.id.activity_editHouse_recylerview_Config)
     RecyclerView mRecyclerConfig;
     @BindView(R.id.activity_addHouse_edit_introduce)
@@ -142,8 +134,8 @@ public class HouseEditActivity extends BaseActivity {
     PoiItem mPoiItem;
 
     RxPermissions rxPermissions;
-    LinkagePicker picker;
-    LinkagePicker.DataProvider provider;
+    ThreeChoosePicker picker;
+    ThreeChoosePicker.DataProvider provider;
     CommonPopupWindow commonPopupWindow;
 
     private List<UploadPicBean> uploadPicBeans = new ArrayList<>();
@@ -252,6 +244,7 @@ public class HouseEditActivity extends BaseActivity {
             case 0:
             case 1://未缴纳安装费
             case 2://待安装认证
+            case 3://待发布
                 editName.setEnabled(true);
                 tvType.setEnabled(true);
 //                tvAgent.setEnabled(true);
@@ -264,7 +257,6 @@ public class HouseEditActivity extends BaseActivity {
                 editIntroduce.setEnabled(true);
                 pic.setEnabled(true);
                 break;
-            case 3://待发布
             case 4://已发布
             case 5://待入租
             case 6://已入住
@@ -475,7 +467,7 @@ public class HouseEditActivity extends BaseActivity {
     }
 
     public void onLinkagePicker() {
-        provider = new LinkagePicker.DataProvider() {
+        provider = new ThreeChoosePicker.DataProvider() {
 
             @Override
             public boolean isOnlyTwo() {
@@ -488,17 +480,17 @@ public class HouseEditActivity extends BaseActivity {
             }
 
             @Override
-            public List<String> provideSecondData(int firstIndex) {
+            public List<String> provideSecondData() {
                 return secondList;
             }
 
             @Override
-            public List<String> provideThirdData(int firstIndex, int secondIndex) {
+            public List<String> provideThirdData() {
                 return thirdList;
             }
 
         };
-        picker = new LinkagePicker(this, provider);
+        picker = new ThreeChoosePicker(this, provider);
         picker.setCanLoop(false);
         picker.setCanLinkage(false);
         picker.setOnMoreItemPickListener(new OnMoreItemPickListener<String>() {
@@ -566,7 +558,7 @@ public class HouseEditActivity extends BaseActivity {
                 .capture(false)
 //                .captureStrategy(new CaptureStrategy(true, "com.konka.fileprovider"))
                 .countable(true)
-                .maxSelectable(PHOTO_MAX_SUM - picCurSum)
+                .maxSelectable(PHOTO_MAX_SUM - uploadPicBeans.size())
                 .gridExpectedSize(getResources().getDimensionPixelSize(R.dimen.dp_130))
                 .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
                 .thumbnailScale(0.85f)
@@ -597,6 +589,11 @@ public class HouseEditActivity extends BaseActivity {
     private void sumbit() {
         int floor = Integer.valueOf(editFloor.getText().toString());
         int floorSum = getFloor(eEditFloorSum.getText().toString());
+        String name = editName.getText().toString();
+        if (TextUtils.isEmpty(name.replace(" ",""))){
+            ShowToastUtil.showNormalToast(this, getString(R.string.error_house_info_name_no));
+            return;
+        }
         if (floor == 0) {
             ShowToastUtil.showNormalToast(this, getString(R.string.warm_house_floor_0));
             return;
@@ -629,21 +626,21 @@ public class HouseEditActivity extends BaseActivity {
         showLoadingDialog();
         Subscription subscription = SecondRetrofitHelper.getInstance()
                 .editRoom2(bean.getRoom_id(),
-                        editName.getText().toString(),
+                        name,
                         room_type,
                         config,
-                        mPoiItem.getProvinceName(),
-                        mPoiItem.getCityName(),
-                        mPoiItem.getAdName(),
-                        mPoiItem.getSnippet(),
+                        mPoiItem == null ? bean.getProvince() : mPoiItem.getProvinceName(),
+                        mPoiItem == null ? bean.getCity() : mPoiItem.getCityName(),
+                        mPoiItem == null ? bean.getArea() : mPoiItem.getAdName(),
+                        mPoiItem == null ? bean.getMap_address() : mPoiItem.getSnippet(),
                         editAddressMore.getText().toString(),
                         floorSum + "",
                         floor + "",
                         editArea.getText().toString(),
                         editIntroduce.getText().toString(),
                         img,
-                        mPoiItem.getLatLonPoint().getLongitude() + "",
-                        mPoiItem.getLatLonPoint().getLatitude() + "")
+                        mPoiItem == null ? bean.getLng() : mPoiItem.getLatLonPoint().getLongitude() + "",
+                        mPoiItem == null ? bean.getLat() : mPoiItem.getLatLonPoint().getLatitude() + "")
                 .compose(RxUtil.<DataInfo>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo>() {
                     @Override

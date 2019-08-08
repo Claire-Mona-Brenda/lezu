@@ -32,6 +32,7 @@ import com.konka.renting.landlord.house.widget.ShowToastUtil;
 import com.konka.renting.utils.CacheUtils;
 import com.konka.renting.utils.RxUtil;
 import com.konka.renting.widget.CommonPopupWindow;
+import com.konka.renting.widget.ThreeChoosePicker;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -240,7 +241,7 @@ public class AddHouseInfoActivity extends BaseActivity {
         String area = mEdtArea.getText().toString();
         String floor = mEdtFloor.getText().toString();
         String floorSum = mEdtFloorSum.getText().toString();
-        if (TextUtils.isEmpty(name)) {
+        if (TextUtils.isEmpty(name.replace(" ", ""))) {
             showToast(R.string.add_house_edit_name);
             return;
         }
@@ -301,7 +302,7 @@ public class AddHouseInfoActivity extends BaseActivity {
     }
 
     public void onLinkagePicker() {
-        LinkagePicker.DataProvider provider = new LinkagePicker.DataProvider() {
+        ThreeChoosePicker.DataProvider provider = new ThreeChoosePicker.DataProvider() {
 
             @Override
             public boolean isOnlyTwo() {
@@ -314,26 +315,26 @@ public class AddHouseInfoActivity extends BaseActivity {
             }
 
             @Override
-            public List<String> provideSecondData(int firstIndex) {
+            public List<String> provideSecondData() {
                 return secondList;
             }
 
             @Override
-            public List<String> provideThirdData(int firstIndex, int secondIndex) {
+            public List<String> provideThirdData() {
                 return thirdList;
             }
 
         };
-        LinkagePicker picker = new LinkagePicker(this, provider);
+        ThreeChoosePicker picker = new ThreeChoosePicker(this, provider);
         picker.setCanLoop(false);
         picker.setCanLinkage(false);
         picker.setOnMoreItemPickListener(new OnMoreItemPickListener<String>() {
 
             @Override
             public void onItemPicked(String first, String second, String third) {
-                mFirst = Integer.valueOf(first.charAt(0)+"");
-                mSecond = Integer.valueOf(second.charAt(0)+"");
-                mThird = Integer.valueOf(third.charAt(0)+"");
+                mFirst = Integer.valueOf(first.charAt(0) + "");
+                mSecond = Integer.valueOf(second.charAt(0) + "");
+                mThird = Integer.valueOf(third.charAt(0) + "");
                 mTvHouseType.setText(first + " " + second + " " + third);
             }
         });

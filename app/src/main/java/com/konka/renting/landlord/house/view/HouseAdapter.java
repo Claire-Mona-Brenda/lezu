@@ -196,7 +196,7 @@ public class HouseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     nvHolder.llInstall.setVisibility(View.VISIBLE);
                 } else {
                     nvHolder.llPaySever.setVisibility(View.VISIBLE);
-                    nvHolder.llOpen.setVisibility(View.VISIBLE);
+                    nvHolder.llOpen.setVisibility(View.GONE);
                     nvHolder.llBind.setVisibility(View.GONE);
                     nvHolder.llInstall.setVisibility(View.GONE);
                 }

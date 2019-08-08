@@ -2,8 +2,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/cp_grid_item_layout"
     android:layout_width="wrap_content"
-    android:layout_height="?attr/cpListItemHeight"
-    android:foreground="?attr/selectableItemBackground">
+    android:layout_height="@dimen/cp_list_item_height">
+    <!--android:foreground="?attr/selectableItemBackground">-->
 
     <TextView
         android:id="@+id/cp_gird_item_name"
@@ -12,7 +12,7 @@
         android:paddingTop="@dimen/cp_grid_item_padding"
         android:paddingBottom="@dimen/cp_grid_item_padding"
         android:gravity="center"
-        android:textSize="?attr/cpListItemTextSize"
-        android:textColor="?attr/cpListItemTextColor"
-        android:background="?attr/cpGridItemBackground"/>
+        android:textSize="@dimen/cp_list_item_text_size"
+        android:textColor="@color/cp_color_gray_deep"
+        android:background="@drawable/cp_grid_item_bg"/>
 </FrameLayout>

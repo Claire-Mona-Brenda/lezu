@@ -64,7 +64,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
-//    implementation files('libs/pinyin4j-2.5.0.jar')
+    implementation files('libs/pinyin4j-2.5.0.jar')
 }
 
 //你的library的地址

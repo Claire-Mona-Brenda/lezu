@@ -323,7 +323,7 @@ public class HouseInfoActivity extends BaseActivity {
 
                                 }
                             });
-                            if (bean.getAuth_image() != null && bean.getRoom_status() >= 3) {
+                            if (bean.getAuth_image() != null && bean.getAuth_image().size()>0) {
                                 llOfficial.setVisibility(View.VISIBLE);
                                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(HouseInfoActivity.this);
                                 linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);

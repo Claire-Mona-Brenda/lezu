@@ -384,6 +384,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_20"
+                    android:layout_marginEnd="@dimen/dp_20"
                     android:layout_marginBottom="@dimen/dp_10"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/lib_house_edit_text" />
