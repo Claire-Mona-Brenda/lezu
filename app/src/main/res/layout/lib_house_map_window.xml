@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:textStyle="bold"
-            android:text="房屋信息" />
+            android:text="房产信息" />
         <TextView
             android:paddingLeft="@dimen/dp_10"
             android:paddingRight="@dimen/dp_10"
@@ -214,7 +214,7 @@
             android:layout_marginTop="@dimen/dp_5"
             android:background="@drawable/shape_button"
             android:textColor="@android:color/white"
-            android:text="房屋详情"
+            android:text="房产详情"
             android:id="@+id/btn_room_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

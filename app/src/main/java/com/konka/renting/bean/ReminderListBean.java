@@ -9,8 +9,8 @@ public class ReminderListBean {
      * num : 1
      */
 
-    private String room_name;//房屋名称
-    private int room_id;//房屋id
+    private String room_name;//房产名称
+    private int room_id;//房产id
     private int status;//1设置催账 0未设置
     private int day;//	每月日期
     private int num;//	单月已设置次数

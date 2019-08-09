@@ -23,7 +23,7 @@ public class RoomDes2 {
         public String room_name;
         public String name;
         public String id;
-        //房屋ID
+        //房产ID
         public String door_number;
         //门牌号
         public String housing_price;
@@ -32,7 +32,7 @@ public class RoomDes2 {
         //楼栋号
         public String door_no;
         //楼门号
-        //房屋图片
+        //房产图片
         public String floor;
         //楼层
         public String total_floor;
@@ -85,7 +85,7 @@ public class RoomDes2 {
         public String type;
         public String room_no;
         public String is_authentication;//是否通过认证0否1是
-        public String[] authentication_image;//房屋认证图片
+        public String[] authentication_image;//房产认证图片
         public String province_name;//]：省份名
         public String city_name;//]：城市名
         public String area_name;//]：县区名

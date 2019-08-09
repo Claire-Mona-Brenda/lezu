@@ -547,7 +547,7 @@ public class SecondRetrofitHelper {
     }
 
     /**
-     * 获取房屋类型列表
+     * 获取房产类型列表
      */
     public Observable<DataInfo<List<RoomTypeBean>>> getRoomTypeList() {
         return mApiService.getRoomTypeList();
@@ -561,7 +561,7 @@ public class SecondRetrofitHelper {
     }
 
     /**
-     * 获取房屋配置列表
+     * 获取房产配置列表
      */
     public Observable<DataInfo<List<HouseConfigBean>>> getRoomConfigList() {
         return mApiService.getRoomConfigList();
@@ -648,7 +648,7 @@ public class SecondRetrofitHelper {
     /**
      * 发布房产
      */
-    public Observable<DataInfo> publishHouse(String room_id,//房屋id
+    public Observable<DataInfo> publishHouse(String room_id,//房产id
                                              String type,//1短租 2长租
                                              String housing_price,//租金
                                              String initial_water,//初始水表
@@ -734,7 +734,7 @@ public class SecondRetrofitHelper {
     }
 
     /**
-     * 催账房屋列表
+     * 催账房产列表
      */
     public Observable<DataInfo<PageDataBean<ReminderListBean>>> getReminderList(String page) {
         return mApiService.getReminderList(page);
@@ -1276,7 +1276,7 @@ public class SecondRetrofitHelper {
     }
 
     /**
-     * 获取房屋配置列表(2.3.4版本以后)
+     * 获取房产配置列表(2.3.4版本以后)
      */
     public Observable<DataInfo<List<HouseConfigBean>>> getRoomConfigList2() {
         return mApiService.getRoomConfigList2();

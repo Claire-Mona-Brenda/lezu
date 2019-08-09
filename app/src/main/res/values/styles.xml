@@ -422,7 +422,7 @@
         <item name="android:layout_alignParentRight">true</item>
     </style>
 
-    <!--房屋订单详情-->
+    <!--房产订单详情-->
     <style name="tv_order_info_header_status">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

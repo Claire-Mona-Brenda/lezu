@@ -95,7 +95,7 @@ public class AddHouseAddressActivity extends BaseActivity {
                     showToast(R.string.add_house_choose_location_tips);
                     return;
                 }
-                if (TextUtils.isEmpty(mEdtRealLocation.getText().toString())) {
+                if (TextUtils.isEmpty(mEdtRealLocation.getText().toString().replace(" ",""))) {
                     showToast(R.string.please_fill_real_location);
                     return;
                 }

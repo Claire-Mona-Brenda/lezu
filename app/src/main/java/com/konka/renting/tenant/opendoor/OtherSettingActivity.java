@@ -170,23 +170,48 @@ public class OtherSettingActivity extends BaseActivity {
                 }
                 break;
             case R.id.activity_other_setting_tv_key_pwd://钥匙孔密码
-                if (queryKeyPwdTime <= 0 || queryKeyPwdTime >= 10) {
-                    showKeyPwdPopup();
-                    keyPwdPopupwindow.setPwd(getString(R.string.tips_loading));
-                    getKeyPwd();
+                if (openDoorListbean.getStatus() > 2 && !openDoorListbean.getDevice_id().equals("")) {
+                    if (queryKeyPwdTime <= 0 || queryKeyPwdTime >= 10) {
+                        showKeyPwdPopup();
+                        keyPwdPopupwindow.setPwd(getString(R.string.tips_loading));
+                        getKeyPwd();
+                    } else {
+                        showKeyPwdPopup();
+                    }
+
+                } else if (openDoorListbean.getStatus() > 2) {
+                    ShowToastUtil.showNormalToast(this, getString(R.string.warm_open_no_device));
                 } else {
-                    showKeyPwdPopup();
+                    ShowToastUtil.showNormalToast(this, getString(R.string.warm_open_no_on_rent));
                 }
                 break;
             case R.id.activity_other_setting_tv_gateway_setting://设置网关
-                GatewaySettingActivity.toActivity(this, openDoorListbean.getRoom_id(), openDoorListbean.getGateway_id(), openDoorListbean.getGateway_version(), GatewaySettingActivity.TYPE_TENANT);
+                if (openDoorListbean.getStatus() > 2 && !TextUtils.isEmpty(openDoorListbean.getGateway_id())) {
+                    GatewaySettingActivity.toActivity(this, openDoorListbean.getRoom_id(), openDoorListbean.getGateway_id(), openDoorListbean.getGateway_version(), GatewaySettingActivity.TYPE_TENANT);
+                } else if (openDoorListbean.getStatus() > 2) {
+                    ShowToastUtil.showNormalToast(this, getString(R.string.warm_open_no_gateway));
+                } else {
+                    ShowToastUtil.showNormalToast(this, getString(R.string.warm_open_no_on_rent));
+                }
                 break;
             case R.id.activity_other_setting_tv_gateway_restart://重启网关
-                showReboot();
+                if (openDoorListbean.getStatus() > 2 && !TextUtils.isEmpty(openDoorListbean.getGateway_id())) {
+                    showReboot();
+                } else if (openDoorListbean.getStatus() > 2) {
+                    ShowToastUtil.showNormalToast(this, getString(R.string.warm_open_no_gateway));
+                } else {
+                    ShowToastUtil.showNormalToast(this, getString(R.string.warm_open_no_on_rent));
+                }
+
                 break;
             case R.id.activity_other_setting_tv_manage_pwd://管理员密码
-                if (openDoorListbean.getStatus() > 2)
+                if (openDoorListbean.getStatus() > 2 && !openDoorListbean.getDevice_id().equals("")) {
                     ManagePwdActivity.toActivity(this, openDoorListbean.getRoom_id());
+                } else if (openDoorListbean.getStatus() > 2) {
+                    ShowToastUtil.showNormalToast(this, getString(R.string.warm_open_no_device));
+                } else {
+                    ShowToastUtil.showNormalToast(this, getString(R.string.warm_open_no_on_rent));
+                }
                 break;
             case R.id.activity_other_setting_tv_fingerprint://管理指纹
                 ClockSetManageActivity.toActivity(this, ClockSetManageActivity.TYPE_FINGERPRINT, openDoorListbean.getRoom_id());
@@ -195,7 +220,14 @@ public class OtherSettingActivity extends BaseActivity {
                 ClockSetManageActivity.toActivity(this, ClockSetManageActivity.TYPE_IC_CARD, openDoorListbean.getRoom_id());
                 break;
             case R.id.activity_other_setting_ll_sync://同步服务费时间
-                showSyncSeverPopup();
+                if (openDoorListbean.getStatus() > 2 && !openDoorListbean.getDevice_id().equals("")) {
+                    showSyncSeverPopup();
+                } else if (openDoorListbean.getStatus() > 2) {
+                    ShowToastUtil.showNormalToast(this, getString(R.string.warm_open_no_device));
+                } else {
+                    ShowToastUtil.showNormalToast(this, getString(R.string.warm_open_no_on_rent));
+                }
+
                 break;
 
         }

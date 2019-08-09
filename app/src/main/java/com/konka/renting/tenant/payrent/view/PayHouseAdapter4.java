@@ -81,7 +81,7 @@ public class PayHouseAdapter4 extends RecyclerView.Adapter<RecyclerView.ViewHold
 		String unit = missionEnity.getType() == 1 ? "/天" : "/月";
 		arg0.price.setText("¥" + (int)Float.parseFloat(missionEnity.getHousing_price())+unit);
 
-		arg0.connect.setText("评价房屋");
+		arg0.connect.setText("评价房产");
 		arg0.connect.setVisibility(View.GONE);
 
 		arg0.mLinOrder.setOnClickListener(new OnClickListener() {

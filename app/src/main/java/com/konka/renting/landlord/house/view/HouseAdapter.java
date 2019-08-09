@@ -74,7 +74,7 @@ public class HouseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         });
         nvHolder.tvId.setText(houseOrderInfoBean.getRoom_no());
         nvHolder.tvAdress.setText(houseOrderInfoBean.getRoom_name());
-        nvHolder.tvSeverEndTime.setText(houseOrderInfoBean.getService_date().equals("0") ? (houseOrderInfoBean.getRoom_status() < 3 ? context.getString(R.string.house_sever_end_time_emty) : context.getString(R.string.house_sever_end_time_end)) : houseOrderInfoBean.getService_date());
+        nvHolder.tvSeverEndTime.setText(houseOrderInfoBean.getService_date().equals("0") ? (houseOrderInfoBean.getIs_install() == 0 ? context.getString(R.string.house_sever_end_time_emty) : context.getString(R.string.house_sever_end_time_end)) : houseOrderInfoBean.getService_date());
         if (CacheUtils.checkFileExist(houseOrderInfoBean.getThumb_image())) {
             Picasso.get().load(CacheUtils.getFile(houseOrderInfoBean.getThumb_image())).placeholder(R.mipmap.fangchan_jiazai).error(R.mipmap.fangchan_jiazai).into(nvHolder.imageView);
         } else if (!TextUtils.isEmpty(houseOrderInfoBean.getThumb_image())) {

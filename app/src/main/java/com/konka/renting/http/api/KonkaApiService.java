@@ -115,11 +115,13 @@ import rx.Observable;
  */
 public interface KonkaApiService {
 
-    //    String HOST = "http://let.tuokemao.com/";
-//    String HOST = "https://let.youlejiakeji.com/";
-    String HOST = "https://lettest.youlejiakeji.com/";
-    String SecondHost = "https://lezuxiaowo-test.youlejiakeji.com";
-//    String SecondHost = "https://lezuxiaowo.youlejiakeji.com";
+    //测试环境
+//    String HOST = "https://lettest.youlejiakeji.com/";
+//    String SecondHost = "https://lezuxiaowo-test.youlejiakeji.com";
+
+    //正式环境
+    String HOST = "https://let.youlejiakeji.com/";
+    String SecondHost = "https://lezuxiaowo.youlejiakeji.com";
 
 
     @FormUrlEncoded
@@ -419,7 +421,7 @@ public interface KonkaApiService {
 //    总楼层（total_floor）：
 //    楼层（floor）：
 //    门牌号（door_number）：
-//    房屋图片（image）：
+//    房产图片（image）：
 //    多张图片用逗号隔开，例如：1.jpg,2.jpg
 //    初始水（initial_water）：
 //    初始电（initial_electric）：
@@ -1080,7 +1082,7 @@ public interface KonkaApiService {
     /**
      * 房东端生成订单
      *
-     * @room_id 房屋id
+     * @room_id 房产id
      * @start_time 入住时间
      * @end_time 退租时间
      * @mobile 租客手机号
@@ -1103,7 +1105,7 @@ public interface KonkaApiService {
     /**
      * 房东端查看生成订单的密码
      *
-     * @room_id 房屋id
+     * @room_id 房产id
      * @merge_order_no 订单编号
      */
     @FormUrlEncoded
@@ -1248,7 +1250,7 @@ public interface KonkaApiService {
             @Part MultipartBody.Part file);
 
     /**
-     * 获取房屋类型列表
+     * 获取房产类型列表
      */
     @GET("index.php/api/room/roomType")
     Observable<DataInfo<List<RoomTypeBean>>> getRoomTypeList();
@@ -1260,7 +1262,7 @@ public interface KonkaApiService {
     Observable<DataInfo<List<AgentBean>>> getAgentList(@Query("city") String city);
 
     /**
-     * 获取房屋配置列表
+     * 获取房产配置列表
      */
     @GET("index.php/api/room/roomConfig")
     Observable<DataInfo<List<HouseConfigBean>>> getRoomConfigList();
@@ -1299,7 +1301,7 @@ public interface KonkaApiService {
     /**
      * 房东端房产详情
      *
-     * @room_id 房屋id
+     * @room_id 房产id
      */
     @FormUrlEncoded
     @POST("index.php/api/room/info")
@@ -1309,7 +1311,7 @@ public interface KonkaApiService {
     /**
      * 申请删除房产
      *
-     * @room_id 房屋id
+     * @room_id 房产id
      */
     @FormUrlEncoded
     @POST("index.php/api/room/applyDel")
@@ -1344,7 +1346,7 @@ public interface KonkaApiService {
     @FormUrlEncoded
     @POST("index.php/api/room/publish")
     Observable<DataInfo> publishHouse(
-            @Field("room_id") String room_id,//房屋id
+            @Field("room_id") String room_id,//房产id
             @Field("type") String type,//1短租 2长租
             @Field("housing_price") String housing_price,//租金
             @Field("initial_water") String initial_water,//初始水表
@@ -1359,7 +1361,7 @@ public interface KonkaApiService {
     /**
      * 取消发布
      *
-     * @room_id 房屋id
+     * @room_id 房产id
      */
     @FormUrlEncoded
     @POST("index.php/api/room/cancel")
@@ -1369,7 +1371,7 @@ public interface KonkaApiService {
     /**
      * 房东申请短租
      *
-     * @room_id 房屋id
+     * @room_id 房产id
      */
     @FormUrlEncoded
     @POST("index.php/api/room_order/landlordAdd")
@@ -1381,7 +1383,7 @@ public interface KonkaApiService {
     /**
      * 获取房东端短租账户申请信息
      *
-     * @room_id 房屋id
+     * @room_id 房产id
      */
     @FormUrlEncoded
     @POST("index.php/api/room_order/LandlordShortRentAccount")
@@ -1400,7 +1402,7 @@ public interface KonkaApiService {
     /**
      * 获取临时密码
      *
-     * @room_id 房屋id
+     * @room_id 房产id
      */
     @FormUrlEncoded
     @POST("index.php/api/room/sharePassword")
@@ -1507,7 +1509,7 @@ public interface KonkaApiService {
     /**
      * 租客端房产详情
      *
-     * @room_id 房屋id
+     * @room_id 房产id
      */
     @FormUrlEncoded
     @POST("index.php/api/room/renterRoomInfo")
@@ -1516,7 +1518,7 @@ public interface KonkaApiService {
     /**
      * 租客端申请租房
      *
-     * @room_id 房屋id
+     * @room_id 房产id
      */
     @FormUrlEncoded
     @POST("index.php/api/room_order/memberAdd")
@@ -1529,7 +1531,7 @@ public interface KonkaApiService {
     /**
      * 租客端申请续租
      *
-     * @room_id 房屋id
+     * @room_id 房产id
      */
     @FormUrlEncoded
     @POST("index.php/api/room_order/relet")
@@ -1542,7 +1544,7 @@ public interface KonkaApiService {
     /**
      * 租客端申请退房
      *
-     * @order_id 房屋id
+     * @order_id 房产id
      */
     @FormUrlEncoded
     @POST("index.php/api/room_order/checkOut")
@@ -1551,7 +1553,7 @@ public interface KonkaApiService {
     /**
      * 租客端申请合租
      *
-     * @room_id 房屋id
+     * @room_id 房产id
      */
     @FormUrlEncoded
     @POST("index.php/api/room_share_order/apply")
@@ -1654,7 +1656,7 @@ public interface KonkaApiService {
     /**
      * 获取短租不能出租日期
      *
-     * @room_id 房屋id
+     * @room_id 房产id
      */
     @FormUrlEncoded
     @POST("index.php/api/room_order/rentingDate")
@@ -2044,7 +2046,7 @@ public interface KonkaApiService {
     /**
      * 房东端房产详情(2.3.4版本以后)
      *
-     * @room_id 房屋id
+     * @room_id 房产id
      */
     @FormUrlEncoded
     @POST("index.php/api/room/info_2_3_4")
@@ -2056,13 +2058,13 @@ public interface KonkaApiService {
     @FormUrlEncoded
     @POST("index.php/api/room/publish_2_3_4")
     Observable<DataInfo> publishHouse2(
-            @Field("room_id") String room_id,//房屋id
+            @Field("room_id") String room_id,//房产id
             @Field("type") String type,//1短租 2长租
             @Field("housing_price") String housing_price//租金
     );
 
     /**
-     * 获取房屋配置列表(2.3.4版本以后)
+     * 获取房产配置列表(2.3.4版本以后)
      */
     @GET("index.php/api/room/roomConfig_2_3_4")
     Observable<DataInfo<List<HouseConfigBean>>> getRoomConfigList2();
@@ -2082,7 +2084,7 @@ public interface KonkaApiService {
     @FormUrlEncoded
     @POST("index.php/api/pay/installOrderPay_2_3_4")
     Observable<DataInfo<PayBean>> installOrderPay2(@Field("payment") String payment,//1微信 2支付宝 3余额
-                                                   @Field("room_id") String room_id,//房屋id
+                                                   @Field("room_id") String room_id,//房产id
                                                    @Field("code_id") String code_id,//推广码id
                                                    @Field("service_charge_id") String service_charge_id);//服务费id
 }

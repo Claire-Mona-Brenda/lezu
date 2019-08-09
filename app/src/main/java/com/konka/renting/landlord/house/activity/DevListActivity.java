@@ -78,7 +78,7 @@ public class DevListActivity extends BaseActivity {
     RelativeLayout mRlDev;
 
     String mRoomId;
-    int status;//	房屋状态 1未缴纳安装费 2待安装认证 3待发布 4已发布 5已确定 6已出租
+    int status;//	房产状态 1未缴纳安装费 2待安装认证 3待发布 4已发布 5已确定 6已出租
     DeviceInfo mDev;
     GatewayInfo mGateway;
     boolean is_Install;
@@ -174,10 +174,12 @@ public class DevListActivity extends BaseActivity {
                                 mRlDev.setVisibility(View.VISIBLE);
                                 mTvDevTime.setText(mDev.time);
                                 mTvDevName.setText(mDev.name);
+                                mBtnGatewayManage.setVisibility(status > 5 ? View.GONE : View.VISIBLE);
                             } else {
                                 mDev = null;
                                 mRlAddDev.setVisibility(View.VISIBLE);
                                 mRlDev.setVisibility(View.GONE);
+                                mBtnGatewayManage.setVisibility( View.VISIBLE);
                             }
                         } else {
                             showToast(listDataInfo.msg());
@@ -222,7 +224,7 @@ public class DevListActivity extends BaseActivity {
                                 }
                                 mImgGatewayPic.setImageResource(gateway_version < 4 ? R.mipmap.wangguan_1_72px_png : R.mipmap.wangguan_2_72px_png);
                                 mTvGatewayName.setText(mGateway.getGateway_name());
-                                mBtnGatewayManage.setVisibility(status < 6 ? View.VISIBLE : View.GONE);
+                                mBtnGatewayManage.setVisibility(status > 5 && mDev != null ? View.GONE : View.VISIBLE);
                             } else {
                                 mGateway = null;
                                 mRlAddGateway.setVisibility(View.VISIBLE);

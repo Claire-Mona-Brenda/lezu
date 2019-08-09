@@ -367,6 +367,8 @@ public class AddHouseInfoActivity extends BaseActivity {
 
             @Override
             public void sure(ArrayList<HouseConfigBean> list) {
+                if (list == null)
+                    return;
                 configList.clear();
                 configList.addAll(list);
                 String str = "";
@@ -378,6 +380,9 @@ public class AddHouseInfoActivity extends BaseActivity {
                 }
                 if (str.length() > 1) {
                     str = str.substring(0, str.length() - 1);
+                    mTvConfit.setVisibility(View.VISIBLE);
+                } else {
+                    mTvConfit.setVisibility(View.GONE);
                 }
                 mTvConfit.setText(str);
             }

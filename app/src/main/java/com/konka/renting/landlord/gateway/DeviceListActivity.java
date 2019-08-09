@@ -66,7 +66,7 @@ public class DeviceListActivity extends BaseActivity {
     private CommonAdapter<DeviceInfo> mDeviceInfoCommonAdapter;
 
     String mRoomId;
-    int status;//	房屋状态 1未缴纳安装费 2待安装认证 3待发布 4已发布 5已出租
+    int status;//	房产状态 1未缴纳安装费 2待安装认证 3待发布 4已发布 5已出租
 
     private OpeningPopupwindow openingPopupwindow;
 

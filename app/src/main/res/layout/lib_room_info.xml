@@ -97,7 +97,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:layout_centerHorizontal="true"
-                    android:text="房屋详情"
+                    android:text="房产详情"
                     android:textSize="@dimen/common_text_size_middle"
                     android:textColor="@color/text_black" />
 

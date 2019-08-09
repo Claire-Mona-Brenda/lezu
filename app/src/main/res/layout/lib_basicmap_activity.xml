@@ -70,7 +70,7 @@
             android:drawableLeft="@mipmap/icon_search"
             android:drawablePadding="@dimen/dp_10"
             android:focusable="true"
-            android:hint="请输入要搜索的房屋"
+            android:hint="请输入要搜索的房产"
             android:paddingLeft="@dimen/dp_20"
             android:textSize="@dimen/lib_house_edit_text">
 

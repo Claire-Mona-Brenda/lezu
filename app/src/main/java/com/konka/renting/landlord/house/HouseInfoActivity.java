@@ -228,6 +228,8 @@ public class HouseInfoActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mPopupwindow = null;
+        keyPwdPopup = null;
         mapView.onDestroy();
     }
 
@@ -323,7 +325,7 @@ public class HouseInfoActivity extends BaseActivity {
 
                                 }
                             });
-                            if (bean.getAuth_image() != null && bean.getAuth_image().size()>0) {
+                            if (bean.getAuth_image() != null && bean.getAuth_image().size() > 0) {
                                 llOfficial.setVisibility(View.VISIBLE);
                                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(HouseInfoActivity.this);
                                 linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);

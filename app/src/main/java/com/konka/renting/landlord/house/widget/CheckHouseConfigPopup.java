@@ -59,8 +59,9 @@ public class CheckHouseConfigPopup extends PopupWindow {
             @Override
             public void convert(ViewHolder viewHolder, HouseConfigBean bean) {
                 viewHolder.setText(R.id.adapter_check_config_cb_config, bean.getName());
-                viewHolder.setChecked(R.id.adapter_check_config_cb_config, bean.getStatus() == 1);
                 CheckBox box = viewHolder.getView(R.id.adapter_check_config_cb_config);
+                box.setOnCheckedChangeListener(null);
+                box.setChecked(bean.getStatus() == 1);
                 box.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -116,12 +117,15 @@ public class CheckHouseConfigPopup extends PopupWindow {
     }
 
     public void onRefresh(List<HouseConfigBean> list) {
-        configList.clear();
-        configList.addAll(list);
-        int size = configList.size();
-        for (int i = 0; i < size; i++) {
-            configList.get(i).setStatus(0);
+        if (list != null) {
+            configList.clear();
+            configList.addAll(list);
+            int size = configList.size();
+            for (int i = 0; i < size; i++) {
+                configList.get(i).setStatus(0);
+            }
         }
+
         configAdapter.notifyDataSetChanged();
         smartRefreshLayout.finishRefresh();
     }

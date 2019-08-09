@@ -1,6 +1,7 @@
 package com.konka.renting.landlord.user.bill;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -25,7 +26,7 @@ public class BillListRecycleAdapter extends RecyclerView.Adapter<BillListRecycle
     public BillListRecycleAdapter(Context mContext, List<BillListBean> listBeans, Set<String> dateSet) {
         this.mContext = mContext;
         this.listBeans = listBeans;
-        this.dateSet=dateSet;
+        this.dateSet = dateSet;
     }
 
     public void setmOnItemClickListen(OnItemClickListen onItemClickListen) {
@@ -44,28 +45,27 @@ public class BillListRecycleAdapter extends RecyclerView.Adapter<BillListRecycle
     public void onBindViewHolder(@NonNull VH vh, final int i) {
         final BillListBean bean = listBeans.get(i);
 
-        String[] time=bean.getCreate_time().split(" ")[0].split("-");
-        String year=time[0];
-        String mon=time[1];
-        String day=time[2];
-
-        if (isHave(year+"-"+mon)){
+        String[] time = bean.getCreate_time().split(" ")[0].split("-");
+        String year = time[0];
+        String mon = time[1];
+        String day = time[2];
+        if (isHave(year + "-" + mon)) {
             vh.rlMon.setVisibility(View.GONE);
-        }else{
-            dateSet.add(year+"-"+mon);
+        } else {
+            dateSet.add(year + "-" + mon);
             vh.rlMon.setVisibility(View.VISIBLE);
-            vh.time.setText(getDateString(year,mon));
+            vh.time.setText(getDateString(year, mon));
         }
 
         vh.type.setText(bean.getTitle());
-        String str="";
-        if (bean.getType()==1)
-            str="";
-        else if(bean.getType()==4)
-            str="+";
+        String str = "";
+        if (bean.getType() == 1)
+            str = "";
+        else if (bean.getType() == 4)
+            str = "+";
         else
-            str="-";
-        vh.money.setText(str+bean.getAmount());
+            str = "-";
+        vh.money.setText(str + bean.getAmount());
         vh.date.setText(bean.getCreate_time());
         vh.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,7 +92,7 @@ public class BillListRecycleAdapter extends RecyclerView.Adapter<BillListRecycle
 
         public VH(@NonNull View itemView) {
             super(itemView);
-            rlMon=itemView.findViewById(R.id.adapter_rl_mon);
+            rlMon = itemView.findViewById(R.id.adapter_rl_mon);
             time = itemView.findViewById(R.id.adapter_tv_time);
             type = itemView.findViewById(R.id.adapter_tv_type);
             money = itemView.findViewById(R.id.adapter_tv_money);
@@ -100,29 +100,29 @@ public class BillListRecycleAdapter extends RecyclerView.Adapter<BillListRecycle
         }
     }
 
-    private boolean isHave(String date){
-        for (String str:dateSet) {
-            if (date.equals(str)){
+    private boolean isHave(String date) {
+        for (String str : dateSet) {
+            if (date.equals(str)) {
                 return true;
             }
         }
         return false;
     }
 
-    private String getDateString(String dateYear,String dateMon){
-        String d="";
+    private String getDateString(String dateYear, String dateMon) {
+        String d = "";
         Calendar calendar = Calendar.getInstance();
         //获取系统的日期
         //年
         int year = calendar.get(Calendar.YEAR);
         //月
-        int month = calendar.get(Calendar.MONTH)+1;
-        if (!dateYear.equals(year+"")){
-            d=dateYear+"-"+dateMon;
-        }else if (!dateMon.equals(month+"")){
-            d=month+"月";
-        }else{
-            d="本月";
+        int month = calendar.get(Calendar.MONTH) + 1;
+        if (!dateYear.equals(year + "")) {
+            d = dateYear + "-" + dateMon;
+        } else if (!dateMon.equals(month + "") && !dateMon.equals("0" + month)) {
+            d = dateMon + "月";
+        } else {
+            d = "本月";
         }
         return d;
     }

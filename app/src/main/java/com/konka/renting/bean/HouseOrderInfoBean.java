@@ -18,13 +18,13 @@ public class HouseOrderInfoBean implements Parcelable {
      * "gateway_id": ""
      */
 
-    private int room_id;//	房屋id
-    private String room_no;//	房屋编号
-    private String room_name;//	房屋名称
+    private int room_id;//	房产id
+    private String room_no;//	房产编号
+    private String room_name;//	房产名称
     private String address;//	详细地址
-    private String image;//	房屋图片
-    private String thumb_image;//房屋缩列图
-    private int room_status;//	房屋状态 1未缴纳安装费 2待安装认证 3待发布 4已发布 5已出租
+    private String image;//	房产图片
+    private String thumb_image;//房产缩列图
+    private int room_status;//	房产状态 1未缴纳安装费 2待安装认证 3待发布 4已发布 5已出租
     private int is_del;//		1正常 2申请删除
     private int type;//		出租类型 1短租 2长租
     private int service_status;//		服务费状态 0已过期 1正常

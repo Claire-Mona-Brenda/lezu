@@ -205,6 +205,7 @@ public class HouseEditActivity extends BaseActivity {
     private void getData() {
 
         editName.setText(bean.getRoom_name());
+        editName.setSelection(editName.getText().toString().length());
         if (bean.getRoom_type() != null && bean.getRoom_type().contains("_")) {
             String[] t = bean.getRoom_type().split("_");
             mFirst = Integer.valueOf(t[0]);
@@ -590,8 +591,13 @@ public class HouseEditActivity extends BaseActivity {
         int floor = Integer.valueOf(editFloor.getText().toString());
         int floorSum = getFloor(eEditFloorSum.getText().toString());
         String name = editName.getText().toString();
-        if (TextUtils.isEmpty(name.replace(" ",""))){
+        String address = editAddressMore.getText().toString();
+        if (TextUtils.isEmpty(name.replace(" ", ""))) {
             ShowToastUtil.showNormalToast(this, getString(R.string.error_house_info_name_no));
+            return;
+        }
+        if (TextUtils.isEmpty(address.replace(" ", ""))) {
+            ShowToastUtil.showNormalToast(this, getString(R.string.error_house_info_address_no));
             return;
         }
         if (floor == 0) {
@@ -633,7 +639,7 @@ public class HouseEditActivity extends BaseActivity {
                         mPoiItem == null ? bean.getCity() : mPoiItem.getCityName(),
                         mPoiItem == null ? bean.getArea() : mPoiItem.getAdName(),
                         mPoiItem == null ? bean.getMap_address() : mPoiItem.getSnippet(),
-                        editAddressMore.getText().toString(),
+                        address,
                         floorSum + "",
                         floor + "",
                         editArea.getText().toString(),

@@ -1,7 +1,7 @@
 package com.konka.renting.event;
 
 /**
- * 租客端搜索房屋详情
+ * 租客端搜索房产详情
  */
 public class TenantRoomInfoEvent {
     public final int TYPE_FINISH = -11;

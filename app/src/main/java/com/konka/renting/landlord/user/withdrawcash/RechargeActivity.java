@@ -11,6 +11,7 @@ import android.widget.RadioButton;
 import com.google.gson.Gson;
 import com.konka.renting.R;
 import com.konka.renting.base.BaseActivity;
+import com.konka.renting.base.BaseApplication;
 import com.konka.renting.base.IPayResCall;
 import com.konka.renting.bean.AlipayBean;
 import com.konka.renting.bean.DataInfo;
@@ -35,7 +36,7 @@ import butterknife.OnClick;
 import rx.Subscription;
 import rx.functions.Action1;
 
-public class RechargeActivity extends BaseActivity implements IPayResCall, PayStatusDialog.PayReTry{
+public class RechargeActivity extends BaseActivity implements IPayResCall, PayStatusDialog.PayReTry {
 
     @BindView(R.id.et_money)
     EditText mEtMoney;
@@ -72,7 +73,7 @@ public class RechargeActivity extends BaseActivity implements IPayResCall, PaySt
         mAlipay.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b){
+                if (b) {
                     mWechat.setChecked(false);
                     mAlipay.setChecked(true);
                     payType = 2;
@@ -83,7 +84,7 @@ public class RechargeActivity extends BaseActivity implements IPayResCall, PaySt
         mWechat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b){
+                if (b) {
                     mAlipay.setChecked(false);
                     mWechat.setChecked(true);
                     payType = 1;
@@ -92,7 +93,9 @@ public class RechargeActivity extends BaseActivity implements IPayResCall, PaySt
 
             }
         });
+        ((BaseApplication) getApplication()).curPay = this;
     }
+
 
     @OnClick({R.id.iv_back, R.id.re_alipay, R.id.re_wechat, R.id.btn_withdraw})
     public void onViewClicked(View view) {
@@ -113,9 +116,9 @@ public class RechargeActivity extends BaseActivity implements IPayResCall, PaySt
             case R.id.btn_withdraw:
                 if (TextUtils.isEmpty(mEtMoney.getText().toString())) {
                     showToast("请输入充值金额");
-                }else if(Float.valueOf(mEtMoney.getText().toString())==0){
+                } else if (Float.valueOf(mEtMoney.getText().toString()) == 0) {
                     showToast("充值金额不能为零");
-                }else{
+                } else {
                     pay();
                 }
                 break;
@@ -124,7 +127,7 @@ public class RechargeActivity extends BaseActivity implements IPayResCall, PaySt
 
     private void pay() {
         showLoadingDialog();
-        Subscription subscription = SecondRetrofitHelper.getInstance().rechargePay(mEtMoney.getText().toString(),payType+"")
+        Subscription subscription = SecondRetrofitHelper.getInstance().rechargePay(mEtMoney.getText().toString(), payType + "")
                 .compose(RxUtil.<DataInfo<PayBean>>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo<PayBean>>() {
                     @Override
@@ -136,10 +139,10 @@ public class RechargeActivity extends BaseActivity implements IPayResCall, PaySt
                     @Override
                     public void onNext(DataInfo<PayBean> dataInfo) {
                         dismiss();
-                        if (dataInfo.success()){
-                            switch (dataInfo.data().getPayment()){
+                        if (dataInfo.success()) {
+                            switch (dataInfo.data().getPayment()) {
                                 case "1"://微信支付
-                                    WxPayBean wxPayInfo=new Gson().fromJson( new Gson().toJson(dataInfo.data().getData()),WxPayBean.class);
+                                    WxPayBean wxPayInfo = new Gson().fromJson(new Gson().toJson(dataInfo.data().getData()), WxPayBean.class);
                                     wechat(wxPayInfo);
                                     break;
                                 case "2"://支付宝支付
@@ -147,7 +150,7 @@ public class RechargeActivity extends BaseActivity implements IPayResCall, PaySt
                                     builder.build().toALiPay(RechargeActivity.this, dataInfo.data().getData().toString());
                                     break;
                             }
-                        }else {
+                        } else {
                             showToast(dataInfo.msg());
                         }
                     }
@@ -171,7 +174,7 @@ public class RechargeActivity extends BaseActivity implements IPayResCall, PaySt
         String prepayid = data.prepayid;//预支付交易会话ID
         String _package = data.packageX;//扩展字段w
         String noncestr = data.noncestr;//随机字符串
-        String timestamp = new Double(data.timestamp).longValue()+"";//时间戳
+        String timestamp = new Double(data.timestamp).longValue() + "";//时间戳
         String sign = data.sign;//签名
 
         builder.setAppId(appid)
@@ -185,9 +188,9 @@ public class RechargeActivity extends BaseActivity implements IPayResCall, PaySt
     }
 
 
-
     @Override
     protected void onDestroy() {
+        ((BaseApplication) getApplication()).curPay = null;
         RxBus.getDefault().post(new UpdateEvent());
         super.onDestroy();
     }
@@ -201,7 +204,7 @@ public class RechargeActivity extends BaseActivity implements IPayResCall, PaySt
             case 0:
                 // TODO: 2018/4/30 成功
                 UIUtils.displayToast("支付成功");
-                new PayStatusDialog(this, true, bond).show();
+//                new PayStatusDialog(this, true, bond).show();
                 RxBus.getDefault().post(new UpdateEvent());
                 RxBus.getDefault().post(new TentantOpenDoorEvent(11));
                 finish();

@@ -20,7 +20,7 @@ public class RenterOrderListBean {
 
     private String order_id;//	订单id
     private String order_no;//	订单编号
-    private String room_id;//	房屋id
+    private String room_id;//	房产id
     private int status;//	订单状态 1申请中 2已确认 3入住中 4申请退租 5过期
     private int type;//	出租类型 1 短租 2长租
     private String start_time;//	开始日期
@@ -28,8 +28,8 @@ public class RenterOrderListBean {
     private String housing_price;//	租金
     private int sponsor_type;//	发起订单人 1房东 2租房
     private int order_type;//	订单类型 1首租 2续租
-    private String thumb_image;//	房屋缩略图
-    private String room_name;//房屋名称
+    private String thumb_image;//	房产缩略图
+    private String room_name;//房产名称
     private String gateway_id;//	网关id
     private String device_id;//	设备id
     private String landlord_phone;//房东电话

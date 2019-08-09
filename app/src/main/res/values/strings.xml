@@ -404,6 +404,7 @@
     <string name="house_public_input_money">请输入金额</string>
 
     <string name="warm_open_no_device">未添加门锁</string>
+    <string name="warm_open_no_gateway">未添加网关</string>
     <string name="warm_del_context_no">已申请删除房产，不能发布房源信息</string>
 
     <string name="start_to_rent">开始发布</string>
@@ -437,16 +438,16 @@
     <string name="add_house_house_floor_sum">总楼层</string>
     <string name="add_house_edit_floor_sum">请输入数字</string>
     <string name="add_house_house_type">房型</string>
-    <string name="add_house_edit_type">请选择房屋类型</string>
+    <string name="add_house_edit_type">请选择房产类型</string>
     <string name="add_house_house_area">面积</string>
-    <string name="add_house_edit_area">请输入房屋面积</string>
+    <string name="add_house_edit_area">请输入房产面积</string>
     <string name="add_house_house_agent">代理商</string>
     <string name="add_house_edit_agent">请选择代理商</string>
-    <string name="add_house_house_confit">房屋配置</string>
-    <string name="add_house_edit_confit">请输入房屋已有的配置，每一项用“，”或者“、”分开</string>
-    <string name="add_house_house_introduce">房屋介绍</string>
-    <string name="add_house_edit_introduce">请输入房屋相关的介绍信息</string>
-    <string name="add_house_house_pic">上传房屋图片</string>
+    <string name="add_house_house_confit">房产配置</string>
+    <string name="add_house_edit_confit">请输入房产已有的配置，每一项用“，”或者“、”分开</string>
+    <string name="add_house_house_introduce">房产介绍</string>
+    <string name="add_house_edit_introduce">请输入房产相关的介绍信息</string>
+    <string name="add_house_house_pic">上传房产图片</string>
     <string name="add_house_house_submit">提交</string>
     <string name="add_house_house_submit_tips_1">*每项房产安装门锁设备需要支付200元安装费用*</string>
 
@@ -462,30 +463,31 @@
 
     <string name="add_house_flow_address">填写地址</string>
     <string name="add_house_flow_info">房产信息</string>
-    <string name="add_house_flow_introduce">房屋介绍</string>
+    <string name="add_house_flow_introduce">房产介绍</string>
     <string name="add_house_flow_finish">完成</string>
 
-    <string name="add_house_fill_address">填写房屋地址</string>
-    <string name="add_house_fill_address_tips">具体填写以下地址信息，租客才能更准确的找到您的房屋位置哦！</string>
+    <string name="add_house_fill_address">填写房产地址</string>
+    <string name="add_house_fill_address_tips">具体填写以下地址信息，准确定位房产位置</string>
     <string name="add_house_choose_location">选择定位</string>
-    <string name="add_house_choose_location_tips">请选择房屋定位</string>
+    <string name="add_house_choose_location_tips">请选择房产定位</string>
     <string name="add_house_choose_real_location">楼栋门牌</string>
     <string name="add_house_choose_real_location_tips">例：福德公寓3栋412</string>
 
     <string name="title_choose_location">选择定位</string>
     <string name="please_fill_real_location">请填写楼栋门牌</string>
 
-    <string name="add_house_fill_info">填写房屋信息</string>
-    <string name="add_house_fill_info_tips"> 填写正确的信息，有助于房屋的出租</string>
-    <string name="add_house_house_info_name">房屋名称</string>
-    <string name="error_house_info_name_no">房屋名称不能为空</string>
+    <string name="add_house_fill_info">填写房产信息</string>
+    <string name="add_house_fill_info_tips"> 填写正确的信息，有助于房产的出租</string>
+    <string name="add_house_house_info_name">房产名称</string>
+    <string name="error_house_info_name_no">房产名称不能为空</string>
+    <string name="error_house_info_address_no">门牌号不能为空</string>
     <string name="add_house_house_info_name_tips">例：乔雅花园一期2栋203</string>
     <string name="add_house_house_info_house_type">户型</string>
     <string name="add_house_confit">家电配置</string>
 
     <string name="add_house_fill_info_more">完善信息</string>
-    <string name="add_house_fill_info_more_tips">填写介绍，完善您的房屋信息</string>
-    <string name="add_house_introduce_house">房屋介绍（选填）</string>
+    <string name="add_house_fill_info_more_tips">填写介绍，完善您的房产信息</string>
+    <string name="add_house_introduce_house">房产介绍（选填）</string>
     <string name="add_house_introduce_house_tips">例：全新家具家电，朝南采光很好，交通方便，近地铁站。</string>
     <string name="tips_add_pic_num_mast">添加图片数量不能超过%s张</string>
     <string name="please_add_pic">请至少请上传一张图片</string>
@@ -505,7 +507,7 @@
     <string name="house_info_official">平台认证</string>
     <string name="house_info_address">地理位置</string>
     <string name="house_info_floor_unit">层</string>
-    <string name="house_info_confit">房屋配置</string>
+    <string name="house_info_confit">房产配置</string>
     
     <string name="house_info_setting_paysetting">安装付费</string>
     <string name="house_info_setting_edit">编辑房产</string>
@@ -559,7 +561,7 @@
     <string name="open_pwd_time_tips">时效性密码：</string>
     <string name="open_manage_pwd_tips">管理员密码：</string>
 
-    <string name="tips_get_authority_content">房屋已出租，权限失效！</string>
+    <string name="tips_get_authority_content">房产已出租，权限失效！</string>
     <string name="get_authority">维修获取</string>
 
     <string name="open_tips_pwd_self">暂无密码，快添加一个吧</string>
@@ -578,7 +580,7 @@
 
     <!--获取管理员密码-->
     <string name="get_manage_pwd_authority">获取管理员密码</string>
-    <string name="get_manage_pwd_authority_tips">房屋已出租，为保障租客的安全和私隐，\n需要先获取租客手机验证码进行操作验证</string>
+    <string name="get_manage_pwd_authority_tips">房产已出租，为保障租客的安全和私隐，\n需要先获取租客手机验证码进行操作验证</string>
     <string name="get_manage_pwd_success_tips">验证成功！\n管理员密码已通过短信发送！</string>
 
     <!--门锁功能管理界面-->
@@ -616,7 +618,7 @@
 
     <string name="error_no_install_pay">未获取到安装费信息</string>
     <string name="error_no_choose_sever_type">未获取到服务费套餐信息</string>
-    <string name="please_talk_pay_install">请通知房东缴纳安装费用</string>
+    <string name="please_talk_pay_install">请提醒房东缴纳安装费用</string>
 
     <!--我的-->
     <string name="my_money">我的资产</string>
@@ -689,7 +691,7 @@
     <string name="freehouse_item_copy_password">复制密码</string>
 
     <!--搜索-->
-    <string name="search_edit_hint">请输入要搜索的房屋、房屋编号</string>
+    <string name="search_edit_hint">请输入要搜索的房产、房产编号</string>
     <string name="search_history_clear">删除搜索记录</string>
     <string name="roomlist_title_des">%1$s  %2$s号楼%3$s门%4$s</string>
     <string name="roomlist_description_des">%1$s | %2$s平米 | %3$s/%4$s层</string>

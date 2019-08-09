@@ -49,68 +49,73 @@
         android:layout_marginEnd="@dimen/dp_15"
         android:background="@mipmap/change_bg"
         android:visibility="gone">
+
         <TextView
             android:id="@+id/tv_tips_my_gateway"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/sp_14"
-            android:textColor="@color/text_black"
-            android:text="@string/my_gateway"
+            android:layout_marginStart="@dimen/dp_20"
             android:layout_marginTop="@dimen/dp_15"
-            android:layout_marginStart="@dimen/dp_20"/>
+            android:text="@string/my_gateway"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/sp_14" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_1"
-            android:background="@color/style_line"
             android:layout_below="@+id/tv_tips_my_gateway"
-            android:layout_marginTop="@dimen/dp_8"
             android:layout_marginStart="@dimen/dp_4"
-            android:layout_marginEnd="@dimen/dp_4"/>
+            android:layout_marginTop="@dimen/dp_8"
+            android:layout_marginEnd="@dimen/dp_4"
+            android:background="@color/style_line" />
+
         <ImageView
             android:id="@+id/activity_dev_list_tv_gateway_pic"
             android:layout_width="@dimen/dp_72"
             android:layout_height="@dimen/dp_72"
-            android:src="@mipmap/wangguan_1_72px_png"
-            android:layout_marginTop="@dimen/dp_12"
+            android:layout_below="@+id/tv_tips_my_gateway"
             android:layout_marginStart="@dimen/dp_15"
-            android:layout_below="@+id/tv_tips_my_gateway" />
+            android:layout_marginTop="@dimen/dp_12"
+            android:src="@mipmap/wangguan_1_72px_png" />
+
         <TextView
             android:id="@+id/activity_dev_list_tv_gateway_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/activity_dev_list_tv_gateway_pic"
+            android:layout_marginStart="@dimen/dp_4"
+            android:layout_marginTop="@dimen/dp_12"
+            android:layout_toEndOf="@+id/activity_dev_list_tv_gateway_pic"
+            android:text="@string/text_gateway"
             android:textColor="@color/text_black"
             android:textSize="@dimen/sp_16"
-            android:typeface="sans"
             android:textStyle="bold"
-            android:text="@string/text_gateway"
-            android:layout_marginTop="@dimen/dp_12"
-            android:layout_marginStart="@dimen/dp_4"
-            android:layout_toEndOf="@+id/activity_dev_list_tv_gateway_pic"
-            android:layout_alignTop="@+id/activity_dev_list_tv_gateway_pic"/>
+            android:typeface="sans" />
 
         <TextView
             android:id="@+id/activity_dev_list_tv_gateway_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/text_black"
-            android:textSize="@dimen/sp_12"
-            android:layout_marginTop="@dimen/dp_4"
+            android:layout_below="@+id/activity_dev_list_tv_gateway_name"
             android:layout_marginStart="@dimen/dp_4"
+            android:layout_marginTop="@dimen/dp_4"
             android:layout_toEndOf="@+id/activity_dev_list_tv_gateway_pic"
-            android:layout_below="@+id/activity_dev_list_tv_gateway_name"/>
-        
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/sp_12" />
+
         <Button
             android:id="@+id/activity_dev_list_btn_gateway_manage"
             android:layout_width="@dimen/dp_55"
             android:layout_height="@dimen/dp_36"
+            android:layout_alignTop="@id/activity_dev_list_tv_gateway_pic"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/dp_18"
+            android:layout_marginEnd="@dimen/dp_25"
             android:background="@drawable/shape_button"
+            android:text="@string/manage"
             android:textColor="@color/text_white"
             android:textSize="@dimen/sp_14"
-            android:text="@string/manage"
-            android:layout_alignParentEnd="true"
-            android:layout_alignTop="@id/activity_dev_list_tv_gateway_pic"
-            android:layout_marginTop="@dimen/dp_18"
-            android:layout_marginEnd="@dimen/dp_25"/>
+            android:visibility="gone" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -155,66 +160,70 @@
         android:layout_marginEnd="@dimen/dp_15"
         android:background="@mipmap/change_bg"
         android:visibility="gone">
+
         <TextView
             android:id="@+id/tv_tips_my_dev"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/sp_14"
-            android:textColor="@color/text_black"
-            android:text="@string/my_dev"
+            android:layout_marginStart="@dimen/dp_20"
             android:layout_marginTop="@dimen/dp_15"
-            android:layout_marginStart="@dimen/dp_20"/>
+            android:text="@string/my_dev"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/sp_14" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_1"
-            android:background="@color/style_line"
             android:layout_below="@+id/tv_tips_my_dev"
-            android:layout_marginTop="@dimen/dp_8"
             android:layout_marginStart="@dimen/dp_4"
-            android:layout_marginEnd="@dimen/dp_4"/>
+            android:layout_marginTop="@dimen/dp_8"
+            android:layout_marginEnd="@dimen/dp_4"
+            android:background="@color/style_line" />
+
         <ImageView
             android:id="@+id/activity_dev_list_tv_dev_pic"
             android:layout_width="@dimen/dp_72"
             android:layout_height="@dimen/dp_72"
-            android:src="@mipmap/k52_72pt"
-            android:layout_marginTop="@dimen/dp_15"
+            android:layout_below="@+id/tv_tips_my_dev"
             android:layout_marginStart="@dimen/dp_15"
-            android:layout_below="@+id/tv_tips_my_dev" />
+            android:layout_marginTop="@dimen/dp_15"
+            android:src="@mipmap/k52_72pt" />
+
         <TextView
             android:id="@+id/activity_dev_list_tv_dev_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/activity_dev_list_tv_dev_pic"
+            android:layout_marginStart="@dimen/dp_4"
+            android:layout_marginTop="@dimen/dp_2"
+            android:layout_toEndOf="@+id/activity_dev_list_tv_dev_pic"
+            android:text="@string/my_dev_name"
             android:textColor="@color/text_black"
             android:textSize="@dimen/sp_16"
-            android:typeface="sans"
             android:textStyle="bold"
-            android:text="@string/my_dev_name"
-            android:layout_marginTop="@dimen/dp_2"
-            android:layout_marginStart="@dimen/dp_4"
-            android:layout_toEndOf="@+id/activity_dev_list_tv_dev_pic"
-            android:layout_alignTop="@+id/activity_dev_list_tv_dev_pic"/>
+            android:typeface="sans" />
 
         <TextView
             android:id="@+id/activity_dev_list_tv_dev_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/text_black"
-            android:textSize="@dimen/sp_12"
-            android:text="@string/my_dev_type"
-            android:layout_marginTop="@dimen/dp_4"
+            android:layout_below="@+id/activity_dev_list_tv_dev_name"
             android:layout_marginStart="@dimen/dp_4"
+            android:layout_marginTop="@dimen/dp_4"
             android:layout_toEndOf="@+id/activity_dev_list_tv_dev_pic"
-            android:layout_below="@+id/activity_dev_list_tv_dev_name"/>
+            android:text="@string/my_dev_type"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/sp_12" />
 
         <TextView
             android:id="@+id/activity_dev_list_tv_dev_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/text_gray"
-            android:textSize="@dimen/sp_12"
-            android:layout_marginTop="@dimen/dp_10"
+            android:layout_below="@+id/activity_dev_list_tv_dev_type"
             android:layout_marginStart="@dimen/dp_4"
+            android:layout_marginTop="@dimen/dp_10"
             android:layout_toEndOf="@+id/activity_dev_list_tv_dev_pic"
-            android:layout_below="@+id/activity_dev_list_tv_dev_type"/>
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/sp_12" />
     </RelativeLayout>
 </LinearLayout>

@@ -245,6 +245,7 @@ public class OpenFragment extends BaseFragment {
             tvName.setText(listbean.getRoom_name());
             imgType.setImageResource(listbean.getStatus() == 2 ? R.mipmap.opendoor_notcheckin_icon : R.mipmap.opendoor_checkin_icon);
             tvServerTime.setText(listbean.getService_time());
+            tvServerTime.setText(listbean.getService_time().equals("0") ? (listbean.getIs_install() == 0 ? getString(R.string.house_sever_end_time_emty) : getString(R.string.house_sever_end_time_end)) : listbean.getService_time());
             mTvRenttime.setText(listbean.getStart_time());
             mTvEndtime.setText(listbean.getEnd_time());
             if (listbean.getType() == 1) {

@@ -208,7 +208,7 @@ public class OpenManageActivity extends BaseActivity {
     }
 
     /**
-     * 已出租房屋请求获取管理员密码权限
+     * 已出租房产请求获取管理员密码权限
      */
     private void showGetAuthorityPopup() {
         commonPopupWindow = new CommonPopupWindow.Builder(this)
@@ -282,6 +282,8 @@ public class OpenManageActivity extends BaseActivity {
                 .setTitle(getString(R.string.tips))
                 .setContent(content)
                 .create();
+        commonTipsPopup.setFocusable(true);
+        commonTipsPopup.setOutsideTouchable(true);
         showPopup(commonTipsPopup);
 
     }
