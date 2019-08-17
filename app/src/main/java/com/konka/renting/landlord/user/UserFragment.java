@@ -1,6 +1,5 @@
 package com.konka.renting.landlord.user;
 
-import android.Manifest;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;

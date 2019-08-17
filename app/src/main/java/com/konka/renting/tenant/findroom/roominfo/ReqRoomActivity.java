@@ -24,6 +24,7 @@ import com.konka.renting.base.BaseActivity;
 import com.konka.renting.bean.DataInfo;
 import com.konka.renting.bean.LoginUserBean;
 import com.konka.renting.bean.PayRentRefreshEvent;
+import com.konka.renting.bean.RentingDateBean;
 import com.konka.renting.bean.RoomInfo;
 import com.konka.renting.bean.RoomSearchInfoBean;
 import com.konka.renting.event.ChooseDateEvent;
@@ -70,7 +71,7 @@ public class ReqRoomActivity extends BaseActivity implements OnClickListener {
     private int year, month, day;
     Switch aSwitch;
     private CountDownTime mTime;
-    ArrayList<String> rentingDates=new ArrayList<>();
+    ArrayList<RentingDateBean> rentingDates=new ArrayList<>();
     RoomSearchInfoBean mBean;
 
 
@@ -171,19 +172,19 @@ public class ReqRoomActivity extends BaseActivity implements OnClickListener {
 
     private void getRentDate() {
         showLoadingDialog();
-        Subscription subscription = SecondRetrofitHelper.getInstance().rentingDate(mBean.getRoom_id())
-                .compose(RxUtil.<DataInfo<List<String>>>rxSchedulerHelper())
-                .subscribe(new CommonSubscriber<DataInfo<List<String>>>() {
+        Subscription subscription = SecondRetrofitHelper.getInstance().rentingDate2(mBean.getRoom_id())
+                .compose(RxUtil.<DataInfo<List<RentingDateBean>>>rxSchedulerHelper())
+                .subscribe(new CommonSubscriber<DataInfo<List<RentingDateBean>>>() {
                     @Override
                     public void onError(Throwable e) {
                         dismiss();
                     }
 
                     @Override
-                    public void onNext(DataInfo dataInfo) {
+                    public void onNext(DataInfo<List<RentingDateBean>> dataInfo) {
                         dismiss();
                         if (dataInfo.success()) {
-                            rentingDates .addAll((Collection<? extends String>) dataInfo.data());
+                            rentingDates .addAll(dataInfo.data());
                             if (rentingDates == null)
                                 rentingDates = new ArrayList<>();
                         }

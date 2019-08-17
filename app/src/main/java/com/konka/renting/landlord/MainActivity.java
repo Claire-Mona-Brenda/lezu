@@ -33,6 +33,7 @@ import com.konka.renting.bean.LoginUserBean;
 import com.konka.renting.http.SecondRetrofitHelper;
 import com.konka.renting.http.subscriber.CommonSubscriber;
 import com.konka.renting.landlord.house.HouseFragment;
+import com.konka.renting.landlord.house.HouseFragment2;
 import com.konka.renting.landlord.order.OrderFragment;
 import com.konka.renting.landlord.user.UserFragment;
 import com.konka.renting.login.LoginInfo;
@@ -132,7 +133,7 @@ public class MainActivity extends BaseMainActivity {
                 mFragments[index] = OrderFragment.newInstance();
                 break;
             case 2:
-                mFragments[index] = HouseFragment.newInstance();
+                mFragments[index] = HouseFragment2.newInstance();
                 break;
         }
     }

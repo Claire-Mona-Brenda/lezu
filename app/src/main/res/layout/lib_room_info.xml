@@ -438,10 +438,9 @@
     </androidx.core.widget.NestedScrollView>
     <LinearLayout
         android:id="@+id/linear_renter"
-        android:gravity="center"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_70"
+        android:layout_height="@dimen/dp_90"
         android:layout_marginTop="@dimen/dp_1"
         android:background="@android:color/white"
         android:layout_gravity="bottom"
@@ -453,14 +452,16 @@
         <Button
             android:onClick="onClick"
             android:id="@+id/look_room"
-            android:textColor="@android:color/black"
-            android:background="@drawable/shape_button_gray"
+            android:textColor="@color/text_white"
+            android:background="@drawable/selector_enable_org_gray"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/apply_house_call_landlord"
             android:textSize="@dimen/lib_house_edit_text"
+            android:layout_marginTop="@dimen/dp_10"
             android:layout_marginEnd="@dimen/dp_20"
+            android:layout_marginStart="@dimen/dp_20"
             android:visibility="visible"/>
 
         <Button
@@ -471,7 +472,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/apply_rent_house"
-            android:textSize="@dimen/lib_house_edit_text" />
+            android:textSize="@dimen/lib_house_edit_text"
+            android:visibility="gone"/>
 
 
     </LinearLayout>

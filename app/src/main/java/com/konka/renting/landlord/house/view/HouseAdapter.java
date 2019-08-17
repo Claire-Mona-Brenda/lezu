@@ -243,7 +243,7 @@ public class HouseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         nvHolder.llCreateOrder.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {//短租生成订单
-                CreateOrderActivity.toActivity(context, houseOrderInfoBean.getRoom_id() + "", houseOrderInfoBean.getRoom_name());
+                CreateOrderActivity.toActivity(context, houseOrderInfoBean.getRoom_id()+"",houseOrderInfoBean.getRoom_name());
             }
         });
 

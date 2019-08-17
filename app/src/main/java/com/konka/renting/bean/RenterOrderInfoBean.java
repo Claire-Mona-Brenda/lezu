@@ -59,6 +59,12 @@ public class RenterOrderInfoBean {
     private int service_status;//服务费状态 1正常 0过期
     private String service_date;//服务费到期日期
     private int is_share;//合租发布是否开启 0关闭 1开启
+    private String room_type;//房型
+    private String address;//地址
+    private String floor;//楼层
+    private String total_floor;//楼层
+    private String measure_area;//面积
+    private int is_online;// 0线下
 
     public String getOrder_id() {
         return order_id;
@@ -188,11 +194,11 @@ public class RenterOrderInfoBean {
         this.cost_rent = cost_rent;
     }
 
-    public List<HouseConfigBean>  getConfig() {
+    public List<HouseConfigBean> getConfig() {
         return config;
     }
 
-    public void setConfig(List<HouseConfigBean>  config) {
+    public void setConfig(List<HouseConfigBean> config) {
         this.config = config;
     }
 
@@ -284,6 +290,54 @@ public class RenterOrderInfoBean {
         this.is_share = is_share;
     }
 
+    public String getRoom_type() {
+        return room_type;
+    }
+
+    public void setRoom_type(String room_type) {
+        this.room_type = room_type;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getFloor() {
+        return floor;
+    }
+
+    public void setFloor(String floor) {
+        this.floor = floor;
+    }
+
+    public String getTotal_floor() {
+        return total_floor;
+    }
+
+    public void setTotal_floor(String total_floor) {
+        this.total_floor = total_floor;
+    }
+
+    public String getMeasure_area() {
+        return measure_area;
+    }
+
+    public void setMeasure_area(String measure_area) {
+        this.measure_area = measure_area;
+    }
+
+    public int getIs_online() {
+        return is_online;
+    }
+
+    public void setIs_online(int is_online) {
+        this.is_online = is_online;
+    }
+
     public static class LandlordBean {
         /**
          * real_name : 杨俊豪
@@ -292,6 +346,8 @@ public class RenterOrderInfoBean {
 
         private String real_name;
         private String phone;
+        private String thumb_headimgurl;
+        private String headimgurl;
 
         public String getReal_name() {
             return real_name;
@@ -307,6 +363,22 @@ public class RenterOrderInfoBean {
 
         public void setPhone(String phone) {
             this.phone = phone;
+        }
+
+        public String getThumb_headimgurl() {
+            return thumb_headimgurl;
+        }
+
+        public void setThumb_headimgurl(String thumb_headimgurl) {
+            this.thumb_headimgurl = thumb_headimgurl;
+        }
+
+        public String getHeadimgurl() {
+            return headimgurl;
+        }
+
+        public void setHeadimgurl(String headimgurl) {
+            this.headimgurl = headimgurl;
         }
     }
 

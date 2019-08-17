@@ -218,7 +218,7 @@ public class ApplyFragment extends BaseFragment {
                 btn_checkpwd.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {//查看密码
-                        PwsOrderDetailsActivity.toActivity(getContext(), s.getRoom_id(), s.getOrder_id(), s.getRoom_name());
+                        PwsOrderDetailsActivity.toActivity(getContext(), s.getOrder_id());
                     }
                 });
 
@@ -280,7 +280,7 @@ public class ApplyFragment extends BaseFragment {
                         dismiss();
                         if (dataInfo.success()) {
                             removeBean(bean.getOrder_id());
-                            if (bean.getType()==2){
+                            if (bean.getType() == 2) {
                                 initData(REFRESH);
                             }
                             RxBus.getDefault().post(new LandlordOrderCheckinEvent(11));

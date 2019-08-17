@@ -207,10 +207,33 @@
             android:name=".landlord.house.activity.SearchAddressActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
+        <activity
+            android:name=".landlord.house.activity.RentPeopleListActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.order.OrderInfoLActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tenant.order.OrderInfoTActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tenant.opendoor.AddRentPeopleActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tenant.opendoor.ShareRentListActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".landlord.house.HouseInfoActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.house.activity.HouseInfoActivity2"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity

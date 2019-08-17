@@ -58,22 +58,8 @@
     <string name="about">关于</string>
     <string name="problem">常见问题</string>
     <string name="login_out">退出登录</string>
-    <string name="apply_ing">申请订单</string>
-    <string name="check_in">入住订单</string>
-    <string name="check_out">退房订单</string>
-    <string name="expire">失效订单</string>
-    <string name="confirm_order">确认订单</string>
-    <string name="cancel_order">取消订单</string>
-    <string name="check_pwd">查看密码</string>
-    <string name="income_history">收租历史</string>
-    <string name="agree_relet">同意续租</string>
-    <string name="agree_change">同意变更</string>
-    <string name="confirm_refund">确认退款</string>
-    <string name="confirm_apply_checkout">同意退房</string>
-    <string name="cancle_apply_checkout">拒绝退房</string>
-    <string name="service">联系客服</string>
-    <string name="wait_confirm">待确认</string>
-    <string name="wait_refund">待退款</string>
+
+
     <string name="lease_income">租期总收入:</string>
     <string name="revise_photo">修改头像</string>
     <string name="name">姓名</string>
@@ -223,24 +209,38 @@
     <string name="warm_no_to_add_pwd_more">门锁设置的密码数量不能超过7个</string>
 
     <string name="houes_id">房间</string>
+    <string name="choose_rent_date">选择日期</string>
+    <string name="please_choose_rent_date">请选择日期</string>
     <string name="start_rent">入住时间</string>
+    <string name="start_rent_">入住时间：</string>
     <string name="end_rent">退房时间</string>
-    <string name="input_rent_phone_number">租客手机号码（选填）</string>
+    <string name="end_rent_">退房时间：</string>
+    <string name="input_rent_phone_number">手机号码（选填）</string>
+    <string name="please_input_rent_phone_number">请输入租客手机号码</string>
     <string name="caution_create_pwd">* 填入手机号码，生成的卡号和密码会直接以短信的形式发送到该号码的手机上。</string>
+    <string name="caution_create_pwd_tips_1">*租客需注册APP账号，并已经进行实名验证。</string>
+    <string name="caution_create_pwd_tips_2">*输入手机号码可直接获取开门权限。</string>
     <string name="to_create">生成密码</string>
     <string name="warn_input_date">请选择入住时间和退房时间</string>
     <string name="warn_input_mobile">请填写正确的手机号码</string>
 
     <string name="choose_date">选择入住时间</string>
+    <string name="choose_time_date">请选择时间日期</string>
     <string name="please_choose_date">请选择入住日期和退租日期</string>
     <string name="warn_end_time_not_same">退房时间已被出租，请重新选择</string>
 
     <string name="title_pwd_order_details">查看密码</string>
-    <string name="card_number">卡号：</string>
-    <string name="card_pwd">密码：</string>
+    <string name="title_order_info">入住信息</string>
+    <string name="title_room_info">房间信息</string>
+    <string name="card_number">账号</string>
+    <string name="card_pwd">密码</string>
+    <string name="card_room_name">名称</string>
+    <string name="card_room_no">房型</string>
+    <string name="card_room_address">地址</string>
     <string name="easy_copy">一键复制</string>
     <string name="hint_card_user">*注意卡号密码仅支持一个用户使用</string>
     <string name="toach_copy_to_clipboard">已成功复制到剪贴板内</string>
+
 
 
     <string name="guide_one_title_txt">个性编辑，轻松操控</string>
@@ -255,6 +255,23 @@
 
     
     <!--订单列表/订单详情-->
+    <string name="apply_ing">申请订单</string>
+    <string name="check_in">入住订单</string>
+    <string name="check_out">退房订单</string>
+    <string name="expire">失效订单</string>
+    <string name="confirm_order">确认订单</string>
+    <string name="cancel_order">取消订单</string>
+    <string name="check_pwd">查看密码</string>
+    <string name="income_history">收租历史</string>
+    <string name="agree_relet">同意续租</string>
+    <string name="agree_change">同意变更</string>
+    <string name="confirm_refund">确认退款</string>
+    <string name="confirm_apply_checkout">同意退房</string>
+    <string name="cancle_apply_checkout">拒绝退房</string>
+    <string name="service">联系客服</string>
+    <string name="wait_confirm">待确认</string>
+    <string name="wait_refund">待退款</string>
+
     <string name="renter_start_time">出租时间：</string>
     <string name="renter_end_time">到期时间：</string>
     <string name="renter_sever_end_time">服务费到期：</string>
@@ -276,6 +293,9 @@
     <string name="dialog_apply_cancel">是否拒绝该租客发起的租房申请？</string>
     <string name="dialog_apply_rent">是否同意该租客发起的租房申请？</string>
     <string name="dialog_dissmiss_apply_rent">是否取消该订单？</string>
+    <string name="dialog_dissmiss_rent">是否移除？</string>
+
+
 
     <string name="apply">申请</string>
 
@@ -290,6 +310,22 @@
     <string name="order_status_5">过期</string>
     <string name="order_status_6">租客取消</string>
     <string name="order_status_7">房东取消</string>
+    
+    <string name="order_title_underway">进行中</string>
+    <string name="order_title_done">已完成</string>
+
+    <string name="title_rent_info">租房信息</string>
+    <string name="title_in_order_info">订单信息</string>
+    <string name="tips_rent_limit">租期</string>
+    <string name="tips_pay_way">付款方式</string>
+    <string name="tips_pay_way_online">线上</string>
+    <string name="tips_pay_way_no_online">线下</string>
+    <string name="tips_rent_money">房租</string>
+    <string name="tips_deposit_money">押金</string>
+    <string name="tips_order_no">订单号</string>
+    <string name="tips_create_time">创建时间</string>
+    <string name="tips_landlord_">房东：</string>
+    <string name="tips_tenant_">租客：</string>
 
     <!--租客管理-->
     <string name="dialog_renter_manage_apply_title">合租申请</string>
@@ -297,6 +333,14 @@
     <string name="dialog_renter_manage_agree">是否同意合租申请</string>
     <string name="dialog_renter_manage_cancel">是否拒绝合租申请</string>
     <string name="dialog_renter_manage_remove">是否移除该租客的开门权限</string>
+
+    <string name="please_input_add_rent_people_">请输入需要添加的账号：</string>
+    <string name="please_input_account">请输入账号</string>
+
+    <string name="title_add_account">添加账号</string>
+    <string name="tips_add_account">注意事项</string>
+    <string name="tips_add_account_1">*账号需已进行实名验证；</string>
+    <string name="tips_add_account_2">*获得的使用时间与你一致，添加的账号仅有使用</string>
 
     <!--公共-->
     <string name="message">消息</string>
@@ -447,12 +491,16 @@
     <string name="add_house_edit_confit">请输入房产已有的配置，每一项用“，”或者“、”分开</string>
     <string name="add_house_house_introduce">房产介绍</string>
     <string name="add_house_edit_introduce">请输入房产相关的介绍信息</string>
+    <string name="add_house_house_img">房产照片</string>
     <string name="add_house_house_pic">上传房产图片</string>
     <string name="add_house_house_submit">提交</string>
     <string name="add_house_house_submit_tips_1">*每项房产安装门锁设备需要支付200元安装费用*</string>
+    
+    <string name="nothing">无</string>
 
     <string name="unit_m2">平方米</string>
     <string name="unit_m2_1">平方</string>
+    <string name="unit_hour">时</string>
 
     <string name="warm_house_floor_sum">填写的楼层数不能大于总楼层数</string>
     <string name="warm_house_floor_0">填写正确的楼层数</string>
@@ -511,10 +559,13 @@
     
     <string name="house_info_setting_paysetting">安装付费</string>
     <string name="house_info_setting_edit">编辑房产</string>
+    <string name="house_info_setting_bind_clock">绑定门锁</string>
     <string name="house_info_setting_binddevice">绑定设备</string>
     <string name="house_info_setting_device_list">设备列表</string>
     <string name="house_info_setting_gateway">网关列表</string>
+    <string name="house_info_setting_rent">租客列表</string>
     <string name="house_info_setting_key_pwd">钥匙孔密码</string>
+    <string name="house_info_setting_clock_manage">门锁管理</string>
     <string name="house_info_setting_open_manage">开门管理</string>
     <string name="house_info_setting_del">申请删除</string>
     <string name="house_info_setting_temporary_pwd">临时密码</string>
@@ -560,6 +611,8 @@
     <string name="popup_warm_pwd_time">遇到问题？戳我～</string>
     <string name="open_pwd_time_tips">时效性密码：</string>
     <string name="open_manage_pwd_tips">管理员密码：</string>
+    <string name="open_manage_add_people">添加使用账号</string>
+    <string name="open_manage_add_rent">添加使用者</string>
 
     <string name="tips_get_authority_content">房产已出租，权限失效！</string>
     <string name="get_authority">维修获取</string>
@@ -600,6 +653,7 @@
     <string name="pay_sever_title">服务续费</string>
     <string name="pay_all_money">缴纳费用</string>
     <string name="pay">付款</string>
+    <string name="pay_to">充值</string>
     <string name="pay_choose_type">选择支付方式</string>
     <string name="pay_choose_sever_type">选择续费套餐</string>
     <string name="alipay">支付宝</string>

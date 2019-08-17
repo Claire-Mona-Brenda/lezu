@@ -14,6 +14,7 @@
         android:layout_marginTop="@dimen/dp_1"
         android:background="@color/color_ffffff"
         app:tabIndicatorColor="@color/text_org"
+        app:tabIndicatorFullWidth="false"
         app:tabMode="fixed"
         app:tabSelectedTextColor="@color/text_org"
         app:tabTextColor="@color/color_666666" />

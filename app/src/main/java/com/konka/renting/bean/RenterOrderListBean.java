@@ -35,6 +35,11 @@ public class RenterOrderListBean {
     private String landlord_phone;//房东电话
     private String member_phone;//租客电话
     private String service_date;//服务费到期日期
+    private String room_type;//房型
+    private String address;//地址
+    private String floor;//楼层
+    private String total_floor;//楼层
+    private String measure_area;//面积
 
 
     public String getOrder_id() {
@@ -171,5 +176,45 @@ public class RenterOrderListBean {
 
     public void setService_date(String service_date) {
         this.service_date = service_date;
+    }
+
+    public String getRoom_type() {
+        return room_type;
+    }
+
+    public void setRoom_type(String room_type) {
+        this.room_type = room_type;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getFloor() {
+        return floor;
+    }
+
+    public void setFloor(String floor) {
+        this.floor = floor;
+    }
+
+    public String getTotal_floor() {
+        return total_floor;
+    }
+
+    public void setTotal_floor(String total_floor) {
+        this.total_floor = total_floor;
+    }
+
+    public String getMeasure_area() {
+        return measure_area;
+    }
+
+    public void setMeasure_area(String measure_area) {
+        this.measure_area = measure_area;
     }
 }

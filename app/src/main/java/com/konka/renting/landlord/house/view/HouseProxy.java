@@ -33,6 +33,7 @@ import com.konka.renting.landlord.house.HouseContract;
 import com.konka.renting.landlord.house.HouseInfoActivity;
 import com.konka.renting.landlord.house.IHouseRefresh;
 import com.konka.renting.landlord.house.activity.AddHouseAddressActivity;
+import com.konka.renting.landlord.house.activity.HouseInfoActivity2;
 import com.konka.renting.landlord.house.data.MissionEnity;
 import com.konka.renting.landlord.house.widget.ShowToastUtil;
 import com.konka.renting.landlord.user.userinfo.NewFaceDectectActivity;
@@ -118,8 +119,6 @@ public class HouseProxy implements HouseContract.IMissionView, HouseAdapter.Miss
 //                    }
 //                });
                 if (LoginUserBean.getInstance().getIs_lodge_identity().equals("1")) {
-//                    Intent intent = new Intent(context, HouseAddActivity.class);
-//                    context.startActivity(intent);
                     AddHouseAddressActivity.toActivity(mActivity);
                 } else {
                     NewFaceDectectActivity.toActivity(context, 1);
@@ -131,8 +130,6 @@ public class HouseProxy implements HouseContract.IMissionView, HouseAdapter.Miss
             @Override
             public void onClick(View view) {
                 if (LoginUserBean.getInstance().getIs_lodge_identity().equals("1")) {
-//                    Intent intent = new Intent(context, HouseAddActivity.class);
-//                    context.startActivity(intent);
                     AddHouseAddressActivity.toActivity(mActivity);
                 } else {
                     NewFaceDectectActivity.toActivity(context, 1);
@@ -235,7 +232,7 @@ public class HouseProxy implements HouseContract.IMissionView, HouseAdapter.Miss
     public void missionItemClick(int position) {
         // TODO Auto-generated method stub\
         index = position;
-        HouseInfoActivity.toActivity(context, list.get(index).getRoom_id() + "");
+        HouseInfoActivity2.toActivity(context, list.get(index).getRoom_id() + "");
 
     }
 

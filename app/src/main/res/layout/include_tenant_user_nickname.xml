@@ -91,16 +91,17 @@
          />
         <View
             style="@style/user_view"
-           />
+           android:visibility="gone"/>
         <TextView
             android:id="@+id/tv_after_the_process"
             style="@style/user_view_item"
             android:drawableLeft="@mipmap/my_about_icon"
-            android:text="@string/after_the_process" />
+            android:text="@string/after_the_process"
+            android:visibility="gone"/>
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_10"
-            android:background="@color/style_bg_card_1"/>
+            android:background="@color/style_bg_card_1" />
         <TextView
             android:id="@+id/tv_quit"
             android:layout_width="match_parent"

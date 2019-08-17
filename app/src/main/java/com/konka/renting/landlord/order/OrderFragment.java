@@ -77,17 +77,14 @@ public class OrderFragment extends BaseFragment {
     private void initTab() {
         List<Fragment> fragmentList = new ArrayList<>();
         List<String> listTab = new ArrayList<>();
-        listTab.add(getString(R.string.apply_ing));
-        listTab.add(getString(R.string.check_in));
-        listTab.add(getString(R.string.check_out));
-        listTab.add(getString(R.string.expire));
+        listTab.add(getString(R.string.order_title_underway));
+        listTab.add(getString(R.string.order_title_done));
         for (int i = 0; i < listTab.size(); i++) {
             mTabOrder.addTab(mTabOrder.newTab().setText(listTab.get(0)));
         }
-        fragmentList.add(ApplyFragment.newInstance());  // 申请中
-        fragmentList.add(CheckinFragment.newInstance());   // 入住中
-        fragmentList.add(CheckoutFragment.newInstance());
-        fragmentList.add(ExpireFragment.newInstance());
+        fragmentList.add(UnderwayLFragment.newInstance());  // 申请中
+        fragmentList.add(DoneLFragment.newInstance());   // 入住中
+
         FragmentManager manager = getChildFragmentManager();
         BillVPAdapter adapter = new BillVPAdapter(manager, fragmentList, listTab);
         mVpOrder.setAdapter(adapter);

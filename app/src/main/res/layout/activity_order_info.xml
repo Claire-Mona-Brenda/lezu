@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_ffffff">
+
+    <include layout="@layout/include_title_text" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:layout_below="@+id/lin_title"
+        android:background="@color/style_line" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/lin_title">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/dp_16"
+                android:paddingTop="@dimen/dp_26"
+                android:paddingEnd="@dimen/dp_16"
+                android:paddingBottom="@dimen/dp_24">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/activity_order_info_card_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="@dimen/dp_1"
+                    app:cardElevation="0dp"
+                    app:cardUseCompatPadding="false">
+
+                    <ImageView
+                        android:id="@+id/activity_order_info_img_icon"
+                        android:layout_width="@dimen/dp_110"
+                        android:layout_height="@dimen/dp_80"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/fangchan_jiazai" />
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/activity_order_info_tv_room_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/activity_order_info_card_img"
+                    android:layout_marginStart="@dimen/dp_16"
+                    android:layout_toEndOf="@+id/activity_order_info_card_img"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/sp_16"
+                    android:textStyle="bold"
+                    android:typeface="sans" />
+
+                <TextView
+                    android:id="@+id/activity_order_info_tv_room_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/activity_order_info_tv_room_name"
+                    android:layout_alignStart="@+id/activity_order_info_tv_room_name"
+                    android:layout_marginTop="@dimen/dp_3"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/sp_12" />
+
+                <TextView
+                    android:id="@+id/activity_order_info_tv_room_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/activity_order_info_tv_room_info"
+                    android:layout_alignStart="@+id/activity_order_info_tv_room_info"
+                    android:layout_marginTop="@dimen/dp_6"
+                    android:textColor="@color/text_ren"
+                    android:textSize="@dimen/sp_16"
+                    android:textStyle="bold"
+                    android:typeface="sans" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1"
+                android:background="@color/style_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/dp_10"
+                android:paddingTop="@dimen/dp_18"
+                android:paddingEnd="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_18">
+
+                <TextView
+                    android:id="@+id/activity_order_info_tv_push_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_ren"
+                    android:textSize="@dimen/sp_13" />
+
+                <TextView
+                    android:id="@+id/activity_order_info_tv_order_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/sp_13" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1"
+                android:background="@color/style_line" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/dp_18"
+                android:paddingTop="@dimen/dp_16"
+                android:paddingEnd="@dimen/dp_33"
+                android:paddingBottom="@dimen/dp_16">
+
+                <ImageView
+                    android:id="@+id/activity_order_info_img_icon_person"
+                    android:layout_width="@dimen/dp_40"
+                    android:layout_height="@dimen/dp_40"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/fangdong_xuanzhong" />
+
+                <TextView
+                    android:id="@+id/activity_order_info_tv_person_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/activity_order_info_img_icon_person"
+                    android:layout_marginStart="@dimen/dp_16"
+                    android:layout_toEndOf="@+id/activity_order_info_img_icon_person"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/sp_16"
+                    android:textStyle="bold"
+                    android:typeface="sans" />
+
+                <TextView
+                    android:id="@+id/activity_order_info_tv_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/activity_order_info_tv_person_name"
+                    android:layout_alignStart="@+id/activity_order_info_tv_person_name"
+                    android:layout_marginTop="@dimen/dp_3"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/sp_12" />
+
+                <ImageView
+                    android:id="@+id/activity_order_info_img_call"
+                    android:layout_width="@dimen/dp_40"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/call" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1"
+                android:background="@color/style_line" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/dp_18"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingEnd="@dimen/dp_24"
+                android:paddingBottom="@dimen/dp_12">
+
+                <TextView
+                    android:id="@+id/tv_title_rent_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_rent_info"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/sp_16"
+                    android:textStyle="bold"
+                    android:typeface="sans" />
+
+                <TextView
+                    android:id="@+id/tv_tips_limit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_title_rent_info"
+                    android:layout_marginTop="@dimen/dp_15"
+                    android:text="@string/tips_rent_limit"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/sp_13" />
+
+                <TextView
+                    android:id="@+id/activity_order_info_tv_rent_limit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/tv_tips_limit"
+                    android:layout_alignParentEnd="true"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/sp_13" />
+
+                <TextView
+                    android:id="@+id/tv_tips_pay_way"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_tips_limit"
+                    android:layout_marginTop="@dimen/dp_17"
+                    android:text="@string/tips_pay_way"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/sp_13" />
+
+                <TextView
+                    android:id="@+id/activity_order_info_tv_pay_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/tv_tips_pay_way"
+                    android:layout_alignParentEnd="true"
+                    android:text="@string/tips_pay_way_no_online"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/sp_13" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1"
+                android:layout_below="@+id/tv_tips_pay_way"
+                android:background="@color/style_line" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/dp_18"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingEnd="@dimen/dp_24"
+                android:paddingBottom="@dimen/dp_12"
+                android:layout_below="@+id/tv_tips_pay_way">
+
+                <TextView
+                    android:id="@+id/tv_tips_rent_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="@string/tips_rent_money"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/sp_13" />
+
+                <TextView
+                    android:id="@+id/activity_order_info_tv_rent_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/tv_tips_rent_money"
+                    android:layout_alignParentEnd="true"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/sp_13" />
+
+                <TextView
+                    android:id="@+id/tv_tips_deposit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_tips_rent_money"
+                    android:layout_marginTop="@dimen/dp_17"
+                    android:text="@string/tips_deposit_money"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/sp_13" />
+
+                <TextView
+                    android:id="@+id/activity_order_info_tv_deposit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/tv_tips_deposit"
+                    android:layout_alignParentEnd="true"
+                    android:text="@string/tips_pay_way_no_online"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/sp_13" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1"
+                android:background="@color/style_line" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/dp_18"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingEnd="@dimen/dp_24"
+                android:paddingBottom="@dimen/dp_12">
+
+                <TextView
+                    android:id="@+id/tv_title_order_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_order_info"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/sp_16"
+                    android:textStyle="bold"
+                    android:typeface="sans" />
+
+                <TextView
+                    android:id="@+id/tv_tips_order_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_title_order_info"
+                    android:layout_marginTop="@dimen/dp_15"
+                    android:text="@string/tips_order_no"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/sp_13" />
+
+                <TextView
+                    android:id="@+id/activity_order_info_tv_order_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/tv_tips_order_no"
+                    android:layout_alignParentEnd="true"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/sp_13" />
+
+                <TextView
+                    android:id="@+id/tv_tips_create_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_tips_order_no"
+                    android:layout_marginTop="@dimen/dp_15"
+                    android:text="@string/tips_create_time"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/sp_13" />
+
+                <TextView
+                    android:id="@+id/activity_order_info_tv_create_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/tv_tips_create_time"
+                    android:layout_alignParentEnd="true"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/sp_13" />
+            </RelativeLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</RelativeLayout>

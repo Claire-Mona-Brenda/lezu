@@ -27,6 +27,7 @@ public class OpenDoorListbean implements Parcelable {
     private int type;
     private int status;
     private int is_install;
+    private int is_rent;//是否有合租 1有 0否
     private String start_time;
     private String end_time;
     private String gateway_id;
@@ -44,6 +45,7 @@ public class OpenDoorListbean implements Parcelable {
         type = in.readInt();
         status = in.readInt();
         is_install = in.readInt();
+        is_rent = in.readInt();
         start_time = in.readString();
         end_time = in.readString();
         gateway_id = in.readString();
@@ -99,6 +101,14 @@ public class OpenDoorListbean implements Parcelable {
 
     public void setIs_install(int is_install) {
         this.is_install = is_install;
+    }
+
+    public int getIs_rent() {
+        return is_rent;
+    }
+
+    public void setIs_rent(int is_rent) {
+        this.is_rent = is_rent;
     }
 
     public String getStart_time() {
@@ -200,6 +210,7 @@ public class OpenDoorListbean implements Parcelable {
         dest.writeInt(type);
         dest.writeInt(status);
         dest.writeInt(is_install);
+        dest.writeInt(is_rent);
         dest.writeString(start_time);
         dest.writeString(end_time);
         dest.writeString(gateway_id);

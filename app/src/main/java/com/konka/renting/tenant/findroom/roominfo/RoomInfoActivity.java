@@ -64,7 +64,7 @@ public class RoomInfoActivity extends BaseActivity implements OnClickListener {
     AppBarLayout mAppBarLayout;
     ViewPager pager;
     LinearLayout bottom_views;
-    Button btn_req;
+//    Button btn_req;
     Button look_room;
     TextView tvTitle;
     TextView tvRoomName;
@@ -178,9 +178,9 @@ public class RoomInfoActivity extends BaseActivity implements OnClickListener {
         mAppBarLayout = findViewById(R.id.activity_room_info_appbarlayout);
         picstandardWidget = findViewById(R.id.stantard);
         pager = (ViewPager) findViewById(R.id.fliper);
-        btn_req = (Button) findViewById(R.id.request_room);
+//        btn_req = (Button) findViewById(R.id.request_room);
         look_room = (Button) findViewById(R.id.look_room);
-        btn_req.setOnClickListener(this);
+//        btn_req.setOnClickListener(this);
         tvTitle = findViewById(R.id.text_title);
         tvImgSum = findViewById(R.id.activity_room_info_tv_img_sum);
         tvRoomName = (TextView) findViewById(R.id.tv_room_name);
@@ -301,22 +301,20 @@ public class RoomInfoActivity extends BaseActivity implements OnClickListener {
         if (infoBean.getType() == 2) {
             switch (infoBean.getRoom_status()) {
                 case 4://未出租
-                    if (infoBean.getIs_rent() == 0) {
-//                        btn_req.setVisibility(View.GONE);
-                        btn_req.setEnabled(false);
-                    }
-                    btn_req.setText("申请租房");
+//                    if (infoBean.getIs_rent() == 0) {
+//                        btn_req.setEnabled(false);
+//                    }
+//                    btn_req.setText("申请租房");
                     break;
                 case 5://已确定
                 case 6://已出租
                     look_room.setVisibility(View.GONE);
-                    if (infoBean.getIs_rent() == 1) {
-                        btn_req.setText("申请合租");
-                        btn_req.setEnabled(true);
-                    } else {
-//                        btn_req.setVisibility(View.GONE);
-                        btn_req.setEnabled(false);
-                    }
+//                    if (infoBean.getIs_rent() == 1) {
+//                        btn_req.setText("申请合租");
+//                        btn_req.setEnabled(true);
+//                    } else {
+//                        btn_req.setEnabled(false);
+//                    }
                     break;
             }
         }
@@ -364,30 +362,30 @@ public class RoomInfoActivity extends BaseActivity implements OnClickListener {
     @Override
     public void onClick(View arg0) {
         switch (arg0.getId()) {
-            case R.id.request_room:
-                if (infoBean == null)
-                    return;
-                if (LoginUserBean.getInstance().getIs_lodge_identity().equals("1")) {
-                    if (btn_req.getText().toString().contains("合租")) {
-                        if (infoBean.getIs_rent() == 0) {
-                            ShowToastUtil.showWarningToast(context, "已申请，请勿重复申请");
-                        } else {
-                            new AlertDialog.Builder(this).setTitle(R.string.renter_joint_rent).setMessage(R.string.dialog_apply_to_joint_rent)
-                                    .setNegativeButton(R.string.warn_cancel, null)
-                                    .setPositiveButton(R.string.warn_confirm, new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            req_join();
-                                        }
-                                    }).create().show();
-                        }
-                    } else {
-                        isRenting();
-                    }
-                } else {
-                    NewFaceDectectActivity.toActivity(this, 1);
-                }
-                break;
+//            case R.id.request_room:
+//                if (infoBean == null)
+//                    return;
+//                if (LoginUserBean.getInstance().getIs_lodge_identity().equals("1")) {
+//                    if (btn_req.getText().toString().contains("合租")) {
+//                        if (infoBean.getIs_rent() == 0) {
+//                            ShowToastUtil.showWarningToast(context, "已申请，请勿重复申请");
+//                        } else {
+//                            new AlertDialog.Builder(this).setTitle(R.string.renter_joint_rent).setMessage(R.string.dialog_apply_to_joint_rent)
+//                                    .setNegativeButton(R.string.warn_cancel, null)
+//                                    .setPositiveButton(R.string.warn_confirm, new DialogInterface.OnClickListener() {
+//                                        @Override
+//                                        public void onClick(DialogInterface dialog, int which) {
+//                                            req_join();
+//                                        }
+//                                    }).create().show();
+//                        }
+//                    } else {
+//                        isRenting();
+//                    }
+//                } else {
+//                    NewFaceDectectActivity.toActivity(this, 1);
+//                }
+//                break;
             case R.id.back:
                 this.finish();
                 break;
@@ -456,8 +454,7 @@ public class RoomInfoActivity extends BaseActivity implements OnClickListener {
 
                         if (homeInfoDataInfo.success()) {
                             infoBean.setIs_rent(0);
-//                            btn_req.setVisibility(View.GONE);
-                            btn_req.setEnabled(false);
+//                            btn_req.setEnabled(false);
                             ShowToastUtil.showSuccessToast(
                                     context, homeInfoDataInfo.msg());
                         } else {

@@ -32,6 +32,11 @@ public class HouseOrderInfoBean implements Parcelable {
     private String device_id;//设备id
     private String gateway_id;//网关id
     private int is_install;//0未缴纳安装费 1已缴纳安装费
+    private int is_pub;//0未发布 1已发布
+    private String room_type;//房型
+    private String measure_area;//面积
+    private String floor;//楼层
+    private String housing_price;//租金
 
     protected HouseOrderInfoBean(Parcel in) {
         room_id = in.readInt();
@@ -47,6 +52,11 @@ public class HouseOrderInfoBean implements Parcelable {
         device_id = in.readString();
         gateway_id = in.readString();
         is_install = in.readInt();
+        is_pub = in.readInt();
+        room_type = in.readString();
+        measure_area = in.readString();
+        floor = in.readString();
+        housing_price = in.readString();
     }
 
     public static final Creator<HouseOrderInfoBean> CREATOR = new Creator<HouseOrderInfoBean>() {
@@ -173,6 +183,46 @@ public class HouseOrderInfoBean implements Parcelable {
         this.is_install = is_install;
     }
 
+    public int getIs_pub() {
+        return is_pub;
+    }
+
+    public void setIs_pub(int is_pub) {
+        this.is_pub = is_pub;
+    }
+
+    public String getRoom_type() {
+        return room_type;
+    }
+
+    public void setRoom_type(String room_type) {
+        this.room_type = room_type;
+    }
+
+    public String getMeasure_area() {
+        return measure_area;
+    }
+
+    public void setMeasure_area(String measure_area) {
+        this.measure_area = measure_area;
+    }
+
+    public String getFloor() {
+        return floor;
+    }
+
+    public void setFloor(String floor) {
+        this.floor = floor;
+    }
+
+    public String getHousing_price() {
+        return housing_price;
+    }
+
+    public void setHousing_price(String housing_price) {
+        this.housing_price = housing_price;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -193,5 +243,10 @@ public class HouseOrderInfoBean implements Parcelable {
         dest.writeString(device_id);
         dest.writeString(gateway_id);
         dest.writeInt(is_install);
+        dest.writeInt(is_pub);
+        dest.writeString(room_type);
+        dest.writeString(measure_area);
+        dest.writeString(floor);
+        dest.writeString(housing_price);
     }
 }

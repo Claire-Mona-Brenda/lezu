@@ -36,6 +36,7 @@ import com.konka.renting.login.LoginNewActivity;
 import com.konka.renting.service.GeTuiIntentService;
 import com.konka.renting.service.GeTuiPushService;
 import com.konka.renting.tenant.opendoor.OpenFragment;
+import com.konka.renting.tenant.order.TenantOrderFragment;
 import com.konka.renting.tenant.payrent.PayRentFragment;
 import com.konka.renting.tenant.user.TenantUserFragment;
 import com.konka.renting.utils.AppManager;
@@ -110,7 +111,7 @@ public class TenantMainActivity extends BaseMainActivity {
                 mFragments[index] = OpenFragment.newInstance();
                 break;
             case 2:
-                mFragments[index] = PayRentFragment.newInstance();
+                mFragments[index] = TenantOrderFragment.newInstance();
                 break;
             case 3:
                 mFragments[index] = TenantUserFragment.newInstance();

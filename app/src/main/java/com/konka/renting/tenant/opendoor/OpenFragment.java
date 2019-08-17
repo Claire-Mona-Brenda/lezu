@@ -18,14 +18,18 @@ import com.konka.renting.R;
 import com.konka.renting.base.BaseFragment;
 import com.konka.renting.bean.ContractBean;
 import com.konka.renting.bean.DataInfo;
+import com.konka.renting.bean.LoginUserBean;
 import com.konka.renting.bean.OpenDoorListbean;
 import com.konka.renting.bean.PwdBean;
+import com.konka.renting.event.AddShareRentEvent;
 import com.konka.renting.event.TentantOpenDoorEvent;
 import com.konka.renting.http.RetrofitHelper;
 import com.konka.renting.http.SecondRetrofitHelper;
 import com.konka.renting.http.subscriber.CommonSubscriber;
 import com.konka.renting.landlord.house.PaySeverActivity;
+import com.konka.renting.landlord.house.activity.AddHouseAddressActivity;
 import com.konka.renting.landlord.house.widget.ShowToastUtil;
+import com.konka.renting.landlord.user.userinfo.NewFaceDectectActivity;
 import com.konka.renting.utils.RxUtil;
 import com.konka.renting.utils.SharedPreferenceUtil;
 import com.konka.renting.utils.UIUtils;
@@ -171,6 +175,18 @@ public class OpenFragment extends BaseFragment {
             public void call(TentantOpenDoorEvent tentantOpenDoorEvent) {
                 if (tentantOpenDoorEvent.isUpdata()) {
                     mRefresh.autoRefresh();
+                }
+            }
+        });
+        addRxBusSubscribe(AddShareRentEvent.class, new Action1<AddShareRentEvent>() {
+            @Override
+            public void call(AddShareRentEvent addShareRentEvent) {
+                int size = mData.size();
+                for (int i = 0; i < size; i++) {
+                    if (mData.get(i).getOrder_id().equals(addShareRentEvent.getOrder_id())) {
+                        mData.get(i).setIs_rent(addShareRentEvent.getHave());
+                        break;
+                    }
                 }
             }
         });
@@ -396,6 +412,11 @@ public class OpenFragment extends BaseFragment {
                 chooseDevicesDialog();
                 break;
             case R.id.frame_open_btn_open://开门
+                if (!LoginUserBean.getInstance().getIs_lodge_identity().equals("1")) {
+                    NewFaceDectectActivity.toActivity(getActivity(), 1);
+                    return;
+                }
+
                 if (mData.get(current).getStatus() > 2 && !mData.get(current).getDevice_id().equals("")) {
                     openDoor();
                 } else if (mData.get(current).getStatus() > 2) {
@@ -406,9 +427,9 @@ public class OpenFragment extends BaseFragment {
                 break;
             case R.id.frame_open_rl_renew://续交服务费
                 OpenDoorListbean listbean = mData.get(current);
-                if (listbean.getIs_install()==1){
+                if (listbean.getIs_install() == 1) {
                     PaySeverActivity.toActivity(getContext(), listbean.getRoom_id(), listbean.getRoom_name(), listbean.getService_time(), 2);
-                }else{
+                } else {
                     showToast(getString(R.string.please_talk_pay_install));
                 }
                 break;
@@ -431,9 +452,17 @@ public class OpenFragment extends BaseFragment {
 //                }
 //                break;
             case R.id.frame_open_tv_long_other_setting://长租其他功能
+                if (!LoginUserBean.getInstance().getIs_lodge_identity().equals("1")) {
+                    NewFaceDectectActivity.toActivity(getActivity(), 1);
+                    return;
+                }
                 OtherSettingActivity.toActivity(getContext(), 0, mData.get(current));
                 break;
             case R.id.frame_open_tv_short_other_setting://短租其他功能
+                if (!LoginUserBean.getInstance().getIs_lodge_identity().equals("1")) {
+                    NewFaceDectectActivity.toActivity(getActivity(), 1);
+                    return;
+                }
                 OtherSettingActivity.toActivity(getContext(), 1, mData.get(current));
                 break;
         }

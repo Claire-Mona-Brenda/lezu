@@ -19,6 +19,7 @@ import com.konka.renting.bean.DataInfo;
 import com.konka.renting.bean.OpenDoorListbean;
 import com.konka.renting.bean.PwdBean;
 import com.konka.renting.bean.QueryPwdBean;
+import com.konka.renting.event.AddShareRentEvent;
 import com.konka.renting.event.ToGetPwdTimeEvent;
 import com.konka.renting.http.SecondRetrofitHelper;
 import com.konka.renting.http.subscriber.CommonSubscriber;
@@ -82,6 +83,10 @@ public class OtherSettingActivity extends BaseActivity {
     LinearLayout llManagePwd;
     @BindView(R.id.activity_other_setting_tv_manage_pwd)
     TextView tvManagePwd;
+    @BindView(R.id.activity_other_setting_tv_add_people)
+    TextView tvAddPeople;
+    @BindView(R.id.activity_other_setting_ll_add_people)
+    LinearLayout llAddPeople;
 
     final int QUERY_TIME_MAX = 10;
 
@@ -143,17 +148,33 @@ public class OtherSettingActivity extends BaseActivity {
                 GetTimePwdActivity.toActivity(OtherSettingActivity.this, openDoorListbean.getRoom_id());
             }
         });
+
+        addRxBusSubscribe(AddShareRentEvent.class, new Action1<AddShareRentEvent>() {
+            @Override
+            public void call(AddShareRentEvent addShareRentEvent) {
+                    if (openDoorListbean.getOrder_id().equals(addShareRentEvent.getOrder_id())) {
+                        openDoorListbean.setIs_rent(addShareRentEvent.getHave());
+                    }
+            }
+        });
     }
 
 
     @OnClick({R.id.iv_back, R.id.activity_other_setting_tv_open_pwd, R.id.activity_other_setting_tv_key_pwd,
             R.id.activity_other_setting_tv_gateway_setting, R.id.activity_other_setting_tv_gateway_restart,
             R.id.activity_other_setting_tv_fingerprint, R.id.activity_other_setting_tv_ic,
-            R.id.activity_other_setting_ll_sync, R.id.activity_other_setting_tv_manage_pwd})
+            R.id.activity_other_setting_ll_sync, R.id.activity_other_setting_tv_manage_pwd, R.id.activity_other_setting_tv_add_people})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back://返回
                 finish();
+                break;
+            case R.id.activity_other_setting_tv_add_people://添加使用账号
+                if (openDoorListbean.getIs_rent() == 1) {
+                    ShareRentListActivity.toActivity(this, openDoorListbean.getOrder_id());
+                } else {
+                    AddRentPeopleActivity.toActivity(this, openDoorListbean.getOrder_id(), true);
+                }
                 break;
             case R.id.activity_other_setting_tv_open_pwd://开门密码
                 if (openDoorListbean.getStatus() > 2 && !openDoorListbean.getDevice_id().equals("")) {
@@ -609,6 +630,5 @@ public class OtherSettingActivity extends BaseActivity {
                 });
         addSubscrebe(subscription);
     }
-
 
 }

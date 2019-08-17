@@ -62,9 +62,11 @@ import com.konka.renting.bean.PwsOrderDetailsBean;
 import com.konka.renting.bean.QueryPwdBean;
 import com.konka.renting.bean.RechargeBean;
 import com.konka.renting.bean.ReminderListBean;
+import com.konka.renting.bean.RentListBean;
 import com.konka.renting.bean.RenterOrderInfoBean;
 import com.konka.renting.bean.RenterOrderListBean;
 import com.konka.renting.bean.RenterSearchListBean;
+import com.konka.renting.bean.RentingDateBean;
 import com.konka.renting.bean.RoomDes2;
 import com.konka.renting.bean.RoomInfo;
 import com.konka.renting.bean.RoomSearchInfoBean;
@@ -75,6 +77,7 @@ import com.konka.renting.bean.ServicePackageBean;
 import com.konka.renting.bean.ServiceTelBean;
 import com.konka.renting.bean.SeverPayListBean;
 import com.konka.renting.bean.ShareBean;
+import com.konka.renting.bean.ShareRentListBean;
 import com.konka.renting.bean.TenantDespoitDetailBean;
 import com.konka.renting.bean.TenantDespoitlistBean;
 import com.konka.renting.bean.TenantListBean;
@@ -116,12 +119,12 @@ import rx.Observable;
 public interface KonkaApiService {
 
     //测试环境
-//    String HOST = "https://lettest.youlejiakeji.com/";
-//    String SecondHost = "https://lezuxiaowo-test.youlejiakeji.com";
+    String HOST = "https://lettest.youlejiakeji.com/";
+    String SecondHost = "https://lezuxiaowo-test.youlejiakeji.com";
 
     //正式环境
-    String HOST = "https://let.youlejiakeji.com/";
-    String SecondHost = "https://lezuxiaowo.youlejiakeji.com";
+//    String HOST = "https://let.youlejiakeji.com/";
+//    String SecondHost = "https://lezuxiaowo.youlejiakeji.com";
 
 
     @FormUrlEncoded
@@ -2087,4 +2090,87 @@ public interface KonkaApiService {
                                                    @Field("room_id") String room_id,//房产id
                                                    @Field("code_id") String code_id,//推广码id
                                                    @Field("service_charge_id") String service_charge_id);//服务费id
+
+    /*********************************************2.4.1版本以后新接口*****************************************************/
+    /**
+     * 添加订单(2.4.1版本以后)
+     */
+    @FormUrlEncoded
+    @POST("index.php/api/room_order/add_2_4_1")
+    Observable<DataInfo<AddRentingBean>> addOrderPay2(@Field("room_id") String room_id,//房产id
+                                                      @Field("phone") String phone,//手机号
+                                                      @Field("start_time") String start_time,//开始日期 格式 2019-08-15 14:00:00
+                                                      @Field("end_time") String end_time);//结束日期 格式 2019-08-16 14:00:00
+
+    /**
+     * 获取已租出日期(2.4.1版本以后)
+     */
+    @FormUrlEncoded
+    @POST("index.php/api/room_order/rentingDate_2_4_1")
+    Observable<DataInfo<List<RentingDateBean>>> rentingDate2(@Field("room_id") String room_id);
+
+    /**
+     * 激活订单(2.4.1版本以后)
+     */
+    @FormUrlEncoded
+    @POST("index.php/api/room_order/activate")
+    Observable<DataInfo> activate(@Field("account") String account,
+                                  @Field("password") String password);
+
+    /**
+     * 查询租客是否注册(2.4.1版本以后)
+     */
+    @FormUrlEncoded
+    @POST("index.php/api/user/check")
+    Observable<DataInfo> check(@Field("phone") String phone);
+
+    /**
+     * 添加订单后调用详情(2.4.1版本以后)
+     */
+    @FormUrlEncoded
+    @POST("index.php/api/room_order/info_2_4_1")
+    Observable<DataInfo<PwsOrderDetailsBean>> queryPassword2(@Field("order_id") String order_id);
+
+    /**
+     * 订单列表(2.4.1版本以后)
+     */
+    @GET("index.php/api/room_order/list_2_4_1")
+    Observable<DataInfo<PageDataBean<RenterOrderListBean>>> getOrderList2(@Query("type") String type,
+                                                                          @Query("page") String page);
+
+    /**
+     * 添加合租(2.4.1版本以后)
+     */
+    @FormUrlEncoded
+    @POST("index.php/api/room_share_order/add")
+    Observable<DataInfo> addShareOrder(@Field("order_id") String order_id,
+                                       @Field("phone") String phone);
+
+    /**
+     * 移除合租人(2.4.1版本以后)
+     */
+    @FormUrlEncoded
+    @POST("index.php/api/room_share_order/remove_2_4_1")
+    Observable<DataInfo> removeShareOrder(@Field("order_id") String order_id,
+                                          @Field("member_id") String member_id);
+
+    /**
+     * 租客列表(2.4.1版本以后)
+     */
+    @GET("index.php/api/room_share_order/list_2_4_1")
+    Observable<DataInfo<List<ShareRentListBean>>> shareList(@Query("order_id") String order_id);
+
+    /**
+     * 房屋租客列表(2.4.1版本以后)
+     */
+    @GET("index.php/api/room/renterList")
+    Observable<DataInfo<PageDataBean<RentListBean>>> renterList(@Query("page") String page,
+                                                                @Query("room_id") String room_id);
+
+    /**
+     * 取消订单(2.4.1版本以后)
+     */
+    @FormUrlEncoded
+    @POST("index.php/api/room_order/cancel_2_4_1")
+    Observable<DataInfo> canceOrder(@Field("order_id") String order_id);
 }

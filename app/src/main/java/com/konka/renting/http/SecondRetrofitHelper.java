@@ -51,9 +51,11 @@ import com.konka.renting.bean.PwdBean;
 import com.konka.renting.bean.PwsOrderDetailsBean;
 import com.konka.renting.bean.QueryPwdBean;
 import com.konka.renting.bean.ReminderListBean;
+import com.konka.renting.bean.RentListBean;
 import com.konka.renting.bean.RenterOrderInfoBean;
 import com.konka.renting.bean.RenterOrderListBean;
 import com.konka.renting.bean.RenterSearchListBean;
+import com.konka.renting.bean.RentingDateBean;
 import com.konka.renting.bean.RoomInfo;
 import com.konka.renting.bean.RoomSearchInfoBean;
 import com.konka.renting.bean.RoomTypeBean;
@@ -61,6 +63,7 @@ import com.konka.renting.bean.RoomUserPhoneBean;
 import com.konka.renting.bean.ServerDeviceInfo;
 import com.konka.renting.bean.ServiceTelBean;
 import com.konka.renting.bean.SeverPayListBean;
+import com.konka.renting.bean.ShareRentListBean;
 import com.konka.renting.bean.TenantListBean;
 import com.konka.renting.bean.TenantRenterListBean;
 import com.konka.renting.bean.TenantUserinfoBean;
@@ -1292,10 +1295,89 @@ public class SecondRetrofitHelper {
     }
 
     /**
-     *  安装费支付(2.3.4版本以后)
-     *
+     * 安装费支付(2.3.4版本以后)
      */
-    public Observable<DataInfo<PayBean>> installOrderPay2(String payment,String room_id,String code_id,String service_charge_id) {
-        return mApiService.installOrderPay2(payment,room_id, code_id, service_charge_id);
+    public Observable<DataInfo<PayBean>> installOrderPay2(String payment, String room_id, String code_id, String service_charge_id) {
+        return mApiService.installOrderPay2(payment, room_id, code_id, service_charge_id);
+    }
+
+    /*********************************************2.4.1版本以后新接口*****************************************************/
+    /**
+     * 添加订单(2.4.1版本以后)
+     */
+    public Observable<DataInfo<AddRentingBean>> addOrderPay2(String room_id, String phone, String start_time, String end_time) {
+        return mApiService.addOrderPay2(room_id, phone, start_time, end_time);
+    }
+
+    /**
+     * 获取已租出日期(2.4.1版本以后)
+     */
+    public Observable<DataInfo<List<RentingDateBean>>> rentingDate2(String room_id) {
+        return mApiService.rentingDate2(room_id);
+    }
+
+    /**
+     * 激活订单(2.4.1版本以后)
+     */
+    public Observable<DataInfo> activate(String account, String password) {
+        return mApiService.activate(account, password);
+    }
+
+    /**
+     * 查询租客是否注册(2.4.1版本以后)
+     */
+    public Observable<DataInfo> check(String phone) {
+        return mApiService.check(phone);
+    }
+
+    /**
+     * 添加订单后调用详情(2.4.1版本以后)
+     */
+    public Observable<DataInfo<PwsOrderDetailsBean>> queryPassword2(String order_id) {
+        return mApiService.queryPassword2(order_id);
+    }
+
+    /**
+     * 订单列表(2.4.1版本以后)
+     * <p>
+     * type 1进行中 2完成
+     */
+    public Observable<DataInfo<PageDataBean<RenterOrderListBean>>> getOrderList2(String type, String page) {
+        return mApiService.getOrderList2(type, page);
+    }
+
+    /**
+     * 添加合租(2.4.1版本以后)
+     */
+    public Observable<DataInfo> addShareOrder(String order_id, String phone) {
+        return mApiService.addShareOrder(order_id, phone);
+    }
+
+    /**
+     * 移除合租人(2.4.1版本以后)
+     */
+    public Observable<DataInfo> removeShareOrder(String order_id, String member_id) {
+        return mApiService.removeShareOrder(order_id, member_id);
+    }
+
+    /**
+     * 租客列表(2.4.1版本以后)
+     */
+    public Observable<DataInfo<List<ShareRentListBean>>> shareList(String order_id) {
+        return mApiService.shareList(order_id);
+    }
+
+    /**
+     * 房屋租客列表(2.4.1版本以后)
+     */
+    public Observable<DataInfo<PageDataBean<RentListBean>>> renterList(String page, String room_id) {
+        return mApiService.renterList(page, room_id);
+    }
+
+    /**
+     * 取消订单(2.4.1版本以后)
+     */
+    public Observable<DataInfo> canceOrder(String order_id) {
+        return mApiService.canceOrder(order_id);
     }
 }
