@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_ffffff"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_title_text" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:background="@color/style_line" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_black"
+        android:textSize="@dimen/sp_16"
+        android:text="@string/please_input_code"
+        android:layout_marginTop="@dimen/dp_32"
+        android:layout_marginStart="@dimen/dp_17"/>
+    <EditText
+        android:id="@+id/activity_add_code_edt_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_black"
+        android:textSize="@dimen/sp_16"
+        android:maxLength="30"
+        android:background="@null"
+        android:hint="@string/please_input_code"
+        android:paddingBottom="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_5"
+        android:layout_marginTop="@dimen/dp_32"
+        android:layout_marginEnd="@dimen/dp_32"
+        android:layout_marginStart="@dimen/dp_17"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:background="@color/style_line"
+        android:layout_marginEnd="@dimen/dp_32"
+        android:layout_marginStart="@dimen/dp_17"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_gray"
+        android:textSize="@dimen/sp_14"
+        android:text="@string/please_input_code_tips"
+        android:layout_marginTop="@dimen/dp_32"
+        android:layout_marginStart="@dimen/dp_17"/>
+
+    <TextView
+        android:id="@+id/activity_add_code_tv_sure"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44"
+        android:textSize="@dimen/sp_16"
+        android:textColor="@color/text_white"
+        android:text="@string/common_sure"
+        android:gravity="center"
+        android:background="@drawable/shape_button"
+        android:layout_marginTop="@dimen/dp_65"
+        android:layout_marginStart="@dimen/dp_17"
+        android:layout_marginEnd="@dimen/dp_17"/>
+</LinearLayout>

@@ -4,7 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextPaint;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -67,6 +70,8 @@ public class CreateOrderActivity extends BaseActivity {
     Button btnToCreate;
     @BindView(R.id.activity_create_order_edt_mobile)
     EditText edtMobile;
+    @BindView(R.id.activity_create_order_tv_mobile_tips)
+    TextView tvMobileTips;
     @BindView(R.id.tv_right)
     TextView tvRight;
     @BindView(R.id.iv_right)
@@ -92,6 +97,7 @@ public class CreateOrderActivity extends BaseActivity {
     ArrayList<Integer> endHours;
     ChooseHourPopup chooseHourPopup;
     boolean isChooseStart = true;
+    CommonPopupWindow commonPopupWindow;
 
     public static void toActivity(Context context, String room_id, String room_name) {
         Intent intent = new Intent(context, CreateOrderActivity.class);
@@ -126,18 +132,40 @@ public class CreateOrderActivity extends BaseActivity {
 
         rentingDates = new ArrayList<>();
         tvId.setText(room_name);
+        edtMobile.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String phone = s.toString();
+                if (isMobileNO(phone)) {
+                    check(phone);
+                } else if (phone.length() < 11) {
+                    tvMobileTips.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
         addRxBusSubscribe(ChooseDateEvent.class, new Action1<ChooseDateEvent>() {
             @Override
             public void call(ChooseDateEvent chooseDateEvent) {
                 startDate = fromDate(chooseDateEvent.startDate);
                 endDate = fromDate(chooseDateEvent.endDate);
-                String[]s=startDate.split("-");
-                String[]e=endDate.split("-");
-                tvStart.setText(s[0]+"年"+s[1]+"月"+s[2]+"日");
-                tvEnd.setText(e[0]+"年"+e[1]+"月"+e[2]+"日");
-                setChooseHours();
-                mTvStartHour.setText(startHours.size() > 0 && startHours.get(0) < 12 ? "12" : (startHours.size() == 0 ? "24" : startHours.get(0) + ""));
-                mTvEndHour.setText(endHours.size() > 0 && endHours.get(endHours.size() - 1) > 12 ? "12" : (endHours.size() == 0 ? "0" : endHours.get(endHours.size() - 1) + ""));
+                String[] s = startDate.split("-");
+                String[] e = endDate.split("-");
+                tvStart.setText(s[0] + "年" + s[1] + "月" + s[2] + "日");
+                tvEnd.setText(e[0] + "年" + e[1] + "月" + e[2] + "日");
+//                setChooseHours();
+//                mTvStartHour.setText(startHours.size() > 0 && startHours.get(0) < 12 ? "12" : (startHours.size() == 0 ? "24" : startHours.get(0) + ""));
+//                mTvEndHour.setText(endHours.size() > 0 && endHours.get(endHours.size() - 1) > 12 ? "12" : (endHours.size() == 0 ? "0" : endHours.get(endHours.size() - 1) + ""));
             }
         });
         getRentDate();
@@ -159,6 +187,27 @@ public class CreateOrderActivity extends BaseActivity {
                         dismiss();
                         if (dataInfo.success()) {
                             rentingDates.addAll(dataInfo.data());
+                        }
+                    }
+                });
+        addSubscrebe(subscription);
+    }
+
+    private void check(String phone) {
+        Subscription subscription = SecondRetrofitHelper.getInstance().check(phone)
+                .compose(RxUtil.<DataInfo>rxSchedulerHelper())
+                .subscribe(new CommonSubscriber<DataInfo>() {
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataInfo dataInfo) {
+                        if (dataInfo.success()) {
+                            tvMobileTips.setVisibility(View.INVISIBLE);
+                        } else {
+                            tvMobileTips.setVisibility(View.VISIBLE);
                         }
                     }
                 });
@@ -192,7 +241,6 @@ public class CreateOrderActivity extends BaseActivity {
             }
         }
 
-        Log.e("123", "=============" + si + "==========" + ei);
 
         for (int j = si; j < 24; j++) {
             startHours.add(j);
@@ -210,7 +258,7 @@ public class CreateOrderActivity extends BaseActivity {
             s[1] = "0" + w;
         }
 
-        return s[0]+"-"+s[1]+"-"+s[2];
+        return s[0] + "-" + s[1] + "-" + s[2];
     }
 
 
@@ -224,12 +272,15 @@ public class CreateOrderActivity extends BaseActivity {
                 ChooseDateActivity.toActivity(this, rentingDates);
                 break;
             case R.id.activity_create_order_btn_toCreate://生成订单
-                if (tvStart.getText().toString().equals("") || tvEnd.getText().toString().equals("")) {
+                String mobile = edtMobile.getText().toString();
+                if (TextUtils.isEmpty(startDate) || TextUtils.isEmpty(endDate)) {
                     showToast(R.string.warn_input_date);
-                } else if (!edtMobile.getText().toString().equals("") && !isMobileNO(edtMobile.getText().toString())) {
+                } else if (!mobile.equals("") && !isMobileNO(mobile)) {
                     showToast(R.string.warn_input_mobile);
-                } else {
+                } else  if (TextUtils.isEmpty(mobile)) {
                     createOrder();
+                } else {
+                    showFinishPopup(mobile);
                 }
                 break;
             case R.id.activity_create_order_ll_start_hour://选择开始入住小时
@@ -242,10 +293,11 @@ public class CreateOrderActivity extends BaseActivity {
     }
 
     private void createOrder() {
+        btnToCreate.setEnabled(false);
         showLoadingDialog();
         String mobile = edtMobile.getText().toString();
-        String start = startDate + " " + mTvStartHour.getText() + ":00:00";
-        String end = endDate + " " + mTvEndHour.getText() + ":00:00";
+        String start = startDate + " 12:00:00";
+        String end = endDate + " 12:00:00";
         Subscription subscription = SecondRetrofitHelper.getInstance().addOrderPay2(room_id, mobile, start, end)
                 .compose(RxUtil.<DataInfo<AddRentingBean>>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo<AddRentingBean>>() {
@@ -253,6 +305,7 @@ public class CreateOrderActivity extends BaseActivity {
                     public void onError(Throwable e) {
                         doFailed();
                         dismiss();
+                        btnToCreate.setEnabled(true);
                     }
 
                     @Override
@@ -261,10 +314,15 @@ public class CreateOrderActivity extends BaseActivity {
                         if (dataInfo.success()) {
                             if (dataInfo.success()) {
                                 RxBus.getDefault().post(new CreateOrderEvent());
-                                PwsOrderDetailsActivity.toActivity(CreateOrderActivity.this, dataInfo.data().getOrder_id());
+                                if (TextUtils.isEmpty(mobile)) {
+                                    PwsOrderDetailsActivity.toActivity(CreateOrderActivity.this, dataInfo.data().getOrder_id());
+                                }else{
+                                    showToast(R.string.order_create_success);
+                                }
                                 finish();
                             }
                         } else {
+                            btnToCreate.setEnabled(true);
                             showToast(dataInfo.msg());
                         }
                     }
@@ -313,4 +371,40 @@ public class CreateOrderActivity extends BaseActivity {
 
     }
 
+    private void showFinishPopup(String phone) {
+        if (commonPopupWindow == null)
+            commonPopupWindow = new CommonPopupWindow.Builder(this)
+                    .setTitle(getString(R.string.house_user) + " " + phone)
+                    .setContent(getString(R.string.house_user_will_get_open))
+                    .setRightTextColor("#4A90E1")
+                    .setRightBtnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            commonPopupWindow.dismiss();
+                            createOrder();
+                        }
+                    })
+                    .create();
+        showPopup(commonPopupWindow);
+    }
+
+    private void showPopup(PopupWindow popupWindow) {
+        // 开启 popup 时界面透明
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.alpha = 0.5f;
+        getWindow().setAttributes(lp);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        // popupwindow 第一个参数指定popup 显示页面
+        popupWindow.showAtLocation((View) findViewById(R.id.lin_title).getParent(), Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL, 0, -200);     // 第一个参数popup显示activity页面
+        // popup 退出时界面恢复
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                WindowManager.LayoutParams lp = getWindow().getAttributes();
+                lp.alpha = 1f;
+                getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+                getWindow().setAttributes(lp);
+            }
+        });
+    }
 }

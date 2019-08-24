@@ -107,9 +107,9 @@ public class OpenManageActivity extends BaseActivity {
     public void init() {
         bean = getIntent().getParcelableExtra(HouseDetailsInfoBean2.class.getSimpleName());
 
-        tvTitle.setText(R.string.house_info_setting_open_manage);
+        tvTitle.setText(R.string.house_info_setting_clock_manage);
 
-        rlManagePwd.setVisibility(bean.getRoom_status() == 6 ? View.GONE : View.VISIBLE);
+//        rlManagePwd.setVisibility(bean.getStatus() == 2 ? View.GONE : View.VISIBLE);
 
 
     }
@@ -124,60 +124,61 @@ public class OpenManageActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.activity_open_manage_rl_manage_pwd://管理员密码
-                if (bean.getRoom_status() < 6) {
+                if (bean.getStatus() < 2) {
                     ManagePwdActivity.toActivity(this, bean.getRoom_id());
                 } else {
-                    showGetAuthorityPopup();
+//                    showGetAuthorityPopup();
+                    showTips(getString(R.string.tips_get_authority_content));
                 }
                 break;
             case R.id.activity_open_manage_rl_set_pwd://设置开锁密码
-                if (bean.getRoom_status() < 6) {
+                if (bean.getStatus() < 2) {
                     DevicesOpenPasswordActivity.toActivity(this, bean.getDevice_id(), bean.getRoom_id());
                 } else {
                     showTips(getString(R.string.tips_get_authority_content));
                 }
                 break;
             case R.id.activity_open_manage_rl_temporary_pwd://临时密码
-                if (bean.getRoom_status() < 6) {
+                if (bean.getStatus() < 2) {
                     TemporaryPwdActivity.toActivity(this, bean.getRoom_id());
                 } else {
                     showTips(getString(R.string.tips_get_authority_content));
                 }
                 break;
             case R.id.activity_open_manage_rl_key_pwd://钥匙孔密码
-                if (bean.getRoom_status() < 6 && (queryTime <= 0 || queryTime >= 10)) {
+                if (bean.getStatus() < 2&& (queryTime <= 0 || queryTime >= 10)) {
                     showKeyPwdPopup();
                     keyPwdPopupwindow.setPwd(getString(R.string.tips_loading));
                     getKeyPwd();
-                } else if (bean.getRoom_status() < 6) {
+                } else if (bean.getStatus() < 2) {
                     showKeyPwdPopup();
                 } else {
                     showTips(getString(R.string.tips_get_authority_content));
                 }
                 break;
             case R.id.activity_open_manage_rl_set_gateway://设置网关
-                if (bean.getRoom_status() < 6) {
+                if (bean.getStatus() < 2) {
                     GatewaySettingActivity.toActivity(this, bean.getRoom_id(), bean.getGateway_id(), TextUtils.isEmpty(bean.getGateway_version()) ? "2" : bean.getGateway_version(), GatewaySettingActivity.TYPE_LANDLORD);
                 } else {
                     showTips(getString(R.string.tips_get_authority_content));
                 }
                 break;
             case R.id.activity_open_manage_rl_fingerPrint://指纹管理
-                if (bean.getRoom_status() < 6) {
+                if (bean.getStatus() < 2) {
                     ClockSetManageActivity.toActivity(this, ClockSetManageActivity.TYPE_FINGERPRINT, bean.getRoom_id());
                 } else {
                     showTips(getString(R.string.tips_get_authority_content));
                 }
                 break;
             case R.id.activity_open_manage_rl_ic_card://IC卡管理
-                if (bean.getRoom_status() < 6) {
+                if (bean.getStatus() < 2) {
                     ClockSetManageActivity.toActivity(this, ClockSetManageActivity.TYPE_IC_CARD, bean.getRoom_id());
                 } else {
                     showTips(getString(R.string.tips_get_authority_content));
                 }
                 break;
             case R.id.activity_open_manage_rl_sync_service://同步服务费时间
-                if (bean.getRoom_status() < 6) {
+                if (bean.getStatus() < 2) {
                     showSyncSeverPopup();
                 } else {
                     showTips(getString(R.string.tips_get_authority_content));

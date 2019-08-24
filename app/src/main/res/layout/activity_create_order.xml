@@ -101,7 +101,8 @@
             android:layout_marginStart="@dimen/dp_24"
             android:background="@drawable/shape_button_gray"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/activity_create_order_tv_start_hour"
@@ -164,7 +165,8 @@
             android:layout_marginStart="@dimen/dp_24"
             android:background="@drawable/shape_button_gray"
             android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:visibility="gone">
             <TextView
                 android:id="@+id/activity_create_order_tv_end_hour"
                 android:layout_width="@dimen/dp_20"
@@ -226,12 +228,21 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_1"
         android:background="@color/style_line" />
-
+    <TextView
+        android:id="@+id/activity_create_order_tv_mobile_tips"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_5"
+        android:textColor="@color/text_ren"
+        android:textSize="@dimen/sp_12"
+        android:text="@string/tips_no_register_mobile"
+        android:visibility="invisible"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_16"
-        android:layout_marginTop="@dimen/dp_17"
+        android:layout_marginTop="@dimen/dp_10"
         android:text="@string/caution_create_pwd_tips_1"
         android:textSize="@dimen/sp_12"
         android:textColor="@color/text_gray" />

@@ -1,11 +1,15 @@
 package com.konka.renting.landlord.order;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.SuperscriptSpan;
@@ -13,32 +17,26 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
 
-import com.amap.api.services.core.PoiItem;
 import com.konka.renting.R;
 import com.konka.renting.base.BaseActivity;
 import com.konka.renting.bean.DataInfo;
-import com.konka.renting.bean.PageDataBean;
 import com.konka.renting.bean.RenterOrderInfoBean;
-import com.konka.renting.bean.RenterOrderListBean;
-import com.konka.renting.event.CancelOrderEvent;
 import com.konka.renting.http.SecondRetrofitHelper;
 import com.konka.renting.http.subscriber.CommonSubscriber;
-import com.konka.renting.landlord.house.activity.AddHouseIntroduceActivity;
 import com.konka.renting.utils.CacheUtils;
 import com.konka.renting.utils.CircleTransform;
 import com.konka.renting.utils.PhoneUtil;
 import com.konka.renting.utils.RxUtil;
-import com.konka.renting.utils.UIUtils;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import de.hdodenhof.circleimageview.CircleImageView;
 import rx.Subscription;
 
 public class OrderInfoLActivity extends BaseActivity {
@@ -62,10 +60,13 @@ public class OrderInfoLActivity extends BaseActivity {
     TextView mTvRoomInfo;
     @BindView(R.id.activity_order_info_tv_room_price)
     TextView mTvRoomPrice;
+    @BindView(R.id.activity_order_info_ll_push_type)
+    LinearLayout mLlPushType;
     @BindView(R.id.activity_order_info_tv_push_type)
     TextView mTvPushType;
     @BindView(R.id.activity_order_info_tv_order_type)
     TextView mTvOrderType;
+
     @BindView(R.id.activity_order_info_img_icon_person)
     ImageView mImgIconPerson;
     @BindView(R.id.activity_order_info_tv_person_name)
@@ -74,26 +75,25 @@ public class OrderInfoLActivity extends BaseActivity {
     TextView mTvPhone;
     @BindView(R.id.activity_order_info_img_call)
     ImageView mImgCall;
-    @BindView(R.id.tv_title_rent_info)
-    TextView tvTitleRentInfo;
-    @BindView(R.id.tv_tips_limit)
-    TextView tvTipsLimit;
-    @BindView(R.id.activity_order_info_tv_rent_limit)
-    TextView mTvRentLimit;
-    @BindView(R.id.tv_tips_pay_way)
-    TextView tvTipsPayWay;
-    @BindView(R.id.activity_order_info_tv_pay_style)
-    TextView mTvPayStyle;
-    @BindView(R.id.tv_tips_rent_money)
-    TextView tvTipsRentMoney;
-    @BindView(R.id.activity_order_info_tv_rent_money)
-    TextView mTvRentMoney;
-    @BindView(R.id.tv_tips_deposit)
-    TextView tvTipsDeposit;
-    @BindView(R.id.activity_order_info_tv_deposit)
-    TextView mTvDeposit;
-    @BindView(R.id.tv_title_order_info)
-    TextView tvTitleOrderInfo;
+    @BindView(R.id.activity_order_info_rl_person)
+    RelativeLayout mRlPerson;
+    @BindView(R.id.tv_tips_code_status)
+    TextView tvTipsCodeStatus;
+    @BindView(R.id.activity_order_info_rl_rent_code)
+    RelativeLayout mRlRentCode;
+    @BindView(R.id.activity_order_info_tv_rent_in_code)
+    TextView mTvRentInCode;
+    @BindView(R.id.activity_order_info_tv_rent_code_copy)
+    TextView mTvRentCodeCopy;
+    @BindView(R.id.activity_order_info_tv_code_status)
+    TextView mTvCodeStatus;
+
+
+    @BindView(R.id.activity_order_info_tv_rent_start)
+    TextView mTvRentStart;
+    @BindView(R.id.activity_order_info_tv_rent_end)
+    TextView mTvRentEnd;
+
     @BindView(R.id.tv_tips_order_no)
     TextView tvTipsOrderNo;
     @BindView(R.id.activity_order_info_tv_order_no)
@@ -107,6 +107,7 @@ public class OrderInfoLActivity extends BaseActivity {
     int type = 0;//0 进行中  1已完成
     String order_id;
 
+
     public static void toActivity(Context context, String order_id, int type) {
         Intent intent = new Intent(context, OrderInfoLActivity.class);
         intent.putExtra("order_id", order_id);
@@ -116,7 +117,7 @@ public class OrderInfoLActivity extends BaseActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_order_info;
+        return R.layout.activity_order_info_l;
     }
 
     @Override
@@ -124,23 +125,37 @@ public class OrderInfoLActivity extends BaseActivity {
         order_id = getIntent().getStringExtra("order_id");
         type = getIntent().getIntExtra("type", 0);
 
-        tvTitle.setText(R.string.tenant_main_payrent);
+        tvTitle.setText(R.string.order_info_title);
+        tvTitle.setTypeface(Typeface.SANS_SERIF);
+        TextPaint paint = tvTitle.getPaint();
+        paint.setFakeBoldText(true);
 
         getOrderDetail();
 
     }
 
 
-    @OnClick({R.id.iv_back, R.id.activity_order_info_img_call})
+    @OnClick({R.id.iv_back, R.id.activity_order_info_tv_rent_code_copy, R.id.activity_order_info_img_call})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
                 finish();
                 break;
             case R.id.activity_order_info_img_call:
-                if (infoBean != null && infoBean.getLandlord().getPhone() != null) {
-                    PhoneUtil.call(infoBean.getLandlord().getPhone(), this);
+                if (infoBean != null && infoBean.getMember().size() > 0 && infoBean.getMember().get(0).getPhone() != null) {
+                    PhoneUtil.call(infoBean.getMember().get(0).getPhone(), this);
                 }
+                break;
+            case R.id.activity_order_info_tv_rent_code_copy:
+                if (infoBean == null)
+                    return;
+                //获取剪贴板管理器：
+                ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                // 创建普通字符型ClipData
+                ClipData mClipData = ClipData.newPlainText("Label", infoBean.getAccount());
+                // 将ClipData内容放到系统剪贴板里。
+                cm.setPrimaryClip(mClipData);
+                showToast(R.string.toach_copy_to_clipboard);
                 break;
         }
     }
@@ -169,43 +184,56 @@ public class OrderInfoLActivity extends BaseActivity {
         spannableStringBuilder.append("|" + infoBean.getFloor() + "/" + infoBean.getTotal_floor() + "层");
         mTvRoomInfo.setText(spannableStringBuilder);
 
-        String unit = infoBean.getType() == 1 ? "/天" : "/月";
-        mTvRoomPrice.setText("¥ " + (int) Float.parseFloat(infoBean.getHousing_price()) + unit);
 
-        mTvPushType.setText(getStringStatus(infoBean.getType()));
-        mTvOrderType.setText(type == 0 ? R.string.order_title_underway : R.string.order_title_done);
-
-        if (infoBean.getMember() != null && infoBean.getMember().size() > 0) {
-            if (CacheUtils.checkFileExist(infoBean.getLandlord().getThumb_headimgurl())) {
-                Picasso.get().load(CacheUtils.getFile(infoBean.getLandlord().getThumb_headimgurl())).placeholder(R.mipmap.fangdong_xuanzhong).error(R.mipmap.fangdong_xuanzhong)
-                        .transform(new CircleTransform()).into(mImgIconPerson);
-            } else if (!TextUtils.isEmpty(infoBean.getLandlord().getThumb_headimgurl())) {
-                CacheUtils.saveFile(infoBean.getLandlord().getThumb_headimgurl(), this);
-                Picasso.get().load(infoBean.getLandlord().getThumb_headimgurl()).placeholder(R.mipmap.fangdong_xuanzhong).error(R.mipmap.fangdong_xuanzhong)
-                        .transform(new CircleTransform()).into(mImgIconPerson);
-            } else
-                Picasso.get().load(R.mipmap.fangchan_jiazai).placeholder(R.mipmap.fangchan_jiazai).transform(new CircleTransform()).into(mImgIconPerson);
-
-            mTvPersonName.setText(getString(R.string.tips_tenant_) + infoBean.getMember().get(0).getReal_name());
-
-            String tel = infoBean.getMember().get(0).getPhone();
-            if (!tel.equals("")) {
-                int len = tel.length();
-                String str = tel.substring(0, 3);
-                for (int i = 3; i < len - 2; i++) {
-                    str += "*";
-                }
-                str += tel.substring(len - 2, len);
-                tel = str;
-            }
-            mTvPhone.setText(tel);
+        if (!TextUtils.isEmpty(infoBean.getHousing_price()) && Float.valueOf(infoBean.getHousing_price()) != 0) {
+            mTvRoomPrice.setVisibility(View.VISIBLE);
+            String unit = infoBean.getType() == 1 ? "/天" : "/月";
+            mTvRoomPrice.setText("¥ " + (int) Float.parseFloat(infoBean.getHousing_price()) + unit);
+            mLlPushType.setVisibility(View.VISIBLE);
+            mTvPushType.setText(getStringStatus(infoBean.getType()));
+            mTvOrderType.setText(type == 0 ? R.string.order_title_underway : R.string.order_title_done);
+        } else {
+            mTvRoomPrice.setVisibility(View.GONE);
+            mLlPushType.setVisibility(View.GONE);
         }
 
 
-        mTvRentLimit.setText(infoBean.getCreate_time() + "至" + infoBean.getEnd_time());
-        mTvPayStyle.setText(infoBean.getIs_online() == 0 ? R.string.tips_pay_way_no_online : R.string.tips_pay_way_online);
-        String unit1 = infoBean.getType() == 1 ? "元/天" : "元/月";
-        mTvRentMoney.setText((int) Float.parseFloat(infoBean.getHousing_price()) + unit1);
+        if (infoBean.getStatus() > 1) {
+            mRlPerson.setVisibility(View.VISIBLE);
+            mRlRentCode.setVisibility(View.GONE);
+            if (infoBean.getMember() != null && infoBean.getMember().size() > 0) {
+                if (CacheUtils.checkFileExist(infoBean.getLandlord().getThumb_headimgurl())) {
+                    Picasso.get().load(CacheUtils.getFile(infoBean.getLandlord().getThumb_headimgurl())).placeholder(R.mipmap.fangdong_xuanzhong).error(R.mipmap.fangdong_xuanzhong)
+                            .transform(new CircleTransform()).into(mImgIconPerson);
+                } else if (!TextUtils.isEmpty(infoBean.getLandlord().getThumb_headimgurl())) {
+                    CacheUtils.saveFile(infoBean.getLandlord().getThumb_headimgurl(), this);
+                    Picasso.get().load(infoBean.getLandlord().getThumb_headimgurl()).placeholder(R.mipmap.fangdong_xuanzhong).error(R.mipmap.fangdong_xuanzhong)
+                            .transform(new CircleTransform()).into(mImgIconPerson);
+                } else
+                    Picasso.get().load(R.mipmap.fangchan_jiazai).placeholder(R.mipmap.fangchan_jiazai).transform(new CircleTransform()).into(mImgIconPerson);
+
+                mTvPersonName.setText(getString(R.string.tips_tenant_) + infoBean.getMember().get(0).getReal_name());
+
+                String tel = infoBean.getMember().get(0).getPhone();
+                if (!tel.equals("")) {
+                    int len = tel.length();
+                    String str = tel.substring(0, 3);
+                    for (int i = 3; i < len - 2; i++) {
+                        str += "*";
+                    }
+                    str += tel.substring(len - 2, len);
+                    tel = str;
+                }
+                mTvPhone.setText(tel);
+            }
+        } else {
+            mRlPerson.setVisibility(View.GONE);
+            mRlRentCode.setVisibility(View.VISIBLE);
+            mTvRentInCode.setText(infoBean.getAccount());
+        }
+
+        mTvRentStart.setText(infoBean.getStart_time());
+        mTvRentEnd.setText(infoBean.getEnd_time());
 
         mTvOrderNo.setText(infoBean.getOrder_no());
         mTvCreateTime.setText(infoBean.getCreate_time());
@@ -265,4 +293,5 @@ public class OrderInfoLActivity extends BaseActivity {
                 });
         addSubscrebe(subscription);
     }
+
 }

@@ -182,11 +182,13 @@
         <activity
             android:name=".landlord.house.activity.AddHouseInfoActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".landlord.house.activity.AddHouseIntroduceActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
         android:name=".landlord.house.activity.AddHouseCompleteActivity"
         android:launchMode="singleTop"
@@ -375,7 +377,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.user.userinfo.FaceDetectActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".landlord.user.userinfo.PlayVideoActivity"
             android:screenOrientation="portrait" />
@@ -384,7 +387,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.user.userinfo.CertificationActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".landlord.user.other.AfterProcessActivity"
             android:launchMode="singleTop"
@@ -476,6 +480,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".tenant.payrent.TenantOrderDetailActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tenant.opendoor.AddCodeActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
@@ -610,7 +618,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.user.userinfo.NewFaceDectectActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
     </application>
 
 </manifest>

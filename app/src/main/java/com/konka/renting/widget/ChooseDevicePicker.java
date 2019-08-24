@@ -11,6 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.FloatRange;
 import androidx.annotation.NonNull;
 
+import com.konka.renting.tenant.opendoor.ChooseCodeListener;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,6 +35,7 @@ public class ChooseDevicePicker<T> extends WheelPicker {
     private float weightWidth = 0.0f;
     private OnSingleWheelListener onSingleWheelListener;
     private OnItemPickListener<T> onItemPickListener;
+    private ChooseCodeListener chooseCodeListener;
     private int selectedItemIndex = 0;
     private String selectedItem = "";
     private String label = "";
@@ -44,7 +47,7 @@ public class ChooseDevicePicker<T> extends WheelPicker {
         this(activity, Arrays.asList(items));
     }
 
-    public ChooseDevicePicker(Activity activity, List<T> items,ToGetItemStringCall mGetItemStringCall) {
+    public ChooseDevicePicker(Activity activity, List<T> items, ToGetItemStringCall mGetItemStringCall) {
         super(activity);
         this.mGetItemStringCall = mGetItemStringCall;
         setItems(items);
@@ -59,12 +62,12 @@ public class ChooseDevicePicker<T> extends WheelPicker {
         this.mGetItemStringCall = mGetItemStringCall;
     }
 
-    private String getItemString(T item){
+    private String getItemString(T item) {
         String str;
         if (mGetItemStringCall != null) {
-            str=mGetItemStringCall.getItemString(item);
-        }else{
-            str=formatToString(item);
+            str = mGetItemStringCall.getItemString(item);
+        } else {
+            str = formatToString(item);
         }
         return str;
     }
@@ -187,6 +190,10 @@ public class ChooseDevicePicker<T> extends WheelPicker {
         this.onItemPickListener = listener;
     }
 
+    public void setChooseCodeListener(ChooseCodeListener chooseCodeListener) {
+        this.chooseCodeListener = chooseCodeListener;
+    }
+
     @Override
     @NonNull
     protected View makeCenterView() {
@@ -300,6 +307,14 @@ public class ChooseDevicePicker<T> extends WheelPicker {
         if (onItemPickListener != null) {
             onItemPickListener.onItemPicked(getSelectedIndex(), getSelectedItem());
         }
+    }
+
+    @Override
+    protected void onCancel() {
+        super.onCancel();
+        if (chooseCodeListener != null)
+            chooseCodeListener.addCode();
+
     }
 
     private T getSelectedItem() {

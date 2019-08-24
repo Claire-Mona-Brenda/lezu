@@ -25,21 +25,17 @@
 
             <RelativeLayout
                 style="@style/rl_add_house">
-                <TextView
-                    style="@style/textview_add_house_xing"
-                    android:id="@+id/text_xing_0"
-                    android:text="*" />
+
                 <TextView
                     style="@style/textview_add_house"
                     android:id="@+id/text1"
-                    android:text="@string/add_house_house_name"
-                    android:layout_toRightOf="@+id/text_xing_0"/>
+                    android:text="@string/add_house_house_name"/>
 
                 <EditText
                     style="@style/editview_add_house"
                     android:hint="@string/add_house_edit_name"
                     android:id="@+id/activity_addHouse_edit_name"
-                    android:layout_toRightOf="@id/text1"
+                    android:layout_toEndOf="@id/text1"
                     android:inputType="text"
                     android:maxLength="30"/>
 
@@ -51,49 +47,42 @@
             <RelativeLayout
                 style="@style/rl_add_house">
                 <TextView
-                    style="@style/textview_add_house_xing"
-                    android:id="@+id/text_xing_1"
-                    android:text="*" />
-                <TextView
                     style="@style/textview_add_house"
                     android:id="@+id/text2"
-                    android:text="@string/add_house_choose_location"
-                    android:layout_toRightOf="@+id/text_xing_1"/>
+                    android:text="@string/add_house_choose_location"/>
 
                 <TextView
-                    android:layout_marginRight="20dp"
+                    android:layout_marginEnd="20dp"
                     android:hint="@string/add_house_choose_location_tips"
                     android:id="@+id/activity_addHouse_tv_address"
                     style="@style/editview_add_house"
-                    android:layout_toRightOf="@id/text2" />
+                    android:layout_toEndOf="@id/text2"
+                    android:paddingEnd="@dimen/dp_10"
+                    android:paddingStart="@dimen/dp_1"/>
 
-                <TextView
+                <ImageView
+                    android:id="@+id/address_img_icon_arrow"
                     android:layout_centerVertical="true"
-                    android:background="@mipmap/right"
+                    android:src="@mipmap/right"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="20dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="20dp"
                     />
             </RelativeLayout>
 
             <RelativeLayout
                 style="@style/rl_add_house">
                 <TextView
-                    style="@style/textview_add_house_xing"
-                    android:id="@+id/text_xing_2"
-                    android:text="*" />
-                <TextView
                     style="@style/textview_add_house"
                     android:id="@+id/text3"
-                    android:text="@string/add_house_choose_real_location"
-                    android:layout_toRightOf="@+id/text_xing_2"/>
+                    android:text="@string/add_house_choose_real_location"/>
 
                 <EditText
                     android:hint="@string/add_house_choose_real_location_tips"
                     android:id="@+id/activity_addHouse_edit_address_more"
                     style="@style/editview_add_house"
-                    android:layout_toRightOf="@id/text3"
+                    android:layout_toEndOf="@id/text3"
                     android:inputType="text"
                     android:maxLength="30"/>
 
@@ -109,21 +98,16 @@
                     style="@style/rl_add_house"
                     android:layout_weight="1">
                     <TextView
-                        style="@style/textview_add_house_xing"
-                        android:id="@+id/text_xing_3"
-                        android:text="*" />
-                    <TextView
                         android:id="@+id/text4"
                         style="@style/textview_add_house"
                         android:ems="4"
-                        android:text="@string/add_house_house_floor"
-                        android:layout_toRightOf="@+id/text_xing_3"/>
+                        android:text="@string/add_house_house_floor"/>
 
                     <EditText
                         android:id="@+id/activity_addHouse_edit_floor"
                         style="@style/editview_add_house"
                         android:layout_alignParentTop="true"
-                        android:layout_toRightOf="@id/text4"
+                        android:layout_toEndOf="@id/text4"
                         android:digits="Bb-0123456789"
                         android:hint="@string/add_house_edit_floor"
                         android:maxLength="4"
@@ -136,21 +120,16 @@
                     style="@style/rl_add_house"
                     android:layout_weight="1">
                     <TextView
-                        style="@style/textview_add_house_xing"
-                        android:id="@+id/text_xing_4"
-                        android:text="*" />
-                    <TextView
                         android:id="@+id/text7"
                         style="@style/textview_add_house"
                         android:ems="5"
-                        android:text="@string/add_house_house_floor_sum"
-                        android:layout_toRightOf="@+id/text_xing_4"/>
+                        android:text="@string/add_house_house_floor_sum"/>
 
                     <EditText
                         android:hint="@string/add_house_edit_floor_sum"
                         android:id="@+id/activity_addHouse_edit_floor_sum"
                         style="@style/editview_add_house"
-                        android:layout_toRightOf="@id/text7"
+                        android:layout_toEndOf="@id/text7"
                         android:inputType="number"
                         android:maxLength="4"
                         android:digits="0123456789" />
@@ -167,28 +146,23 @@
                 style="@style/rl_add_house"
                 android:layout_marginTop="@dimen/dp_5">
                 <TextView
-                    style="@style/textview_add_house_xing"
-                    android:id="@+id/text_xing_5"
-                    android:text="*" />
-                <TextView
                     android:id="@+id/activity_addHouse_tv_type_left"
                     style="@style/textview_add_house"
                     android:text="@string/add_house_house_type"
-                    android:layout_toRightOf="@+id/text_xing_5"
                     />
 
                 <TextView
                     android:id="@+id/activity_addHouse_tv_type"
                     style="@style/editview_add_house"
                     android:hint="@string/add_house_edit_type"
-                    android:layout_toRightOf="@+id/activity_addHouse_tv_type_left"/>
-                <TextView
+                    android:layout_toEndOf="@+id/activity_addHouse_tv_type_left"/>
+                <ImageView
                     android:layout_centerVertical="true"
-                    android:background="@mipmap/right"
+                    android:src="@mipmap/right"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="20dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/dp_20"
                     />
             </RelativeLayout>
 
@@ -197,20 +171,15 @@
             <RelativeLayout
                 style="@style/rl_add_house">
                 <TextView
-                    style="@style/textview_add_house_xing"
-                    android:id="@+id/text_xing_6"
-                    android:text="*" />
-                <TextView
                     style="@style/textview_add_house"
                     android:id="@+id/text19"
-                    android:text="@string/add_house_house_area"
-                    android:layout_toRightOf="@+id/text_xing_6"/>
+                    android:text="@string/add_house_house_area"/>
 
                 <EditText
                     style="@style/editview_add_house"
                     android:hint="@string/add_house_edit_area"
                     android:id="@+id/activity_addHouse_edit_area"
-                    android:layout_toRightOf="@id/text19"
+                    android:layout_toEndOf="@id/text19"
                     android:inputType="number"
                     android:digits="0123456789."
                     android:maxLength="6"/>
@@ -258,6 +227,8 @@
                     android:layout_marginBottom="@dimen/dp_10"
                     android:text="@string/add_house_house_confit"
                     android:textSize="@dimen/style_text_context"
+                    android:textStyle="bold"
+                    android:typeface="sans"
                     android:textColor="@color/text_black"/>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -282,6 +253,8 @@
                     android:layout_marginBottom="@dimen/dp_10"
                     android:text="@string/add_house_house_introduce"
                     android:textSize="@dimen/style_text_context"
+                    android:textStyle="bold"
+                    android:typeface="sans"
                     android:textColor="@color/text_black"/>
 
                 <EditText
@@ -293,7 +266,7 @@
                     android:textSize="@dimen/style_text_tips"
                     android:textColor="@color/text_black"
                     android:padding="@dimen/dp_10"
-                    android:gravity="left"
+                    android:gravity="start"
                     android:layout_below="@+id/tv_introduce"
                     android:background="@drawable/shape_button_gray"/>
 
@@ -302,18 +275,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_15"
-                android:layout_marginLeft="13dp">
-                <TextView
-                    style="@style/textview_add_house_xing"
-                    android:id="@+id/text_xing_8"
-                    android:text="*" />
+                android:layout_marginStart="13dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/text_xing_8"
                     android:text="@string/add_house_house_pic"
                     android:textColor="@color/text_black"
                     android:textSize="@dimen/style_text_context"
+                    android:textStyle="bold"
+                    android:typeface="sans"
                     android:layout_centerVertical="true"/>
             </RelativeLayout>
 
@@ -343,9 +313,9 @@
                     android:enabled="false"
                     android:gravity="center"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="60dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
                     android:layout_below="@+id/info"
                     android:layout_centerInParent="true"
                     android:id="@+id/submit"

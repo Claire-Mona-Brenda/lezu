@@ -1,20 +1,25 @@
 package com.konka.renting.landlord.house;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.SuperscriptSpan;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -29,6 +34,8 @@ import com.konka.renting.bean.DataInfo;
 import com.konka.renting.bean.HouseOrderInfoBean;
 import com.konka.renting.bean.LoginUserBean;
 import com.konka.renting.bean.PageDataBean;
+import com.konka.renting.event.CreateOrderEvent;
+import com.konka.renting.event.DelHouseEvent;
 import com.konka.renting.event.HousePublishEvent;
 import com.konka.renting.event.LandlordHouseListEvent;
 import com.konka.renting.event.PublicCancelEvent;
@@ -36,16 +43,20 @@ import com.konka.renting.event.RefreshDeviceEvent;
 import com.konka.renting.http.SecondRetrofitHelper;
 import com.konka.renting.http.subscriber.CommonSubscriber;
 import com.konka.renting.landlord.house.activity.AddHouseAddressActivity;
+import com.konka.renting.landlord.house.activity.DevListActivity;
 import com.konka.renting.landlord.house.activity.HouseInfoActivity2;
 import com.konka.renting.landlord.house.activity.PayAllMoneyActivity;
 import com.konka.renting.landlord.house.view.HouseAdapter;
+import com.konka.renting.landlord.house.view.HousePublishActivity;
 import com.konka.renting.landlord.house.widget.ShowToastUtil;
 import com.konka.renting.landlord.user.userinfo.NewFaceDectectActivity;
 import com.konka.renting.landlord.user.userinfo.UpdateEvent;
+import com.konka.renting.tenant.opendoor.OpeningPopupwindow;
 import com.konka.renting.utils.CacheUtils;
 import com.konka.renting.utils.RxBus;
 import com.konka.renting.utils.RxUtil;
 import com.konka.renting.utils.UIUtils;
+import com.konka.renting.widget.CommonPopupWindow;
 import com.mcxtzhang.commonadapter.rv.CommonAdapter;
 import com.mcxtzhang.commonadapter.rv.ViewHolder;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -86,6 +97,8 @@ public class HouseFragment2 extends BaseFragment {
     List<HouseOrderInfoBean> dataList = new ArrayList<>();
     int offset = 1;
     CommonAdapter<HouseOrderInfoBean> commonAdapter;
+    CommonPopupWindow commonPopupWindow;
+    private OpeningPopupwindow openingPopupwindow;
 
     public static HouseFragment2 newInstance() {
         Bundle args = new Bundle();
@@ -125,35 +138,75 @@ public class HouseFragment2 extends BaseFragment {
             }
         });
         mRefresh.setEnableLoadmore(false);
-        RxBus.getDefault().toDefaultObservable(LandlordHouseListEvent.class, new Action1<LandlordHouseListEvent>() {
+        addRxBusSubscribe(LandlordHouseListEvent.class, new Action1<LandlordHouseListEvent>() {
             @Override
             public void call(LandlordHouseListEvent event) {
                 if (event.isUpdata())
                     mRefresh.autoRefresh();
             }
         });
-        RxBus.getDefault().toDefaultObservable(RefreshDeviceEvent.class, new Action1<RefreshDeviceEvent>() {
+        addRxBusSubscribe(RefreshDeviceEvent.class, new Action1<RefreshDeviceEvent>() {
             @Override
             public void call(RefreshDeviceEvent refreshDeviceEvent) {
                 mRefresh.autoRefresh();
             }
         });
-        RxBus.getDefault().toDefaultObservable(UpdateEvent.class, new Action1<UpdateEvent>() {
+        addRxBusSubscribe(UpdateEvent.class, new Action1<UpdateEvent>() {
             @Override
             public void call(UpdateEvent event) {
                 mRefresh.autoRefresh();
             }
         });
-        RxBus.getDefault().toDefaultObservable(PublicCancelEvent.class, new Action1<PublicCancelEvent>() {
+        addRxBusSubscribe(DelHouseEvent.class, new Action1<DelHouseEvent>() {
             @Override
-            public void call(PublicCancelEvent event) {
+            public void call(DelHouseEvent delHouseEvent) {
+                if (TextUtils.isEmpty(delHouseEvent.getRoom_id())) {
+                    mRefresh.autoRefresh();
+                } else {
+                    int size = dataList.size();
+                    for (int i = 0; i < size; i++) {
+                        if (delHouseEvent.getRoom_id().equals(dataList.get(i).getRoom_id() + "")) {
+                            dataList.remove(i);
+                            commonAdapter.notifyDataSetChanged();
+                            break;
+                        }
+                    }
+                }
+            }
+        });
+        addRxBusSubscribe(CreateOrderEvent.class, new Action1<CreateOrderEvent>() {
+            @Override
+            public void call(CreateOrderEvent createOrderEvent) {
                 mRefresh.autoRefresh();
             }
         });
-        RxBus.getDefault().toDefaultObservable(HousePublishEvent.class, new Action1<HousePublishEvent>() {
+        addRxBusSubscribe(PublicCancelEvent.class, new Action1<PublicCancelEvent>() {
+            @Override
+            public void call(PublicCancelEvent event) {
+                int size = dataList.size();
+                for (int i = 0; i < size; i++) {
+                    if (event.getRoom_id().equals(dataList.get(i).getRoom_id() + "")) {
+                        dataList.get(i).setIs_pub(0);
+                        commonAdapter.notifyDataSetChanged();
+                        break;
+                    }
+                }
+            }
+        });
+        addRxBusSubscribe(HousePublishEvent.class, new Action1<HousePublishEvent>() {
             @Override
             public void call(HousePublishEvent event) {
-                mRefresh.autoRefresh();
+                int size = dataList.size();
+                for (int i = 0; i < size; i++) {
+                    HouseOrderInfoBean bean = dataList.get(i);
+                    if (event.getRoom_id().equals(bean.getRoom_id() + "")) {
+                        bean.setIs_pub(1);
+                        bean.setType(event.getType());
+                        bean.setHousing_price(event.getPrice());
+                        commonAdapter.notifyDataSetChanged();
+                        break;
+                    }
+                }
             }
         });
         getRoomList();
@@ -163,12 +216,36 @@ public class HouseFragment2 extends BaseFragment {
         commonAdapter = new CommonAdapter<HouseOrderInfoBean>(getActivity(), dataList, R.layout.adapter_house_fragment) {
             @Override
             public void convert(ViewHolder viewHolder, HouseOrderInfoBean houseOrderInfoBean) {
+                viewHolder.setText(R.id.adapter_houselist_tv_id, houseOrderInfoBean.getRoom_no());
                 viewHolder.setText(R.id.tv_name, houseOrderInfoBean.getRoom_name());
                 viewHolder.setText(R.id.adapter_house_tv_endtime, houseOrderInfoBean.getService_date().equals("0") ? (houseOrderInfoBean.getIs_install() == 0 ? getString(R.string.house_sever_end_time_emty) : getString(R.string.house_sever_end_time_end)) : houseOrderInfoBean.getService_date());
-                viewHolder.setVisible(R.id.adapter_house_ll_sever_time, !TextUtils.isEmpty(houseOrderInfoBean.getDevice_id()));
-                viewHolder.setVisible(R.id.adapter_house_ll_rent_money, houseOrderInfoBean.getRoom_status() > 3);
-                viewHolder.setText(R.id.adapter_house_tv_rent_money, houseOrderInfoBean.getHousing_price());
-                viewHolder.setText(R.id.adapter_house_tv_rent_money_unit, getString(houseOrderInfoBean.getType() == 1 ? R.string.public_house_pay_unit_day : R.string.public_house_pay_unit_mon));
+
+
+                if (houseOrderInfoBean.getIs_pub() == 0) {//未发布
+                    viewHolder.setText(R.id.status, getString(R.string.house_status_type_3));
+                    viewHolder.setText(R.id.start_end, getString(R.string.start_to_rent));
+                    viewHolder.setText(R.id.adapter_houselist_tv_rent_type, "");
+                    viewHolder.setVisible(R.id.adapter_house_ll_rent_money, false);
+                } else {//已发布
+                    viewHolder.setText(R.id.status, getString(R.string.house_status_type_public));
+                    viewHolder.setVisible(R.id.adapter_house_ll_rent_money, true);
+                    String price = "";
+                    if (!TextUtils.isEmpty(houseOrderInfoBean.getHousing_price())) {
+                        price = Float.valueOf(houseOrderInfoBean.getHousing_price()).intValue() + "";
+                    }
+                    viewHolder.setText(R.id.adapter_house_tv_rent_money, price);
+                    viewHolder.setText(R.id.start_end, getString(R.string.end_to_rent));
+                    if (houseOrderInfoBean.getType() == 1) {//短租
+                        viewHolder.setText(R.id.adapter_houselist_tv_rent_type, "【" + getString(R.string.short_rent) + "】");
+                        viewHolder.setTextColorRes(R.id.adapter_houselist_tv_rent_type, R.color.color_short);
+                        viewHolder.setText(R.id.adapter_house_tv_rent_money_unit, getString(R.string.public_house_pay_unit_day));
+                    } else {//长租
+                        viewHolder.setText(R.id.adapter_houselist_tv_rent_type, "【" + getString(R.string.long_rent) + "】");
+                        viewHolder.setTextColorRes(R.id.adapter_houselist_tv_rent_type, R.color.color_long);
+                        viewHolder.setText(R.id.adapter_house_tv_rent_money_unit, getString(R.string.public_house_pay_unit_mon));
+                    }
+
+                }
 
                 String room_type;
                 if (houseOrderInfoBean.getRoom_type().contains("_")) {
@@ -192,17 +269,59 @@ public class HouseFragment2 extends BaseFragment {
                 } else
                     Picasso.get().load(R.mipmap.fangchan_jiazai).placeholder(R.mipmap.fangchan_jiazai).into(ipc);
 
-                viewHolder.setOnClickListener(R.id.adapter_house_tv_pay, new View.OnClickListener() {
+                viewHolder.setVisible(R.id.ll_create_order, !TextUtils.isEmpty(houseOrderInfoBean.getDevice_id()) && houseOrderInfoBean.getIs_install() == 1);
+                viewHolder.setVisible(R.id.ll_open, !TextUtils.isEmpty(houseOrderInfoBean.getDevice_id()) && houseOrderInfoBean.getStatus() <= 1);
+                viewHolder.setVisible(R.id.ll_bind, TextUtils.isEmpty(houseOrderInfoBean.getDevice_id()));
+                viewHolder.setVisible(R.id.ll_install, !TextUtils.isEmpty(houseOrderInfoBean.getDevice_id()) && houseOrderInfoBean.getIs_install() == 0);
+                viewHolder.setVisible(R.id.adapter_houselist_ll_sever, !TextUtils.isEmpty(houseOrderInfoBean.getDevice_id()) && houseOrderInfoBean.getIs_install() == 1);
+                viewHolder.setVisible(R.id.ll_start_end, false);
+
+                viewHolder.setOnClickListener(R.id.ll_create_order, new View.OnClickListener() {//生成订单
                     @Override
                     public void onClick(View v) {
-                        if (houseOrderInfoBean.getIs_install() == 0) {
-                            PayAllMoneyActivity.toActivity(getActivity(), houseOrderInfoBean.getRoom_id() + "");
+                        CreateOrderActivity.toActivity(mActivity, houseOrderInfoBean.getRoom_id() + "", houseOrderInfoBean.getRoom_name());
+                    }
+                });
+                viewHolder.setOnClickListener(R.id.ll_bind, new View.OnClickListener() {//绑定设备
+                    @Override
+                    public void onClick(View v) {
+                        DevListActivity.toActivity(mActivity, houseOrderInfoBean.getRoom_id() + "", houseOrderInfoBean.getStatus(), houseOrderInfoBean.getIs_install() == 0, false);
+                    }
+                });
+                viewHolder.setOnClickListener(R.id.ll_install, new View.OnClickListener() {//安装付费
+                    @Override
+                    public void onClick(View v) {
+                        PayAllMoneyActivity.toActivity(getActivity(), houseOrderInfoBean.getRoom_id() + "");
+                    }
+                });
+                viewHolder.setOnClickListener(R.id.adapter_houselist_ll_sever, new View.OnClickListener() {//缴纳服务费
+                    @Override
+                    public void onClick(View v) {
+                        PaySeverActivity.toActivity(getActivity(), houseOrderInfoBean.getRoom_id() + "", houseOrderInfoBean.getRoom_name(), houseOrderInfoBean.getService_date(), 1);
+                    }
+                });
+                viewHolder.setOnClickListener(R.id.ll_open, new View.OnClickListener() {//开门
+                    @Override
+                    public void onClick(View v) {
+                        if (!TextUtils.isEmpty(houseOrderInfoBean.getDevice_id())) {
+                            showOpen(houseOrderInfoBean);
                         } else {
-                            PaySeverActivity.toActivity(getActivity(), houseOrderInfoBean.getRoom_id() + "", houseOrderInfoBean.getAddress(), houseOrderInfoBean.getService_date(), 1);
+                            ShowToastUtil.showNormalToast(mActivity, getString(R.string.warm_open_no_device));
                         }
                     }
                 });
-                viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                viewHolder.setOnClickListener(R.id.ll_start_end, new View.OnClickListener() {//发布操作
+                    @Override
+                    public void onClick(View v) {
+                        if (houseOrderInfoBean.getIs_pub() == 1) {
+                            cancelPublic(houseOrderInfoBean.getRoom_id() + "");
+                        } else {
+                            HousePublishActivity.toActivity(mActivity, houseOrderInfoBean.getRoom_id() + "");
+                        }
+                    }
+                });
+
+                viewHolder.itemView.setOnClickListener(new View.OnClickListener() {//查看详情
 
                     @Override
                     public void onClick(View arg0) {
@@ -234,6 +353,18 @@ public class HouseFragment2 extends BaseFragment {
                 }
                 break;
         }
+    }
+
+    private SpannableStringBuilder getArea(String area) {
+        SpannableString m2 = new SpannableString("m2");
+        m2.setSpan(new RelativeSizeSpan(0.5f), 1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);//一半大小
+        m2.setSpan(new SuperscriptSpan(), 1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);   //上标
+
+        SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(area);
+        spannableStringBuilder.append(m2);
+
+        return spannableStringBuilder;
+
     }
 
 
@@ -288,15 +419,121 @@ public class HouseFragment2 extends BaseFragment {
         addSubscrebe(subscription);
     }
 
-    private SpannableStringBuilder getArea(String area) {
-        SpannableString m2 = new SpannableString("m2");
-        m2.setSpan(new RelativeSizeSpan(0.5f), 1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);//一半大小
-        m2.setSpan(new SuperscriptSpan(), 1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);   //上标
+    private void openDoor(String room_id, String gateway_id, String device_id) {
+        showOpening();
+        Subscription subscription = SecondRetrofitHelper.getInstance().openDoor(room_id, gateway_id, device_id)
+                .compose(RxUtil.<DataInfo>rxSchedulerHelper())
+                .subscribe(new CommonSubscriber<DataInfo>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                openingPopupwindow.dismiss();
+//                                showFailer();
+                            }
+                        }, 1000);
+                    }
 
-        SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(area);
-        spannableStringBuilder.append(m2);
+                    @Override
+                    public void onNext(DataInfo dataInfo) {
+                        if (dataInfo.success()) {
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    openingPopupwindow.dismiss();
+//                                    showFailer();
+                                }
+                            }, 1000);
+                        } else {
+                            openingPopupwindow.dismiss();
+                            ShowToastUtil.showWarningToast(mActivity, dataInfo.msg());
+                        }
+                    }
+                });
+        addSubscrebe(subscription);
+    }
 
-        return spannableStringBuilder;
+    public void cancelPublic(String room_id) {
+        showLoadingDialog();
+        Subscription subscription = SecondRetrofitHelper.getInstance().cancelPublishHouse2(room_id)
+                .compose(RxUtil.<DataInfo>rxSchedulerHelper())
+                .subscribe(new CommonSubscriber<DataInfo>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        dismiss();
+                    }
 
+                    @Override
+                    public void onNext(DataInfo dataInfo) {
+                        dismiss();
+                        if (dataInfo.success()) {
+                            RxBus.getDefault().post(new PublicCancelEvent(room_id));
+
+                        } else {
+                            showToast(dataInfo.msg());
+                        }
+                    }
+                });
+        addSubscrebe(subscription);
+    }
+
+
+    /****************************************************弹窗**************************************************/
+    private void showOpen(final HouseOrderInfoBean bean) {
+        commonPopupWindow = new CommonPopupWindow.Builder(mActivity)
+                .setTitle(mActivity.getString(R.string.tips))
+                .setContent(mActivity.getString(R.string.warm_open_door))
+                .setRightBtnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        openDoor(bean.getRoom_id() + "", bean.getGateway_id(), bean.getDevice_id());
+                        commonPopupWindow.setOnDismissListener(null);
+                        commonPopupWindow.dismiss();
+                    }
+                })
+                .create();
+        showPopup(commonPopupWindow);
+    }
+
+    private void showOpening() {
+        // 开启 popup 时界面透明
+        openingPopupwindow = new OpeningPopupwindow(mActivity);
+        WindowManager.LayoutParams lp = mActivity.getWindow().getAttributes();
+        lp.alpha = 0.5f;
+        mActivity.getWindow().setAttributes(lp);
+        mActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        // popupwindow 第一个参数指定popup 显示页面
+        openingPopupwindow.showAtLocation((View) titleBg.getParent(), Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL, 0, 0);     // 第一个参数popup显示activity页面
+        // popup 退出时界面恢复
+        openingPopupwindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                WindowManager.LayoutParams lp = mActivity.getWindow().getAttributes();
+                lp.alpha = 1f;
+                mActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+                mActivity.getWindow().setAttributes(lp);
+            }
+        });
+    }
+
+    private void showPopup(PopupWindow popupWindow) {
+        // 开启 popup 时界面透明
+        WindowManager.LayoutParams lp = mActivity.getWindow().getAttributes();
+        lp.alpha = 0.5f;
+        mActivity.getWindow().setAttributes(lp);
+        mActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        // popupwindow 第一个参数指定popup 显示页面
+        popupWindow.showAtLocation((View) titleBg.getParent(), Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL, 0, -200);     // 第一个参数popup显示activity页面
+        // popup 退出时界面恢复
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                WindowManager.LayoutParams lp = mActivity.getWindow().getAttributes();
+                lp.alpha = 1f;
+                mActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+                mActivity.getWindow().setAttributes(lp);
+            }
+        });
     }
 }

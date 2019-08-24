@@ -10,6 +10,7 @@ import com.konka.renting.KonkaApplication;
 import com.konka.renting.R;
 import com.konka.renting.base.BaseActivity;
 import com.konka.renting.base.BaseApplication;
+import com.konka.renting.bean.ActivateBean;
 import com.konka.renting.bean.AddHouseBean;
 import com.konka.renting.bean.AddRentingBean;
 import com.konka.renting.bean.AgentBean;
@@ -1279,6 +1280,13 @@ public class SecondRetrofitHelper {
     }
 
     /**
+     * 取消发布(2.3.4版本以后)
+     */
+    public Observable<DataInfo> cancelPublishHouse2(String room_id) {
+        return mApiService.cancelPublishHouse2(room_id);
+    }
+
+    /**
      * 获取房产配置列表(2.3.4版本以后)
      */
     public Observable<DataInfo<List<HouseConfigBean>>> getRoomConfigList2() {
@@ -1319,8 +1327,8 @@ public class SecondRetrofitHelper {
     /**
      * 激活订单(2.4.1版本以后)
      */
-    public Observable<DataInfo> activate(String account, String password) {
-        return mApiService.activate(account, password);
+    public Observable<DataInfo<ActivateBean>> activate(String account) {
+        return mApiService.activate(account);
     }
 
     /**
@@ -1379,5 +1387,12 @@ public class SecondRetrofitHelper {
      */
     public Observable<DataInfo> canceOrder(String order_id) {
         return mApiService.canceOrder(order_id);
+    }
+
+    /**
+     * 删除房产(2.4.1版本以后)
+     */
+    public Observable<DataInfo> delHouse(String room_id) {
+        return mApiService.delHouse(room_id);
     }
 }

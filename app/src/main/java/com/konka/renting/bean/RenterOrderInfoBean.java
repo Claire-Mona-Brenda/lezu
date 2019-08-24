@@ -64,7 +64,9 @@ public class RenterOrderInfoBean {
     private String floor;//楼层
     private String total_floor;//楼层
     private String measure_area;//面积
+    private String account;//激活码
     private int is_online;// 0线下
+    private int is_pub;// 是否发布
 
     public String getOrder_id() {
         return order_id;
@@ -330,12 +332,28 @@ public class RenterOrderInfoBean {
         this.measure_area = measure_area;
     }
 
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
     public int getIs_online() {
         return is_online;
     }
 
     public void setIs_online(int is_online) {
         this.is_online = is_online;
+    }
+
+    public int getIs_pub() {
+        return is_pub;
+    }
+
+    public void setIs_pub(int is_pub) {
+        this.is_pub = is_pub;
     }
 
     public static class LandlordBean {

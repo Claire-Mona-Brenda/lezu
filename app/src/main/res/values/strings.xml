@@ -223,6 +223,7 @@
     <string name="to_create">生成密码</string>
     <string name="warn_input_date">请选择入住时间和退房时间</string>
     <string name="warn_input_mobile">请填写正确的手机号码</string>
+    <string name="tips_no_register_mobile">提示：请注意该手机号码为未注册号码</string>
 
     <string name="choose_date">选择入住时间</string>
     <string name="choose_time_date">请选择时间日期</string>
@@ -255,6 +256,7 @@
 
     
     <!--订单列表/订单详情-->
+    <string name="order_info_title">订单详情</string>
     <string name="apply_ing">申请订单</string>
     <string name="check_in">入住订单</string>
     <string name="check_out">退房订单</string>
@@ -282,6 +284,21 @@
     <string name="renter_apply_to_end">申请退房</string>
     <string name="landlord_apply_to_end_agree">确定退房申请</string>
 
+    <string name="activation_code">激活码</string>
+    <string name="rent_in_code">租客入住权限激活码：</string>
+    <string name="rent_in_code_title">租客入住权限激活码</string>
+    <string name="rent_in_code_tips">激活码可以在订单详情查看</string>
+    <string name="rent_in_code_status">状态：</string>
+    <string name="rent_in_code_status_no">未激活</string>
+    <string name="rent_in_code_status_yes">已激活</string>
+    <string name="copy">复制</string>
+    <string name="acquire">获取</string>
+
+    <string name="input_code">输入激活码</string>
+    <string name="please_input_code">请输入激活码</string>
+    <string name="please_success_code">激活成功!</string>
+    <string name="please_input_code_tips">说明\n*使用需已进行实名验证；\n*激活码仅限本人使用，切勿外借他人。</string>
+
     <string name="renter_relet">申请续租</string>
     <string name="renter_joint_rent">申请合租</string>
 
@@ -294,6 +311,8 @@
     <string name="dialog_apply_rent">是否同意该租客发起的租房申请？</string>
     <string name="dialog_dissmiss_apply_rent">是否取消该订单？</string>
     <string name="dialog_dissmiss_rent">是否移除？</string>
+
+    <string name="order_create_success">订单生成成功</string>
 
 
 
@@ -334,8 +353,11 @@
     <string name="dialog_renter_manage_cancel">是否拒绝合租申请</string>
     <string name="dialog_renter_manage_remove">是否移除该租客的开门权限</string>
 
+    <string name="open_authority">开门权限</string>
+
     <string name="please_input_add_rent_people_">请输入需要添加的账号：</string>
     <string name="please_input_account">请输入账号</string>
+    <string name="please_input_phone">请输入有效的手机号</string>
 
     <string name="title_add_account">添加账号</string>
     <string name="tips_add_account">注意事项</string>
@@ -447,8 +469,8 @@
     <string name="house_public_tips">请注意：长租请填写一个月收费价格，短租请填写一天收费价格</string>
     <string name="house_public_input_money">请输入金额</string>
 
-    <string name="warm_open_no_device">未添加门锁</string>
-    <string name="warm_open_no_gateway">未添加网关</string>
+    <string name="warm_open_no_device">请先添加门锁</string>
+    <string name="warm_open_no_gateway">请先添加网关</string>
     <string name="warm_del_context_no">已申请删除房产，不能发布房源信息</string>
 
     <string name="start_to_rent">开始发布</string>
@@ -463,15 +485,20 @@
     <string name="house_status_type_6">已入住</string>
     <string name="house_status_type_7">申请删除</string>
 
+    <string name="house_status_type_public">已发布</string>
+
     <string name="short_rent">短租</string>
     <string name="long_rent">长租</string>
 
     <string name="please_input_rent_money">请填写金额</string>
     <string name="public_title">发布房源</string>
 
+    <string name="house_user">用户</string>
+    <string name="house_user_will_get_open">将获得开门权限</string>
+
     <!--添加或编辑房产-->
     <string name="add_house_title">房产登记</string>
-    <string name="add_house_house_name">房产名</string>
+    <string name="add_house_house_name">房产名称</string>
     <string name="add_house_edit_name">请输入房产名</string>
     <string name="add_house_house_address">所在省市区</string>
     <string name="add_house_edit_address">请选择房产所在的省市区</string>
@@ -544,6 +571,13 @@
     <string name="bind_clock_dev">绑定门锁设备</string>
     <string name="bind_dev">绑定设备</string>
     <string name="house_info_start_rent">发布房产</string>
+
+    <string name="is_to_del_house">是否删除该房产？</string>
+    <string name="is_to_del_house_if_have_money">该房产已缴纳过费用，是否仍然要删除该房产？</string>
+    <string name="no_to_del_house_bind_dev">房产已绑定设备，无法删除！</string>
+    <string name="no_to_del_house_pay_money">房产存在服务费，无法删除！</string>
+    <string name="no_to_del_house_rent_order">房产存在入住租客，无法删除！</string>
+    <string name="if_have_question_call">如有问题，请联系客服！</string>
 
     <!--房产详情-->
     <string name="house_info_title">房产详情</string>
@@ -862,6 +896,7 @@
     <!--设备-->
     <string name="no_gateway">还没有网关</string>
     <string name="no_dev">还没有设备</string>
+    <string name="no_dev_2">暂无设备</string>
     <string name="add_gateway">添加网关</string>
     <string name="add_dev">添加设备</string>
     <string name="my_gateway">我的网关</string>
@@ -932,6 +967,10 @@
         <item>未付账单</item>
         <item>已付账单</item>
     </string-array>
+    
+    
+    <!--人脸认证-->
+    <string name="restart_error">认证出现异常，请重新进行认证</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

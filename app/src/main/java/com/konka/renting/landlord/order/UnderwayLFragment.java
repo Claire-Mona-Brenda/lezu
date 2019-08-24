@@ -128,8 +128,15 @@ public class UnderwayLFragment extends BaseFragment {
         commonAdapter = new CommonAdapter<RenterOrderListBean>(getContext(), mData, R.layout.adapter_underway_l) {
             @Override
             public void convert(ViewHolder viewHolder, RenterOrderListBean listBean) {
-                String unit = listBean.getType() == 1 ? "/天" : "/月";
-                viewHolder.setText(R.id.adapter_tv_room_price, "¥ " + (int) Float.parseFloat(listBean.getHousing_price()) + unit);
+                if (!TextUtils.isEmpty(listBean.getHousing_price())&&Float.valueOf(listBean.getHousing_price()) != 0){
+                    String unit = listBean.getType() == 1 ? "/天" : "/月";
+                    viewHolder.setText(R.id.adapter_tv_room_price, "¥ " + (int) Float.parseFloat(listBean.getHousing_price()) + unit);
+                    viewHolder.setVisible(R.id.adapter_tv_room_price,true);
+                }else{
+                    viewHolder.setVisible(R.id.adapter_tv_room_price,false);
+                }
+
+
                 ImageView ivPic = viewHolder.getView(R.id.adapter_icon_room);
                 if (!TextUtils.isEmpty(listBean.getThumb_image()))
                     Picasso.get().load(listBean.getThumb_image()).into(ivPic);

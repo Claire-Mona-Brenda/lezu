@@ -11,12 +11,16 @@ import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.SuperscriptSpan;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.widget.NestedScrollView;
@@ -35,6 +39,7 @@ import com.konka.renting.base.BaseActivity;
 import com.konka.renting.bean.DataInfo;
 import com.konka.renting.bean.HouseConfigBean;
 import com.konka.renting.bean.HouseDetailsInfoBean2;
+import com.konka.renting.event.DelHouseEvent;
 import com.konka.renting.event.HousePublishEvent;
 import com.konka.renting.event.LandlordHouseInfoEvent;
 import com.konka.renting.event.PublicCancelEvent;
@@ -48,10 +53,12 @@ import com.konka.renting.landlord.house.PicViewPagerActivity;
 import com.konka.renting.landlord.house.data.MissionEnity;
 import com.konka.renting.landlord.house.view.HousePublishActivity;
 import com.konka.renting.landlord.house.view.OnTouchMapView;
+import com.konka.renting.landlord.house.view.WarmDelHousePopup;
 import com.konka.renting.landlord.house.widget.PicstandardWidget;
 import com.konka.renting.utils.RxBus;
 import com.konka.renting.utils.RxUtil;
 import com.konka.renting.utils.UIUtils;
+import com.konka.renting.widget.CommonPopupWindow;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -135,6 +142,7 @@ public class HouseInfoActivity2 extends BaseActivity {
 
     HouseDetailsInfoBean2 bean;
 
+
     private AMap aMap;
 
     public static void toActivity(Context context, String room_id) {
@@ -161,8 +169,8 @@ public class HouseInfoActivity2 extends BaseActivity {
         viewGroup.setPadding(viewGroup.getPaddingLeft(), viewGroup.getPaddingTop() + UIUtils.getStatusHeight(), viewGroup.getPaddingRight(), viewGroup.getPaddingBottom());
 
 
-        tvTitle.setText(R.string.house_info_title);
         room_id = getIntent().getStringExtra("room_id");
+        tvTitle.setText(R.string.house_info_title);
 
         mRlMapviewAddress.setScrollView(nestedScrollView);
 
@@ -170,6 +178,12 @@ public class HouseInfoActivity2 extends BaseActivity {
             @Override
             public void call(UpdataHouseInfoEvent updataHouseInfoEvent) {
                 getData();
+            }
+        });
+        addRxBusSubscribe(DelHouseEvent.class, new Action1<DelHouseEvent>() {
+            @Override
+            public void call(DelHouseEvent delHouseEvent) {
+                finish();
             }
         });
         addRxBusSubscribe(LandlordHouseInfoEvent.class, new Action1<LandlordHouseInfoEvent>() {
@@ -185,7 +199,7 @@ public class HouseInfoActivity2 extends BaseActivity {
             @Override
             public void call(HousePublishEvent housePublishEvent) {
                 mTvPublic.setText(R.string.end_to_rent);
-                bean.setRoom_status(4);
+                bean.setIs_pub(1);
             }
         });
     }
@@ -224,7 +238,7 @@ public class HouseInfoActivity2 extends BaseActivity {
     }
 
 
-    @OnClick({R.id.iv_back, R.id.activity_house_info_ll_bind, R.id.activity_house_info_ll_open_manege, R.id.activity_house_info_ll_ren_list,
+    @OnClick({R.id.iv_back, R.id.iv_right, R.id.activity_house_info_ll_bind, R.id.activity_house_info_ll_open_manege, R.id.activity_house_info_ll_ren_list,
             R.id.activity_house_info_ll_edit, R.id.activity_house_info_tv_public, R.id.activity_house_info_tv_create})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -233,13 +247,15 @@ public class HouseInfoActivity2 extends BaseActivity {
                 break;
             case R.id.activity_house_info_ll_bind://绑定设备
                 if (bean != null)
-                    DevListActivity.toActivity(mActivity, bean.getRoom_id() + "", bean.getRoom_status(), bean.getIs_install() == 0, false);
+                    DevListActivity.toActivity(mActivity, bean.getRoom_id() + "", bean.getStatus(), bean.getIs_install() == 0, false);
                 break;
             case R.id.activity_house_info_ll_open_manege://开门管理
-                if (bean != null && !bean.getDevice_id().equals(""))
+                if (bean != null && !bean.getDevice_id().equals("") && bean.getStatus() < 2)
                     OpenManageActivity.toActivity(mActivity, bean);
                 else if (bean != null && bean.getDevice_id().equals("")) {
                     showToast(R.string.warm_open_no_device);
+                } else if (bean != null && bean.getStatus() == 2) {
+                    showToast(R.string.tips_get_authority_content);
                 }
                 break;
             case R.id.activity_house_info_ll_ren_list://租客列表
@@ -253,7 +269,7 @@ public class HouseInfoActivity2 extends BaseActivity {
                 if (bean == null) {
                     return;
                 }
-                if (bean.getRoom_status() > 3) {
+                if (bean.getIs_pub() == 1) {
                     cancelPublic();
                 } else {
                     HousePublishActivity.toActivity(mActivity, bean.getRoom_id());
@@ -294,7 +310,7 @@ public class HouseInfoActivity2 extends BaseActivity {
                         if (dataInfo.success()) {
                             bean = dataInfo.data();
                             mLlButton.setVisibility(View.VISIBLE);
-                            mTvPublic.setText(bean.getRoom_status() < 4 ? R.string.start_to_rent : R.string.end_to_rent);
+                            mTvPublic.setText(bean.getIs_pub() == 0 ? R.string.start_to_rent : R.string.end_to_rent);
                             imageList = bean.getImage();
                             mTvName.setText(bean.getRoom_name());
                             mImgBind.setImageResource(bean.getDevice_id().equals("") ? R.mipmap.unbounded : R.mipmap.binding);
@@ -326,6 +342,7 @@ public class HouseInfoActivity2 extends BaseActivity {
                             }
                             //图片
                             ViewGroup viewGroup = (ViewGroup) mPwPic.getParent();
+                            mPwPic.getImgs().clear();
                             if (bean.getImage().size() > 0) {
 
                                 for (String str : bean.getImage()) {
@@ -356,7 +373,7 @@ public class HouseInfoActivity2 extends BaseActivity {
 
     public void cancelPublic() {
         showLoadingDialog();
-        Subscription subscription = SecondRetrofitHelper.getInstance().cancelPublishHouse(bean.getRoom_id())
+        Subscription subscription = SecondRetrofitHelper.getInstance().cancelPublishHouse2(bean.getRoom_id())
                 .compose(RxUtil.<DataInfo>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo>() {
                     @Override
@@ -368,9 +385,9 @@ public class HouseInfoActivity2 extends BaseActivity {
                     public void onNext(DataInfo dataInfo) {
                         dismiss();
                         if (dataInfo.success()) {
-                            RxBus.getDefault().post(new PublicCancelEvent());
+                            RxBus.getDefault().post(new PublicCancelEvent(bean.getRoom_id()));
                             mTvPublic.setText(R.string.start_to_rent);
-                            bean.setRoom_status(3);
+                            bean.setIs_pub(0);
                         } else {
                             showToast(dataInfo.msg());
                         }

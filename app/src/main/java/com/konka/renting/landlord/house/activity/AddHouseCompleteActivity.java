@@ -125,7 +125,7 @@ public class AddHouseCompleteActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.activity_add_house_complete_btn_bind:
-                DevListActivity.toActivity(this, room_id, 1, true, true);
+                DevListActivity.toActivity(this, room_id, 0, true, true);
                 break;
             case R.id.activity_add_house_complete_btn_rent:
                 HousePublishActivity.toActivity(this, room_id);

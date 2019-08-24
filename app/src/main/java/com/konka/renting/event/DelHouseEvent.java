@@ -1,9 +1,9 @@
 package com.konka.renting.event;
 
-public class PublicCancelEvent {
+public class DelHouseEvent {
     String room_id;
 
-    public PublicCancelEvent(String room_id) {
+    public DelHouseEvent(String room_id) {
         this.room_id = room_id;
     }
 

@@ -7,9 +7,16 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@drawable/rectangle">
+
+    <View
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_1"
+    android:background="@color/text_gray"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="@dimen/dp_60">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -17,23 +24,31 @@
             android:padding="@dimen/dp_20"
             android:text="@string/please_choose_device"
             android:textColor="@color/text_black"
-            android:textSize="@dimen/style_text_context"/>
+            android:textSize="@dimen/style_text_context" />
+        <TextView
+            android:id="@+id/pop_opendoorlist_tv_code"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="center"
+            android:paddingStart="@dimen/dp_15"
+            android:paddingEnd="@dimen/dp_15"
+            android:text="@string/activation_code"
+            android:textColor="@color/text_blue"
+            android:textSize="@dimen/sp_16" />
         <Button
             android:id="@+id/pop_opendoorlist_btn_confirm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_gravity="center_horizontal"
+            android:background="@null"
             android:text="@string/confirm"
-            android:textSize="@dimen/style_text_context"
             android:textColor="@color/text_org"
-            android:background="@null"/>
+            android:textSize="@dimen/style_text_context" />
     </RelativeLayout>
-<View
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/dp_1"
-    android:background="@color/text_gray"/>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_200">

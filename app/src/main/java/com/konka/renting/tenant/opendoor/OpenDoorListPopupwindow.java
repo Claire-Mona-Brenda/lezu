@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.konka.renting.R;
 import com.konka.renting.bean.OpenDoorListbean;
+import com.konka.renting.event.AddCodeEvent;
 import com.konka.renting.utils.RxBus;
 import com.mcxtzhang.commonadapter.lvgv.CommonAdapter;
 import com.mcxtzhang.commonadapter.lvgv.ViewHolder;
@@ -23,6 +24,7 @@ import java.util.List;
 public class OpenDoorListPopupwindow extends PopupWindow implements View.OnClickListener {
     ImageView imgClose;
     ListView listView;
+    TextView tvCode;
     Button btnConfirm;
 
     private View mView;
@@ -59,8 +61,10 @@ public class OpenDoorListPopupwindow extends PopupWindow implements View.OnClick
         LayoutInflater infalter = LayoutInflater.from(context);
         mView = infalter.inflate(R.layout.popup_opendoorlist, null);    //绑定布局
         listView = mView.findViewById(R.id.pop_opendoorlist_lv_list);
+        tvCode = mView.findViewById(R.id.pop_opendoorlist_tv_code);
         btnConfirm = mView.findViewById(R.id.pop_opendoorlist_btn_confirm);
         btnConfirm.setOnClickListener(this);
+        tvCode.setOnClickListener(this);
 
     }
 
@@ -95,6 +99,10 @@ public class OpenDoorListPopupwindow extends PopupWindow implements View.OnClick
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.pop_opendoorlist_tv_code:
+                RxBus.getDefault().post(new AddCodeEvent());
+                dismiss();
+                break;
             case R.id.pop_opendoorlist_btn_confirm:
                 RxBus.getDefault().post(new OpenDeviceEvent(current));
                 dismiss();

@@ -25,6 +25,7 @@ import com.konka.renting.bean.DataInfo;
 import com.konka.renting.bean.LandlordUserDetailsInfoBean;
 import com.konka.renting.bean.LoginUserBean;
 import com.konka.renting.bean.OpenCityBean;
+import com.konka.renting.event.AddCodeSuccessEvent;
 import com.konka.renting.event.LocationEvent;
 import com.konka.renting.event.RefreshFindRoomEvent;
 import com.konka.renting.http.RetrofitHelper;

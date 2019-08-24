@@ -76,7 +76,7 @@ public class AddRentPeopleActivity extends BaseActivity {
             case R.id.activity_add_rent_people_tv_sure:
                 String phone = mEdtAccount.getText().toString();
                 if (phone.length() < 11) {
-                    showToast(R.string.please_input_account);
+                    showToast(R.string.please_input_phone);
                 } else {
                     addAccount(phone);
                 }

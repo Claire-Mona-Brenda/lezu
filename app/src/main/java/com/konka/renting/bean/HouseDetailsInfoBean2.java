@@ -47,11 +47,13 @@ public class HouseDetailsInfoBean2 implements Parcelable {
     private String remark;
     private String explain;
     private int room_status;
+    private int status;// 0默认 1未入住 2已入住
     private String housing_price;
     private int type;
     private String time;
     private int is_del;
     private int is_install;//0未缴纳安装费 1已缴纳安装费
+    private int is_pub;//0未发布 1已发布
     private int service_status;
     private String service_date;
     private String device_id;
@@ -82,11 +84,13 @@ public class HouseDetailsInfoBean2 implements Parcelable {
         remark=in.readString();
         explain = in.readString();
         room_status = in.readInt();
+        status = in.readInt();
         housing_price = in.readString();
         type = in.readInt();
         time = in.readString();
         is_del = in.readInt();
         is_install = in.readInt();
+        is_pub = in.readInt();
         service_status = in.readInt();
         service_date = in.readString();
         device_id = in.readString();
@@ -212,6 +216,14 @@ public class HouseDetailsInfoBean2 implements Parcelable {
         this.room_status = room_status;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     public String getHousing_price() {
         return housing_price;
     }
@@ -250,6 +262,14 @@ public class HouseDetailsInfoBean2 implements Parcelable {
 
     public void setIs_install(int is_install) {
         this.is_install = is_install;
+    }
+
+    public int getIs_pub() {
+        return is_pub;
+    }
+
+    public void setIs_pub(int is_pub) {
+        this.is_pub = is_pub;
     }
 
     public int getService_status() {
@@ -393,11 +413,13 @@ public class HouseDetailsInfoBean2 implements Parcelable {
         dest.writeString(remark);
         dest.writeString(explain);
         dest.writeInt(room_status);
+        dest.writeInt(status);
         dest.writeString(housing_price);
         dest.writeInt(type);
         dest.writeString(time);
         dest.writeInt(is_del);
         dest.writeInt(is_install);
+        dest.writeInt(is_pub);
         dest.writeInt(service_status);
         dest.writeString(service_date);
         dest.writeString(device_id);

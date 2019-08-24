@@ -121,6 +121,12 @@ public class OtherSettingActivity extends BaseActivity {
         type = getIntent().getIntExtra("type", 0);
         openDoorListbean = getIntent().getParcelableExtra("openDoorListbean");
 
+        if (openDoorListbean.getIs_share_rent()==1){
+            llAddPeople.setVisibility(View.GONE);
+        }else{
+            llAddPeople.setVisibility(View.VISIBLE);
+        }
+
         switch (type) {
             case 0:
                 llOpenPwd.setVisibility(View.VISIBLE);
@@ -140,7 +146,7 @@ public class OtherSettingActivity extends BaseActivity {
                 break;
         }
 
-        llManagePwd.setVisibility(openDoorListbean.getStatus() > 2 ? View.VISIBLE : View.GONE);
+        llManagePwd.setVisibility( View.VISIBLE );
 
         addRxBusSubscribe(ToGetPwdTimeEvent.class, new Action1<ToGetPwdTimeEvent>() {
             @Override
@@ -177,21 +183,21 @@ public class OtherSettingActivity extends BaseActivity {
                 }
                 break;
             case R.id.activity_other_setting_tv_open_pwd://开门密码
-                if (openDoorListbean.getStatus() > 2 && !openDoorListbean.getDevice_id().equals("")) {
+                if ( !openDoorListbean.getDevice_id().equals("")) {
                     if (type == 0) {
                         DevicesOpenPasswordActivity.toActivity(this, openDoorListbean.getDevice_id(), openDoorListbean.getRoom_id());
                     } else {
                         checkOpenPwd();//短租查看密码
                     }
 
-                } else if (openDoorListbean.getStatus() > 2) {
+                } else if (openDoorListbean.getDevice_id().equals("")) {
                     ShowToastUtil.showNormalToast(this, getString(R.string.warm_open_no_device));
                 } else {
                     ShowToastUtil.showNormalToast(this, getString(R.string.warm_open_no_on_rent));
                 }
                 break;
             case R.id.activity_other_setting_tv_key_pwd://钥匙孔密码
-                if (openDoorListbean.getStatus() > 2 && !openDoorListbean.getDevice_id().equals("")) {
+                if ( !openDoorListbean.getDevice_id().equals("")) {
                     if (queryKeyPwdTime <= 0 || queryKeyPwdTime >= 10) {
                         showKeyPwdPopup();
                         keyPwdPopupwindow.setPwd(getString(R.string.tips_loading));
@@ -200,25 +206,25 @@ public class OtherSettingActivity extends BaseActivity {
                         showKeyPwdPopup();
                     }
 
-                } else if (openDoorListbean.getStatus() > 2) {
+                } else if (openDoorListbean.getDevice_id().equals("")) {
                     ShowToastUtil.showNormalToast(this, getString(R.string.warm_open_no_device));
                 } else {
                     ShowToastUtil.showNormalToast(this, getString(R.string.warm_open_no_on_rent));
                 }
                 break;
             case R.id.activity_other_setting_tv_gateway_setting://设置网关
-                if (openDoorListbean.getStatus() > 2 && !TextUtils.isEmpty(openDoorListbean.getGateway_id())) {
+                if (!TextUtils.isEmpty(openDoorListbean.getGateway_id())) {
                     GatewaySettingActivity.toActivity(this, openDoorListbean.getRoom_id(), openDoorListbean.getGateway_id(), openDoorListbean.getGateway_version(), GatewaySettingActivity.TYPE_TENANT);
-                } else if (openDoorListbean.getStatus() > 2) {
+                } else if (TextUtils.isEmpty(openDoorListbean.getGateway_id())) {
                     ShowToastUtil.showNormalToast(this, getString(R.string.warm_open_no_gateway));
                 } else {
                     ShowToastUtil.showNormalToast(this, getString(R.string.warm_open_no_on_rent));
                 }
                 break;
             case R.id.activity_other_setting_tv_gateway_restart://重启网关
-                if (openDoorListbean.getStatus() > 2 && !TextUtils.isEmpty(openDoorListbean.getGateway_id())) {
+                if ( !TextUtils.isEmpty(openDoorListbean.getGateway_id())) {
                     showReboot();
-                } else if (openDoorListbean.getStatus() > 2) {
+                } else if (TextUtils.isEmpty(openDoorListbean.getGateway_id())) {
                     ShowToastUtil.showNormalToast(this, getString(R.string.warm_open_no_gateway));
                 } else {
                     ShowToastUtil.showNormalToast(this, getString(R.string.warm_open_no_on_rent));
@@ -226,9 +232,9 @@ public class OtherSettingActivity extends BaseActivity {
 
                 break;
             case R.id.activity_other_setting_tv_manage_pwd://管理员密码
-                if (openDoorListbean.getStatus() > 2 && !openDoorListbean.getDevice_id().equals("")) {
+                if (!openDoorListbean.getDevice_id().equals("")) {
                     ManagePwdActivity.toActivity(this, openDoorListbean.getRoom_id());
-                } else if (openDoorListbean.getStatus() > 2) {
+                } else if (openDoorListbean.getDevice_id().equals("")) {
                     ShowToastUtil.showNormalToast(this, getString(R.string.warm_open_no_device));
                 } else {
                     ShowToastUtil.showNormalToast(this, getString(R.string.warm_open_no_on_rent));
@@ -241,9 +247,9 @@ public class OtherSettingActivity extends BaseActivity {
                 ClockSetManageActivity.toActivity(this, ClockSetManageActivity.TYPE_IC_CARD, openDoorListbean.getRoom_id());
                 break;
             case R.id.activity_other_setting_ll_sync://同步服务费时间
-                if (openDoorListbean.getStatus() > 2 && !openDoorListbean.getDevice_id().equals("")) {
+                if (!openDoorListbean.getDevice_id().equals("")) {
                     showSyncSeverPopup();
-                } else if (openDoorListbean.getStatus() > 2) {
+                } else if (openDoorListbean.getDevice_id().equals("")) {
                     ShowToastUtil.showNormalToast(this, getString(R.string.warm_open_no_device));
                 } else {
                     ShowToastUtil.showNormalToast(this, getString(R.string.warm_open_no_on_rent));

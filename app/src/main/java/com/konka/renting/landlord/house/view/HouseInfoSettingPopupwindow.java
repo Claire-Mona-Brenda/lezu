@@ -216,12 +216,12 @@ public class HouseInfoSettingPopupwindow extends PopupWindow implements View.OnC
                 break;
             case R.id.popup_rl_binddevice://绑定设备
 //                DeviceListActivity.toActivity(mContext, bean.getRoom_id() + "", bean.getRoom_status());
-                DevListActivity.toActivity(mContext, bean.getRoom_id() + "", bean.getRoom_status(), bean.getIs_install() == 0, false);
+                DevListActivity.toActivity(mContext, bean.getRoom_id() + "", bean.getStatus(), bean.getIs_install() == 0, false);
                 dismiss();
                 break;
             case R.id.popup_rl_gateway://网关列表
 //                UserGatewayListActivity.toActivity(mContext, bean.getRoom_id() + "");
-                DevListActivity.toActivity(mContext, bean.getRoom_id() + "", bean.getRoom_status(), bean.getIs_install() == 0, false);
+                DevListActivity.toActivity(mContext, bean.getRoom_id() + "", bean.getStatus(), bean.getIs_install() == 0, false);
                 dismiss();
                 break;
             case R.id.popup_rl_open_manage://开门管理

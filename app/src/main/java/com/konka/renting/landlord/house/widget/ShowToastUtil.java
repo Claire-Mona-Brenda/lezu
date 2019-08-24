@@ -32,7 +32,7 @@ public class ShowToastUtil {
 		TextView tv = (TextView) toastView.findViewById(R.id.successmsg);
 		tv.setText(msg);
 		toast.setView(toastView);
-		toast.setGravity(Gravity.TOP, 0, 300);
+		toast.setGravity(Gravity.CENTER, 0, -200);
 		toast.setDuration(Toast.LENGTH_SHORT);
 		toast.show();
 	}

@@ -25,6 +25,7 @@ public class HouseOrderInfoBean implements Parcelable {
     private String image;//	房产图片
     private String thumb_image;//房产缩列图
     private int room_status;//	房产状态 1未缴纳安装费 2待安装认证 3待发布 4已发布 5已出租
+    private int status;// 0默认 1未入住 2已入住
     private int is_del;//		1正常 2申请删除
     private int type;//		出租类型 1短租 2长租
     private int service_status;//		服务费状态 0已过期 1正常
@@ -45,6 +46,7 @@ public class HouseOrderInfoBean implements Parcelable {
         address = in.readString();
         image = in.readString();
         room_status = in.readInt();
+        status = in.readInt();
         is_del = in.readInt();
         type = in.readInt();
         service_status = in.readInt();
@@ -125,6 +127,14 @@ public class HouseOrderInfoBean implements Parcelable {
 
     public void setRoom_status(int room_status) {
         this.room_status = room_status;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public int getIs_del() {
@@ -236,6 +246,7 @@ public class HouseOrderInfoBean implements Parcelable {
         dest.writeString(address);
         dest.writeString(image);
         dest.writeInt(room_status);
+        dest.writeInt(status);
         dest.writeInt(is_del);
         dest.writeInt(type);
         dest.writeInt(service_status);

@@ -78,7 +78,7 @@ public class DevListActivity extends BaseActivity {
     RelativeLayout mRlDev;
 
     String mRoomId;
-    int status;//	房产状态 1未缴纳安装费 2待安装认证 3待发布 4已发布 5已确定 6已出租
+    int status;// 0默认 1未入住 2已入住
     DeviceInfo mDev;
     GatewayInfo mGateway;
     boolean is_Install;
@@ -128,18 +128,18 @@ public class DevListActivity extends BaseActivity {
     @OnClick({R.id.iv_back, R.id.activity_dev_list_btn_add_gateway, R.id.activity_dev_list_btn_gateway_manage, R.id.activity_dev_list_btn_add_dev, R.id.activity_dev_list_rl_dev})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.iv_back:
+            case R.id.iv_back://返回
                 finish();
                 break;
-            case R.id.activity_dev_list_btn_add_gateway:
+            case R.id.activity_dev_list_btn_add_gateway://添加网关
                 BindGatewayActivity.toActivity(this, mRoomId);
                 break;
-            case R.id.activity_dev_list_btn_gateway_manage:
+            case R.id.activity_dev_list_btn_gateway_manage://网关管理
                 if (mGateway != null) {
                     GatewaySettingActivity.toActivity(this, mRoomId, mGateway.getId(), mGateway.getGateway_version(), GatewaySettingActivity.TYPE_LANDLORD);
                 }
                 break;
-            case R.id.activity_dev_list_btn_add_dev:
+            case R.id.activity_dev_list_btn_add_dev://添加设备
                 if (mGateway == null) {
                     showToast(R.string.please_add_gateway);
                 } else {
@@ -174,7 +174,7 @@ public class DevListActivity extends BaseActivity {
                                 mRlDev.setVisibility(View.VISIBLE);
                                 mTvDevTime.setText(mDev.time);
                                 mTvDevName.setText(mDev.name);
-                                mBtnGatewayManage.setVisibility(status > 5 ? View.GONE : View.VISIBLE);
+                                mBtnGatewayManage.setVisibility(status ==2 ? View.GONE : View.VISIBLE);
                             } else {
                                 mDev = null;
                                 mRlAddDev.setVisibility(View.VISIBLE);
@@ -224,7 +224,7 @@ public class DevListActivity extends BaseActivity {
                                 }
                                 mImgGatewayPic.setImageResource(gateway_version < 4 ? R.mipmap.wangguan_1_72px_png : R.mipmap.wangguan_2_72px_png);
                                 mTvGatewayName.setText(mGateway.getGateway_name());
-                                mBtnGatewayManage.setVisibility(status > 5 && mDev != null ? View.GONE : View.VISIBLE);
+                                mBtnGatewayManage.setVisibility(status ==2 && mDev != null ? View.GONE : View.VISIBLE);
                             } else {
                                 mGateway = null;
                                 mRlAddGateway.setVisibility(View.VISIBLE);

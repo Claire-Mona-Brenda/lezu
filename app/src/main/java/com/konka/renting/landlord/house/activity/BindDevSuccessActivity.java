@@ -94,7 +94,7 @@ public class BindDevSuccessActivity extends BaseActivity {
                 if (is_Install) {
                     PayAllMoneyActivity.toActivity(this, room_id);
                 } else {
-                    PaySeverActivity.toActivity(this, room_id, infoBean == null ? "" : infoBean.getAddress(), infoBean == null ? "" : infoBean.getService_date(), 1);
+                    PaySeverActivity.toActivity(this, room_id, infoBean == null ? "" : infoBean.getRoom_name(), infoBean == null ? "" : infoBean.getService_date(), 1);
                 }
                 finish();
                 break;

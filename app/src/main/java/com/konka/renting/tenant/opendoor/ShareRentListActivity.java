@@ -77,7 +77,8 @@ public class ShareRentListActivity extends BaseActivity {
     public void init() {
         order_id = getIntent().getStringExtra("order_id");
 
-        rentListBeans = new ArrayList<>();
+
+       rentListBeans = new ArrayList<>();
         commonAdapter = new CommonAdapter<ShareRentListBean>(this, rentListBeans, R.layout.adapter_share_rent_list) {
             @Override
             public void convert(ViewHolder viewHolder, ShareRentListBean shareRentListBean) {

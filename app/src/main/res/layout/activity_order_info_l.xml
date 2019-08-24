@@ -89,6 +89,7 @@
                 android:background="@color/style_line" />
 
             <LinearLayout
+                android:id="@+id/activity_order_info_ll_push_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -116,14 +117,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_8"
                 android:background="@color/style_line" />
-
             <RelativeLayout
+                android:id="@+id/activity_order_info_rl_person"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="@dimen/dp_18"
                 android:paddingTop="@dimen/dp_16"
                 android:paddingEnd="@dimen/dp_33"
-                android:paddingBottom="@dimen/dp_16">
+                android:paddingBottom="@dimen/dp_16"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/activity_order_info_img_icon_person"
@@ -161,6 +163,61 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:src="@mipmap/call" />
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/activity_order_info_rl_rent_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/dp_18"
+                android:paddingTop="@dimen/dp_16"
+                android:paddingEnd="@dimen/dp_33"
+                android:paddingBottom="@dimen/dp_16"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_tips_rent_in_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/sp_14"
+                    android:text="@string/rent_in_code"/>
+                <TextView
+                    android:id="@+id/activity_order_info_tv_rent_in_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/tv_tips_rent_in_code"
+                    android:layout_alignTop="@+id/tv_tips_rent_in_code"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/sp_14"/>
+                <TextView
+                    android:id="@+id/activity_order_info_tv_rent_code_copy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignTop="@+id/tv_tips_rent_in_code"
+                    android:textColor="@color/text_blue"
+                    android:textSize="@dimen/sp_14"
+                    android:text="@string/copy"/>
+
+                <TextView
+                    android:id="@+id/tv_tips_code_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_tips_rent_in_code"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/sp_14"
+                    android:text="@string/rent_in_code_status"/>
+                <TextView
+                    android:id="@+id/activity_order_info_tv_code_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/tv_tips_code_status"
+                    android:layout_alignTop="@+id/tv_tips_code_status"
+                    android:textColor="@color/text_org"
+                    android:textSize="@dimen/sp_14"
+                    android:text="@string/rent_in_code_status_no"/>
 
             </RelativeLayout>
 
@@ -260,6 +317,9 @@
                     android:textColor="@color/text_black"
                     android:textSize="@dimen/sp_14" />
             </RelativeLayout>
+
+
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </RelativeLayout>

@@ -87,8 +87,8 @@ public class HousePublishActivity extends BaseActivity implements CompoundButton
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String num=editMoney.getText().toString();
-                if (num.startsWith("0")){
+                String num = editMoney.getText().toString();
+                if (num.startsWith("0")) {
                     editMoney.setText("");
                 }
 
@@ -139,10 +139,12 @@ public class HousePublishActivity extends BaseActivity implements CompoundButton
     }
 
     public void submitData() {
+        int t = type;
+        String money = editMoney.getText().toString();
         Subscription subscription = (SecondRetrofitHelper.getInstance().publishHouse2(
                 room_id,
-                type + "",
-                editMoney.getText().toString()
+                t + "",
+                money
         )
                 .compose(RxUtil.<DataInfo>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo>() {
@@ -154,7 +156,7 @@ public class HousePublishActivity extends BaseActivity implements CompoundButton
                     @Override
                     public void onNext(DataInfo homeInfoDataInfo) {
                         if (homeInfoDataInfo.success()) {
-                            RxBus.getDefault().post(new HousePublishEvent());
+                            RxBus.getDefault().post(new HousePublishEvent(room_id, t, money));
                             HousePublishActivity.this.finish();
                             ShowToastUtil.showSuccessToast(HousePublishActivity.this, homeInfoDataInfo.msg());
                         } else {

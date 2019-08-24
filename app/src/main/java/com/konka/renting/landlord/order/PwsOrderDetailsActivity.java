@@ -5,6 +5,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -13,7 +14,6 @@ import android.widget.TextView;
 import com.konka.renting.R;
 import com.konka.renting.base.BaseActivity;
 import com.konka.renting.bean.DataInfo;
-import com.konka.renting.bean.HouseOrderInfoBean;
 import com.konka.renting.bean.PwsOrderDetailsBean;
 import com.konka.renting.http.SecondRetrofitHelper;
 import com.konka.renting.http.subscriber.CommonSubscriber;
@@ -42,8 +42,6 @@ public class PwsOrderDetailsActivity extends BaseActivity {
     TextView tvAddress;
     @BindView(R.id.activity_pws_order_details_tv_cardId)
     TextView tvCardId;
-    @BindView(R.id.activity_pws_order_details_tv_pwd)
-    TextView tvPwd;
     @BindView(R.id.activity_pws_order_details_tv_copy)
     TextView tvCopy;
     @BindView(R.id.activity_pws_order_details_tv_endTime)
@@ -52,6 +50,10 @@ public class PwsOrderDetailsActivity extends BaseActivity {
     TextView tvStartTime;
     @BindView(R.id.activity_pws_order_details_tv_houesId)
     TextView tvHouesId;
+    @BindView(R.id.activity_pws_order_details_tv_sure)
+    TextView tvSure;
+    @BindView(R.id.tv_tips_id)
+    TextView tvTipsId;
 
     String room_id, order_id, room_name, startDate, endDate;
 
@@ -91,8 +93,15 @@ public class PwsOrderDetailsActivity extends BaseActivity {
                         dismiss();
                         if (dataInfo.success()) {
                             if (dataInfo.success()) {
-                                tvCardId.setText(dataInfo.data().getAccount());
-                                tvPwd.setText(dataInfo.data().getPassword());
+                                if (!TextUtils.isEmpty(dataInfo.data().getAccount())) {
+                                    tvTipsId.setVisibility(View.VISIBLE);
+                                    tvCopy.setVisibility(View.VISIBLE);
+                                    tvCardId.setText(dataInfo.data().getAccount());
+                                } else {
+                                    tvTipsId.setVisibility(View.GONE);
+                                    tvCopy.setVisibility(View.INVISIBLE);
+                                    tvCardId.setText(R.string.rent_in_code_status_yes);
+                                }
                                 tvStartTime.setText(dataInfo.data().getStart_time());
                                 tvEndTime.setText(dataInfo.data().getEnd_time());
                                 tvHouesId.setText(dataInfo.data().getRoom_name());
@@ -114,21 +123,23 @@ public class PwsOrderDetailsActivity extends BaseActivity {
         addSubscrebe(subscription);
     }
 
-    @OnClick({R.id.iv_back, R.id.activity_pws_order_details_tv_copy})
+    @OnClick({R.id.iv_back, R.id.activity_pws_order_details_tv_copy, R.id.activity_pws_order_details_tv_sure})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
+                finish();
+                break;
+            case R.id.activity_pws_order_details_tv_sure:
                 finish();
                 break;
             case R.id.activity_pws_order_details_tv_copy:
                 //获取剪贴板管理器：
                 ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 // 创建普通字符型ClipData
-                ClipData mClipData = ClipData.newPlainText("Label", tvCardId.getText().toString() + " " + tvPwd.getText().toString());
+                ClipData mClipData = ClipData.newPlainText("Label", tvCardId.getText().toString());
                 // 将ClipData内容放到系统剪贴板里。
                 cm.setPrimaryClip(mClipData);
                 showToast(R.string.toach_copy_to_clipboard);
-
                 break;
         }
     }

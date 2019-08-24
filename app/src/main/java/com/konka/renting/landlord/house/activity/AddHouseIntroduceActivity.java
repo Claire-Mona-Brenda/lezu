@@ -31,6 +31,7 @@ import com.konka.renting.bean.DataInfo;
 import com.konka.renting.bean.HouseConfigBean;
 import com.konka.renting.bean.UploadPicBean;
 import com.konka.renting.event.AddHouseCompleteEvent;
+import com.konka.renting.event.LandlordHouseListEvent;
 import com.konka.renting.http.SecondRetrofitHelper;
 import com.konka.renting.http.subscriber.CommonSubscriber;
 import com.konka.renting.landlord.house.HouseAddActivity;
@@ -391,7 +392,7 @@ public class AddHouseIntroduceActivity extends BaseActivity {
                         mPoiItem.getProvinceName(),
                         mPoiItem.getCityName(),
                         mPoiItem.getAdName(),
-                        mPoiItem.getSnippet() ,
+                        mPoiItem.getSnippet(),
                         address,
                         total_floor,
                         floor,
@@ -412,8 +413,9 @@ public class AddHouseIntroduceActivity extends BaseActivity {
                     public void onNext(DataInfo<AddHouseBean> dataInfo) {
                         dismiss();
                         if (dataInfo.success()) {
-                            AddHouseCompleteActivity.toActivity(mActivity,uploadPicBeans.get(0).getThumb_url(),mPoiItem.getSnippet() + address,room_type,measure_area,floor,dataInfo.data().getRoom_id());
+                            AddHouseCompleteActivity.toActivity(mActivity, uploadPicBeans.get(0).getThumb_url(), mPoiItem.getSnippet() + address, room_type, measure_area, floor, dataInfo.data().getRoom_id());
                             RxBus.getDefault().post(new AddHouseCompleteEvent());
+                            RxBus.getDefault().post(new LandlordHouseListEvent(11));
                             finish();
                         } else {
                             showToast(dataInfo.msg());

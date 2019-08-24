@@ -2,6 +2,7 @@ package com.konka.renting.tenant.opendoor;
 
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,14 +21,13 @@ import com.konka.renting.bean.ContractBean;
 import com.konka.renting.bean.DataInfo;
 import com.konka.renting.bean.LoginUserBean;
 import com.konka.renting.bean.OpenDoorListbean;
-import com.konka.renting.bean.PwdBean;
+import com.konka.renting.event.AddCodeEvent;
 import com.konka.renting.event.AddShareRentEvent;
 import com.konka.renting.event.TentantOpenDoorEvent;
 import com.konka.renting.http.RetrofitHelper;
 import com.konka.renting.http.SecondRetrofitHelper;
 import com.konka.renting.http.subscriber.CommonSubscriber;
 import com.konka.renting.landlord.house.PaySeverActivity;
-import com.konka.renting.landlord.house.activity.AddHouseAddressActivity;
 import com.konka.renting.landlord.house.widget.ShowToastUtil;
 import com.konka.renting.landlord.user.userinfo.NewFaceDectectActivity;
 import com.konka.renting.utils.RxUtil;
@@ -60,14 +60,20 @@ public class OpenFragment extends BaseFragment {
     Unbinder unbinder;
     @BindView(R.id.frame_open_ll)
     LinearLayout linearLayout;
+    @BindView(R.id.iv_back)
+    ImageView ivBack;
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.tv_right)
     ImageView tvRight;
     @BindView(R.id.frame_open_refresh)
     SmartRefreshLayout mRefresh;
-    @BindView(R.id.fragment_open_img_empty)
-    ImageView imgEmpty;
+
+    @BindView(R.id.fragment_open_tv_input_code)
+    TextView mTvInputCode;
+    @BindView(R.id.fragment_open_ll_empty)
+    LinearLayout mLlEmpty;
+
     @BindView(R.id.fragment_open_tv_name)
     TextView tvName;
     @BindView(R.id.fragment_open_img_type)
@@ -102,6 +108,7 @@ public class OpenFragment extends BaseFragment {
 
     private final String KEY_ORDER_ID = "key_open_order_id";
     private final int CAN_OPEN_TIME = 15;
+
 
     private int queryTime = 0;
     private int page;
@@ -190,6 +197,12 @@ public class OpenFragment extends BaseFragment {
                 }
             }
         });
+        addRxBusSubscribe(AddCodeEvent.class, new Action1<AddCodeEvent>() {
+            @Override
+            public void call(AddCodeEvent addCodeEvent) {
+                AddCodeActivity.toActivity(mActivity);
+            }
+        });
     }
 
     @Override
@@ -246,7 +259,7 @@ public class OpenFragment extends BaseFragment {
                 OpenDoorListPicker.setItems(mData);
             }
             tvRight.setVisibility(View.VISIBLE);
-            imgEmpty.setVisibility(View.GONE);
+            mLlEmpty.setVisibility(View.GONE);
             rlOpen.setVisibility(View.VISIBLE);
             int size = mData.size();
             current = 0;
@@ -270,10 +283,15 @@ public class OpenFragment extends BaseFragment {
             } else if (listbean.getType() == 2) {
                 rlRentLong.setVisibility(View.VISIBLE);
                 rlRentShort.setVisibility(View.GONE);
+            } else {
+                rlRentLong.setVisibility(View.VISIBLE);
+                rlRentShort.setVisibility(View.GONE);
             }
+
+
         } else {
             tvRight.setVisibility(View.GONE);
-            imgEmpty.setVisibility(View.VISIBLE);
+            mLlEmpty.setVisibility(View.VISIBLE);
             rlOpen.setVisibility(View.GONE);
         }
     }
@@ -369,7 +387,9 @@ public class OpenFragment extends BaseFragment {
             OpenDoorListPicker.setTitleText(getString(R.string.please_choose_device));
             OpenDoorListPicker.setTitleTextColor(0xFF333333);
             OpenDoorListPicker.setTitleTextSize(16);
-            OpenDoorListPicker.setCancelVisible(false);
+            OpenDoorListPicker.setCancelVisible(true);
+            OpenDoorListPicker.setCancelText(R.string.activation_code);
+            OpenDoorListPicker.setCancelTextColor(getResources().getColor(R.color.text_blue));
             OpenDoorListPicker.setSubmitTextColor(0xFFFF4707);
             OpenDoorListPicker.setSubmitTextSize(16);
             OpenDoorListPicker.setSelectedTextColor(0xFF333333);
@@ -393,6 +413,12 @@ public class OpenFragment extends BaseFragment {
                     refreshData();
                 }
             });
+            OpenDoorListPicker.setChooseCodeListener(new ChooseCodeListener() {
+                @Override
+                public void addCode() {
+                    AddCodeActivity.toActivity(mActivity);
+                }
+            });
         }
         OpenDoorListPicker.show();
     }
@@ -403,7 +429,7 @@ public class OpenFragment extends BaseFragment {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.tv_right, R.id.frame_open_btn_open, R.id.frame_open_rl_renew,
+    @OnClick({R.id.tv_right, R.id.frame_open_btn_open, R.id.frame_open_rl_renew, R.id.fragment_open_tv_input_code,
             R.id.frame_open_tv_long_other_setting, R.id.frame_open_tv_short_other_setting})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -411,21 +437,29 @@ public class OpenFragment extends BaseFragment {
 //                showDevicesPopwindow();
                 chooseDevicesDialog();
                 break;
+            case R.id.fragment_open_tv_input_code://输入激活码
+                AddCodeActivity.toActivity(mActivity);
+                break;
             case R.id.frame_open_btn_open://开门
                 if (!LoginUserBean.getInstance().getIs_lodge_identity().equals("1")) {
                     NewFaceDectectActivity.toActivity(getActivity(), 1);
                     return;
                 }
 
-                if (mData.get(current).getStatus() > 2 && !mData.get(current).getDevice_id().equals("")) {
+                if (!mData.get(current).getDevice_id().equals("") && mData.get(current).getIs_install() == 1) {
                     openDoor();
-                } else if (mData.get(current).getStatus() > 2) {
+                } else if (mData.get(current).getDevice_id().equals("")) {
                     ShowToastUtil.showNormalToast(getContext(), getString(R.string.warm_open_no_device));
                 } else {
-                    ShowToastUtil.showNormalToast(getContext(), getString(R.string.warm_open_no_on_rent));
+                    ShowToastUtil.showNormalToast(getContext(), getString(R.string.please_talk_pay_install));
                 }
                 break;
             case R.id.frame_open_rl_renew://续交服务费
+                if (!LoginUserBean.getInstance().getIs_lodge_identity().equals("1")) {
+                    NewFaceDectectActivity.toActivity(getActivity(), 1);
+                    return;
+                }
+
                 OpenDoorListbean listbean = mData.get(current);
                 if (listbean.getIs_install() == 1) {
                     PaySeverActivity.toActivity(getContext(), listbean.getRoom_id(), listbean.getRoom_name(), listbean.getService_time(), 2);
@@ -456,14 +490,22 @@ public class OpenFragment extends BaseFragment {
                     NewFaceDectectActivity.toActivity(getActivity(), 1);
                     return;
                 }
-                OtherSettingActivity.toActivity(getContext(), 0, mData.get(current));
+                if (TextUtils.isEmpty(mData.get(current).getDevice_id())) {
+                    ShowToastUtil.showNormalToast(getContext(), getString(R.string.warm_open_no_device));
+                } else {
+                    OtherSettingActivity.toActivity(getContext(), 0, mData.get(current));
+                }
                 break;
             case R.id.frame_open_tv_short_other_setting://短租其他功能
                 if (!LoginUserBean.getInstance().getIs_lodge_identity().equals("1")) {
                     NewFaceDectectActivity.toActivity(getActivity(), 1);
                     return;
                 }
-                OtherSettingActivity.toActivity(getContext(), 1, mData.get(current));
+                if (TextUtils.isEmpty(mData.get(current).getDevice_id())) {
+                    ShowToastUtil.showNormalToast(getContext(), getString(R.string.warm_open_no_device));
+                } else {
+                    OtherSettingActivity.toActivity(getContext(), 1, mData.get(current));
+                }
                 break;
         }
     }

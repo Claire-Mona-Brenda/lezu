@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/dp_50"
+    android:layout_marginEnd="@dimen/dp_50"
+    android:background="@drawable/background_blur">
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_40"
+        android:gravity="center"
+        android:textColor="@color/text_ren"
+        android:textSize="@dimen/sp_16"
+        android:text="@string/no_to_del_house_pay_money"/>
+<LinearLayout
+    android:id="@+id/ll_content_warm"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="@dimen/dp_12"
+    android:layout_below="@+id/tv_content">
+    <TextView
+        android:id="@+id/tv_content_warm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/text_black"
+        android:textSize="@dimen/sp_12"
+        android:text="@string/if_have_question_call" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:background="@color/text_black"/>
+</LinearLayout>
+
+
+
+
+    <LinearLayout
+        android:layout_below="@+id/ll_content_warm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_32"
+        android:orientation="horizontal"
+        android:background="@color/color_fafafa">
+
+
+        <TextView
+            android:id="@+id/tv_sure"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/common_sure"
+            android:gravity="center_horizontal"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingBottom="@dimen/dp_10"
+            android:textSize="@dimen/sp_17"
+            android:textColor="@color/color_black" />
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -262,7 +262,7 @@ public class HouseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         nvHolder.llBind.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {//绑定设备
-                DevListActivity.toActivity(context, houseOrderInfoBean.getRoom_id() + "", houseOrderInfoBean.getRoom_status(), houseOrderInfoBean.getIs_install() == 0, false);
+                DevListActivity.toActivity(context, houseOrderInfoBean.getRoom_id() + "", houseOrderInfoBean.getStatus(), houseOrderInfoBean.getIs_install() == 0, false);
             }
         });
         nvHolder.llInstall.setOnClickListener(new OnClickListener() {
@@ -276,7 +276,7 @@ public class HouseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             @Override
             public void onClick(View v) {//缴纳服务费
 //                PayAllMoneyActivity.toActivity(context, houseOrderInfoBean.getRoom_id() + "");
-                PaySeverActivity.toActivity(context, houseOrderInfoBean.getRoom_id() + "", houseOrderInfoBean.getAddress(), houseOrderInfoBean.getService_date(), 1);
+                PaySeverActivity.toActivity(context, houseOrderInfoBean.getRoom_id() + "", houseOrderInfoBean.getRoom_name(), houseOrderInfoBean.getService_date(), 1);
             }
         });
 

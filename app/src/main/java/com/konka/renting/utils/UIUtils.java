@@ -18,6 +18,7 @@ import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -112,7 +113,9 @@ public class UIUtils {
     }
 
     public static void displayToast(String str) {
-        Toast.makeText(UIUtils.getContext(), str, Toast.LENGTH_SHORT).show();
+        Toast toast = Toast.makeText(UIUtils.getContext(), str, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 100);
+        toast.show();
     }
 
     public static void showFailed() {
@@ -317,8 +320,8 @@ public class UIUtils {
         return true;
     }
 
-    public static void changeLocale(String language){
-        Log.e(TAG, "changeLocale: " + language );
+    public static void changeLocale(String language) {
+        Log.e(TAG, "changeLocale: " + language);
 
         Resources resources = getContext().getResources();
         DisplayMetrics dm = resources.getDisplayMetrics();
@@ -327,8 +330,8 @@ public class UIUtils {
         resources.updateConfiguration(config, dm);
     }
 
-    private static Locale getLocal(String language){
-        switch (language){
+    private static Locale getLocal(String language) {
+        switch (language) {
             case "zh_cn":
                 return Locale.CHINA;
             case "zh_tw":
@@ -438,14 +441,14 @@ public class UIUtils {
     /**
      * 设置状态栏图标为黑色或者白色
      */
-    public static void setDarkStatusIcon(Activity activity,boolean bDark) {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+    public static void setDarkStatusIcon(Activity activity, boolean bDark) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             View decorView = activity.getWindow().getDecorView();
-            if(decorView != null){
+            if (decorView != null) {
                 int vis = decorView.getSystemUiVisibility();
-                if(bDark){
+                if (bDark) {
                     vis |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
-                } else{
+                } else {
                     vis &= ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
                 }
                 decorView.setSystemUiVisibility(vis);
@@ -494,8 +497,8 @@ public class UIUtils {
      * 应该在对应的xml布局文件中，设置根布局fitsSystemWindows=true。
      */
 
-    public static void setFitSystemWindow(boolean fitSystemWindow,Activity activity) {
-        View  contentViewGroup = ((ViewGroup) activity.findViewById(android.R.id.content)).getChildAt(0);
+    public static void setFitSystemWindow(boolean fitSystemWindow, Activity activity) {
+        View contentViewGroup = ((ViewGroup) activity.findViewById(android.R.id.content)).getChildAt(0);
         contentViewGroup.setFitsSystemWindows(fitSystemWindow);
     }
 
@@ -505,7 +508,7 @@ public class UIUtils {
     public static void setDrawerLayoutFitSystemWindow(Activity activity) {
         if (Build.VERSION.SDK_INT == 19) {//19表示4.4
             int statusBarHeight = getStatusHeight();
-               View contentViewGroup = ((ViewGroup) activity.findViewById(android.R.id.content)).getChildAt(0);
+            View contentViewGroup = ((ViewGroup) activity.findViewById(android.R.id.content)).getChildAt(0);
             if (contentViewGroup instanceof DrawerLayout) {
                 DrawerLayout drawerLayout = (DrawerLayout) contentViewGroup;
                 drawerLayout.setClipToPadding(true);
@@ -513,7 +516,7 @@ public class UIUtils {
                 for (int i = 0; i < drawerLayout.getChildCount(); i++) {
                     View child = drawerLayout.getChildAt(i);
                     child.setFitsSystemWindows(false);
-                    child.setPadding(0,statusBarHeight, 0, 0);
+                    child.setPadding(0, statusBarHeight, 0, 0);
                 }
 
             }
@@ -521,7 +524,7 @@ public class UIUtils {
     }
 
     public static int getStatusHeight() {
-        if (BaseApplication.statusHeight>=0)
+        if (BaseApplication.statusHeight >= 0)
             return BaseApplication.statusHeight;
         //获取status_bar_height资源的ID
         int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");

@@ -548,7 +548,7 @@ public class CertificationActivity extends BaseActivity {
 //                                }
 //                            }
 
-                            finish();
+//                            finish();
                         } else {
                             /*displayTip(resultTipTV, "核身失败");
                             displayTip(scoreTV, "公安验证分数过低：" + result.getScore());*/

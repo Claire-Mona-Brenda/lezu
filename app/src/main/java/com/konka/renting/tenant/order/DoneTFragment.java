@@ -20,6 +20,7 @@ import com.konka.renting.base.BaseFragment;
 import com.konka.renting.bean.DataInfo;
 import com.konka.renting.bean.PageDataBean;
 import com.konka.renting.bean.RenterOrderListBean;
+import com.konka.renting.event.AddCodeSuccessEvent;
 import com.konka.renting.event.LandlordOrderApplyEvent;
 import com.konka.renting.http.SecondRetrofitHelper;
 import com.konka.renting.http.subscriber.CommonSubscriber;
@@ -102,6 +103,12 @@ public class DoneTFragment extends BaseFragment {
                 }
             }
         });
+        addRxBusSubscribe(AddCodeSuccessEvent.class, new Action1<AddCodeSuccessEvent>() {
+            @Override
+            public void call(AddCodeSuccessEvent addCodeSuccessEvent) {
+                mSrlRefresh.autoRefresh();
+            }
+        });
 
         mSrlRefresh.autoRefresh();
     }
@@ -111,8 +118,14 @@ public class DoneTFragment extends BaseFragment {
         commonAdapter = new CommonAdapter<RenterOrderListBean>(getContext(), mData, R.layout.adapter_order_t) {
             @Override
             public void convert(ViewHolder viewHolder, RenterOrderListBean listBean) {
-                String unit = listBean.getType() == 1 ? "/天" : "/月";
-                viewHolder.setText(R.id.adapter_tv_room_price, "¥ " + (int) Float.parseFloat(listBean.getHousing_price()) + unit);
+                if (!TextUtils.isEmpty(listBean.getHousing_price()) && Float.valueOf(listBean.getHousing_price()) != 0) {
+                    String unit = listBean.getType() == 1 ? "/天" : "/月";
+                    viewHolder.setText(R.id.adapter_tv_room_price, "¥ " + (int) Float.parseFloat(listBean.getHousing_price()) + unit);
+                    viewHolder.setVisible(R.id.adapter_tv_room_price, true);
+                } else {
+                    viewHolder.setVisible(R.id.adapter_tv_room_price, false);
+                }
+
                 ImageView ivPic = viewHolder.getView(R.id.adapter_icon_room);
                 if (!TextUtils.isEmpty(listBean.getThumb_image()))
                     Picasso.get().load(listBean.getThumb_image()).into(ivPic);
@@ -138,7 +151,7 @@ public class DoneTFragment extends BaseFragment {
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        OrderInfoTActivity.toActivity(getActivity(), listBean.getOrder_id(),1);
+                        OrderInfoTActivity.toActivity(getActivity(), listBean.getOrder_id(), 1);
                     }
                 });
             }

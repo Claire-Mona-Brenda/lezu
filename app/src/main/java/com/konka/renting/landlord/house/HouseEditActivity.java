@@ -30,6 +30,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -42,11 +43,15 @@ import com.konka.renting.bean.DataInfo;
 import com.konka.renting.bean.HouseConfigBean;
 import com.konka.renting.bean.HouseDetailsInfoBean2;
 import com.konka.renting.bean.UploadPicBean;
+import com.konka.renting.event.DelHouseEvent;
+import com.konka.renting.event.LandlordHouseInfoEvent;
+import com.konka.renting.event.LandlordHouseListEvent;
 import com.konka.renting.event.UpdataHouseInfoEvent;
 import com.konka.renting.http.SecondRetrofitHelper;
 import com.konka.renting.http.subscriber.CommonSubscriber;
 import com.konka.renting.landlord.house.activity.ChooseLocationActivity;
 import com.konka.renting.landlord.house.data.MissionEnity;
+import com.konka.renting.landlord.house.view.WarmDelHousePopup;
 import com.konka.renting.landlord.house.widget.IPopBack;
 import com.konka.renting.landlord.house.widget.PicRecordWidget;
 import com.konka.renting.landlord.house.widget.PicassoEngine;
@@ -137,6 +142,8 @@ public class HouseEditActivity extends BaseActivity {
     ThreeChoosePicker picker;
     ThreeChoosePicker.DataProvider provider;
     CommonPopupWindow commonPopupWindow;
+    CommonPopupWindow delPopupWindow;
+    WarmDelHousePopup warmDelHousePopup;
 
     private List<UploadPicBean> uploadPicBeans = new ArrayList<>();
 
@@ -175,8 +182,10 @@ public class HouseEditActivity extends BaseActivity {
 
     @Override
     public void init() {
-        tvTitle.setText(R.string.add_house_title);
         bean = getIntent().getParcelableExtra("HouseDetailsInfoBean");
+        tvTitle.setText(R.string.add_house_title);
+        tvRight.setText(R.string.common_del);
+        tvRight.setVisibility(View.VISIBLE);
 
         confitList = bean.getConfig();
         tvAreaTips.setText(getArea(tvAreaTips.getText().toString() + "/"));
@@ -241,39 +250,17 @@ public class HouseEditActivity extends BaseActivity {
     }
 
     private void initEnable() {
-        switch (bean.getRoom_status()) {
-            case 0:
-            case 1://未缴纳安装费
-            case 2://待安装认证
-            case 3://待发布
-                editName.setEnabled(true);
-                tvType.setEnabled(true);
+        editName.setEnabled(true);
+        tvType.setEnabled(true);
 //                tvAgent.setEnabled(true);
-                tvAddress.setEnabled(true);
-                editAddressMore.setEnabled(true);
-                eEditFloorSum.setEnabled(true);
-                editFloor.setEnabled(true);
-                editArea.setEnabled(true);
+        tvAddress.setEnabled(true);
+        editAddressMore.setEnabled(true);
+        eEditFloorSum.setEnabled(true);
+        editFloor.setEnabled(true);
+        editArea.setEnabled(true);
 //                editConfit.setEnabled(true);
-                editIntroduce.setEnabled(true);
-                pic.setEnabled(true);
-                break;
-            case 4://已发布
-            case 5://待入租
-            case 6://已入住
-                editName.setEnabled(false);
-                tvType.setEnabled(false);
-//                tvAgent.setEnabled(false);
-                tvAddress.setEnabled(false);
-                editAddressMore.setEnabled(false);
-                eEditFloorSum.setEnabled(false);
-                editFloor.setEnabled(false);
-                editArea.setEnabled(false);
-//                editConfit.setEnabled(true);
-                editIntroduce.setEnabled(true);
-                pic.setEnabled(true);
-                break;
-        }
+        editIntroduce.setEnabled(true);
+        pic.setEnabled(true);
     }
 
     private void initListener() {
@@ -569,11 +556,24 @@ public class HouseEditActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.iv_back, R.id.activity_addHouse_tv_address, R.id.activity_addHouse_tv_type, R.id.submit})
+    @OnClick({R.id.iv_back, R.id.tv_right, R.id.activity_addHouse_tv_address, R.id.activity_addHouse_tv_type, R.id.submit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
                 showBack();
+                break;
+            case R.id.tv_right://删除
+                if (bean == null)
+                    return;
+                if (bean.getService_status() == 1) {
+                    showTipsDel(getString(R.string.no_to_del_house_pay_money));
+                } else if (!TextUtils.isEmpty(bean.getDevice_id()) || !TextUtils.isEmpty(bean.getGateway_id())) {
+                    showTipsDel(getString(R.string.no_to_del_house_bind_dev));
+                } else if (bean.getStatus() > 0) {
+                    showTipsDel(getString(R.string.no_to_del_house_rent_order));
+                } else {
+                    showDel();
+                }
                 break;
             case R.id.activity_addHouse_tv_address:
                 ChooseLocationActivity.toActivity(this);
@@ -661,6 +661,7 @@ public class HouseEditActivity extends BaseActivity {
                         dismiss();
                         if (dataInfo.success()) {
                             RxBus.getDefault().post(new UpdataHouseInfoEvent());
+                            RxBus.getDefault().post(new LandlordHouseListEvent(11));
                             doSuccess();
                             finish();
                         } else {
@@ -669,6 +670,34 @@ public class HouseEditActivity extends BaseActivity {
 
                     }
                 });
+        addSubscrebe(subscription);
+    }
+
+    private void del() {
+        showLoadingDialog();
+        Subscription subscription = (SecondRetrofitHelper.getInstance().delHouse(bean.getRoom_id())
+                .compose(RxUtil.<DataInfo>rxSchedulerHelper())
+                .subscribe(new CommonSubscriber<DataInfo>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        dismiss();
+                        doFailed();
+                    }
+
+                    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+                    @Override
+                    public void onNext(DataInfo dataInfo) {
+                        dismiss();
+                        if (dataInfo.success()) {
+                            RxBus.getDefault().post(new DelHouseEvent(bean.getRoom_id()));
+                            RxBus.getDefault().post(new LandlordHouseInfoEvent(11));
+                            finish();
+                        } else {
+                            showToast(dataInfo.msg());
+                        }
+
+                    }
+                }));
         addSubscrebe(subscription);
     }
 
@@ -958,20 +987,45 @@ public class HouseEditActivity extends BaseActivity {
         showBack();
     }
 
-    /*************************************弹窗**********************************************************************/
+
+    /**************************************弹窗*************************************************************/
+    private void showDel() {
+        if (delPopupWindow == null)
+            delPopupWindow = new CommonPopupWindow.Builder(this)
+                    .setTitle(getString(R.string.tips))
+                    .setContent(getString(R.string.is_to_del_house))
+                    .setRightTextColor("#4A90E1")
+                    .setRightBtnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            delPopupWindow.dismiss();
+                            del();
+                        }
+                    })
+                    .create();
+        showPopup(delPopupWindow);
+    }
+
+    private void showTipsDel(String content) {
+        if (warmDelHousePopup == null)
+            warmDelHousePopup = new WarmDelHousePopup(this);
+        warmDelHousePopup.setTvContent(content);
+        showPopup(warmDelHousePopup);
+    }
 
     private void showBack() {
-        commonPopupWindow = new CommonPopupWindow.Builder(this)
-                .setTitle(getString(R.string.tips))
-                .setContent(getString(R.string.warm_house_give_up_edit))
-                .setRightBtnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        commonPopupWindow.dismiss();
-                        finish();
-                    }
-                })
-                .create();
+        if (commonPopupWindow == null)
+            commonPopupWindow = new CommonPopupWindow.Builder(this)
+                    .setTitle(getString(R.string.tips))
+                    .setContent(getString(R.string.warm_house_give_up_edit))
+                    .setRightBtnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            commonPopupWindow.dismiss();
+                            finish();
+                        }
+                    })
+                    .create();
         showPopup(commonPopupWindow);
     }
 

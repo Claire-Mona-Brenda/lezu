@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -31,12 +32,12 @@ import java.io.File;
  * 在线检测活体和公安核实
  */
 
-public class FaceOnlineVerifyActivity extends AppCompatActivity implements View.OnClickListener{
+public class FaceOnlineVerifyActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final int OFFLINE_FACE_LIVENESS_REQUEST = 100;
 
-    private String username ;
-    private String idnumber ;
+    private String username;
+    private String idnumber;
 
     private TextView resultTipTV;
     private TextView onlineFacelivenessTipTV;
@@ -47,8 +48,8 @@ public class FaceOnlineVerifyActivity extends AppCompatActivity implements View.
     private boolean policeVerifyFinish = false;
     private boolean waitAccesstoken = true;
 
-    public static void toActivity(Context context){
-        Intent intent = new Intent(context,FaceOnlineVerifyActivity.class);
+    public static void toActivity(Context context) {
+        Intent intent = new Intent(context, FaceOnlineVerifyActivity.class);
         context.startActivity(intent);
     }
 
@@ -119,11 +120,11 @@ public class FaceOnlineVerifyActivity extends AppCompatActivity implements View.
         APIService.getInstance().initAccessTokenWithAkSk(new OnResultListener<AccessToken>() {
             @Override
             public void onResult(AccessToken result) {
-                Log.e("加载中",result.getAccessToken());
+                Log.e("加载中", result.getAccessToken());
                 if (result != null && !TextUtils.isEmpty(result.getAccessToken())) {
                     waitAccesstoken = false;
                     policeVerify(filePath);
-                }else if (result != null) {
+                } else if (result != null) {
                     displayTip(resultTipTV, "在线活体token获取失败");
                     retBtn.setVisibility(View.VISIBLE);
                 } else {
@@ -145,9 +146,9 @@ public class FaceOnlineVerifyActivity extends AppCompatActivity implements View.
      * 公安接口合并在线活体，调用公安验证接口进行最后的核身比对；公安权限需要在官网控制台提交工单开启
      * 接口地址：https://aip.baidubce.com/rest/2.0/face/v2/person/verify
      * 入参为「姓名」「身份证号」「bestimage」
-     *  ext_fields 扩展功能。如 faceliveness 表示返回活体值, qualities 表示返回质检测结果
-     *  quality string 判断质 是否达标。“use” 表示做质 控制,质  好的照 会 直接拒绝
-     *  faceliveness string 判断活体值是否达标。 use 表示做活体控制,低于活体阈值的 照 会直接拒绝
+     * ext_fields 扩展功能。如 faceliveness 表示返回活体值, qualities 表示返回质检测结果
+     * quality string 判断质 是否达标。“use” 表示做质 控制,质  好的照 会 直接拒绝
+     * faceliveness string 判断活体值是否达标。 use 表示做活体控制,低于活体阈值的 照 会直接拒绝
      * quality_conf和faceliveness_conf 用于指定阈值，超过此分数才调用公安验证，
      *
      * @param filePath
@@ -158,8 +159,10 @@ public class FaceOnlineVerifyActivity extends AppCompatActivity implements View.
             return;
         }*/
         File file = new File(filePath);
-        if (!file.exists() ) {
-            Log.e("errrrrrr","2222");
+        if (!file.exists()) {
+            Toast toast = Toast.makeText(this, R.string.restart_error, Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
             return;
         }
 
@@ -200,7 +203,7 @@ public class FaceOnlineVerifyActivity extends AppCompatActivity implements View.
 
     private void delete() {
         File file = new File(filePath);
-        if (file.exists() ) {
+        if (file.exists()) {
             file.delete();
         }
     }

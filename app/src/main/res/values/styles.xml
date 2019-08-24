@@ -55,6 +55,7 @@
         <item name="android:layout_marginLeft">@dimen/dp_90</item>
         <item name="android:background">@color/common_bg_gray</item>
     </style>
+
     <style name="user_view_item">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -175,6 +176,8 @@
 
     <style name="textview_add_house">
         <item name="android:textSize">@dimen/style_text_context</item>
+        <item name="android:typeface">sans</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/text_black</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -572,6 +575,7 @@
         <item name="android:textColor">@color/text_black</item>
         <item name="android:gravity">center</item>
     </style>
+
     <style name="tv_open_new_pwd">
         <item name="android:textSize">@dimen/style_text_title_more_big</item>
         <item name="android:textColor">@color/text_black</item>

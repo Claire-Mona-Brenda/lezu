@@ -1,5 +1,6 @@
 package com.konka.renting.http.api;
 
+import com.konka.renting.bean.ActivateBean;
 import com.konka.renting.bean.AddBankInfo;
 import com.konka.renting.bean.AddHouseBean;
 import com.konka.renting.bean.AddRentingBean;
@@ -118,13 +119,13 @@ import rx.Observable;
  */
 public interface KonkaApiService {
 
-    //测试环境
-    String HOST = "https://lettest.youlejiakeji.com/";
-    String SecondHost = "https://lezuxiaowo-test.youlejiakeji.com";
+//    //测试环境
+//    String HOST = "https://lettest.youlejiakeji.com/";
+//    String SecondHost = "https://lezuxiaowo-test.youlejiakeji.com";
 
     //正式环境
-//    String HOST = "https://let.youlejiakeji.com/";
-//    String SecondHost = "https://lezuxiaowo.youlejiakeji.com";
+    String HOST = "https://let.youlejiakeji.com/";
+    String SecondHost = "https://lezuxiaowo.youlejiakeji.com";
 
 
     @FormUrlEncoded
@@ -2067,6 +2068,14 @@ public interface KonkaApiService {
     );
 
     /**
+     * 取消发布(2.3.4版本以后)
+     */
+    @FormUrlEncoded
+    @POST("index.php/api/room/cancel_2_3_4")
+    Observable<DataInfo> cancelPublishHouse2(@Field("room_id") String room_id);
+
+
+    /**
      * 获取房产配置列表(2.3.4版本以后)
      */
     @GET("index.php/api/room/roomConfig_2_3_4")
@@ -2114,8 +2123,7 @@ public interface KonkaApiService {
      */
     @FormUrlEncoded
     @POST("index.php/api/room_order/activate")
-    Observable<DataInfo> activate(@Field("account") String account,
-                                  @Field("password") String password);
+    Observable<DataInfo<ActivateBean>> activate(@Field("account") String account);
 
     /**
      * 查询租客是否注册(2.4.1版本以后)
@@ -2173,4 +2181,13 @@ public interface KonkaApiService {
     @FormUrlEncoded
     @POST("index.php/api/room_order/cancel_2_4_1")
     Observable<DataInfo> canceOrder(@Field("order_id") String order_id);
+
+    /**
+     * 删除房产
+     *
+     * @room_id 房产id
+     */
+    @FormUrlEncoded
+    @POST("index.php/api/room/delete")
+    Observable<DataInfo> delHouse(@Field("room_id") String room_id);
 }
