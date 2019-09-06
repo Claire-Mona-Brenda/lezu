@@ -1,14 +1,16 @@
 package com.konka.renting.landlord.user;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import androidx.appcompat.app.AlertDialog;
 
 import com.konka.renting.R;
 import com.konka.renting.base.BaseFragment;
@@ -16,30 +18,32 @@ import com.konka.renting.bean.DataInfo;
 import com.konka.renting.bean.LandlordUserBean;
 import com.konka.renting.bean.LoginUserBean;
 import com.konka.renting.bean.ServiceTelBean;
+import com.konka.renting.event.RenZhengSuccessEvent;
 import com.konka.renting.http.SecondRetrofitHelper;
 import com.konka.renting.http.subscriber.CommonSubscriber;
-import com.konka.renting.landlord.MainActivity;
 import com.konka.renting.landlord.home.bill.BillListActivity;
 import com.konka.renting.landlord.user.collection.MyCollectionActivity;
 import com.konka.renting.landlord.user.message.MessageActivity;
-import com.konka.renting.landlord.user.other.AfterProcessActivity;
 import com.konka.renting.landlord.user.tenant.HouseTenantListActivity;
+import com.konka.renting.landlord.user.userinfo.CertificationActivity;
 import com.konka.renting.landlord.user.userinfo.FaceDectectEvent;
+import com.konka.renting.landlord.user.userinfo.NewFaceDectectActivity;
+import com.konka.renting.landlord.user.userinfo.RenZhengInfoActivity;
 import com.konka.renting.landlord.user.userinfo.UpdateEvent;
 import com.konka.renting.landlord.user.userinfo.UserInfoActivity;
 import com.konka.renting.landlord.user.withdrawcash.RechargeActivity;
 import com.konka.renting.landlord.user.withdrawcash.RechargeEvent;
 import com.konka.renting.landlord.user.withdrawcash.WithdrawEvent;
 import com.konka.renting.landlord.user.withdrawcash.WithdrawcashActivity;
-import com.konka.renting.login.ForgetPasswordActivity;
 import com.konka.renting.login.LoginInfo;
 import com.konka.renting.login.LoginNewActivity;
 import com.konka.renting.utils.CacheUtils;
 import com.konka.renting.utils.PhoneUtil;
 import com.konka.renting.utils.RxUtil;
 import com.konka.renting.utils.UIUtils;
+import com.konka.renting.widget.CommonPopupWindow;
+import com.konka.renting.widget.RenZhengTipsPopup;
 import com.squareup.picasso.Picasso;
-import com.tbruyelle.rxpermissions.RxPermissions;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,9 +66,45 @@ public class UserFragment extends BaseFragment {
     TextView mTvMoney;
     @BindView(R.id.tv_message_sum)
     TextView mTvMessageSum;
-    private LandlordUserBean userInfoBean;
 
+    @BindView(R.id.icon_user_setting)
+    ImageView imgUserSetting;
+    @BindView(R.id.tv_recharge)
+    TextView tvRecharge;
+    @BindView(R.id.tv_withdraw)
+    TextView tvWithdraw;
+    @BindView(R.id.tv_money_unit)
+    TextView tvMoneyUnit;
+    @BindView(R.id.img_user_isAuthentication)
+    ImageView imgUserIsAuthentication;
+    @BindView(R.id.img_rent_people)
+    ImageView imgRentPeople;
+    @BindView(R.id.tv_rent_people)
+    RelativeLayout tvRentPeople;
+    @BindView(R.id.img_bill)
+    ImageView imgBill;
+    @BindView(R.id.tv_bill)
+    RelativeLayout tvBill;
+    @BindView(R.id.img_collection)
+    ImageView imgCollection;
+    @BindView(R.id.tv_collection)
+    RelativeLayout tvCollection;
+    @BindView(R.id.img_message)
+    ImageView imgMessage;
+    @BindView(R.id.tv_message)
+    RelativeLayout tvMessage;
+    @BindView(R.id.img_face)
+    ImageView imgFace;
+    @BindView(R.id.img_problem)
+    ImageView imgProblem;
+    @BindView(R.id.img_call_us)
+    ImageView imgCallUs;
+
+    private LandlordUserBean userInfoBean;
     String urlPic;
+    RenZhengTipsPopup renZhengTipsPopup;
+    CommonPopupWindow callPopupWindow;
+    String tel;
 
     public UserFragment() {
     }
@@ -90,7 +130,7 @@ public class UserFragment extends BaseFragment {
         ViewGroup.LayoutParams lp = viewGroup.getLayoutParams();
         lp.height += UIUtils.getStatusHeight();
         viewGroup.setLayoutParams(lp);
-        viewGroup.setPadding(viewGroup.getPaddingLeft(), viewGroup.getPaddingTop() + UIUtils.getStatusHeight(), viewGroup.getPaddingRight(), viewGroup.getPaddingBottom());
+        viewGroup.setPadding(viewGroup.getPaddingLeft(), viewGroup.getPaddingTop(), viewGroup.getPaddingRight(), viewGroup.getPaddingBottom());
 
         init();
 
@@ -132,6 +172,17 @@ public class UserFragment extends BaseFragment {
                 initData();
             }
         });
+        addRxBusSubscribe(RenZhengSuccessEvent.class, new Action1<RenZhengSuccessEvent>() {
+            @Override
+            public void call(RenZhengSuccessEvent renZhengSuccessEvent) {
+                if (userInfoBean != null) {
+                    userInfoBean.setIs_auth(1);
+                    imgUserIsAuthentication.setVisibility(View.VISIBLE);
+                    imgUserIsAuthentication.setImageResource(R.mipmap.attestation_icon);
+
+                }
+            }
+        });
 
     }
 
@@ -146,6 +197,7 @@ public class UserFragment extends BaseFragment {
                     @Override
                     public void onNext(DataInfo<LandlordUserBean> userInfoBeanDataInfo) {
                         if (userInfoBeanDataInfo.success()) {
+                            userInfoBean = userInfoBeanDataInfo.data();
                             if (userInfoBeanDataInfo.data() != null) {
                                 if (userInfoBeanDataInfo.data().getUnread() > 0)
                                     mTvMessageSum.setText(userInfoBeanDataInfo.data().getUnread() + "");
@@ -163,6 +215,10 @@ public class UserFragment extends BaseFragment {
                                     tel = str;
                                 }
                                 mTvUserPhone.setText(tel);
+
+                                imgUserIsAuthentication.setVisibility(View.VISIBLE);
+                                imgUserIsAuthentication.setImageResource(userInfoBeanDataInfo.data().getIs_auth() == 1 ? R.mipmap.attestation_icon : R.mipmap.notattestation_icon);
+
                                 if (userInfoBeanDataInfo.data().getThumb_headimgurl() != null
                                         && !userInfoBeanDataInfo.data().getThumb_headimgurl().equals(urlPic == null ? "" : urlPic)) {
                                     if (!TextUtils.isEmpty(userInfoBeanDataInfo.data().getThumb_headimgurl())) {
@@ -180,9 +236,10 @@ public class UserFragment extends BaseFragment {
                                     }
                                 }
                                 urlPic = userInfoBeanDataInfo.data().getThumb_headimgurl();
-                                mTvMoney.setText((int) Float.parseFloat(userInfoBeanDataInfo.data().getBalance()) + "");
+                                mTvMoney.setText(Float.parseFloat(userInfoBeanDataInfo.data().getBalance()) + "");
+
                             }
-                            userInfoBean = userInfoBeanDataInfo.data();
+
                         } else {
                             showToast(userInfoBeanDataInfo.msg());
                         }
@@ -197,56 +254,93 @@ public class UserFragment extends BaseFragment {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.tv_bill, R.id.tv_collection, R.id.tv_message, R.id.tv_setting,
-            R.id.tv_withdraw, R.id.tv_recharge, R.id.tv_call_us,
-            R.id.tv_rent_people, R.id.tv_change_pwd, R.id.tv_problem, R.id.tv_after_the_process, R.id.tv_login_out})
+    @OnClick({R.id.tv_bill, R.id.tv_collection, R.id.tv_message, R.id.icon_user_setting,
+            R.id.tv_withdraw, R.id.tv_recharge, R.id.img_call_us, R.id.img_face,
+            R.id.tv_rent_people, R.id.img_problem})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_withdraw://提现
-                WithdrawcashActivity.toActivity(getContext(), userInfoBean.getBalance());
+                if (userInfoBean != null && userInfoBean.getIs_auth() == 1) {
+                    WithdrawcashActivity.toActivity(getContext(), userInfoBean.getBalance());
+                } else if (userInfoBean != null && userInfoBean.getIs_auth() == 0) {
+                    showRenZhengTips();
+                }
                 break;
             case R.id.tv_recharge://充值
-                RechargeActivity.toActivity(getContext());
+                if (userInfoBean != null && userInfoBean.getIs_auth() == 1) {
+                    RechargeActivity.toActivity(getContext());
+                } else if (userInfoBean != null && userInfoBean.getIs_auth() == 0) {
+                    showRenZhengTips();
+                }
                 break;
             case R.id.tv_rent_people://租客
-                HouseTenantListActivity.toActivity(getContext());
+                if (userInfoBean != null && userInfoBean.getIs_auth() == 1)
+                    HouseTenantListActivity.toActivity(getContext());
                 break;
             case R.id.tv_bill://账单
-                BillListActivity.toActivity(getContext());
+                if (userInfoBean != null && userInfoBean.getIs_auth() == 1) {
+                    BillListActivity.toActivity(getContext());
+                } else if (userInfoBean != null && userInfoBean.getIs_auth() == 0) {
+                    showRenZhengTips();
+                }
                 break;
             case R.id.tv_collection://催租
-                MyCollectionActivity.toActivity(getContext());
+                if (userInfoBean != null && userInfoBean.getIs_auth() == 1) {
+                    MyCollectionActivity.toActivity(getContext());
+                } else if (userInfoBean != null && userInfoBean.getIs_auth() == 0) {
+                    showRenZhengTips();
+                }
                 break;
             case R.id.tv_message://消息
-                MessageActivity.toActivity(getContext());
+                if (userInfoBean != null && userInfoBean.getIs_auth() == 1) {
+                    MessageActivity.toActivity(getContext());
+                } else if (userInfoBean != null && userInfoBean.getIs_auth() == 0) {
+                    showRenZhengTips();
+                }
                 break;
-            case R.id.tv_setting://个人设置
-                UserInfoActivity.toActivity(getContext());
+            case R.id.icon_user_setting://个人设置
+                UserInfoActivity.toActivity(getContext(), LoginInfo.LANDLORD);
                 break;
-            case R.id.tv_change_pwd://修改密码
-                ForgetPasswordActivity.toActivity(getContext(), LoginInfo.LANDLORD, LoginUserBean.getInstance().getMobile());
-                break;
-            case R.id.tv_call_us://联系客服
-                callService();
-                break;
-            case R.id.tv_problem://常见问题
-//                WebviewActivity.toActivity(getActivity(), WebType.WEB_PROBLEM);
-                ProblemActivity.toActivity(getActivity());
-                break;
-            case R.id.tv_after_the_process://售后流程
-//                WebviewActivity.toActivity(getActivity(), WebType.WEB_ABOUT);
-                AfterProcessActivity.toActivity(getContext(), ((MainActivity) getActivity()).mAppConfigBean.getDisclaimer());
-                break;
-            case R.id.tv_login_out://退出登录
+//            case R.id.tv_change_pwd://修改密码
+//                ForgetPasswordActivity.toActivity(getContext(), LoginInfo.LANDLORD, LoginUserBean.getInstance().getMobile());
+//                break;
+            case R.id.img_call_us://联系客服
+                if (userInfoBean != null){
+                    showCalll();
 
-                new AlertDialog.Builder(getActivity()).setTitle(R.string.login_out).setMessage("是否退出登录")
-                        .setPositiveButton(R.string.warn_confirm, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                landmoreLoginOut();
-                            }
-                        }).setNegativeButton(R.string.warn_cancel, null).create().show();
+                }
+
                 break;
+            case R.id.img_problem://常见问题
+//                WebviewActivity.toActivity(getActivity(), WebType.WEB_PROBLEM);
+                if (userInfoBean != null && userInfoBean.getIs_auth() == 1) {
+                    ProblemActivity.toActivity(getActivity());
+                } else if (userInfoBean != null && userInfoBean.getIs_auth() == 0) {
+                    showRenZhengTips();
+                }
+                break;
+            case R.id.img_face://实名认证
+                if (userInfoBean != null && userInfoBean.getIs_auth() == 1) {
+                    RenZhengInfoActivity.toActivity(mActivity);
+                } else if (userInfoBean != null && userInfoBean.getIs_auth() == 0) {
+                    CertificationActivity.toActivity(mActivity, 1);
+                }
+
+                break;
+//            case R.id.tv_after_the_process://售后流程
+////                WebviewActivity.toActivity(getActivity(), WebType.WEB_ABOUT);
+//                AfterProcessActivity.toActivity(getContext(), ((MainActivity) getActivity()).mAppConfigBean.getDisclaimer());
+//                break;
+//            case R.id.tv_login_out://退出登录
+//
+//                new AlertDialog.Builder(getActivity()).setTitle(R.string.login_out).setMessage("是否退出登录")
+//                        .setPositiveButton(R.string.warn_confirm, new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                landmoreLoginOut();
+//                            }
+//                        }).setNegativeButton(R.string.warn_cancel, null).create().show();
+//                break;
         }
     }
 
@@ -265,7 +359,8 @@ public class UserFragment extends BaseFragment {
                     public void onNext(DataInfo<ServiceTelBean> dataInfo) {
                         dismiss();
                         if (dataInfo.success()) {
-                            PhoneUtil.call(dataInfo.data().getTel(), getContext());
+                            tel = dataInfo.data().getTel();
+                            PhoneUtil.call(tel, getContext());
                         } else {
                             showToast(dataInfo.msg());
                         }
@@ -279,5 +374,60 @@ public class UserFragment extends BaseFragment {
         LoginUserBean.getInstance().save();
         LoginNewActivity.toLandlordActivity(getContext());
         getActivity().finish();
+    }
+
+    /*********************************************弹窗***************************************************/
+    private void showRenZhengTips() {
+        if (renZhengTipsPopup == null) {
+            renZhengTipsPopup = new RenZhengTipsPopup(mActivity);
+            renZhengTipsPopup.setOnToClickCall(new RenZhengTipsPopup.OnToClickCall() {
+                @Override
+                public void onClick() {
+                    CertificationActivity.toActivity(mActivity, 1);
+                }
+            });
+        }
+        showPopup(renZhengTipsPopup);
+    }
+
+    private void showCalll() {
+        if (callPopupWindow == null)
+            callPopupWindow = new CommonPopupWindow.Builder(mActivity)
+                    .setTitle(getString(R.string.tips))
+                    .setContent(getString(R.string.if_have_call_question_call))
+                    .setRightBtnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            callPopupWindow.dismiss();
+                            if (TextUtils.isEmpty(tel)){
+                                callService();
+
+                            }else{
+                                PhoneUtil.call(tel, getContext());
+                            }
+                        }
+                    })
+                    .create();
+        showPopup(callPopupWindow);
+    }
+
+    private void showPopup(PopupWindow popupWindow) {
+        // 开启 popup 时界面透明
+        WindowManager.LayoutParams lp = mActivity.getWindow().getAttributes();
+        lp.alpha = 0.5f;
+        mActivity.getWindow().setAttributes(lp);
+        mActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        // popupwindow 第一个参数指定popup 显示页面
+        popupWindow.showAtLocation((View) mIconUserPhoto.getParent().getParent(), Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL, 0, -200);     // 第一个参数popup显示activity页面
+        // popup 退出时界面恢复
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                WindowManager.LayoutParams lp = mActivity.getWindow().getAttributes();
+                lp.alpha = 1f;
+                mActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+                mActivity.getWindow().setAttributes(lp);
+            }
+        });
     }
 }

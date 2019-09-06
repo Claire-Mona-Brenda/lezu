@@ -259,13 +259,13 @@
         <item name="android:layout_weight">1</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:padding">@dimen/dp_15</item>
+        <item name="android:padding">@dimen/dp_2</item>
     </style>
 
     <style name="img_main_user_top_drawable">
         <item name="android:layout_centerHorizontal">true</item>
-        <item name="android:layout_width">@dimen/dp_40</item>
-        <item name="android:layout_height">@dimen/dp_40</item>
+        <item name="android:layout_width">@dimen/dp_60</item>
+        <item name="android:layout_height">@dimen/dp_60</item>
     </style>
 
     <style name="tv_main_user_top_drawable">
@@ -274,7 +274,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/style_text_context</item>
         <item name="android:textColor">@color/text_black</item>
-        <item name="android:layout_marginTop">@dimen/dp_10</item>
+        <item name="android:layout_marginTop">@dimen/dp_2</item>
     </style>
 
 

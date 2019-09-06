@@ -32,6 +32,7 @@ import com.konka.renting.bean.DataInfo;
 import com.konka.renting.bean.IdCardFrontbean;
 import com.konka.renting.bean.LoginUserBean;
 import com.konka.renting.bean.UploadPicBean;
+import com.konka.renting.event.RenZhengSuccessEvent;
 import com.konka.renting.http.RetrofitHelper;
 import com.konka.renting.http.SecondRetrofitHelper;
 import com.konka.renting.http.subscriber.CommonSubscriber;
@@ -55,6 +56,7 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import rx.Subscription;
+import rx.functions.Action1;
 
 public class CertificationActivity extends BaseActivity {
 
@@ -79,6 +81,8 @@ public class CertificationActivity extends BaseActivity {
     private String photoUrlName;
     private String frontName;
     private String backName;
+    private String start_time;
+    private String end_time;
     private final int PHOTO_REQUEST_CODE = 111;                    // 是否开启相机权限
     private Intent intent;
     private boolean hasGotToken = false;
@@ -86,7 +90,7 @@ public class CertificationActivity extends BaseActivity {
     private static final int REQUEST_CODE_CAMERA = 102;
     private File file;
     private String filePath = "";
-    private String bestImage;
+    //    private String bestImage;
     private String idnumber;
     private String username;
     private int type1;
@@ -94,12 +98,11 @@ public class CertificationActivity extends BaseActivity {
     private String birthDay = "";
 
 
-    public static void toActivity(Context context, String bestImagepath, int type) {
+    public static void toActivity(Context context, int type) {
 
         Intent intent = new Intent(context, CertificationActivity.class);
-        //intent.putExtra("bestimage_path", bestImagepath);
         Bundle bundle = new Bundle();
-        bundle.putString("bestimage_path", bestImagepath);
+//        bundle.putString("bestimage_path", bestImagepath);
         bundle.putInt("type", type);
         intent.putExtras(bundle);
         context.startActivity(intent);
@@ -116,10 +119,10 @@ public class CertificationActivity extends BaseActivity {
 
         alertDialog = new AlertDialog.Builder(this);
         Bundle bundle = getIntent().getExtras();
-        bestImage = bundle.getString("bestimage_path");
+//        bestImage = bundle.getString("bestimage_path");
         type1 = bundle.getInt("type");
-        if (bestImage != null)
-            uploadPic(new File(bestImage));
+//        if (bestImage != null)
+//            uploadPic(new File(bestImage));
         initAccessTokenLicenseFile();
         //  初始化本地质量控制模型,释放代码在onDestory中
         //  调用身份证扫描必须加上 intent.putExtra(CameraActivity.KEY_NATIVE_MANUAL, true); 关闭自动初始化和释放本地模型
@@ -141,10 +144,15 @@ public class CertificationActivity extends BaseActivity {
                             default:
                                 msg = String.valueOf(errorCode);
                         }
-                        // infoTextView.setText("本地质量控制初始化错误，错误原因： " + msg);
                         alertText("本地质量控制初始化错误，错误原因： ", msg);
                     }
                 });
+        addRxBusSubscribe(RenZhengSuccessEvent.class, new Action1<RenZhengSuccessEvent>() {
+            @Override
+            public void call(RenZhengSuccessEvent renZhengSuccessEvent) {
+                finish();
+            }
+        });
     }
 
     @OnClick({R.id.iv_back, R.id.iv_idcard_head, R.id.iv_idcard_back, R.id.btn_commit})
@@ -154,18 +162,6 @@ public class CertificationActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.iv_idcard_head:
-               /* imageUri = Uri.fromFile(outputImage);    //将file 转化为uri路径
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    imageUri = FileProvider.getUriForFile(this, "com.konka.fileprovider", outputImage);
-                }
-                intent = new Intent("android.media.action.IMAGE_CAPTURE");
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    //添加这一句表示对目标应用临时授权该Uri所代表的文件
-                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                }
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);   //指定图片输出地址   将拍照结果保存至photo_file的Uri中，不保留在相册中
-                startActivityForResult(intent, RESULT_CODE_CAMEA);   //启动相机  startActivityForResult() 结果返回onActivityResult()函数   第2个参数——拍照返回参数
-                type = 2;*/
                 if (!checkTokenStatus()) {
                     return;
                 }
@@ -184,18 +180,6 @@ public class CertificationActivity extends BaseActivity {
                 startActivityForResult(intent, REQUEST_CODE_CAMERA);
                 break;
             case R.id.iv_idcard_back:
-               /* imageUri = Uri.fromFile(outputImage);    //将file 转化为uri路径
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    imageUri = FileProvider.getUriForFile(this, "com.konka.fileprovider", outputImage);
-                }
-                intent = new Intent("android.media.action.IMAGE_CAPTURE");
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    //添加这一句表示对目标应用临时授权该Uri所代表的文件
-                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                }
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);   //指定图片输出地址   将拍照结果保存至photo_file的Uri中，不保留在相册中
-                startActivityForResult(intent, RESULT_CODE_CAMEA);   //启动相机  startActivityForResult() 结果返回onActivityResult()函数   第2个参数——拍照返回参数
-                type = 3;*/
                 intent = new Intent(CertificationActivity.this, CameraActivity.class);
                 intent.putExtra(CameraActivity.KEY_OUTPUT_FILE_PATH,
                         "/data/user/0/com.konka.renting/files/pic1.jpg");
@@ -210,19 +194,17 @@ public class CertificationActivity extends BaseActivity {
                 startActivityForResult(intent, REQUEST_CODE_CAMERA);
                 break;
             case R.id.btn_commit:
-               /* // 调转到活体识别界面
-                String username = mEtName.getText().toString();
-                String idnumber = mEtIdcard.getText().toString();
-                Intent faceIntent = new Intent(CertificationActivity.this, FaceOnlineVerifyActivity.class);
-                faceIntent.putExtra("username", username);
-                faceIntent.putExtra("idnumber", idnumber);
-                startActivity(faceIntent);*/
+                /* // 调转到活体识别界面*/
                 username = mEtName.getText().toString();
                 idnumber = mEtIdcard.getText().toString();
-                if (TextUtils.isEmpty(username) || TextUtils.isEmpty(idnumber))
-                    showToast("个人信息不能为空");
-                else
-                    initAccessToken();
+                if (TextUtils.isEmpty(username) || TextUtils.isEmpty(idnumber)) {
+                    showToast(R.string.warm_fail_up_face_f);
+                } else if (TextUtils.isEmpty(backName)) {
+                    showToast(R.string.warm_fail_up_face_b);
+                } else {
+                    FaceDetectActivity.toActivity(this, type1, username, idnumber, frontName, backName, sex, birthDay, start_time, end_time);
+//                    initAccessToken();
+                }
                 break;
         }
     }
@@ -238,15 +220,11 @@ public class CertificationActivity extends BaseActivity {
                 if (!TextUtils.isEmpty(contentType)) {
                     if (CameraActivity.CONTENT_TYPE_ID_CARD_FRONT.equals(contentType)) {
                         filePath = FileUtil.getSaveFile(getApplicationContext()).getAbsolutePath();
-                        File frontFile = new File(filePath);
                         type = 2;
-                        uploadPhoto(frontFile);
                         recIDCard(IDCardParams.ID_CARD_SIDE_FRONT, filePath);
                     } else if (CameraActivity.CONTENT_TYPE_ID_CARD_BACK.equals(contentType)) {
                         filePath = "/data/user/0/com.konka.renting/files/pic1.jpg";
-                        File backfile = new File(filePath);
                         type = 3;
-                        uploadPhoto(backfile);
                         recIDCard(IDCardParams.ID_CARD_SIDE_BACK, filePath);
                     }
                 }
@@ -343,7 +321,7 @@ public class CertificationActivity extends BaseActivity {
     private void identyFacedect() {
         showLoadingDialog();
         Subscription subscription = SecondRetrofitHelper.getInstance().identityAuth(mEtName.getText().toString(), mEtIdcard.getText().toString(),
-                frontName, backName, photoUrlName, sex, birthDay)
+                frontName, backName, photoUrlName, sex, birthDay, start_time, end_time)
                 .compose(RxUtil.<DataInfo>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo>() {
                     @Override
@@ -434,9 +412,13 @@ public class CertificationActivity extends BaseActivity {
                             sex = result.getGender().toString().equals("男") ? "1" : "2";
                         if (result.getBirthday() != null && !TextUtils.isEmpty(result.getBirthday().toString()))
                             birthDay = result.getBirthday().toString();
+                    } else {
+                        start_time = result.getSignDate().toString();
+                        end_time = result.getExpiryDate().toString();
                     }
-
-
+                    uploadPhoto(file);
+                } else {
+                    showToast(idCardSide.equals(IDCardParams.ID_CARD_SIDE_FRONT) ? R.string.warm_fail_face_f : R.string.warm_fail_face_b);
                 }
             }
 
@@ -499,14 +481,9 @@ public class CertificationActivity extends BaseActivity {
      * @param filePath
      */
     private void policeVerify(final String filePath) {
-       /* if (TextUtils.isEmpty(filePath) || waitAccesstoken) {
-            Log.e("errrrrrr","1111");
-            return;
-        }*/
         showLoadingDialog();
         File file = new File(filePath);
         if (!file.exists()) {
-            Log.e("errrrrrr", "2222");
             return;
         }
 
@@ -527,32 +504,8 @@ public class CertificationActivity extends BaseActivity {
                                 RxBus.getDefault().post(new FaceDectectEvent());
                                 finish();
                             }
-                            /*displayTip(resultTipTV, "核身成功");
-                            displayTip(onlineFacelivenessTipTV, "在线活体分数：" + result.getFaceliveness());
-                            displayTip(scoreTV, "公安验证分数：" + result.getScore());*/
-//                            if (LoginUserBean.getInstance().getAccess_token().contains("landlord")) {
-//                                if (type1 == 1)
-//                                    identyFacedect();
-//                                else {
-////                                    BindMobileActivity.toActivity(mActivity);
-//                                    RxBus.getDefault().post(new FaceDectectEvent());
-//                                    finish();
-//                                }
-//                            } else if (LoginUserBean.getInstance().getAccess_token().contains("renter")) {
-//                                if (type1 == 1)
-//                                    identyTentFacedect();
-//                                else {
-////                                    BindMobileActivity.toActivity(mActivity);
-//                                    RxBus.getDefault().post(new FaceDectectEvent());
-//                                    finish();
-//                                }
-//                            }
-
-//                            finish();
                         } else {
-                            /*displayTip(resultTipTV, "核身失败");
-                            displayTip(scoreTV, "公安验证分数过低：" + result.getScore());*/
-                            showToast("核身失败");
+                            showToast("核身失败,公安验证分数过低");
 
                         }
                     }
@@ -561,67 +514,15 @@ public class CertificationActivity extends BaseActivity {
                     public void onError(FaceException error) {
                         dismiss();
                         delete(filePath);
-                        Log.e("errrrrrr", error.getErrorMessage() + "");
-                        //displayTip(resultTipTV, "核身失败：" + error.getErrorMessage());
-                        //showToast("核身失败:"+ error.getErrorMessage());
                         // TODO 错误处理
                         // 如返回错误码为：216600，则核身失败，提示信息为：身份证号码错误
                         // 如返回错误码为：216601，则核身失败，提示信息为：身份证号码与姓名不匹配
                         Toast.makeText(CertificationActivity.this, "公安身份核实失败:" + error.getMessage(), Toast.LENGTH_SHORT)
                                 .show();
-                        //retBtn.setVisibility(View.VISIBLE);
-
                     }
                 });
     }
 
-    private void landlordCheck() {
-        showLoadingDialog();
-        Subscription subscription = RetrofitHelper.getInstance().landlordIdenty(mEtName.getText().toString(), mEtIdcard.getText().toString())
-                .compose(RxUtil.<DataInfo>rxSchedulerHelper())
-                .subscribe(new CommonSubscriber<DataInfo>() {
-                    @Override
-                    public void onError(Throwable e) {
-                        dismiss();
-                        doFailed();
-                    }
-
-                    @Override
-                    public void onNext(DataInfo dataInfo) {
-                        dismiss();
-                        showToast(dataInfo.msg());
-                        if (dataInfo.success()) {
-                            policeVerify(bestImage);
-
-                        }
-                    }
-                });
-        addSubscrebe(subscription);
-    }
-
-    private void rentCheck() {
-        showLoadingDialog();
-        Subscription subscription = RetrofitHelper.getInstance().rentIdenty(mEtName.getText().toString(), mEtIdcard.getText().toString())
-                .compose(RxUtil.<DataInfo>rxSchedulerHelper())
-                .subscribe(new CommonSubscriber<DataInfo>() {
-                    @Override
-                    public void onError(Throwable e) {
-                        dismiss();
-                        doFailed();
-                    }
-
-                    @Override
-                    public void onNext(DataInfo dataInfo) {
-                        dismiss();
-                        showToast(dataInfo.msg());
-                        Log.e("msgggg", dataInfo.msg());
-                        if (dataInfo.success()) {
-                            policeVerify(bestImage);
-                        }
-                    }
-                });
-        addSubscrebe(subscription);
-    }
 
     // 在线活体检测和公安核实需要使用该token，为了防止ak、sk泄露，建议在线活体检测和公安接口在您的服务端请求
     private void initAccessToken() {
@@ -634,23 +535,11 @@ public class CertificationActivity extends BaseActivity {
             public void onResult(com.konka.renting.utils.AccessToken result) {
                 dismiss();
                 if (result != null && !TextUtils.isEmpty(result.getAccessToken())) {
-                    if (type1 == 1)
-                        policeVerify(bestImage);
-                    else {
-                        identyTentFacedect();
-//                        if (LoginUserBean.getInstance().getAccess_token().contains("landlord")) {
-//                            landlordCheck();
-//                        } else if (LoginUserBean.getInstance().getAccess_token().contains("renter")) {
-//                            rentCheck();
-//                        }
-                    }
+//                    if (type1 == 1)
+//                        policeVerify(bestImage);
                 } else if (result != null) {
-                    /*displayTip("获取token", "在线活体token获取失败");
-                    retBtn.setVisibility(View.VISIBLE);*/
                     showToast("在线活体token获取失败");
                 } else {
-                    /*displayTip(resultTipTV, "在线活体token获取失败");
-                    retBtn.setVisibility(View.VISIBLE);*/
                     showToast("在线活体token获取失败");
                 }
             }
@@ -659,8 +548,6 @@ public class CertificationActivity extends BaseActivity {
             public void onError(FaceException error) {
                 // TODO 错误处理
                 dismiss();
-               /* displayTip(resultTipTV, "在线活体token获取失败");
-                retBtn.setVisibility(View.VISIBLE);*/
                 showToast("在线活体token获取失败");
             }
         }, Config.apiKey, Config.secretKey);

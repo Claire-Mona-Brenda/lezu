@@ -47,10 +47,10 @@ public class ForgetPasswordActivity extends BaseActivity implements TextWatcher 
     private String phone;
 
 
-    public static void toActivity(Context context, int type,String phone) {
+    public static void toActivity(Context context, int type, String phone) {
         Intent intent = new Intent(context, ForgetPasswordActivity.class);
         intent.putExtra("type", type);
-        intent.putExtra("phone",phone);
+        intent.putExtra("phone", phone);
         context.startActivity(intent);
     }
 
@@ -63,10 +63,10 @@ public class ForgetPasswordActivity extends BaseActivity implements TextWatcher 
     @Override
     public void init() {
         mType = getIntent().getIntExtra("type", LoginInfo.LANDLORD);
-        phone=getIntent().getStringExtra("phone");
+        phone = getIntent().getStringExtra("phone");
         setTitleText(R.string.forget_password_title);
 
-        if (!phone.equals("")){
+        if (!phone.equals("")) {
             mEditPhone.setText(phone);
             mEditPhone.setEnabled(false);
         }
@@ -116,7 +116,7 @@ public class ForgetPasswordActivity extends BaseActivity implements TextWatcher 
 
         String password = mEditPasswordNew.getText().toString();
 
-        if (password.length()<6) {
+        if (password.length() < 6) {
             showToast(R.string.regist_password_is_wrong_lenght);
             return;
         }
@@ -140,6 +140,10 @@ public class ForgetPasswordActivity extends BaseActivity implements TextWatcher 
                         dismiss();
                         showToast(info.msg());
                         if (info.success()) {
+                            if (mType == LoginInfo.LANDLORD)
+                                LoginNewActivity.toLandlordActivity(mActivity);
+                            else
+                                LoginNewActivity.toTenantActivity(mActivity);
                             finish();
                         }
                     }
@@ -157,7 +161,7 @@ public class ForgetPasswordActivity extends BaseActivity implements TextWatcher 
             return;
         }
 
-        Subscription subscription = SecondRetrofitHelper.getInstance().getVerify( mEditPhone.getText().toString(), "1")
+        Subscription subscription = SecondRetrofitHelper.getInstance().getVerify(mEditPhone.getText().toString(), "1")
                 .compose(RxUtil.<DataInfo>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo>() {
                     @Override
@@ -208,8 +212,9 @@ public class ForgetPasswordActivity extends BaseActivity implements TextWatcher 
         valueAnimator.start();
         return valueAnimator;
     }
-    private boolean checkEnableRegist(){
-        if (mEditPhone.getText().toString().length()<11)
+
+    private boolean checkEnableRegist() {
+        if (mEditPhone.getText().toString().length() < 11)
             return false;
         if (mEditNum.getText().toString().equals(""))
             return false;
@@ -235,7 +240,7 @@ public class ForgetPasswordActivity extends BaseActivity implements TextWatcher 
 
     /**
      * 将密码转换成*显示
-     * */
+     */
     private class PasswordCharSequence implements CharSequence {
         private CharSequence mSource;
 

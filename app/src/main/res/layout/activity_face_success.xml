@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:background="@color/color_ffffff">
+
+    <include layout="@layout/include_title_text" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:background="@color/style_line" />
+
+
+    <ImageView
+        android:layout_width="@dimen/dp_74"
+        android:layout_height="@dimen/dp_74"
+        android:src="@mipmap/icon_success"
+        android:layout_marginTop="@dimen/dp_40"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/sp_18"
+        android:textColor="@color/text_black"
+        android:text="@string/renzheng_success"
+        android:layout_marginTop="@dimen/dp_26"/>
+
+    <TextView
+        android:id="@+id/activity_face_success_tv_sure"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44"
+        android:background="@drawable/shape_main"
+        android:textColor="@color/color_ffffff"
+        android:textSize="@dimen/sp_16"
+        android:text="@string/common_sure"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/dp_75"
+        android:layout_marginStart="@dimen/dp_28"
+        android:layout_marginEnd="@dimen/dp_28"/>
+
+</LinearLayout>

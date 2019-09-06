@@ -1,98 +1,6 @@
 package com.konka.renting.http.api;
 
-import com.konka.renting.bean.ActivateBean;
-import com.konka.renting.bean.AddBankInfo;
-import com.konka.renting.bean.AddHouseBean;
-import com.konka.renting.bean.AddRentingBean;
-import com.konka.renting.bean.AgentBean;
-import com.konka.renting.bean.AlipayBean;
-import com.konka.renting.bean.AppConfigBean;
-import com.konka.renting.bean.BannerListbean;
-import com.konka.renting.bean.BillBean;
-import com.konka.renting.bean.BillDetailBean;
-import com.konka.renting.bean.BillListBean;
-import com.konka.renting.bean.BindGatewaySearchBean;
-import com.konka.renting.bean.CheckGatewayStatusBean;
-import com.konka.renting.bean.CheckVersionBean;
-import com.konka.renting.bean.CityBean;
-import com.konka.renting.bean.CityInfo;
-import com.konka.renting.bean.ClockSetManagerItemBean;
-import com.konka.renting.bean.CollectionListBean;
-import com.konka.renting.bean.CommentTemp;
-import com.konka.renting.bean.ConfigInfoBean;
-import com.konka.renting.bean.ContractBean;
-import com.konka.renting.bean.DataInfo;
-import com.konka.renting.bean.DeviceInfo;
-import com.konka.renting.bean.DevicesOpenPasswordBean;
-import com.konka.renting.bean.GatewayDetailBean;
-import com.konka.renting.bean.GatewayInfo;
-import com.konka.renting.bean.GetFaceVerfyBean;
-import com.konka.renting.bean.GetIssueBankBean;
-import com.konka.renting.bean.HomeInfo;
-import com.konka.renting.bean.HouseConfigBean;
-import com.konka.renting.bean.HouseDetailsInfoBean;
-import com.konka.renting.bean.HouseDetailsInfoBean2;
-import com.konka.renting.bean.HouseOrderInfoBean;
-import com.konka.renting.bean.IdCardFrontbean;
-import com.konka.renting.bean.Img;
-import com.konka.renting.bean.KInfo;
-import com.konka.renting.bean.LandlordUserBean;
-import com.konka.renting.bean.LandlordUserDetailsInfoBean;
-import com.konka.renting.bean.ListInfo;
-import com.konka.renting.bean.MachineInfo;
-import com.konka.renting.bean.MessageBean;
-import com.konka.renting.bean.MessageDetailBean;
-import com.konka.renting.bean.MessageListBean;
-import com.konka.renting.bean.MoneyBean;
-import com.konka.renting.bean.MyBankBean;
-import com.konka.renting.bean.NativePwdBean;
-import com.konka.renting.bean.OpenCityBean;
-import com.konka.renting.bean.OpenDoorListInfo;
-import com.konka.renting.bean.OpenDoorListbean;
-import com.konka.renting.bean.OrderBean;
-import com.konka.renting.bean.OrderDetailBean;
-import com.konka.renting.bean.OrderInfo;
-import com.konka.renting.bean.OrderRentingHistoryBean;
-import com.konka.renting.bean.PageDataBean;
-import com.konka.renting.bean.PayBean;
-import com.konka.renting.bean.PayOrder;
-import com.konka.renting.bean.ProfileBean;
-import com.konka.renting.bean.PromotionCodeBean;
-import com.konka.renting.bean.PwdBean;
-import com.konka.renting.bean.PwsOrderDetailsBean;
-import com.konka.renting.bean.QueryPwdBean;
-import com.konka.renting.bean.RechargeBean;
-import com.konka.renting.bean.ReminderListBean;
-import com.konka.renting.bean.RentListBean;
-import com.konka.renting.bean.RenterOrderInfoBean;
-import com.konka.renting.bean.RenterOrderListBean;
-import com.konka.renting.bean.RenterSearchListBean;
-import com.konka.renting.bean.RentingDateBean;
-import com.konka.renting.bean.RoomDes2;
-import com.konka.renting.bean.RoomInfo;
-import com.konka.renting.bean.RoomSearchInfoBean;
-import com.konka.renting.bean.RoomTypeBean;
-import com.konka.renting.bean.RoomUserPhoneBean;
-import com.konka.renting.bean.ServerDeviceInfo;
-import com.konka.renting.bean.ServicePackageBean;
-import com.konka.renting.bean.ServiceTelBean;
-import com.konka.renting.bean.SeverPayListBean;
-import com.konka.renting.bean.ShareBean;
-import com.konka.renting.bean.ShareRentListBean;
-import com.konka.renting.bean.TenantDespoitDetailBean;
-import com.konka.renting.bean.TenantDespoitlistBean;
-import com.konka.renting.bean.TenantListBean;
-import com.konka.renting.bean.TenantManagerBean;
-import com.konka.renting.bean.TenantOrderDetailBean;
-import com.konka.renting.bean.TenantRenterListBean;
-import com.konka.renting.bean.TenantUserinfoBean;
-import com.konka.renting.bean.UploadPicBean;
-import com.konka.renting.bean.UploadRecordBean;
-import com.konka.renting.bean.UserInfoBean;
-import com.konka.renting.bean.UserProtocolBean;
-import com.konka.renting.bean.WebUrlInfo;
-import com.konka.renting.bean.WithDrawRecordBean;
-import com.konka.renting.bean.WxPayInfo;
+import com.konka.renting.bean.*;
 import com.konka.renting.landlord.house.entity.DicEntity;
 import com.konka.renting.landlord.house.entity.RoomList;
 import com.konka.renting.landlord.user.rentoutincome.RentOutIncomeBean;
@@ -119,13 +27,13 @@ import rx.Observable;
  */
 public interface KonkaApiService {
 
-//    //测试环境
-//    String HOST = "https://lettest.youlejiakeji.com/";
-//    String SecondHost = "https://lezuxiaowo-test.youlejiakeji.com";
+    //    //测试环境
+    String HOST = "https://lettest.youlejiakeji.com/";
+    String SecondHost = "https://lezuxiaowo-test.youlejiakeji.com";
 
     //正式环境
-    String HOST = "https://let.youlejiakeji.com/";
-    String SecondHost = "https://lezuxiaowo.youlejiakeji.com";
+//    String HOST = "https://let.youlejiakeji.com/";
+//    String SecondHost = "https://lezuxiaowo.youlejiakeji.com";
 
 
     @FormUrlEncoded
@@ -1500,14 +1408,19 @@ public interface KonkaApiService {
 
     /**
      * 获取租客端房产列表
+     *
+     * rent_type  0 默认 1 短租 2长租
+     * type   0 默认 1推荐 2精品 3热门
      */
     @GET("index.php/api/room/renterRoomList")
     Observable<DataInfo<PageDataBean<RenterSearchListBean>>> getRenterRoomList(
             @Query("page") String page,
-            @Query("province_id") String province_id,
-            @Query("city_id") String city_id,
-            @Query("area_id") String area_id,
-            @Query("keyword") String keyword
+            @Query("province") String province,
+            @Query("city") String city,
+            @Query("area") String area,
+            @Query("keyword") String keyword,
+            @Query("rent_type") String rent_type,
+            @Query("type") String type
     );
 
     /**
@@ -1714,7 +1627,9 @@ public interface KonkaApiService {
                                       @Field("identity_back") String identity_back,
                                       @Field("photo") String photo,
                                       @Field("sex") String sex,
-                                      @Field("birthday") String birthday);
+                                      @Field("birthday") String birthday,
+                                      @Field("start_time") String start_time,
+                                      @Field("end_time") String end_time);
 
     /**
      * 身份证号识别
@@ -1738,6 +1653,13 @@ public interface KonkaApiService {
     Observable<DataInfo> resetPassword(@Field("mobile") String mobile,
                                        @Field("password") String password,
                                        @Field("verify") String verify);
+
+    /**
+     * 手机号查询（是否查询）
+     */
+    @FormUrlEncoded
+    @POST("index.php/api/user/phoneCheck")
+    Observable<DataInfo> phoneCheck(@Field("mobile") String mobile);
 
     /**
      * 修改绑定手机
@@ -2190,4 +2112,104 @@ public interface KonkaApiService {
     @FormUrlEncoded
     @POST("index.php/api/room/delete")
     Observable<DataInfo> delHouse(@Field("room_id") String room_id);
+
+    /*****************************************************版本2.4.2**********************************************/
+    /**
+     * 添加小区(2.4.2版本以后)
+     */
+    @FormUrlEncoded
+    @POST("index.php/api/room/roomGroupAdd")
+    Observable<DataInfo<RoomGroupListBean>> roomGroupAdd(@Field("name") String name,
+                                      @Field("province") String province,
+                                      @Field("city") String city,
+                                      @Field("area") String area,
+                                      @Field("business") String business,
+                                      @Field("address") String address,
+                                      @Field("lng") String lng,
+                                      @Field("lat") String lat);
+
+    /**
+     * 小区列表(2.4.2版本以后)
+     */
+    @GET("index.php/api/room/roomGroupList")
+    Observable<DataInfo<PageDataBean<RoomGroupListBean>>> roomGroupList(@Query("page") String page,
+                                                                        @Query("city") String city,
+                                                                        @Query("keyword") String keyword);
+
+    /**
+     * 申请添加房产(2.4.2版本以后)
+     */
+    @FormUrlEncoded
+    @POST("index.php/api/room/add_2_4_2")
+    Observable<DataInfo<AddHouseBean>> addRoom3(
+            @Field("room_name") String room_name,
+            @Field("room_type") String room_type,
+            @Field("room_config_id") String room_config_id,
+            @Field("room_group_id") String room_group_id,
+            @Field("address") String address,
+            @Field("total_floor") String total_floor,
+            @Field("floor") String floor,
+            @Field("measure_area") String measure_area,
+            @Field("remark") String remark,
+            @Field("image") String image);
+
+    /**
+     * 编辑房产（2.3.4版本以后）
+     */
+    @FormUrlEncoded
+    @POST("index.php/api/room/edit_2_4_2")
+    Observable<DataInfo> editRoom3(
+            @Field("room_id") String room_id,
+            @Field("room_name") String room_name,
+            @Field("room_type") String room_type,
+            @Field("room_config_id") String room_config_id,
+            @Field("room_group_id") String room_group_id,
+            @Field("address") String address,
+            @Field("total_floor") String total_floor,
+            @Field("floor") String floor,
+            @Field("measure_area") String measure_area,
+            @Field("remark") String remark,
+            @Field("image") String image);
+
+    /**
+     * 价格区间(2.4.2版本以后)
+     */
+    @GET("index.php/api/room/roomPriceArea")
+    Observable<DataInfo<List<RoomPriceAreaBean>>> roomPriceArea(@Query("rent_type") String rent_type);
+
+    /**
+     * 房屋类型(2.4.2版本以后)
+     */
+    @GET("index.php/api/room/roomTypeList")
+    Observable<DataInfo<List<RoomTypeListBean>>> roomTypeList();
+
+
+    /**
+     * 地图找房(2.4.2版本以后)
+     */
+    @GET("index.php/api/room/mapSearch")
+    Observable<DataInfo<List<MapSearchBean>>> mapSearch(@Query("level") String level,
+                                                        @Query("point1") String point1,
+                                                        @Query("point2") String point2,
+                                                        @Query("rent_type") String rent_type,
+                                                        @Query("price_area_id") String price_area_id,
+                                                        @Query("room_type_id") String room_type_id,
+                                                        @Query("price_area") String price_area,
+                                                        @Query("keyword") String keyword);
+
+    /**
+     * 小区房屋列表(2.4.2版本以后)
+     */
+    @GET("index.php/api/room/groupRoomList")
+    Observable<DataInfo<PageDataBean<GroupRoomListBean>>> groupRoomList(@Query("page") String page,
+                                                                        @Query("room_group_id") String room_group_id,
+                                                                        @Query("rent_type") String rent_type,
+                                                                        @Query("keyword") String keyword);
+
+    /**
+     * 地图位置查询(2.4.2版本以后)
+     */
+    @GET("index.php/api/room/mapLocationSearch")
+    Observable<DataInfo<List<MapLocationSearchBean>>> mapLocationSearch(@Query("city") String city,
+                                                                        @Query("keyword") String keyword);
 }

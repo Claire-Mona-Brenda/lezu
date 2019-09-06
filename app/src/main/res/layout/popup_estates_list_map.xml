@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_420"
+    android:orientation="vertical"
+    android:background="@color/color_ffffff">
+<TextView
+    android:id="@+id/pop_estates_list_map_tv_title"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/dp_15"
+    android:layout_marginStart="@dimen/dp_20"
+    android:textSize="@dimen/sp_16"
+    android:textColor="@color/text_black"/>
+    <TextView
+        android:id="@+id/pop_estates_list_map_tv_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_3"
+        android:layout_marginStart="@dimen/dp_20"
+        android:textSize="@dimen/sp_12"
+        android:textColor="@color/color_999999"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:layout_marginTop="@dimen/dp_15"
+        android:background="@color/style_line"/>
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/pop_estates_list_map_srl_estate"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/pop_estates_list_map_rv_estate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+</LinearLayout>

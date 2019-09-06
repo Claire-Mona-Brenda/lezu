@@ -28,6 +28,7 @@ import com.konka.renting.bean.DeviceInfo;
 import com.konka.renting.bean.DevicesOpenPasswordBean;
 import com.konka.renting.bean.GatewayDetailBean;
 import com.konka.renting.bean.GatewayInfo;
+import com.konka.renting.bean.GroupRoomListBean;
 import com.konka.renting.bean.HomeInfo;
 import com.konka.renting.bean.HouseConfigBean;
 import com.konka.renting.bean.HouseDetailsInfoBean;
@@ -39,6 +40,8 @@ import com.konka.renting.bean.LandlordUserDetailsInfoBean;
 import com.konka.renting.bean.ListInfo;
 import com.konka.renting.bean.LoginUserBean;
 import com.konka.renting.bean.MachineInfo;
+import com.konka.renting.bean.MapLocationSearchBean;
+import com.konka.renting.bean.MapSearchBean;
 import com.konka.renting.bean.MessageListBean;
 import com.konka.renting.bean.MoneyBean;
 import com.konka.renting.bean.NativePwdBean;
@@ -57,9 +60,12 @@ import com.konka.renting.bean.RenterOrderInfoBean;
 import com.konka.renting.bean.RenterOrderListBean;
 import com.konka.renting.bean.RenterSearchListBean;
 import com.konka.renting.bean.RentingDateBean;
+import com.konka.renting.bean.RoomGroupListBean;
 import com.konka.renting.bean.RoomInfo;
+import com.konka.renting.bean.RoomPriceAreaBean;
 import com.konka.renting.bean.RoomSearchInfoBean;
 import com.konka.renting.bean.RoomTypeBean;
+import com.konka.renting.bean.RoomTypeListBean;
 import com.konka.renting.bean.RoomUserPhoneBean;
 import com.konka.renting.bean.ServerDeviceInfo;
 import com.konka.renting.bean.ServiceTelBean;
@@ -803,12 +809,9 @@ public class SecondRetrofitHelper {
     /**
      * 获取租客端房产列表
      */
-    public Observable<DataInfo<PageDataBean<RenterSearchListBean>>> getRenterRoomList(String page,
-                                                                                      String province_id,
-                                                                                      String city_id,
-                                                                                      String area_id,
-                                                                                      String keyword) {
-        return mApiService.getRenterRoomList(page, province_id, city_id, area_id, keyword);
+    public Observable<DataInfo<PageDataBean<RenterSearchListBean>>> getRenterRoomList(String page, String province, String city,
+                                                                                      String area, String keyword, String rent_type, String type) {
+        return mApiService.getRenterRoomList(page, province, city, area, keyword, rent_type, type);
     }
 
     /**
@@ -970,8 +973,10 @@ public class SecondRetrofitHelper {
                                              String identity_back,
                                              String photo,
                                              String sex,
-                                             String birthday) {
-        return mApiService.identityAuth(real_name, identity, identity_just, identity_back, photo, sex, birthday);
+                                             String birthday,
+                                             String start_time,
+                                             String end_time) {
+        return mApiService.identityAuth(real_name, identity, identity_just, identity_back, photo, sex, birthday, start_time, end_time);
     }
 
     /**
@@ -999,10 +1004,17 @@ public class SecondRetrofitHelper {
     }
 
     /**
+     * 手机号查询（是否查询）
+     */
+    public Observable<DataInfo> phoneCheck(String mobile) {
+        return mApiService.phoneCheck(mobile);
+    }
+
+
+    /**
      * 修改绑定手机
      */
-    public Observable<DataInfo> updateBindPhone(String mobile,
-                                                String verify) {
+    public Observable<DataInfo> updateBindPhone(String mobile, String verify) {
         return mApiService.updateBindPhone(mobile, verify);
     }
 
@@ -1394,5 +1406,77 @@ public class SecondRetrofitHelper {
      */
     public Observable<DataInfo> delHouse(String room_id) {
         return mApiService.delHouse(room_id);
+    }
+
+    /*****************************************************版本2.4.2**********************************************/
+    /**
+     * 添加小区(2.4.2版本以后)
+     */
+    public Observable<DataInfo<RoomGroupListBean>> roomGroupAdd(String name, String province, String city, String area, String business, String address, String lng, String lat) {
+        return mApiService.roomGroupAdd(name, province, city, area, business, address, lng, lat);
+    }
+
+    /**
+     * 小区列表(2.4.2版本以后)
+     */
+    public Observable<DataInfo<PageDataBean<RoomGroupListBean>>> roomGroupList(String page, String city_id, String keyword) {
+        return mApiService.roomGroupList(page, city_id, keyword);
+    }
+
+    /**
+     * 添加房产(2.4.2版本以后)
+     */
+    public Observable<DataInfo<AddHouseBean>> addRoom3(String room_name, String room_type, String room_config_id,
+                                                       String room_group_id, String address, String total_floor,
+                                                       String floor, String measure_area, String remark, String image) {
+        return mApiService.addRoom3(room_name, room_type, room_config_id,
+                room_group_id, address, total_floor, floor, measure_area,
+                remark, image);
+    }
+
+    /**
+     * 编辑房产(2.4.2版本以后)
+     */
+    public Observable<DataInfo> editRoom3(String room_id, String room_name, String room_type, String room_config_id,
+                                          String room_group_id, String address, String total_floor, String floor,
+                                          String measure_area, String remark, String image) {
+        return mApiService.editRoom3(room_id, room_name, room_type, room_config_id,
+                room_group_id, address, total_floor, floor, measure_area, remark,
+                image);
+    }
+
+    /**
+     * 价格区间(2.4.2版本以后)
+     */
+    public Observable<DataInfo<List<RoomPriceAreaBean>>> roomPriceArea(String rent_type) {
+        return mApiService.roomPriceArea(rent_type);
+    }
+
+    /**
+     * 房屋类型(2.4.2版本以后)
+     */
+    public Observable<DataInfo<List<RoomTypeListBean>>> roomTypeList() {
+        return mApiService.roomTypeList();
+    }
+
+    /**
+     * 地图找房(2.4.2版本以后)
+     */
+    public Observable<DataInfo<List<MapSearchBean>>> mapSearch( String level,String point1,String point2,String rent_type,String price_area_id,String room_type_id,String price_area,String keyword) {
+        return mApiService.mapSearch(level, point1, point2,  rent_type,price_area_id, room_type_id, price_area, keyword);
+    }
+
+    /**
+     * 小区房屋列表(2.4.2版本以后)
+     */
+    public Observable<DataInfo<PageDataBean<GroupRoomListBean>>> groupRoomList(String page, String room_group_id, String rent_type, String keyword) {
+        return mApiService.groupRoomList(page, room_group_id, rent_type, keyword);
+    }
+
+    /**
+     * 地图位置查询(2.4.2版本以后)
+     */
+    public Observable<DataInfo<List<MapLocationSearchBean>>> mapLocationSearch(String city, String keyword) {
+        return mApiService.mapLocationSearch(city, keyword);
     }
 }

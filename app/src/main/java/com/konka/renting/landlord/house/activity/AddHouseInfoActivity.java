@@ -24,6 +24,7 @@ import com.konka.renting.R;
 import com.konka.renting.base.BaseActivity;
 import com.konka.renting.bean.DataInfo;
 import com.konka.renting.bean.HouseConfigBean;
+import com.konka.renting.bean.RoomGroupListBean;
 import com.konka.renting.event.AddHouseCompleteEvent;
 import com.konka.renting.http.SecondRetrofitHelper;
 import com.konka.renting.http.subscriber.CommonSubscriber;
@@ -80,7 +81,7 @@ public class AddHouseInfoActivity extends BaseActivity {
     @BindView(R.id.activity_add_house_info_rl_confit)
     RelativeLayout mRlConfit;
 
-    PoiItem mPoiItem;
+    RoomGroupListBean groupListBean;
     String address;
     List<HouseConfigBean> configList;
     CheckHouseConfigPopup mConfigPopup;
@@ -91,9 +92,9 @@ public class AddHouseInfoActivity extends BaseActivity {
     int mSecond;
     int mThird;
 
-    public static void toActivity(Context context, PoiItem mPoiItem, String address) {
+    public static void toActivity(Context context, RoomGroupListBean groupListBean, String address) {
         Intent intent = new Intent(context, AddHouseInfoActivity.class);
-        intent.putExtra(PoiItem.class.getSimpleName(), mPoiItem);
+        intent.putExtra(RoomGroupListBean.class.getSimpleName(), groupListBean);
         intent.putExtra("address", address);
         context.startActivity(intent);
     }
@@ -105,7 +106,7 @@ public class AddHouseInfoActivity extends BaseActivity {
 
     @Override
     public void init() {
-        mPoiItem = getIntent().getParcelableExtra(PoiItem.class.getSimpleName());
+        groupListBean = getIntent().getParcelableExtra(RoomGroupListBean.class.getSimpleName());
         address = getIntent().getStringExtra("address");
 
         tvTitle.setText(R.string.add_house);
@@ -128,6 +129,11 @@ public class AddHouseInfoActivity extends BaseActivity {
         initPicker();
         initConfig();
         initListent();
+
+        mEdtName.setFocusable(true);
+        mEdtName.setFocusableInTouchMode(true);
+        mEdtName.requestFocus();
+       getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
     }
 
     @Override
@@ -286,7 +292,7 @@ public class AddHouseInfoActivity extends BaseActivity {
             }
 
         }
-        AddHouseIntroduceActivity.toActivity(this, mPoiItem, address, name, room_type, config, floorSum, floor, area);
+        AddHouseIntroduceActivity.toActivity(this, groupListBean, address, name, room_type, config, floorSum, floor, area);
     }
 
     private int getFloor(String floor) {

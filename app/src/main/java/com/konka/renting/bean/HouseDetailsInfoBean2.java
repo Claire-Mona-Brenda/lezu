@@ -65,6 +65,8 @@ public class HouseDetailsInfoBean2 implements Parcelable {
     private String room_type;
     private String lng;
     private String lat;
+    String room_group_id;
+    String room_group;
     private List<String> image;
     private List<String> thumb_image;
     private List<String> auth_image;
@@ -102,6 +104,8 @@ public class HouseDetailsInfoBean2 implements Parcelable {
         room_type = in.readString();
         lng = in.readString();
         lat = in.readString();
+        room_group_id = in.readString();
+        room_group = in.readString();
         image = in.createStringArrayList();
         thumb_image = in.createStringArrayList();
         auth_image = in.createStringArrayList();
@@ -360,6 +364,22 @@ public class HouseDetailsInfoBean2 implements Parcelable {
         this.lat = lat;
     }
 
+    public String getRoom_group_id() {
+        return room_group_id;
+    }
+
+    public void setRoom_group_id(String room_group_id) {
+        this.room_group_id = room_group_id;
+    }
+
+    public String getRoom_group() {
+        return room_group;
+    }
+
+    public void setRoom_group(String room_group) {
+        this.room_group = room_group;
+    }
+
     public List<String> getImage() {
         return image;
     }
@@ -431,6 +451,8 @@ public class HouseDetailsInfoBean2 implements Parcelable {
         dest.writeString(room_type);
         dest.writeString(lng);
         dest.writeString(lat);
+        dest.writeString(room_group_id);
+        dest.writeString(room_group);
         dest.writeStringList(image);
         dest.writeStringList(thumb_image);
         dest.writeStringList(auth_image);

@@ -37,15 +37,15 @@ MobSDK {
 
 }
 android {
-    compileSdkVersion 28
-    buildToolsVersion = '28.0.3'
+    compileSdkVersion 29
+    buildToolsVersion = '29.0.2'
 
     defaultConfig {
         applicationId "com.konka.renting"
         minSdkVersion 17
-        targetSdkVersion 28
-        versionCode 14
-        versionName "2.4.1"
+        targetSdkVersion 29
+        versionCode 15
+        versionName "2.4.2"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         ndk {

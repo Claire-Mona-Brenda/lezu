@@ -42,13 +42,16 @@ import com.konka.renting.base.BaseActivity;
 import com.konka.renting.bean.DataInfo;
 import com.konka.renting.bean.HouseConfigBean;
 import com.konka.renting.bean.HouseDetailsInfoBean2;
+import com.konka.renting.bean.RoomGroupListBean;
 import com.konka.renting.bean.UploadPicBean;
+import com.konka.renting.event.ChooseEstateEvent;
 import com.konka.renting.event.DelHouseEvent;
 import com.konka.renting.event.LandlordHouseInfoEvent;
 import com.konka.renting.event.LandlordHouseListEvent;
 import com.konka.renting.event.UpdataHouseInfoEvent;
 import com.konka.renting.http.SecondRetrofitHelper;
 import com.konka.renting.http.subscriber.CommonSubscriber;
+import com.konka.renting.landlord.house.activity.ChooseEstateActivity;
 import com.konka.renting.landlord.house.activity.ChooseLocationActivity;
 import com.konka.renting.landlord.house.data.MissionEnity;
 import com.konka.renting.landlord.house.view.WarmDelHousePopup;
@@ -136,7 +139,7 @@ public class HouseEditActivity extends BaseActivity {
 
     private int picCurSum = 0;
 
-    PoiItem mPoiItem;
+    RoomGroupListBean groupListBean;
 
     RxPermissions rxPermissions;
     ThreeChoosePicker picker;
@@ -190,11 +193,11 @@ public class HouseEditActivity extends BaseActivity {
         confitList = bean.getConfig();
         tvAreaTips.setText(getArea(tvAreaTips.getText().toString() + "/"));
 
-        addRxBusSubscribe(ChooseLocationEvent.class, new Action1<ChooseLocationEvent>() {
+        addRxBusSubscribe(ChooseEstateEvent.class, new Action1<ChooseEstateEvent>() {
             @Override
-            public void call(ChooseLocationEvent event) {
-                mPoiItem = event.getPoiItem();
-                tvAddress.setText(mPoiItem.getSnippet());
+            public void call(ChooseEstateEvent event) {
+                groupListBean = event.getRoomGroupListBean();
+                tvAddress.setText(groupListBean.getName());
                 tvAddress.setTextColor(getResources().getColor(R.color.text_black));
                 isSumbit();
             }
@@ -222,8 +225,8 @@ public class HouseEditActivity extends BaseActivity {
             mThird = Integer.valueOf(t[2]);
             tvType.setText(mFirst + " 室 " + mThird + " 厅" + (mSecond == 0 ? "" : " " + mSecond + " 卫"));
         }
-        if (!TextUtils.isEmpty(bean.getMap_address())) {
-            tvAddress.setText(bean.getMap_address() == null ? "" : bean.getMap_address());
+        if (!TextUtils.isEmpty(bean.getRoom_group())) {
+            tvAddress.setText(bean.getRoom_group());
             editAddressMore.setText(bean.getAddress());
         }
         editFloor.setText(bean.getFloor() + "");
@@ -576,7 +579,7 @@ public class HouseEditActivity extends BaseActivity {
                 }
                 break;
             case R.id.activity_addHouse_tv_address:
-                ChooseLocationActivity.toActivity(this);
+                ChooseEstateActivity.toActivity(this,bean.getCity());
                 break;
             case R.id.activity_addHouse_tv_type:
                 picker.show();
@@ -631,22 +634,17 @@ public class HouseEditActivity extends BaseActivity {
         String room_type = mFirst + "_" + mSecond + "_" + mThird;
         showLoadingDialog();
         Subscription subscription = SecondRetrofitHelper.getInstance()
-                .editRoom2(bean.getRoom_id(),
+                .editRoom3(bean.getRoom_id(),
                         name,
                         room_type,
                         config,
-                        mPoiItem == null ? bean.getProvince() : mPoiItem.getProvinceName(),
-                        mPoiItem == null ? bean.getCity() : mPoiItem.getCityName(),
-                        mPoiItem == null ? bean.getArea() : mPoiItem.getAdName(),
-                        mPoiItem == null ? bean.getMap_address() : mPoiItem.getSnippet(),
+                        groupListBean == null ? bean.getRoom_group_id() : groupListBean.getRoom_group_id() + "",
                         address,
                         floorSum + "",
                         floor + "",
                         editArea.getText().toString(),
                         editIntroduce.getText().toString(),
-                        img,
-                        mPoiItem == null ? bean.getLng() : mPoiItem.getLatLonPoint().getLongitude() + "",
-                        mPoiItem == null ? bean.getLat() : mPoiItem.getLatLonPoint().getLatitude() + "")
+                        img)
                 .compose(RxUtil.<DataInfo>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo>() {
                     @Override

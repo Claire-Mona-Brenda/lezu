@@ -9,14 +9,17 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,16 +29,17 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
-import com.jzxiang.pickerview.TimePickerDialog;
-import com.jzxiang.pickerview.data.Type;
-import com.jzxiang.pickerview.listener.OnDateSetListener;
 import com.konka.renting.R;
 import com.konka.renting.base.BaseActivity;
 import com.konka.renting.bean.DataInfo;
 import com.konka.renting.bean.LandlordUserDetailsInfoBean;
+import com.konka.renting.bean.LoginUserBean;
 import com.konka.renting.bean.UploadPicBean;
 import com.konka.renting.http.SecondRetrofitHelper;
 import com.konka.renting.http.subscriber.CommonSubscriber;
+import com.konka.renting.login.ForgetPasswordActivity;
+import com.konka.renting.login.LoginInfo;
+import com.konka.renting.login.LoginNewActivity;
 import com.konka.renting.utils.RxBus;
 import com.konka.renting.utils.RxUtil;
 import com.squareup.picasso.MemoryPolicy;
@@ -48,53 +52,64 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import rx.Observable;
 import rx.Subscription;
 import rx.functions.Action1;
 
-public class UserInfoActivity extends BaseActivity implements CustompopupWindow.OnPopItemClickListener, OnDateSetListener {
+public class UserInfoActivity extends BaseActivity implements CustompopupWindow.OnPopItemClickListener {
 
     @BindView(R.id.iv_header)
     CircleImageView mIvHeader;
-    @BindView(R.id.et_name)
-    TextView mEtName;
-    @BindView(R.id.tv_sex_detail)
-    TextView mTvSexDetail;
-    @BindView(R.id.tv_age_detail)
-    TextView mTvAgeDetail;
-    @BindView(R.id.et_idcard)
-    TextView mEtIdcard;
-    @BindView(R.id.iv_front)
-    ImageView mIvFront;
-    @BindView(R.id.tv_front)
-    TextView mTvFront;
-    @BindView(R.id.iv_idcard_back)
-    ImageView mIvBack;
-    @BindView(R.id.tv_back)
-    TextView mTvBack;
     @BindView(R.id.tv_right)
     TextView mTvRight;
     @BindView(R.id.lin_user_info)
     LinearLayout mLinUserInfo;
     @BindView(R.id.tv_mobile)
     TextView mTvMobile;
-    @BindView(R.id.tv_face_right)
-    TextView tvFaceRight;
 
-    private TimePickerDialog mDialogAll;        // 日期选择器控件
-    private String time = null;
+
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+    @BindView(R.id.iv_back)
+    ImageView ivBack;
+    @BindView(R.id.iv_right)
+    ImageView ivRight;
+    @BindView(R.id.lin_title)
+    FrameLayout linTitle;
+    @BindView(R.id.ic_right)
+    ImageView icRight;
+    @BindView(R.id.re_revise_photo)
+    RelativeLayout reRevisePhoto;
+    @BindView(R.id.tv_pwd)
+    TextView tvPwd;
+    @BindView(R.id.pwd_right)
+    ImageView pwdRight;
+    @BindView(R.id.re_pwd)
+    RelativeLayout rePwd;
+    @BindView(R.id.tv_bind)
+    TextView tvBind;
+    @BindView(R.id.bind_right)
+    ImageView bindRight;
+    @BindView(R.id.re_bind)
+    RelativeLayout reBind;
+    @BindView(R.id.activity_user_info_tv_login_out)
+    TextView tvLoginOut;
+    @BindView(R.id.tv_version)
+    TextView tvVersion;
+    @BindView(R.id.re_version)
+    RelativeLayout reVersion;
+
     private final int STORAGE_PERMISSIONS_REQUEST_CODE = 222;    //  获取SDK权限
     private static final int RESULT_CODE_CAMEA = 001;           //拍照
     private static final int RESULT_CODE_PHOTO = 002;           //相册
+
     private CustompopupWindow pop;          // popupWindow 弹出框
     private File path = new File(Environment.getExternalStorageDirectory().getPath());
     private File outputImage = new File(path + "/photo.jpg");
@@ -104,14 +119,13 @@ public class UserInfoActivity extends BaseActivity implements CustompopupWindow.
     private int type;
     private String headName;
     private String picPath;
-    private String frontName;
-    private String backName;
-    private String birthday;
-    private String sex;
+    private int mType;
+
     private LandlordUserDetailsInfoBean bean;
 
-    public static void toActivity(Context context) {
+    public static void toActivity(Context context, int mType) {
         Intent intent = new Intent(context, UserInfoActivity.class);
+        intent.putExtra("mType", mType);
         context.startActivity(intent);
     }
 
@@ -125,8 +139,9 @@ public class UserInfoActivity extends BaseActivity implements CustompopupWindow.
 
     @Override
     public void init() {
+        mType = getIntent().getIntExtra("mType", LoginInfo.LANDLORD);
+
         setTitleText(R.string.user_setting);
-//        setRightText(R.string.common_save);
         mTvRight.setVisibility(View.GONE);
         requestPermission();      // 6.0申请拍照权限
         autoObtainStoragePermission();        //  自动获取sdk权限
@@ -179,14 +194,6 @@ public class UserInfoActivity extends BaseActivity implements CustompopupWindow.
         if (data.getHeadimgurl() != null)
             if (!data.getHeadimgurl().equals(""))
                 Picasso.get().load(data.getHeadimgurl()).placeholder(R.mipmap.touxiang).error(R.mipmap.touxiang).into(mIvHeader);
-        mEtName.setText(data.getReal_name());
-        mTvSexDetail.setText(data.getSex());
-        mTvAgeDetail.setText(data.getAge());
-        if (data.getIs_identity() == 1) {
-            tvFaceRight.setText(R.string.setting_user_real_ok);
-        } else {
-            tvFaceRight.setText(R.string.setting_user_real_no);
-        }
         String tel = data.getPhone();
         if (!tel.equals("")) {
             int len = tel.length();
@@ -198,124 +205,58 @@ public class UserInfoActivity extends BaseActivity implements CustompopupWindow.
             tel = str;
         }
         mTvMobile.setText(tel);
-        String idCard = data.getIdentity();
-        if (!idCard.equals("")) {
-            int len = idCard.length();
-            String str = idCard.substring(0, 1);
-            for (int i = 1; i < len - 4; i++) {
-                str += "*";
-            }
-            str += idCard.substring(len - 4, len);
-            idCard = str;
-        }
-        mEtIdcard.setText(idCard);
-        if (!data.getIdentity_just().equals("")) {
-            mTvFront.setVisibility(View.GONE);
-            mIvFront.setVisibility(View.VISIBLE);
-            Picasso.get().load(data.getIdentity_just()).placeholder(R.mipmap.icon_photo).error(R.mipmap.icon_photo).into(mIvFront);
-        }
-        if (!data.getIdentity_back().equals("")) {
-            mTvBack.setVisibility(View.GONE);
-            mIvBack.setVisibility(View.VISIBLE);
-            Picasso.get().load(data.getIdentity_back()).placeholder(R.mipmap.icon_photo).error(R.mipmap.icon_photo).into(mIvBack);
-        }
+        tvVersion.setText(getVerName(this));
 
     }
 
 
-    @OnClick({R.id.iv_back, R.id.re_revise_photo, R.id.rl_name, R.id.re_sex, R.id.re_age, R.id.re_bind, R.id.re_idcard,
-            R.id.rl_idcard_photo, R.id.re_front, R.id.re_back, R.id.re_face, R.id.tv_right})
+    @OnClick({R.id.iv_back, R.id.re_revise_photo, R.id.re_bind, R.id.tv_right, R.id.re_pwd, R.id.activity_user_info_tv_login_out})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.iv_back:
+            case R.id.iv_back://返回
                 finish();
                 break;
             case R.id.tv_right://保存
-//                updateInfo();
+                break;
+            case R.id.re_revise_photo://头像
+                if (bean != null)
+                    new RxPermissions(mActivity).request(
+                            Manifest.permission.CAMERA,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.READ_EXTERNAL_STORAGE
+                    )
+                            .subscribe(new Action1<Boolean>() {
+                                @Override
+                                public void call(Boolean aBoolean) {
+                                    if (aBoolean) {
+                                        setPhoto(1);
+                                        type = 1;
+                                    } else {
+                                        showToast(getString(R.string.no_permissions));
+                                    }
+                                }
+                            });
+                break;
+            case R.id.re_pwd://修改密码
+                if (bean != null)
+                    ForgetPasswordActivity.toActivity(this, mType, bean.getPhone());
+                break;
+            case R.id.re_bind://修改手机
+                if (bean != null)
+                    UpdatePhotoActivity.toActivity(this, mType, bean.getPhone());
+                break;
+            case R.id.activity_user_info_tv_login_out://退出登录
+                new AlertDialog.Builder(this).setTitle(R.string.login_out).setMessage("是否退出登录")
+                        .setPositiveButton(R.string.warn_confirm, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                loginOut();
+                            }
+                        }).setNegativeButton(R.string.warn_cancel, null).create().show();
                 break;
         }
-        RxPermissions rxPermission = new RxPermissions(mActivity);
-        rxPermission.request(
-                Manifest.permission.CAMERA,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-        )
-                .subscribe(new Action1<Boolean>() {
-                    @Override
-                    public void call(Boolean aBoolean) {
-                        if (aBoolean) {
-                            switch (view.getId()) {
-                                case R.id.re_revise_photo://头像
-                                    setPhoto(1);
-                                    type = 1;
-                                    break;
-                                case R.id.re_sex://性别
-//            change_sex();
-                                case R.id.re_age://年龄
-//            showDatePicker();
-                                case R.id.rl_name://姓名
-                                case R.id.re_idcard://身份证号码
-                                case R.id.rl_idcard_photo://身份证照片
-                                case R.id.re_face://实名制认证
-                                    changeReal();
-                                    break;
-                                case R.id.re_bind://修改手机
-                                    if (bean.getIs_identity() != 1)
-                                        NewFaceDectectActivity.toActivity(mActivity, 1);
-                                    else
-                                        showWarmDialog(3);
-                                    break;
-
-                            }
-                        }else{
-                            showToast(getString(R.string.no_permissions));
-                        }
-                    }
-                });
-
     }
 
-    public void change_sex() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this); //定义一个AlertDialog
-        final String[] strarr = {"男", "女"};
-        builder.setItems(strarr, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface arg0, int arg1) {
-                // 自动生成的方法存根
-                if (arg1 == 0) {//男
-                    sex = "1";
-                    mTvSexDetail.setText("男");
-                } else {//女
-                    sex = "2";
-                    mTvSexDetail.setText("女");
-                }
-            }
-        });
-        builder.show();
-    }
-
-    //展示时间选择器
-    private void showDatePicker() {
-        long tenYears = 100L * 365 * 1000 * 60 * 60 * 24L;
-        mDialogAll = new TimePickerDialog.Builder()
-                .setCallBack(this)
-                .setCancelStringId("取消")
-                .setSureStringId("确定")
-                .setTitleStringId(time)
-                .setYearText("年")
-                .setMonthText("月")
-                .setDayText("日")
-                .setCyclic(false)
-                .setMinMillseconds(System.currentTimeMillis() - tenYears)
-                .setMaxMillseconds(System.currentTimeMillis())
-                .setCurrentMillseconds(System.currentTimeMillis())
-                .setThemeColor(getResources().getColor(R.color.timepicker_toolbar_bg))
-                .setType(Type.YEAR_MONTH_DAY)
-                .setWheelItemTextNormalColor(getResources().getColor(R.color.timetimepicker_default_text_color))
-                .setWheelItemTextSelectorColor(getResources().getColor(R.color.timepicker_toolbar_bg))
-                .setWheelItemTextSize(19)
-                .build();
-        mDialogAll.show(getSupportFragmentManager(), "YEAR_MONTH_DAY");
-    }
 
     private void changeReal() {
         if (bean.getIs_identity() != 1)
@@ -328,17 +269,6 @@ public class UserInfoActivity extends BaseActivity implements CustompopupWindow.
      */
     private void requestPermission() {
         if (Build.VERSION.SDK_INT >= 23) {
-            /*if ((ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) &&
-                    (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)) {
-                //请求获取录音权限
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, PHOTO_REQUEST_CODE);
-            } else {
-                if (hasSdcard()) {
-                    initPhoto();   //  调用拍照弹出框获取图片
-                } else {
-                    Toast.makeText(this, "设备没有SD卡", Toast.LENGTH_SHORT).show();
-                }
-            }*/
             requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PHOTO_REQUEST_CODE);
         } else {
             //系统不高于6.0直接执行
@@ -412,11 +342,6 @@ public class UserInfoActivity extends BaseActivity implements CustompopupWindow.
         // 开启 popup 时界面透明
         WindowManager.LayoutParams lp = this.getWindow().getAttributes();
         lp.alpha = 0.7f;
-//                if (bgAlpha == 1) {
-//                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);//不移除该Flag的话,在有视频的页面上的视频会出现黑屏的bug
-//                } else {
-//                    getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);//此行代码主要是解决在华为手机上半透明效果无效的bug
-//                }
         this.getWindow().setAttributes(lp);
         // popupwindow 第一个参数指定popup 显示页面
         pop.showAtLocation(this.findViewById(R.id.lin_user_info), Gravity.BOTTOM | Gravity.CENTER_VERTICAL, 0, 0);     // 第一个参数popup显示activity页面
@@ -579,22 +504,8 @@ public class UserInfoActivity extends BaseActivity implements CustompopupWindow.
                         if (uploadRecordBeanDataInfo.success()) {
                             if (type == 1) {
                                 headName = uploadRecordBeanDataInfo.data().getFilename();
-                                picPath=uploadRecordBeanDataInfo.data().getThumb_url();
+                                picPath = uploadRecordBeanDataInfo.data().getThumb_url();
                                 updateInfo();
-                            }
-                            if (type == 2) {
-                                frontName = uploadRecordBeanDataInfo.data().getFilename();
-                                Picasso.get().load(file).memoryPolicy(MemoryPolicy.NO_CACHE)
-                                        .networkPolicy(NetworkPolicy.NO_CACHE).into(mIvFront);
-                                mTvFront.setVisibility(View.GONE);
-                                mIvFront.setVisibility(View.VISIBLE);
-                            }
-                            if (type == 3) {
-                                backName = uploadRecordBeanDataInfo.data().getFilename();
-                                Picasso.get().load(file).memoryPolicy(MemoryPolicy.NO_CACHE)
-                                        .networkPolicy(NetworkPolicy.NO_CACHE).into(mIvBack);
-                                mTvBack.setVisibility(View.GONE);
-                                mIvBack.setVisibility(View.VISIBLE);
                             }
 
                         } else {
@@ -607,7 +518,6 @@ public class UserInfoActivity extends BaseActivity implements CustompopupWindow.
 
     private void updateInfo() {
         showLoadingDialog();
-        Observable observable = null;
         Subscription subscription = SecondRetrofitHelper.getInstance().updateHead(headName)
                 .compose(RxUtil.<DataInfo>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo>() {
@@ -635,28 +545,6 @@ public class UserInfoActivity extends BaseActivity implements CustompopupWindow.
         addSubscrebe(subscription);
     }
 
-    //  日期选择器
-    @Override
-    public void onDateSet(TimePickerDialog timePickerView, long millseconds) {
-
-        birthday = getDateToString(millseconds);
-        SimpleDateFormat formate = new SimpleDateFormat("yyyy");
-
-        int nowYear = Integer.parseInt(formate.format(new Date()));
-        int year = Integer.parseInt(formate.format(millseconds));
-        String age = String.valueOf(nowYear - year);
-        mTvAgeDetail.setText(age);
-
-
-    }
-
-    SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
-
-    public String getDateToString(long time) {
-        Date d = new Date(time);
-        return sf.format(d);
-    }
-
     private void showWarmDialog(final int type) {
         if (type == 3) {
             new AlertDialog.Builder(this).setTitle(R.string.setting_user_title_real)
@@ -664,7 +552,7 @@ public class UserInfoActivity extends BaseActivity implements CustompopupWindow.
                     .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            FaceDetectActivity.toActivity(UserInfoActivity.this, type);
+                            CertificationActivity.toActivity(UserInfoActivity.this, type);
                         }
                     })
                     .setNegativeButton(R.string.common_cancel, new DialogInterface.OnClickListener() {
@@ -679,7 +567,7 @@ public class UserInfoActivity extends BaseActivity implements CustompopupWindow.
                     .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            FaceDetectActivity.toActivity(UserInfoActivity.this, type);
+                            CertificationActivity.toActivity(UserInfoActivity.this, type);
                         }
                     })
                     .setNegativeButton(R.string.common_cancel, new DialogInterface.OnClickListener() {
@@ -690,5 +578,28 @@ public class UserInfoActivity extends BaseActivity implements CustompopupWindow.
                     }).create().show();
         }
     }
+
+
+    private void loginOut() {
+        LoginUserBean.getInstance().reset();
+        LoginUserBean.getInstance().save();
+        if (mType == LoginInfo.LANDLORD)
+            LoginNewActivity.toLandlordActivity(mActivity);
+        else
+            LoginNewActivity.toTenantActivity(mActivity);
+        finish();
+    }
+
+    private String getVerName(Context context) {
+        String verName = "";
+        try {
+            verName = context.getPackageManager().
+                    getPackageInfo(context.getPackageName(), 0).versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return verName;
+    }
+
 
 }

@@ -6,8 +6,10 @@ package com.konka.renting.event;
 
 public class ToSearchResultEvent {
     public String content;
+    public String city;
 
-    public ToSearchResultEvent(String content) {
+    public ToSearchResultEvent(String content,String city) {
         this.content = content;
+        this.city = city;
     }
 }

@@ -83,7 +83,7 @@ public class LoginNewActivity extends BaseActivity implements CompoundButton.OnC
     private static void toActivity(Context context, int type) {
         Intent intent = new Intent(context, LoginNewActivity.class);
         intent.putExtra("type", type);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 

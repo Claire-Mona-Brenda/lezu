@@ -22,7 +22,7 @@ public class RenterSearchListBean {
     private String room_name;
     private String address;
     private int room_status;
-    private int type;
+    private int type;//出租类型 1短租 2长租
     private String housing_price;
     private int total_floor;
     private int floor;

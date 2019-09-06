@@ -102,16 +102,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_10"
             android:background="@color/style_bg_card_1" />
-        <TextView
-            android:id="@+id/tv_quit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/color_ffffff"
-            android:gravity="center"
-            android:padding="@dimen/dp_20"
-            android:text="@string/login_out"
-            android:textColor="@color/text_org"
-            android:textSize="@dimen/style_text_context" />
+
     </LinearLayout>
 
 </RelativeLayout>

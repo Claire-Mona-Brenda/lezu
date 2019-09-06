@@ -16,7 +16,9 @@ import android.widget.TextView;
 import com.amap.api.services.core.PoiItem;
 import com.konka.renting.R;
 import com.konka.renting.base.BaseActivity;
+import com.konka.renting.bean.RoomGroupListBean;
 import com.konka.renting.event.AddHouseCompleteEvent;
+import com.konka.renting.event.ChooseEstateEvent;
 import com.konka.renting.landlord.house.ChooseLocationEvent;
 
 import butterknife.BindView;
@@ -44,7 +46,7 @@ public class AddHouseAddressActivity extends BaseActivity {
     @BindView(R.id.activity_add_house_address_ll_real_location)
     LinearLayout mLlRealLocation;
 
-    PoiItem mPoiItem;
+    RoomGroupListBean groupListBean;
 
     public static void toActivity(Context context) {
         Intent intent = new Intent(context, AddHouseAddressActivity.class);
@@ -66,11 +68,11 @@ public class AddHouseAddressActivity extends BaseActivity {
         tvRight.setTextColor(getResources().getColor(R.color.text_blue));
         tvRight.setVisibility(View.VISIBLE);
 
-        addRxBusSubscribe(ChooseLocationEvent.class, new Action1<ChooseLocationEvent>() {
+        addRxBusSubscribe(ChooseEstateEvent.class, new Action1<ChooseEstateEvent>() {
             @Override
-            public void call(ChooseLocationEvent event) {
-                mPoiItem = event.getPoiItem();
-                mTvLocation.setText(mPoiItem.getSnippet());
+            public void call(ChooseEstateEvent event) {
+                groupListBean = event.getRoomGroupListBean();
+                mTvLocation.setText(groupListBean.getName());
                 mTvLocation.setTextColor(getResources().getColor(R.color.text_black));
             }
         });
@@ -91,18 +93,18 @@ public class AddHouseAddressActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_right:
-                if (mPoiItem == null) {
+                if (groupListBean == null) {
                     showToast(R.string.add_house_choose_location_tips);
                     return;
                 }
-                if (TextUtils.isEmpty(mEdtRealLocation.getText().toString().replace(" ",""))) {
+                if (TextUtils.isEmpty(mEdtRealLocation.getText().toString().replace(" ", ""))) {
                     showToast(R.string.please_fill_real_location);
                     return;
                 }
-                AddHouseInfoActivity.toActivity(this, mPoiItem,mEdtRealLocation.getText().toString());
+                AddHouseInfoActivity.toActivity(this, groupListBean, mEdtRealLocation.getText().toString());
                 break;
             case R.id.activity_add_house_address_ll_location:
-                ChooseLocationActivity.toActivity(this);
+                ChooseEstateActivity.toActivity(this,"");
                 break;
         }
     }

@@ -2,6 +2,7 @@ package com.konka.renting.landlord.user.userinfo;
 
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -29,7 +30,13 @@ import com.baidu.ocr.sdk.OnResultListener;
 import com.baidu.ocr.sdk.exception.OCRError;
 import com.baidu.ocr.sdk.model.AccessToken;
 import com.baidu.ocr.ui.camera.PermissionCallback;
+import com.konka.renting.R;
+import com.konka.renting.bean.DataInfo;
 import com.konka.renting.bean.LoginUserBean;
+import com.konka.renting.bean.UploadPicBean;
+import com.konka.renting.event.RenZhengSuccessEvent;
+import com.konka.renting.http.SecondRetrofitHelper;
+import com.konka.renting.http.subscriber.CommonSubscriber;
 import com.konka.renting.landlord.house.widget.ShowToastUtil;
 import com.konka.renting.utils.APIService;
 import com.konka.renting.utils.Config;
@@ -37,6 +44,8 @@ import com.konka.renting.utils.FaceCropper;
 import com.konka.renting.utils.FaceException;
 import com.konka.renting.utils.LivenessVsIdcardResult;
 import com.konka.renting.utils.RxBus;
+import com.konka.renting.utils.RxUtil;
+import com.konka.renting.utils.UIUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -45,15 +54,37 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import rx.Subscription;
 import rx.functions.Action1;
+import rx.subscriptions.CompositeSubscription;
 
 public class FaceDetectActivity extends FaceLivenessActivity {
 
     private int type;
+    String name;
+    String idCard;
+    String faceImg;
+    String backImg;
+    String sex;
+    String birthDay;
+    String photoUrlName;
+    private String start_time;
+    private String end_time;
 
-    public static void toActivity(Context context, int type) {
+    public static void toActivity(Context context, int type, String name, String idCard, String faceImg, String backImg, String sex, String birthDay, String start_time, String end_time) {
         Intent intent = new Intent(context, FaceDetectActivity.class);
-        intent.putExtra("type",type);
+        intent.putExtra("type", type);
+        intent.putExtra("name", name);
+        intent.putExtra("idCard", idCard);
+        intent.putExtra("faceImg", faceImg);
+        intent.putExtra("backImg", backImg);
+        intent.putExtra("sex", sex);
+        intent.putExtra("birthDay", birthDay);
+        intent.putExtra("start_time", start_time);
+        intent.putExtra("end_time", end_time);
         context.startActivity(intent);
     }
 
@@ -81,7 +112,17 @@ public class FaceDetectActivity extends FaceLivenessActivity {
         super.onCreate(savedInstanceState);
         initFaceSDK();
         initAccessTokenLicenseFile();
-        type = getIntent().getIntExtra("type",1);
+        type = getIntent().getIntExtra("type", 1);
+        name = getIntent().getStringExtra("name");
+        idCard = getIntent().getStringExtra("idCard");
+        faceImg = getIntent().getStringExtra("faceImg");
+        backImg = getIntent().getStringExtra("backImg");
+        sex = getIntent().getStringExtra("sex");
+        birthDay = getIntent().getStringExtra("birthDay");
+        start_time = getIntent().getStringExtra("start_time");
+        end_time = getIntent().getStringExtra("end_time");
+
+
         alertDialog = new AlertDialog.Builder(this);
         alertlllDialog = new AlertDialog.Builder(this);
         RxBus.getDefault().toDefaultObservable(FaceDetectActivity.class, new Action1<FaceDetectActivity>() {
@@ -150,12 +191,12 @@ public class FaceDetectActivity extends FaceLivenessActivity {
         if (status == FaceStatusEnum.OK && mIsCompletion) {
             // Toast.makeText(this, "活体检测成功", Toast.LENGTH_SHORT).show();
             saveImage(base64ImageMap);
-            alertText("检测结果", "活体检测成功",true);
+            alertText("检测结果", "活体检测成功", true);
         } else if (status == FaceStatusEnum.Error_DetectTimeout ||
                 status == FaceStatusEnum.Error_LivenessTimeout ||
                 status == FaceStatusEnum.Error_Timeout) {
             // Toast.makeText(this, "活体检测采集超时", Toast.LENGTH_SHORT).show();
-            alertText("检测结果", "活体检测采集超时",false);
+            alertText("检测结果", "活体检测采集超时", false);
         }
     }
 
@@ -276,14 +317,14 @@ public class FaceDetectActivity extends FaceLivenessActivity {
                                /* Intent intent = new Intent();
                                 intent.putExtra("bestimage_path", bestImagePath);
                                 setResult(Activity.RESULT_OK, intent);*/
-                               if (isLive) {
-                                   if (type == 3) {
-                                       initAccessToken();
-                                   } else {
-                                       CertificationActivity.toActivity(FaceDetectActivity.this, bestImagePath, type);
-                                   }
-                               }
-                                finish();
+                                if (isLive) {
+                                    if (type == 3) {
+                                        initAccessToken();
+                                    } else {
+//                                        CertificationActivity.toActivity(FaceDetectActivity.this, type);
+                                        uploadPic(new File(bestImagePath));
+                                    }
+                                }
                             }
                         })
                         .show();
@@ -322,6 +363,7 @@ public class FaceDetectActivity extends FaceLivenessActivity {
             }
         });
     }
+
     // 在线活体检测和公安核实需要使用该token，为了防止ak、sk泄露，建议在线活体检测和公安接口在您的服务端请求
     private void initAccessToken() {
         APIService.getInstance().init(getApplicationContext());
@@ -335,12 +377,12 @@ public class FaceDetectActivity extends FaceLivenessActivity {
                 } else if (result != null) {
                     /*displayTip("获取token", "在线活体token获取失败");
                     retBtn.setVisibility(View.VISIBLE);*/
-                    ShowToastUtil.showNormalToast(FaceDetectActivity.this,"在线活体token获取失败");
+                    ShowToastUtil.showNormalToast(FaceDetectActivity.this, "在线活体token获取失败");
                     finish();
                 } else {
                     /*displayTip(resultTipTV, "在线活体token获取失败");
                     retBtn.setVisibility(View.VISIBLE);*/
-                    ShowToastUtil.showNormalToast(FaceDetectActivity.this,"在线活体token获取失败");
+                    ShowToastUtil.showNormalToast(FaceDetectActivity.this, "在线活体token获取失败");
                     finish();
                 }
             }
@@ -350,7 +392,7 @@ public class FaceDetectActivity extends FaceLivenessActivity {
                 // TODO 错误处理
                /* displayTip(resultTipTV, "在线活体token获取失败");
                 retBtn.setVisibility(View.VISIBLE);*/
-                ShowToastUtil.showNormalToast(FaceDetectActivity.this,"在线活体token获取失败");
+                ShowToastUtil.showNormalToast(FaceDetectActivity.this, "在线活体token获取失败");
                 finish();
             }
         }, Config.apiKey, Config.secretKey);
@@ -370,24 +412,24 @@ public class FaceDetectActivity extends FaceLivenessActivity {
     private void policeVerify(final String filePath) {
         File file = new File(filePath);
         if (!file.exists()) {
+            showToast(R.string.warm_fail_file);
+            finish();
             return;
         }
-        APIService.getInstance().policeVerify( LoginUserBean.getInstance().getRealname(),  LoginUserBean.getInstance().getIdentity(), filePath, new
+        APIService.getInstance().policeVerify(name, idCard, filePath, new
                 com.konka.renting.utils.OnResultListener<LivenessVsIdcardResult>() {
                     @Override
                     public void onResult(LivenessVsIdcardResult result) {
-                        delete(filePath);
                         if (result != null && result.getResult().getScoreX() >= 80) {
-                            BindMobileActivity.toActivity(FaceDetectActivity.this);
+                            sure();
                         } else {
-                            ShowToastUtil.showNormalToast(FaceDetectActivity.this,"核身失败");
+                            ShowToastUtil.showNormalToast(FaceDetectActivity.this, "核身失败");
+                            finish();
                         }
-                        finish();
                     }
 
                     @Override
                     public void onError(FaceException error) {
-                        delete(filePath);
                         //displayTip(resultTipTV, "核身失败：" + error.getErrorMessage());
                         //showToast("核身失败:"+ error.getErrorMessage());
                         // TODO 错误处理
@@ -399,11 +441,145 @@ public class FaceDetectActivity extends FaceLivenessActivity {
                     }
                 });
     }
-    private void delete(String filePath) {
-        File file = new File(filePath);
-        if (file.exists()) {
-            file.delete();
+
+
+    /**
+     * 提交认证
+     */
+    private void sure() {
+        Subscription subscription = SecondRetrofitHelper.getInstance().identityAuth(name, idCard,
+                faceImg, backImg, photoUrlName, sex, birthDay, start_time, end_time)
+                .compose(RxUtil.<DataInfo>rxSchedulerHelper())
+                .subscribe(new CommonSubscriber<DataInfo>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        dismissLoadingDialog();
+                        showToast(R.string.warm_fail_face);
+                    }
+
+                    @Override
+                    public void onNext(DataInfo dataInfo) {
+                        dismissLoadingDialog();
+                        if (dataInfo.success()) {
+                            LoginUserBean.getInstance().setIs_lodge_identity("1");
+                            LoginUserBean.getInstance().setRealname(name);
+                            LoginUserBean.getInstance().setIdentity(idCard);
+                            RxBus.getDefault().post(new RenZhengSuccessEvent());
+                            FaceSuccessActivity.toActivity(FaceDetectActivity.this);
+                            finish();
+                        } else {
+                            showToast(dataInfo.msg() + "," + getString(R.string.warm_fail_face));
+                            finish();
+                        }
+                    }
+                });
+        addSubscrebe(subscription);
+    }
+
+    private void uploadPic(final File file) {
+        showLoadingDialog();
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+        RequestBody fullName = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        Subscription subscription = SecondRetrofitHelper.getInstance().uploadPic(fullName, body)
+                .compose(RxUtil.<DataInfo<UploadPicBean>>rxSchedulerHelper())
+                .subscribe(new CommonSubscriber<DataInfo<UploadPicBean>>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        dismissLoadingDialog();
+                        doFailed();
+                    }
+
+                    @Override
+                    public void onNext(DataInfo<UploadPicBean> uploadRecordBeanDataInfo) {
+
+
+                        if (uploadRecordBeanDataInfo.success()) {
+                            photoUrlName = uploadRecordBeanDataInfo.data().getFilename();
+                            initAccessToken();
+                        } else {
+                            dismissLoadingDialog();
+                            showToast(uploadRecordBeanDataInfo.msg());
+                        }
+                    }
+                });
+        addSubscrebe(subscription);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unSubscribe();
+    }
+
+    /******************************************BaseActivity*******************************************************/
+    protected CompositeSubscription mCompositeSubscription;
+    protected ProgressDialog mPDialog;
+
+    public void showLoadingDialog() {
+        if (mPDialog == null) {
+            mPDialog = new ProgressDialog(this);
+            mPDialog.setMessage(getString(R.string.loading));
         }
+        mPDialog.show();
+    }
+
+    public void dismissLoadingDialog() {
+        if (mPDialog != null)
+            mPDialog.dismiss();
+    }
+
+    public void showToast(String string) {
+        UIUtils.displayToast(string);
+    }
+
+    public void showToast(int id) {
+        UIUtils.displayToast(getString(id));
+    }
+
+    public void doFailed() {
+        UIUtils.showFailed();
+    }
+
+    public void doSuccess() {
+        UIUtils.showSuccess();
+    }
+
+    /**
+     * 取消订阅
+     */
+    protected void unSubscribe() {
+        if (mCompositeSubscription != null) {
+            mCompositeSubscription.unsubscribe();
+            mCompositeSubscription = null;
+        }
+    }
+
+    /**
+     * 添加订阅
+     *
+     * @param subscription
+     */
+    public void addSubscrebe(Subscription subscription) {
+        if (mCompositeSubscription == null) {
+            mCompositeSubscription = new CompositeSubscription();
+        }
+        mCompositeSubscription.add(subscription);
+    }
+
+
+    /**
+     * 管理各组件之间的通信
+     *
+     * @param eventType
+     * @param act
+     * @param <U>
+     */
+    protected <U> void addRxBusSubscribe(Class<U> eventType, Action1<U> act) {
+        if (mCompositeSubscription == null) {
+            mCompositeSubscription = new CompositeSubscription();
+        }
+        mCompositeSubscription.add(RxBus.getDefault().toDefaultObservable(eventType, act));
     }
 
 }

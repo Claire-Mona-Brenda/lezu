@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/common_bg"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-       android:background="@color/color_ffffff">
+       android:background="@color/color_ffffff"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10">
         <RelativeLayout
             android:id="@+id/tv_rent_people"
             style="@style/rl_main_user_top_drawable">
             <ImageView
                 android:id="@+id/img_rent_people"
                 style="@style/img_main_user_top_drawable"
-                android:src="@mipmap/zuke_icon" />
+                android:src="@mipmap/tenants_icon" />
             <TextView
                 style="@style/tv_main_user_top_drawable"
                 android:text="@string/tenanter_title"
@@ -27,7 +28,7 @@
             <ImageView
                 android:id="@+id/img_bill"
                 style="@style/img_main_user_top_drawable"
-                android:src="@mipmap/zhangdan_icon" />
+                android:src="@mipmap/bill_icon" />
             <TextView
                 style="@style/tv_main_user_top_drawable"
                 android:text="@string/bill_title"
@@ -39,7 +40,7 @@
             <ImageView
                 android:id="@+id/img_collection"
                 style="@style/img_main_user_top_drawable"
-                android:src="@mipmap/cuizhang_icon" />
+                android:src="@mipmap/collection" />
             <TextView
                 style="@style/tv_main_user_top_drawable"
                 android:text="@string/bill_collection"
@@ -52,7 +53,7 @@
                 android:id="@+id/img_message"
                 style="@style/img_main_user_top_drawable"
                 android:layout_width="@dimen/dp_70"
-                android:src="@mipmap/xiaoxi_icon" />
+                android:src="@mipmap/msg_icon" />
             <TextView
                 style="@style/tv_main_user_top_drawable"
                 android:text="@string/message"
@@ -62,7 +63,7 @@
                 android:id="@+id/tv_message_sum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignRight="@+id/img_message"
+                android:layout_alignEnd="@+id/img_message"
                 android:layout_alignTop="@+id/img_message"
                 android:background="@drawable/shape_ren_point"
                 android:gravity="center"
@@ -73,145 +74,72 @@
                 android:textSize="@dimen/style_text_tips" />
         </RelativeLayout>
 
-
-
     </LinearLayout>
-    <!--<TextView-->
-        <!--android:id="@+id/tv_with_cash"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="@dimen/dp_45"-->
-        <!--android:layout_marginTop="@dimen/dp_20"-->
-        <!--android:background="@color/color_ffffff"-->
-        <!--android:drawableRight="@mipmap/icon_right"-->
-        <!--android:gravity="center_vertical"-->
-        <!--android:paddingLeft="@dimen/dp_10"-->
-        <!--android:paddingRight="@dimen/dp_15"-->
-        <!--android:text="交易记录"-->
-        <!--android:textSize="@dimen/sp_13" />-->
-    <!--<TextView-->
-        <!--android:id="@+id/tv_user_income_profile"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="@dimen/dp_45"-->
-        <!--android:layout_marginTop="@dimen/dp_1"-->
-        <!--android:background="@color/color_ffffff"-->
-        <!--android:drawableRight="@mipmap/icon_right"-->
-        <!--android:gravity="center_vertical"-->
-        <!--android:paddingLeft="@dimen/dp_10"-->
-        <!--android:paddingRight="@dimen/dp_15"-->
-        <!--android:text="@string/income_profile"-->
-        <!--android:textSize="@dimen/sp_13" />-->
-    <!--<TextView-->
-        <!--android:id="@+id/tv_lock_pwd"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="@dimen/dp_45"-->
-        <!--android:layout_marginTop="@dimen/dp_1"-->
-        <!--android:background="@color/color_ffffff"-->
-        <!--android:drawableRight="@mipmap/icon_right"-->
-        <!--android:gravity="center_vertical"-->
-        <!--android:paddingLeft="@dimen/dp_10"-->
-        <!--android:paddingRight="@dimen/dp_15"-->
-        <!--android:text="@string/open_door_pwd"-->
-        <!--android:textSize="@dimen/sp_13" />-->
-    <!--<TextView-->
-        <!--android:id="@+id/tv_user_rent_out_income"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="@dimen/dp_45"-->
-        <!--android:layout_marginTop="@dimen/dp_1"-->
-        <!--android:background="@color/color_ffffff"-->
-        <!--android:drawableRight="@mipmap/icon_right"-->
-        <!--android:gravity="center_vertical"-->
-        <!--android:paddingLeft="@dimen/dp_10"-->
-        <!--android:paddingRight="@dimen/dp_15"-->
-        <!--android:text="@string/rent_out_income"-->
-        <!--android:textSize="@dimen/sp_13" />-->
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_33"
+        android:layout_marginStart="@dimen/dp_25"
+        android:layout_marginEnd="@dimen/dp_25"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:textSize="@dimen/sp_16"
+            android:textColor="@color/text_black"
+            android:text="@string/certification"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:textSize="@dimen/sp_16"
+            android:textColor="@color/text_black"
+            android:text="@string/problem"/>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_10"
-        android:paddingLeft="@dimen/dp_30"
-        android:background="@drawable/shape_user"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/tv_setting"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_50"
-            android:drawableRight="@mipmap/icon_right"
-            android:gravity="center_vertical"
-            android:paddingRight="@dimen/dp_20"
-            android:text="@string/user_setting"
-            android:textSize="@dimen/sp_14" />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_1"
-            android:background="@color/common_bg"/>
-        <TextView
-            android:id="@+id/tv_change_pwd"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_50"
-            android:drawableRight="@mipmap/icon_right"
-            android:gravity="center_vertical"
-            android:paddingRight="@dimen/dp_20"
-            android:text="@string/change_pwd"
-            android:textSize="@dimen/sp_14" />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_1"
-            android:background="@color/common_bg"/>
-
-        <TextView
-            android:id="@+id/tv_problem"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_50"
-            android:drawableRight="@mipmap/icon_right"
-            android:gravity="center_vertical"
-            android:paddingRight="@dimen/dp_20"
-            android:text="@string/problem"
-            android:textSize="@dimen/sp_14" />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_1"
-            android:background="@color/common_bg"/>
-        <TextView
-            android:id="@+id/tv_call_us"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_50"
-            android:drawableRight="@mipmap/icon_right"
-            android:gravity="center_vertical"
-            android:paddingRight="@dimen/dp_20"
-            android:text="@string/service"
-            android:textSize="@dimen/sp_14" />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_1"
-            android:background="@color/common_bg"/>
-        <TextView
-            android:id="@+id/tv_after_the_process"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_50"
-            android:drawableRight="@mipmap/icon_right"
-            android:gravity="center_vertical"
-            android:paddingRight="@dimen/dp_20"
-            android:text="@string/after_the_process"
-            android:textSize="@dimen/sp_14"
-            />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_1"
-            android:background="@color/common_bg"
-            />
-        <TextView
-            android:id="@+id/tv_login_out"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_50"
-            android:drawableRight="@mipmap/icon_right"
-            android:gravity="center_vertical"
-            android:paddingRight="@dimen/dp_20"
-            android:text="@string/login_out"
-            android:textSize="@dimen/sp_14" />
-
+        android:layout_marginStart="@dimen/dp_25"
+        android:layout_marginEnd="@dimen/dp_25"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/img_face"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@mipmap/certification_png"/>
+        <ImageView
+            android:id="@+id/img_problem"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@mipmap/questions_png"/>
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_25"
+        android:layout_marginTop="@dimen/dp_10"
+        android:textStyle="bold"
+        android:textSize="@dimen/sp_16"
+        android:textColor="@color/text_black"
+        android:text="@string/underline_service"/>
+    <ImageView
+        android:id="@+id/img_call_us"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_25"
+        android:layout_marginEnd="@dimen/dp_30"
+        android:src="@mipmap/service_png"
+        android:layout_marginBottom="@dimen/dp_40"/>
+
 
 
 

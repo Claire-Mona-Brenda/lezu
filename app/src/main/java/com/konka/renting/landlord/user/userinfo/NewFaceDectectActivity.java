@@ -38,7 +38,7 @@ public class NewFaceDectectActivity extends BaseActivity {
 
     @Override
     public void init() {
-        setTitleText("实名认证");
+        setTitleText(getString(R.string.certification));
         type = getIntent().getIntExtra("type",1);
         alertDialog = new AlertDialog.Builder(this);
         addRxBusSubscribe(FaceDectectEvent.class, new Action1<FaceDectectEvent>() {
@@ -81,7 +81,8 @@ public class NewFaceDectectActivity extends BaseActivity {
                //initAccessToken();
                 //FaceOnlineVerifyActivity.toActivity(this);
                 //CertificationActivity.toActivity(this);
-                FaceDetectActivity.toActivity(this,type);
+//                FaceDetectActivity.toActivity(this,type);
+                CertificationActivity.toActivity(this,type);
                 finish();
                 break;
         }

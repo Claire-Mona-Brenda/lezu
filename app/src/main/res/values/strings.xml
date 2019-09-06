@@ -68,6 +68,7 @@
     <string name="age">年龄</string>
     <string name="bind_mobile">修改手机</string>
     <string name="idcard_mobile">身份证号码</string>
+    <string name="idcard_date">证件有效期</string>
     <string name="input_idcard">请输入身份证号码</string>
     <string name="idcard_photo">身份证正反面照</string>
     <string name="upload_front">上传正面</string>
@@ -130,11 +131,11 @@
     <string name="re_radio">重录</string>
     <string name="upload">上传</string>
     <string name="certification">实名认证</string>
-    <string name="please_photo_camera">请拍摄以下证件照片，注意避免证件反光：</string>
-    <string name="idcard_head">身份证人像面</string>
-    <string name="idcard_national_emblem">身份证国徽面</string>
+    <string name="please_photo_camera">请拍摄以下证件照片，注意避免证件反光</string>
+    <string name="idcard_head">上传身份证正面</string>
+    <string name="idcard_national_emblem">上传身份证背面</string>
     <string name="immediately_photo">立即拍照</string>
-    <string name="please_confirm">请确认以下信息是否与你证件上的一致:</string>
+    <string name="please_confirm">请确认以下信息是否与你证件上的一致</string>
     <string name="idcard">身份证</string>
     <string name="text_revise">修改</string>
     <string name="text_change_payway">申请变更交租方式为线下付款,等待房东确认</string>
@@ -173,6 +174,17 @@
     <string name="balance_pay">钱包支付</string>
     <string name="please_balance_pay">是否从钱包余额中扣除</string>
     <string name="no_permissions">未取得相机相关权限，请在手机设置启用相机相关权限后再进行操作</string>
+
+    <!--租客端首页-->
+    <string name="map_find_house">地图找房</string>
+    <string name="competitive_house">精品房源</string>
+    <string name="competitive_short">热门短租</string>
+    <string name="recommend_for_you">为您推荐</string>
+    <string name="recommend_for_you_long">长租推荐</string>
+    <string name="recommend_for_you_short">短租推荐</string>
+    <string name="competitive_house_long">长租房源</string>
+    <string name="competitive_house_short">短租房源</string>
+    <string name="more">更多</string>
 
     <!--房客(tenant)-->
     <string name="tenant_main_findroom">找房</string>
@@ -243,7 +255,6 @@
     <string name="toach_copy_to_clipboard">已成功复制到剪贴板内</string>
 
 
-
     <string name="guide_one_title_txt">个性编辑，轻松操控</string>
     <string name="guide_two_title_txt">远程掌控，及时通知</string>
     <string name="guide_three_title_txt">智能安防，轻松离家</string>
@@ -254,7 +265,7 @@
     <string name="apply_house_call_tenant">联系租客</string>
     <string name="remark">备注留言</string>
 
-    
+
     <!--订单列表/订单详情-->
     <string name="order_info_title">订单详情</string>
     <string name="apply_ing">申请订单</string>
@@ -315,7 +326,6 @@
     <string name="order_create_success">订单生成成功</string>
 
 
-
     <string name="apply">申请</string>
 
     <string name="rent_cancle_to_end">取消退房</string>
@@ -329,7 +339,7 @@
     <string name="order_status_5">过期</string>
     <string name="order_status_6">租客取消</string>
     <string name="order_status_7">房东取消</string>
-    
+
     <string name="order_title_underway">进行中</string>
     <string name="order_title_done">已完成</string>
 
@@ -449,10 +459,23 @@
     <string name="forget_password_sure">再次确认</string>
     <string name="forget_password_sure_hint">请再次输入密码</string>
 
+    <!--修改手机-->
+    <string name="update_phone_title">修改手机号</string>
+    <string name="now_phone_tips">当前手机号：</string>
+    <string name="new_phone_tips">新手机号</string>
+    <string name="update_phone_input_phone_hint">请输入手机号码</string>
+    <string name="update_phone_input_code_hint">请输入验证码</string>
+    <string name="update_phone_input_code_tips">短信验证码已发送，请填写验证码</string>
+    <string name="update_phone_code_warm">验证码获取失败，请重新获取</string>
+    <string name="update_phone_warm">该手机号码已注册，不能用于替换</string>
+    <string name="update_phone_success">手机号码修改成功，请重新登录</string>
+
     <!--城市定位-->
     <string name="choose_city">选择城市</string>
+    <string name="choose_location">切换位置</string>
     <string name="open_location_service">手机未开启位置服务,请在设置里将位置服务打开</string>
     <string name="to_open_location_service">去设置</string>
+    <string name="choose_location_address_name">请输入地理位置/房屋名称</string>
 
     <!--房东房产-->
     <string name="add_house">添加房产</string>
@@ -522,7 +545,7 @@
     <string name="add_house_house_pic">上传房产图片</string>
     <string name="add_house_house_submit">提交</string>
     <string name="add_house_house_submit_tips_1">*每项房产安装门锁设备需要支付200元安装费用*</string>
-    
+
     <string name="nothing">无</string>
 
     <string name="unit_m2">平方米</string>
@@ -545,8 +568,12 @@
     <string name="add_house_fill_address_tips">具体填写以下地址信息，准确定位房产位置</string>
     <string name="add_house_choose_location">选择定位</string>
     <string name="add_house_choose_location_tips">请选择房产定位</string>
+    <string name="add_house_choose_estate">选择小区</string>
+    <string name="add_house_choose_estate_tips">请选择所在小区</string>
     <string name="add_house_choose_real_location">楼栋门牌</string>
     <string name="add_house_choose_real_location_tips">例：福德公寓3栋412</string>
+
+    <string name="add_estate_tips">搜索不到？自己来添加一个！</string>
 
     <string name="title_choose_location">选择定位</string>
     <string name="please_fill_real_location">请填写楼栋门牌</string>
@@ -578,10 +605,17 @@
     <string name="no_to_del_house_pay_money">房产存在服务费，无法删除！</string>
     <string name="no_to_del_house_rent_order">房产存在入住租客，无法删除！</string>
     <string name="if_have_question_call">如有问题，请联系客服！</string>
+    <string name="if_have_call_question_call">是否拨打客服电话？</string>
+
+    <string name="please_input_search_string">请输入搜索内容</string>
+    <string name="please_choose_city">请选择城市</string>
+    <string name="estate_name">小区名称</string>
+    <string name="please_input_estate_name">请输入小区名称</string>
 
     <!--房产详情-->
     <string name="house_info_title">房产详情</string>
     <string name="house_info_rent_pay_unit">/月</string>
+    <string name="house_info_rent_pay_unit_day">/天</string>
     <string name="house_info_start">发布</string>
     <string name="house_info_type">户型</string>
     <string name="house_info_area">面积</string>
@@ -590,7 +624,7 @@
     <string name="house_info_address">地理位置</string>
     <string name="house_info_floor_unit">层</string>
     <string name="house_info_confit">房产配置</string>
-    
+
     <string name="house_info_setting_paysetting">安装付费</string>
     <string name="house_info_setting_edit">编辑房产</string>
     <string name="house_info_setting_bind_clock">绑定门锁</string>
@@ -614,7 +648,7 @@
 
     <string name="house_setting_temporary_pwd_tips_1">有效期：</string>
     <string name="house_setting_temporary_pwd_tips_2">前</string>
-    
+
     <!--发布房源-->
     <string name="public_house_pay_day">日租</string>
     <string name="public_house_pay_mon">月租</string>
@@ -696,7 +730,7 @@
     <string name="warm_no_choose_sever_type">未选择支付套餐</string>
 
     <string name="tips_pay_other">是否使用钱包余额支付？</string>
-    
+
     <string name="install_pay">设备安装费</string>
     <string name="install_pay_code">推广码</string>
     <string name="please_input_install_pay_code">请输入推广码</string>
@@ -709,8 +743,9 @@
     <string name="please_talk_pay_install">请提醒房东缴纳安装费用</string>
 
     <!--我的-->
-    <string name="my_money">我的资产</string>
+    <string name="my_money">资产余额</string>
     <string name="money_unit">元</string>
+    <string name="money_unit_1">¥</string>
 
     <!--个人设置-->
     <string name="setting_user_real_no">未认证</string>
@@ -779,6 +814,7 @@
     <string name="freehouse_item_copy_password">复制密码</string>
 
     <!--搜索-->
+    <string name="search">搜索</string>
     <string name="search_edit_hint">请输入要搜索的房产、房产编号</string>
     <string name="search_history_clear">删除搜索记录</string>
     <string name="roomlist_title_des">%1$s  %2$s号楼%3$s门%4$s</string>
@@ -809,8 +845,8 @@
     <string name="please_on_the_device_handle">请在设备上操作响应…</string>
     <string name="device_bind_success">绑定成功</string>
     <string name="device_bind_failed">绑定失败</string>
-    
-    
+
+
     <string name="text_gateway">网关</string>
     <string name="device_gateway_result_title">绑定网关</string>
     <string name="device_wifi_result_title">绑定无线按钮</string>
@@ -866,8 +902,6 @@
     <string name="device_item_history_close">%s 设备关闭</string>
     <string name="device_item_choice_door_type">选择门类型</string>
     <string name="device_item_choice_door_type_tips">请选择门类型</string>
-
-
 
 
     <!--WiFi-->
@@ -935,7 +969,7 @@
     <string name="how_bind_title_step">操作步骤：</string>
     <string name="how_bind_title_lock_main">主锁绑定：</string>
     <string name="how_bind_title_lock_second">应急锁绑定：</string>
-    
+
     <string name="how_to_setting_fingerprint">请根据语音录入指纹</string>
     <string name="how_to_setting_ic_card">请根据语音录入IC卡</string>
     <string name="how_to_setting_remote">门锁进入绑定模式后\n点击遥控器开门按钮进行绑定</string>
@@ -946,9 +980,38 @@
     <string name="version_size">更新内容</string>
     <string name="text_try">立即更新</string>
     <string name="title_dialog">友情提示</string>
-    <string name="version_number">V1.1.0</string>
+    <string name="version_number">版本号</string>
     <string name="version_history">历史版本</string>
     <string name="update_content">有新版本请前往更新</string>
+    <string name="restart_error">认证出现异常，请重新进行认证</string>
+
+    <string name="start_renzheng">开始认证</string>
+
+    <string name="start_renzheng_tips">乐租租房需要人脸识别，才能让您安全入住</string>
+
+    <!--地图找房-->
+    <string name="price">价格</string>
+    <string name="price_min">最低价格</string>
+    <string name="price_max">最高价格</string>
+    <string name="please_choose_price">最低价格应小于最高价格</string>
+    <string name="reset">重置</string>
+    <string name="no_limit">不限</string>
+    <string name="del_search_history">删除搜索历史</string>
+
+
+    <!--人脸认证-->
+    <string name="warm_fail_file">活体图片丢失，请重新认证</string>
+    <string name="warm_fail_face">认证失败，请检查信息无误后再重新进行认证</string>
+    <string name="warm_fail_face_f">身份证正面照片识别失败，请重新上传</string>
+    <string name="warm_fail_face_b">身份证背面照片识别失败，请重新上传</string>
+    <string name="warm_fail_up_face_f">请上传身份证正面照片</string>
+    <string name="warm_fail_up_face_b">请上传身份证背面照片</string>
+    <string name="renzheng_success">认证成功</string>
+    <string name="no_renzheng_tips">请进行实名认证后再次尝试</string>
+    <string name="to_renzheng">前往实名认证</string>
+    <string name="info_renzheng">认证信息</string>
+    <string name="info_renzheng_title">实名认证（已认证)</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string-array name="landlord_home_grid">
         <item>租客</item>
         <item>账单</item>
@@ -956,22 +1019,15 @@
         <item>抄表</item>
         <item>闲置房间</item>
     </string-array>
-
     <string-array name="landlord_tenanters">
         <item>已出租</item>
         <item>未出租</item>
         <item>即将到期</item>
     </string-array>
 
+    <!-- TODO: Remove or change this placeholder text -->
     <string-array name="landlord_bill">
         <item>未付账单</item>
         <item>已付账单</item>
     </string-array>
-    
-    
-    <!--人脸认证-->
-    <string name="restart_error">认证出现异常，请重新进行认证</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

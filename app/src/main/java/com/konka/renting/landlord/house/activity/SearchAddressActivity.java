@@ -2,15 +2,19 @@ package com.konka.renting.landlord.house.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.SearchView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -38,8 +42,17 @@ import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.konka.renting.R;
 import com.konka.renting.base.BaseActivity;
+import com.konka.renting.bean.DataInfo;
+import com.konka.renting.bean.RoomGroupListBean;
+import com.konka.renting.event.ChooseCityEvent;
+import com.konka.renting.event.ChooseEstateEvent;
+import com.konka.renting.event.ChooseEstateFinishEvent;
+import com.konka.renting.http.SecondRetrofitHelper;
+import com.konka.renting.http.subscriber.CommonSubscriber;
 import com.konka.renting.landlord.house.ChooseLocationEvent;
 import com.konka.renting.utils.RxBus;
+import com.konka.renting.utils.RxUtil;
+import com.konka.renting.widget.CommonInputPopupWindow;
 import com.lljjcoder.utils.PinYinUtils;
 import com.mcxtzhang.commonadapter.rv.CommonAdapter;
 import com.mcxtzhang.commonadapter.rv.ViewHolder;
@@ -58,6 +71,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Subscription;
 
 public class SearchAddressActivity extends BaseActivity implements TextWatcher, Inputtips.InputtipsListener, PoiSearch.OnPoiSearchListener, DistrictSearch.OnDistrictSearchListener {
     @BindView(R.id.tv_title)
@@ -84,6 +98,10 @@ public class SearchAddressActivity extends BaseActivity implements TextWatcher, 
     public final String PROVINCE = "province"; // 行政区划，省级
 
     public final String CITY = "city"; // 行政区划，市级
+    public final String CITY_NAME = "cityName";//SharedPreferences 键名
+
+    SharedPreferences sharedPreferences;
+
 
     private PoiResult poiResult; // poi返回的结果
     private int currentPage = 0;// 当前页面，从0开始计数
@@ -99,6 +117,9 @@ public class SearchAddressActivity extends BaseActivity implements TextWatcher, 
     private List<HotCity> mCities;
     private List<City> mAllCities;
     City city;
+
+    CommonInputPopupWindow inputPopupWindow;
+    PoiItem choosePoiItem;
 
     public static void toActivity(Context context, ArrayList<City> mAllCities, ArrayList<HotCity> mCities, City city) {
         Intent intent = new Intent(context, SearchAddressActivity.class);
@@ -120,6 +141,7 @@ public class SearchAddressActivity extends BaseActivity implements TextWatcher, 
         city = getIntent().getParcelableExtra("city");
 
         tvTitle.setText(R.string.title_choose_location);
+        sharedPreferences = getSharedPreferences(CITY, MODE_PRIVATE);
 
         if (city != null) {
             tvLocation.setText(city.getName());
@@ -134,8 +156,8 @@ public class SearchAddressActivity extends BaseActivity implements TextWatcher, 
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        RxBus.getDefault().post(new ChooseLocationEvent(poiItem));
-                        finish();
+                        choosePoiItem = poiItem;
+                        showInputPop(choosePoiItem.getTitle());
                     }
                 });
             }
@@ -251,6 +273,10 @@ public class SearchAddressActivity extends BaseActivity implements TextWatcher, 
                         if (!TextUtils.isEmpty(data.getName())) {
                             city = data;
                             tvLocation.setText(data.getName());
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString(CITY_NAME, city.getName());
+                            editor.commit();
+                            RxBus.getDefault().post(new ChooseCityEvent(data.getName()));
                             String search = editSearch.getText().toString();
                             if (!TextUtils.isEmpty(search)) {
                                 currentPage = 1;
@@ -385,5 +411,77 @@ public class SearchAddressActivity extends BaseActivity implements TextWatcher, 
 
             }
         }
+    }
+
+    /*******************************************弹窗***********************************************************/
+    private void showInputPop(String name) {
+        if (inputPopupWindow == null) {
+            inputPopupWindow = new CommonInputPopupWindow(mActivity);
+            inputPopupWindow.setTvTitle(getString(R.string.estate_name));
+            inputPopupWindow.setBtnRightOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String name = inputPopupWindow.getEdtContent().getText().toString();
+                    if (!TextUtils.isEmpty(name)) {
+                        inputPopupWindow.dismiss();
+                        roomGroupAdd(name);
+                    } else {
+                        showToast(R.string.please_input_estate_name);
+                    }
+                }
+            });
+        }
+        inputPopupWindow.getEdtContent().setText(name);
+        inputPopupWindow.getEdtContent().setSelection(name.length());
+        showPopup(inputPopupWindow);
+    }
+
+    private void showPopup(PopupWindow popupWindow) {
+        // 开启 popup 时界面透明
+        WindowManager.LayoutParams lp = mActivity.getWindow().getAttributes();
+        lp.alpha = 0.5f;
+        mActivity.getWindow().setAttributes(lp);
+        mActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        // popupwindow 第一个参数指定popup 显示页面
+        popupWindow.showAtLocation((View) tvTitle.getParent(), Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL, 0, -200);     // 第一个参数popup显示activity页面
+        // popup 退出时界面恢复
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                WindowManager.LayoutParams lp = mActivity.getWindow().getAttributes();
+                lp.alpha = 1f;
+                mActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+                mActivity.getWindow().setAttributes(lp);
+            }
+        });
+    }
+
+    /*****************************************************接口*********************************************/
+    private void roomGroupAdd(String name) {
+        showLoadingDialog();
+        Subscription subscription = SecondRetrofitHelper.getInstance().roomGroupAdd(name, choosePoiItem.getProvinceName(), choosePoiItem.getCityName(),
+                choosePoiItem.getAdName(), choosePoiItem.getBusinessArea(), choosePoiItem.getSnippet(),
+                choosePoiItem.getLatLonPoint().getLongitude() + "", choosePoiItem.getLatLonPoint().getLatitude() + "")
+                .compose(RxUtil.<DataInfo<RoomGroupListBean>>rxSchedulerHelper())
+                .subscribe(new CommonSubscriber<DataInfo<RoomGroupListBean>>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        dismiss();
+                    }
+
+                    @Override
+                    public void onNext(DataInfo<RoomGroupListBean> info) {
+                        dismiss();
+                        if (info.success()) {
+                            RxBus.getDefault().post(new ChooseLocationEvent(choosePoiItem));
+                            RxBus.getDefault().post(new ChooseEstateEvent(info.data()));
+                            RxBus.getDefault().post(new ChooseEstateFinishEvent());
+                            finish();
+                        } else {
+                            showToast(info.msg());
+                        }
+                    }
+                });
+        addSubscrebe(subscription);
     }
 }

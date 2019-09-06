@@ -334,7 +334,7 @@ public class HomeFragment extends BaseFragment {
         mHeadViewHolder.mTvMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MoreHotRoomListActivity.toActivity(mActivity);
+//                MoreHotRoomListActivity.toActivity(mActivity);
             }
         });
 
@@ -415,7 +415,7 @@ public class HomeFragment extends BaseFragment {
                 break;
             case R.id.tv_search:
 //                DeviceListActivity.toActivity(getActivity());
-                SearchActivity.toActivity(getActivity());
+//                SearchActivity.toActivity(getActivity());
                 break;
             case R.id.iv_message:
                 MessageActivity.toActivity(getActivity());
@@ -468,7 +468,7 @@ public class HomeFragment extends BaseFragment {
         } else {
             page = page + 1;
         }
-        Subscription subscription = SecondRetrofitHelper.getInstance().getRenterRoomList(page + "", "", city_id, "", "")
+        Subscription subscription = SecondRetrofitHelper.getInstance().getRenterRoomList(page + "", "", city_id, "", "","","")
                 .compose(RxUtil.<DataInfo<PageDataBean<RenterSearchListBean>>>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo<PageDataBean<RenterSearchListBean>>>() {
                     @Override

@@ -49,11 +49,11 @@
                 <TextView
                     style="@style/textview_add_house"
                     android:id="@+id/text2"
-                    android:text="@string/add_house_choose_location"/>
+                    android:text="@string/add_house_choose_estate"/>
 
                 <TextView
                     android:layout_marginEnd="20dp"
-                    android:hint="@string/add_house_choose_location_tips"
+                    android:hint="@string/add_house_choose_estate_tips"
                     android:id="@+id/activity_addHouse_tv_address"
                     style="@style/editview_add_house"
                     android:layout_toEndOf="@id/text2"

@@ -74,7 +74,7 @@ public class RoomMapActivity implements OnClickListener, LocationSource {
         ct_search.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                SearchActivity.toActivity(context);
+                SearchActivity.toActivity(context,"","");
             }
         });
         loc =  view.findViewById(R.id.location);

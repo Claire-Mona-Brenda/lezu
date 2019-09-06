@@ -29,6 +29,7 @@ import com.konka.renting.base.BaseActivity;
 import com.konka.renting.bean.AddHouseBean;
 import com.konka.renting.bean.DataInfo;
 import com.konka.renting.bean.HouseConfigBean;
+import com.konka.renting.bean.RoomGroupListBean;
 import com.konka.renting.bean.UploadPicBean;
 import com.konka.renting.event.AddHouseCompleteEvent;
 import com.konka.renting.event.LandlordHouseListEvent;
@@ -99,7 +100,7 @@ public class AddHouseIntroduceActivity extends BaseActivity {
 
     RxPermissions rxPermissions;
 
-    PoiItem mPoiItem;
+    RoomGroupListBean groupListBean;
     String address;
     String room_name;
     String room_type;
@@ -113,10 +114,10 @@ public class AddHouseIntroduceActivity extends BaseActivity {
 
     IPopBack iPopBack;
 
-    public static void toActivity(Context context, PoiItem mPoiItem, String address, String room_name, String room_type, String room_config_id,
+    public static void toActivity(Context context, RoomGroupListBean groupListBean, String address, String room_name, String room_type, String room_config_id,
                                   String total_floor, String floor, String measure_area) {
         Intent intent = new Intent(context, AddHouseIntroduceActivity.class);
-        intent.putExtra(PoiItem.class.getSimpleName(), mPoiItem);
+        intent.putExtra(RoomGroupListBean.class.getSimpleName(), groupListBean);
         intent.putExtra("address", address);
         intent.putExtra("room_name", room_name);
         intent.putExtra("room_type", room_type);
@@ -134,7 +135,7 @@ public class AddHouseIntroduceActivity extends BaseActivity {
 
     @Override
     public void init() {
-        mPoiItem = getIntent().getParcelableExtra(PoiItem.class.getSimpleName());
+        groupListBean = getIntent().getParcelableExtra(RoomGroupListBean.class.getSimpleName());
         address = getIntent().getStringExtra("address");
         room_name = getIntent().getStringExtra("room_name");
         room_type = getIntent().getStringExtra("room_type");
@@ -333,7 +334,7 @@ public class AddHouseIntroduceActivity extends BaseActivity {
         }
         try {
             FileOutputStream out = new FileOutputStream(f);
-            bm.compress(Bitmap.CompressFormat.PNG, 90, out);
+            bm.compress(Bitmap.CompressFormat.PNG, 100, out);
             out.flush();
             out.close();
         } catch (FileNotFoundException e) {
@@ -386,21 +387,16 @@ public class AddHouseIntroduceActivity extends BaseActivity {
         }
         showLoadingDialog();
         Subscription subscription = SecondRetrofitHelper.getInstance()
-                .addRoom2(room_name,
+                .addRoom3(room_name,
                         room_type,
                         room_config_id,
-                        mPoiItem.getProvinceName(),
-                        mPoiItem.getCityName(),
-                        mPoiItem.getAdName(),
-                        mPoiItem.getSnippet(),
+                        groupListBean.getRoom_group_id()+"",
                         address,
                         total_floor,
                         floor,
                         measure_area,
                         mEdtIntroduce.getText().toString(),
-                        img,
-                        mPoiItem.getLatLonPoint().getLongitude() + "",
-                        mPoiItem.getLatLonPoint().getLatitude() + "")
+                        img)
                 .compose(RxUtil.<DataInfo<AddHouseBean>>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo<AddHouseBean>>() {
                     @Override
@@ -413,7 +409,7 @@ public class AddHouseIntroduceActivity extends BaseActivity {
                     public void onNext(DataInfo<AddHouseBean> dataInfo) {
                         dismiss();
                         if (dataInfo.success()) {
-                            AddHouseCompleteActivity.toActivity(mActivity, uploadPicBeans.get(0).getThumb_url(), mPoiItem.getSnippet() + address, room_type, measure_area, floor, dataInfo.data().getRoom_id());
+                            AddHouseCompleteActivity.toActivity(mActivity, uploadPicBeans.get(0).getThumb_url(), groupListBean.getAddress() + address, room_type, measure_area, floor, dataInfo.data().getRoom_id());
                             RxBus.getDefault().post(new AddHouseCompleteEvent());
                             RxBus.getDefault().post(new LandlordHouseListEvent(11));
                             finish();

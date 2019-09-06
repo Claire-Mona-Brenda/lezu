@@ -3,30 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.konka.renting">
 
-    <uses-permission android:name="android.permission.GET_TASKS" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <!-- iBeancon功能所需权限 -->
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <!-- 硬件特性 -->
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="true" />
-    <uses-feature android:name="android.hardware.camera.autofocus" />
-
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-
     <application
         android:name=".KonkaApplication"
         android:allowBackup="true"
@@ -39,44 +15,23 @@
         <!--android:appComponentFactory=""-->
         <!--tools:replace="android:appComponentFactory"-->
         <!--android:extractNativeLibs="true"-->
-        <meta-data
-            android:name="com.amap.api.v2.apikey"
-            android:value="1cf251cda18c8a3fa80fddfd0386330e" />
-        <!-- 拍照、相册7.0权限设置 -->
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="com.konka.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true"
-            tools:replace="android:authorities">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
-        </provider>
-
-        <service
-            android:name=".service.GeTuiPushService"
-            android:exported="true"
-            android:label="PushService"
-            android:process=":pushservice" />
-        <service android:name=".service.GeTuiIntentService" />
-
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden" />
+        <!-- 拍照、相册7.0权限设置 -->
         <activity
             android:name="com.alipay.sdk.app.H5AuthActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden" />
+
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!-- 启动页面 -->
         <activity
             android:name=".start.StartActivity"
             android:configChanges="screenSize|keyboardHidden|orientation"
@@ -85,7 +40,6 @@
 
         </activity>
 
-        <!-- 引导页面 -->
         <activity
             android:name=".guide.GuideActivity"
             android:configChanges="screenSize|keyboardHidden|orientation"
@@ -107,11 +61,14 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/DefaultCityPickerTheme" />
+        <!-- 启动页面 -->
         <activity
             android:name=".tenant.TenantMainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/DefaultCityPickerTheme" />
+
+        <!-- 引导页面 -->
         <activity
             android:name=".landlord.user.incomeprofile.IncomeProfileActivity"
             android:screenOrientation="portrait" />
@@ -170,7 +127,6 @@
             android:name=".landlord.house.HouseAddActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".landlord.house.activity.AddHouseAddressActivity"
             android:launchMode="singleTop"
@@ -180,19 +136,24 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".landlord.house.activity.ChooseEstateActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".landlord.house.activity.AddHouseInfoActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".landlord.house.activity.AddHouseIntroduceActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
+
         <activity
-        android:name=".landlord.house.activity.AddHouseCompleteActivity"
-        android:launchMode="singleTop"
-        android:screenOrientation="portrait" />
+            android:name=".landlord.house.activity.AddHouseCompleteActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.house.activity.DevListActivity"
             android:launchMode="singleTop"
@@ -229,7 +190,6 @@
             android:name=".tenant.opendoor.ShareRentListActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".landlord.house.HouseInfoActivity"
             android:launchMode="singleTop"
@@ -245,6 +205,7 @@
             android:name=".landlord.house.view.HousePublishActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".landlord.house.view.SZLSActivity"
             android:screenOrientation="portrait" />
@@ -377,8 +338,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.user.userinfo.FaceDetectActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.user.userinfo.PlayVideoActivity"
             android:screenOrientation="portrait" />
@@ -387,8 +348,22 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.user.userinfo.CertificationActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.user.userinfo.FaceSuccessActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".landlord.user.userinfo.RenZhengInfoActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity android:name=".landlord.user.userinfo.UpdatePhotoActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity android:name=".landlord.user.userinfo.UpdatePhoneCodeActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".landlord.user.other.AfterProcessActivity"
             android:launchMode="singleTop"
@@ -478,6 +453,12 @@
         <activity
             android:name=".landlord.user.userinfo.IdCardExampleActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".tenant.main.Map.MapFindHouseActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity android:name=".tenant.main.Map.MapSearchActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".tenant.payrent.TenantOrderDetailActivity"
             android:launchMode="singleTop"
@@ -559,7 +540,6 @@
         <activity
             android:name=".landlord.user.userinfo.OfflineFaceLivenessActivity"
             android:screenOrientation="portrait" />
-        <!-- share sdk -->
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -587,12 +567,12 @@
             	“db-”前缀再开发者应用的加上appKey。如果此过滤器不设置，则不能完成SSO功能授权
             -->
             <intent-filter>
-                <data android:scheme="db-23a56e4ec4bb6" />
-
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="db-23a56e4ec4bb6" />
             </intent-filter>
 
             <!--
@@ -601,12 +581,12 @@
                 则分享结束以后不能得到正确的回调
             -->
             <intent-filter>
-                <data android:scheme="tencent101472351" />
-
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="tencent101472351" />
             </intent-filter>
         </activity>
         <activity
@@ -618,8 +598,53 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.user.userinfo.NewFaceDectectActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <!-- share sdk -->
+        <service android:name="com.amap.api.location.APSService"/>
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="1cf251cda18c8a3fa80fddfd0386330e" />
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.konka.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            tools:replace="android:authorities">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+        <service
+            android:name=".service.GeTuiPushService"
+            android:exported="true"
+            android:label="PushService"
+            android:process=":pushservice" />
+        <service android:name=".service.GeTuiIntentService" />
     </application>
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- iBeancon功能所需权限 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 硬件特性 -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
 </manifest>

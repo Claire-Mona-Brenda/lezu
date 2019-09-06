@@ -171,6 +171,18 @@ public abstract class BaseActivity extends AppCompatActivity {
         mCompositeSubscription.add(subscription);
     }
 
+    /**
+     * 移除订阅
+     *
+     * @param subscription
+     */
+    public void removeSubscrebe(Subscription subscription) {
+        if (mCompositeSubscription == null) {
+            mCompositeSubscription = new CompositeSubscription();
+        }
+        mCompositeSubscription.remove(subscription);
+    }
+
 
     /**
      * 管理各组件之间的通信

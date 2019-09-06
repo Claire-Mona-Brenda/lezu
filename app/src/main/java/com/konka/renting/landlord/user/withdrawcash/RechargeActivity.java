@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -94,8 +95,17 @@ public class RechargeActivity extends BaseActivity implements IPayResCall, PaySt
             }
         });
         ((BaseApplication) getApplication()).curPay = this;
+        mEtMoney.setFocusable(true);
+        mEtMoney.setFocusableInTouchMode(true);
+        mEtMoney.requestFocus();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
 
     @OnClick({R.id.iv_back, R.id.re_alipay, R.id.re_wechat, R.id.btn_withdraw})
     public void onViewClicked(View view) {

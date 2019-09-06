@@ -29,8 +29,13 @@ public class SearchActivity extends BaseActivity {
     @BindView(R.id.edit_search)
     EditText mEditSearch;
 
-    public static void toActivity(Context context) {
+    String city;
+    String search;
+
+    public static void toActivity(Context context, String city, String search) {
         Intent intent = new Intent(context, SearchActivity.class);
+        intent.putExtra("city", city);
+        intent.putExtra("search", search);
         context.startActivity(intent);
     }
 
@@ -41,6 +46,9 @@ public class SearchActivity extends BaseActivity {
 
     @Override
     public void init() {
+        city = getIntent().getStringExtra("city");
+        search = getIntent().getStringExtra("search");
+
         mFragments[0] = SearchHistoryFragment.newInstance();
         mFragments[1] = SearchResultFragment.newInstance();
         switchContent(1, 0);
@@ -69,17 +77,22 @@ public class SearchActivity extends BaseActivity {
                 return false;
             }
         });
+        mEditSearch.setText(search);
+        mEditSearch.setSelection(search.length());
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        toSearchResult(search);
+    }
+
     private void toSearchResult(String content) {
-        ((InputMethodManager) mActivity.getSystemService(
-                Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(
-                mActivity.getCurrentFocus().getWindowToken(),
-                InputMethodManager.HIDE_NOT_ALWAYS);
+//        ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         Log.e(TAG, "toSearchResult: ");
         switchContent(0, 1);
-        RxBus.getDefault().post(new ToSearchResultEvent(content));
+        RxBus.getDefault().post(new ToSearchResultEvent(content,city));
     }
 
     public void switchContent(int fromIndex, int toIndex) {
@@ -90,7 +103,7 @@ public class SearchActivity extends BaseActivity {
 
         if (!to.isAdded()) {    // 先判断是否被add过
             if (from != null) {
-                if (!from.isAdded()){
+                if (!from.isAdded()) {
                     transaction = transaction.add(R.id.frame_container, from);
                 }
                 transaction.hide(from).add(R.id.frame_container, to).show(to).commit(); // 隐藏当前的fragment，add下一个到Activity中

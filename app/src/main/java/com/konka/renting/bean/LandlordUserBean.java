@@ -13,6 +13,7 @@ public class LandlordUserBean  {
     private String balance;
     private String phone;
     private int unread;
+    private int is_auth;
     private String thumb_headimgurl;
 
     public String getReal_name() {
@@ -53,6 +54,14 @@ public class LandlordUserBean  {
 
     public void setUnread(int unread) {
         this.unread = unread;
+    }
+
+    public int getIs_auth() {
+        return is_auth;
+    }
+
+    public void setIs_auth(int is_auth) {
+        this.is_auth = is_auth;
     }
 
     public String getThumb_headimgurl() {

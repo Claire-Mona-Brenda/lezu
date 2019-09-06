@@ -110,7 +110,7 @@ public class MoreRoomListFragment extends BaseFragment {
         LocationInfo locationInfo = LocationUtils.getInstance();
         String city_id = locationInfo == null ? "" : locationInfo.city_id;
 
-        Subscription subscription = SecondRetrofitHelper.getInstance().getRenterRoomList("1", "", city_id, "", "")
+        Subscription subscription = SecondRetrofitHelper.getInstance().getRenterRoomList("1", "", city_id, "", "","","")
                 .compose(RxUtil.<DataInfo<PageDataBean<RenterSearchListBean>>>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo<PageDataBean<RenterSearchListBean>>>() {
                     @Override

@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
@@ -40,6 +41,7 @@ import com.konka.renting.http.subscriber.CommonSubscriber;
 import com.konka.renting.landlord.house.AppBarStateChangeListener;
 import com.konka.renting.landlord.house.PicViewPagerActivity;
 import com.konka.renting.landlord.house.data.MissionEnity;
+import com.konka.renting.landlord.house.view.OnTouchMapView;
 import com.konka.renting.landlord.house.widget.PicstandardWidget;
 import com.konka.renting.landlord.house.widget.ShowToastUtil;
 import com.konka.renting.landlord.user.userinfo.NewFaceDectectActivity;
@@ -73,12 +75,15 @@ public class RoomInfoActivity extends BaseActivity implements OnClickListener {
     TextView tvImgSum, tvRoomMoney, tvRoomMoneyUnit, tvRentType, tvRoomPublicTime, tvRoomType, tvRoomArea, tvRoomFloor, tvRoomIntroduce, tvRoomAddress;
     //    RoomInfo roomInfo;
     MapView mapView;
+    OnTouchMapView mRlMapviewAddress;
+    NestedScrollView nestedScrollView;
+
     PicstandardWidget picstandardWidget;
     AutoGridView autoGridView;
+    RecyclerView mRecyclerConfig;
     private CompositeSubscription mCompositeSubscription;
     String roomid;
     RoomSearchInfoBean infoBean;
-    RecyclerView mRecyclerConfig;
 
     List<String> imageList;
     PagerAdapter viewPagerAdapter;
@@ -195,10 +200,14 @@ public class RoomInfoActivity extends BaseActivity implements OnClickListener {
         mRecyclerConfig = (RecyclerView) findViewById(R.id.activity_room_info_recylerview_Config);
         tvRoomAddress = (TextView) findViewById(R.id.tv_room_address);
         mapView = findViewById(R.id.room_info_mapview);
+        mRlMapviewAddress = findViewById(R.id.activity_room_info_rl_mapview_address);
+        nestedScrollView = findViewById(R.id.activity_room_info_nestedScrollView);
         room_no = (TextView) findViewById(R.id.room_no);
         comment_num = (TextView) findViewById(R.id.comment_num);
         autoGridView = (AutoGridView) findViewById(R.id.auto_grid);
         bottom_views = findViewById(R.id.linear_renter);
+
+        mRlMapviewAddress.setScrollView(nestedScrollView);
     }
 
     private void initConfit() {

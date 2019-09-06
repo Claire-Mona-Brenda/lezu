@@ -2,16 +2,20 @@ package com.konka.renting.landlord.house.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.location.Location;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -36,6 +40,7 @@ import com.amap.api.services.district.DistrictItem;
 import com.amap.api.services.district.DistrictResult;
 import com.amap.api.services.district.DistrictSearch;
 import com.amap.api.services.district.DistrictSearchQuery;
+import com.amap.api.services.geocoder.BusinessArea;
 import com.amap.api.services.geocoder.GeocodeAddress;
 import com.amap.api.services.geocoder.GeocodeQuery;
 import com.amap.api.services.geocoder.GeocodeResult;
@@ -46,9 +51,21 @@ import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.konka.renting.R;
 import com.konka.renting.base.BaseActivity;
+import com.konka.renting.bean.DataInfo;
+import com.konka.renting.bean.PageDataBean;
+import com.konka.renting.bean.RenterSearchListBean;
+import com.konka.renting.bean.RoomGroupListBean;
+import com.konka.renting.event.ChooseCityEvent;
+import com.konka.renting.event.ChooseEstateEvent;
+import com.konka.renting.event.ChooseEstateFinishEvent;
+import com.konka.renting.http.SecondRetrofitHelper;
+import com.konka.renting.http.subscriber.CommonSubscriber;
 import com.konka.renting.landlord.house.ChooseLocationEvent;
+import com.konka.renting.tenant.opendoor.OpeningPopupwindow;
 import com.konka.renting.utils.RxBus;
+import com.konka.renting.utils.RxUtil;
 import com.konka.renting.utils.UIUtils;
+import com.konka.renting.widget.CommonInputPopupWindow;
 import com.lljjcoder.utils.PinYinUtils;
 import com.mcxtzhang.commonadapter.rv.CommonAdapter;
 import com.mcxtzhang.commonadapter.rv.ViewHolder;
@@ -65,6 +82,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import rx.Subscription;
 import rx.functions.Action1;
 
 public class ChooseLocationActivity extends BaseActivity implements PoiSearch.OnPoiSearchListener, DistrictSearch.OnDistrictSearchListener, GeocodeSearch.OnGeocodeSearchListener {
@@ -99,6 +117,10 @@ public class ChooseLocationActivity extends BaseActivity implements PoiSearch.On
 
     public final String BUSINESS = "biz_area"; // 行政区划，商圈级
 
+    public final String CITY_NAME = "cityName";//SharedPreferences 键名
+
+    SharedPreferences sharedPreferences;
+
 
     private final int STROKE_COLOR = Color.argb(0, 3, 145, 255);
     private final int FILL_COLOR = Color.argb(0, 0, 0, 180);
@@ -123,9 +145,14 @@ public class ChooseLocationActivity extends BaseActivity implements PoiSearch.On
     GeocodeSearch geocoderSearch;
     City city;
 
+    PoiItem choosePoiItem;
 
-    public static void toActivity(Context context) {
+    CommonInputPopupWindow inputPopupWindow;
+
+
+    public static void toActivity(Context context, String cityName) {
         Intent intent = new Intent(context, ChooseLocationActivity.class);
+        intent.putExtra("cityName", cityName);
         context.startActivity(intent);
     }
 
@@ -147,6 +174,15 @@ public class ChooseLocationActivity extends BaseActivity implements PoiSearch.On
         geocoderSearch = new GeocodeSearch(this);
         geocoderSearch.setOnGeocodeSearchListener(this);
 
+        sharedPreferences = getSharedPreferences(CITY, MODE_PRIVATE);
+        String cityName = getIntent().getStringExtra("cityName");
+        if (!TextUtils.isEmpty(cityName)) {
+            city = new City(cityName, cityName, pinYinUtils.getStringPinYin(cityName), "");
+            tvLocation.setText(cityName);
+            GeocodeQuery query1 = new GeocodeQuery(cityName, cityName);
+            geocoderSearch.getFromLocationNameAsyn(query1);
+        }
+
         commonAdapter = new CommonAdapter<PoiItem>(this, poiItems, R.layout.adapter_choose_location) {
             @Override
             public void convert(ViewHolder viewHolder, PoiItem poiItem) {
@@ -155,8 +191,14 @@ public class ChooseLocationActivity extends BaseActivity implements PoiSearch.On
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        RxBus.getDefault().post(new ChooseLocationEvent(poiItem));
-                        finish();
+                        choosePoiItem = poiItem;
+                        showInputPop(choosePoiItem.getTitle());
+                        if (TextUtils.isEmpty(choosePoiItem.getBusinessArea())) {
+                            RegeocodeQuery query = new RegeocodeQuery(new LatLonPoint(choosePoiItem.getLatLonPoint().getLatitude(), choosePoiItem.getLatLonPoint().getLongitude()), 100, GeocodeSearch.AMAP);
+                            geocoderSearch.getFromLocationAsyn(query);
+                        }
+//                        RxBus.getDefault().post(new ChooseLocationEvent(poiItem));
+//                        finish();
                     }
                 });
             }
@@ -182,6 +224,17 @@ public class ChooseLocationActivity extends BaseActivity implements PoiSearch.On
                 finish();
             }
         });
+        addRxBusSubscribe(ChooseCityEvent.class, new Action1<ChooseCityEvent>() {
+            @Override
+            public void call(ChooseCityEvent chooseCityEvent) {
+                if (!TextUtils.isEmpty(chooseCityEvent.getCityName())) {
+                    city = new City(chooseCityEvent.getCityName(), chooseCityEvent.getCityName(), pinYinUtils.getStringPinYin(chooseCityEvent.getCityName()), "");
+                    tvLocation.setText(chooseCityEvent.getCityName());
+                    GeocodeQuery query2 = new GeocodeQuery(city.getName(), city.getName());
+                    geocoderSearch.getFromLocationNameAsyn(query2);
+                }
+            }
+        });
 
     }
 
@@ -194,7 +247,7 @@ public class ChooseLocationActivity extends BaseActivity implements PoiSearch.On
             aMap = mMapview.getMap();
         setupLocationStyle();
         initListener();
-        aMap.moveCamera(CameraUpdateFactory.zoomTo(16));
+//        aMap.moveCamera(CameraUpdateFactory.zoomTo(16));
         initCity();
 
     }
@@ -204,14 +257,13 @@ public class ChooseLocationActivity extends BaseActivity implements PoiSearch.On
             @Override
             public void onMyLocationChange(Location location) {
                 // 第一个参数表示一个Latlng，第二参数表示范围多少米，第三个参数表示是火系坐标系还是GPS原生坐标系
-                RegeocodeQuery query = new RegeocodeQuery(new LatLonPoint(location.getLatitude(), location.getLongitude()), 200, GeocodeSearch.AMAP);
-                geocoderSearch.getFromLocationAsyn(query);
+//                RegeocodeQuery query = new RegeocodeQuery(new LatLonPoint(location.getLatitude(), location.getLongitude()), 200, GeocodeSearch.AMAP);
+//                geocoderSearch.getFromLocationAsyn(query);
             }
         });
         aMap.setOnMapLoadedListener(new AMap.OnMapLoadedListener() {
             @Override
             public void onMapLoaded() {
-                addMarkerInScreenCenter();
             }
         });
 
@@ -224,6 +276,9 @@ public class ChooseLocationActivity extends BaseActivity implements PoiSearch.On
 
             @Override
             public void onCameraChangeFinish(CameraPosition postion) {
+                if (screenMarker == null) {
+                    addMarkerInScreenCenter();
+                }
                 //屏幕中心的Marker跳动
                 startJumpAnimation();
                 currentPage = 1;
@@ -275,7 +330,8 @@ public class ChooseLocationActivity extends BaseActivity implements PoiSearch.On
         myLocationStyle.interval(2000); //设置连续定位模式下的定位间隔，只在连续定位模式下生效，单次定位模式下不会生效。单位为毫秒。
         myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE);
         //aMap.getUiSettings().setMyLocationButtonEnabled(true);设置默认定位按钮是否显示，非必需设置。
-        aMap.setMyLocationEnabled(true);// 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false。
+        myLocationStyle.showMyLocation(false);
+        aMap.setMyLocationEnabled(false);// 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false。
         aMap.setMyLocationStyle(myLocationStyle);//设置定位蓝点的Style
     }
 
@@ -447,9 +503,12 @@ public class ChooseLocationActivity extends BaseActivity implements PoiSearch.On
                         if (!TextUtils.isEmpty(data.getName())) {
                             city = data;
                             tvLocation.setText(data.getName());
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString(CITY_NAME, city.getName());
+                            editor.commit();
+                            RxBus.getDefault().post(new ChooseCityEvent(data.getName()));
                             // name表示地址，第二个参数表示查询城市，中文或者中文全拼，citycode、adcode
                             GeocodeQuery query = new GeocodeQuery(data.getProvince() + data.getName(), data.getName());
-
                             geocoderSearch.getFromLocationNameAsyn(query);
                         }
                     }
@@ -485,7 +544,6 @@ public class ChooseLocationActivity extends BaseActivity implements PoiSearch.On
                         DistrictItem districtItem = district.get(i);
                         City city = new City(districtItem.getName(), item.getName(), pinYinUtils.getStringPinYin(districtItem.getName()), item.getCitycode());
                         mAllCities.add(city);
-
                     }
                 }
             } else {
@@ -500,10 +558,19 @@ public class ChooseLocationActivity extends BaseActivity implements PoiSearch.On
      */
     @Override
     public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {
-        String c = regeocodeResult.getRegeocodeAddress().getCity();
-        if (!TextUtils.isEmpty(c)) {
-            tvLocation.setText(c);
-            city = new City(c, regeocodeResult.getRegeocodeAddress().getProvince(), pinYinUtils.getStringPinYin(c), regeocodeResult.getRegeocodeAddress().getCityCode());
+        String a ;
+        List<BusinessArea> businessAreaList = regeocodeResult.getRegeocodeAddress().getBusinessAreas();
+        if (businessAreaList.size() > 0) {
+            a = businessAreaList.get(0).getName();
+        } else if (!TextUtils.isEmpty(regeocodeResult.getRegeocodeAddress().getNeighborhood())) {
+            a = regeocodeResult.getRegeocodeAddress().getNeighborhood();
+        } else if (!TextUtils.isEmpty(regeocodeResult.getRegeocodeAddress().getTownship())) {
+            a = regeocodeResult.getRegeocodeAddress().getTownship();
+        }else{
+            a= choosePoiItem.getTitle();
+        }
+        if (TextUtils.isEmpty(choosePoiItem.getBusinessArea())) {
+            choosePoiItem.setBusinessArea(a);
         }
     }
 
@@ -518,9 +585,78 @@ public class ChooseLocationActivity extends BaseActivity implements PoiSearch.On
 
     private void changeCamera(double lat, double lng) {
         LatLng latLng = new LatLng(lat, lng);
-        aMap.moveCamera(
-                CameraUpdateFactory.newCameraPosition(new CameraPosition(
-                        latLng, 15, 30, 30)));
+        aMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(latLng, 11, 30, 30)));
+    }
 
+
+    /*******************************************弹窗***********************************************************/
+    private void showInputPop(String name) {
+        if (inputPopupWindow == null) {
+            inputPopupWindow = new CommonInputPopupWindow(mActivity);
+            inputPopupWindow.setTvTitle(getString(R.string.estate_name));
+            inputPopupWindow.setBtnRightOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String name = inputPopupWindow.getEdtContent().getText().toString();
+                    if (!TextUtils.isEmpty(name)) {
+                        inputPopupWindow.dismiss();
+                        roomGroupAdd(name);
+                    } else {
+                        showToast(R.string.please_input_estate_name);
+                    }
+                }
+            });
+        }
+        inputPopupWindow.getEdtContent().setText(name);
+        inputPopupWindow.getEdtContent().setSelection(name.length());
+        showPopup(inputPopupWindow);
+    }
+
+    private void showPopup(PopupWindow popupWindow) {
+        // 开启 popup 时界面透明
+        WindowManager.LayoutParams lp = mActivity.getWindow().getAttributes();
+        lp.alpha = 0.5f;
+        mActivity.getWindow().setAttributes(lp);
+        mActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        // popupwindow 第一个参数指定popup 显示页面
+        popupWindow.showAtLocation((View) tvTitle.getParent(), Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL, 0, -200);     // 第一个参数popup显示activity页面
+        // popup 退出时界面恢复
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                WindowManager.LayoutParams lp = mActivity.getWindow().getAttributes();
+                lp.alpha = 1f;
+                mActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+                mActivity.getWindow().setAttributes(lp);
+            }
+        });
+    }
+
+    /*****************************************************接口*********************************************/
+    private void roomGroupAdd(String name) {
+        showLoadingDialog();
+        Subscription subscription = SecondRetrofitHelper.getInstance().roomGroupAdd(name, choosePoiItem.getProvinceName(), choosePoiItem.getCityName(),
+                choosePoiItem.getAdName(), choosePoiItem.getBusinessArea(), choosePoiItem.getSnippet(),
+                choosePoiItem.getLatLonPoint().getLongitude() + "", choosePoiItem.getLatLonPoint().getLatitude() + "")
+                .compose(RxUtil.<DataInfo<RoomGroupListBean>>rxSchedulerHelper())
+                .subscribe(new CommonSubscriber<DataInfo<RoomGroupListBean>>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        dismiss();
+                    }
+
+                    @Override
+                    public void onNext(DataInfo<RoomGroupListBean> info) {
+                        dismiss();
+                        if (info.success()) {
+                            RxBus.getDefault().post(new ChooseEstateEvent(info.data()));
+                            RxBus.getDefault().post(new ChooseEstateFinishEvent());
+                            finish();
+                        } else {
+                            showToast(info.msg());
+                        }
+                    }
+                });
+        addSubscrebe(subscription);
     }
 }

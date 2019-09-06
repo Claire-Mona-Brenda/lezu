@@ -109,6 +109,7 @@
 
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/activity_room_info_nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/title_bg"
@@ -388,6 +389,10 @@
                     android:layout_marginBottom="@dimen/dp_10"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/lib_house_edit_text" />
+                <com.konka.renting.landlord.house.view.OnTouchMapView
+                    android:id="@+id/activity_room_info_rl_mapview_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
                 <com.amap.api.maps.MapView
                     android:id="@+id/room_info_mapview"
                     android:layout_width="match_parent"
@@ -395,7 +400,7 @@
                     android:layout_marginStart="@dimen/dp_20"
                     android:layout_marginEnd="@dimen/dp_20"
                     android:layout_marginTop="@dimen/dp_10"/>
-
+                </com.konka.renting.landlord.house.view.OnTouchMapView>
             </LinearLayout>
             <LinearLayout
                 android:paddingTop="@dimen/dp_10"

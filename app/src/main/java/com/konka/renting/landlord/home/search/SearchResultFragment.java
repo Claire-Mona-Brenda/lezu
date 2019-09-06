@@ -88,7 +88,7 @@ SearchResultFragment extends BaseFragment {
                 viewHolder.setText(R.id.tv_title, bean.getRoom_name());
 
                 String description = getString(R.string.roomlist_description_des);
-                String room_type ;
+                String room_type;
                 if (bean.getRoom_type() != null && bean.getRoom_type().contains("_")) {
                     String[] t = bean.getRoom_type().split("_");
                     room_type = t[0] + "室" + t[2] + "厅" + (t[1].equals("0") ? "" : t[1] + "卫");
@@ -117,7 +117,7 @@ SearchResultFragment extends BaseFragment {
             @Override
             public void call(ToSearchResultEvent toSearchResultEvent) {
                 SpHistoryStorage.getInstance(mActivity, 10).save(toSearchResultEvent.content);
-                getSearchResultList(toSearchResultEvent.content);
+                getSearchResultList(toSearchResultEvent.content, toSearchResultEvent.city);
 //                getSearchResult(toSearchResultEvent.content);
             }
         });
@@ -159,9 +159,9 @@ SearchResultFragment extends BaseFragment {
 //        addSubscrebe(subscription);
 //    }
 
-    private void getSearchResultList(String keyword) {
+    private void getSearchResultList(String keyword, String city) {
         showLoadingDialog();
-        Subscription subscription = SecondRetrofitHelper.getInstance().getRenterRoomList("1", "", "", "", keyword)
+        Subscription subscription = SecondRetrofitHelper.getInstance().getRenterRoomList("1", "", city, "", keyword, "", "")
                 .compose(RxUtil.<DataInfo<PageDataBean<RenterSearchListBean>>>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo<PageDataBean<RenterSearchListBean>>>() {
                     @Override
