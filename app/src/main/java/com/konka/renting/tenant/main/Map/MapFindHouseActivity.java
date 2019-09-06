@@ -182,6 +182,9 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
     Subscription timeSubscription;
     boolean isTimer = false;
 
+    double curr_lat = 0;
+    double curr_lng = 0;
+
     public static void toActivity(Context context, String cityName) {
         Intent intent = new Intent(context, MapFindHouseActivity.class);
         intent.putExtra("cityName", cityName);
@@ -277,9 +280,12 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
                     case MotionEvent.ACTION_DOWN:
                         isTimer = true;
                         checkLocationTime();
+                        curr_lat = aMap.getCameraPosition().target.latitude;
+                        curr_lng = aMap.getCameraPosition().target.longitude;
                         break;
                     case MotionEvent.ACTION_UP:
                         isTimer = false;
+                        timeSubscription.unsubscribe();
                         removeSubscrebe(timeSubscription);
                         break;
                 }
@@ -578,6 +584,7 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
                     mViewShortLine.setVisibility(View.INVISIBLE);
                     if (aMap != null)
                         aMap.clear();
+                    curr_level = 0;
                     addMarkerInScreen();
                 }
                 break;
@@ -590,6 +597,7 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
                     mViewShortLine.setVisibility(View.VISIBLE);
                     if (aMap != null)
                         aMap.clear();
+                    curr_level = 0;
                     addMarkerInScreen();
                 }
                 break;
@@ -678,6 +686,8 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
                 mDrawerlayout.closeDrawer(mLlFiltrate);
                 if (aMap != null)
                     aMap.clear();
+                room_group_id="-1";
+                curr_level = 0;
                 addMarkerInScreen();
                 break;
         }
@@ -837,7 +847,9 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
         } else {
             page++;
         }
-        Subscription subscription = (SecondRetrofitHelper.getInstance().groupRoomList(page + "", room_group_id, rent_type + "", "")
+        String price_area_id = rent_type == 1 ? price_area_id_r : price_area_id_l;
+        String price_area = rent_type == 1 ? price_area_r : price_area_l;
+        Subscription subscription = (SecondRetrofitHelper.getInstance().groupRoomList(page + "", room_group_id, rent_type + "",  price_area_id, room_type_id,price_area,"")
                 .compose(RxUtil.<DataInfo<PageDataBean<GroupRoomListBean>>>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo<PageDataBean<GroupRoomListBean>>>() {
                     @Override
@@ -926,7 +938,13 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
 
                     @Override
                     public void onNext(Long aLong) {
-                        addMarkerInScreen();
+                        LatLng latLng = aMap.getCameraPosition().target;
+                        int level = (int) aMap.getCameraPosition().zoom;
+                        if (curr_lat != latLng.latitude || curr_lng != latLng.longitude || curr_level != level) {
+                            curr_lat = latLng.latitude;
+                            curr_lng = latLng.longitude;
+                            addMarkerInScreen();
+                        }
                     }
                 });
         addSubscrebe(timeSubscription);

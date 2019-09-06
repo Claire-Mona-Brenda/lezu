@@ -295,7 +295,19 @@ public class RoomInfoActivity extends BaseActivity implements OnClickListener {
 
             }
         });
-        tvRoomMoney.setText("¥ " + (int) Float.parseFloat(infoBean.getHousing_price()) + "");
+        String price=infoBean.getHousing_price();
+        if (!TextUtils.isEmpty(price)){
+            float priceF = Float.valueOf(infoBean.getHousing_price());
+            int priceI = (int) priceF;
+            if (priceF>priceI){
+                price= priceF+"";
+            }else{
+                price= priceI+"";
+            }
+        }else{
+            price="";
+        }
+        tvRoomMoney.setText("¥ " + price);
         if (infoBean.getType() == 1) {
             tvRoomMoneyUnit.setText("/天");
             tvRentType.setText(R.string.short_rent);

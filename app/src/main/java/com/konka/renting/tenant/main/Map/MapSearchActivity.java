@@ -86,9 +86,11 @@ public class MapSearchActivity extends BaseActivity {
         mCommonAdapter = new CommonAdapter<MapLocationSearchBean>(this, mRoomInfos, R.layout.adapter_map_location_search) {
             @Override
             public void convert(ViewHolder viewHolder, MapLocationSearchBean bean) {
-                String str="<font color='#FF0000'>"+search+"</font>";
+                String str="<font color='#ff7500'>"+search+"</font>";
                 String name=bean.getName().replace(search,str);
+                String address=bean.getAddress().replace(search,str);
                 viewHolder.setText(R.id.adapter_map_location_search_tv_name, Html.fromHtml(name));
+                viewHolder.setText(R.id.adapter_map_location_search_tv_address, Html.fromHtml(address));
                 viewHolder.setText(R.id.adapter_map_location_search_tv_count, bean.getCount() + "");
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -127,11 +129,15 @@ public class MapSearchActivity extends BaseActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 search = editSearch.getText().toString();
-                if (!TextUtils.isEmpty(search)) {
+                if (!TextUtils.isEmpty(search.replace(" ",""))) {
                     getSearchResultList(search);
                     mLlDelHistory.setVisibility(View.GONE);
                     mRvHistory.setVisibility(View.GONE);
                     mRvSearch.setVisibility(View.VISIBLE);
+                }else{
+                    mLlDelHistory.setVisibility(View.VISIBLE);
+                    mRvHistory.setVisibility(View.VISIBLE);
+                    mRvSearch.setVisibility(View.GONE);
                 }
 
             }
@@ -148,8 +154,8 @@ public class MapSearchActivity extends BaseActivity {
 //                     当按了搜索之后关闭软键盘
 
                     search = editSearch.getText().toString();
-                    if (TextUtils.isEmpty(search)) {
-                        doFailed();
+                    if (TextUtils.isEmpty(search.replace(" ",""))) {
+                        showToast(R.string.please_input_content);
                         return true;
                     }
                     getSearchResultList(search);

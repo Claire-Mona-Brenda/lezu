@@ -308,7 +308,7 @@
     <string name="input_code">输入激活码</string>
     <string name="please_input_code">请输入激活码</string>
     <string name="please_success_code">激活成功!</string>
-    <string name="please_input_code_tips">说明\n*使用需已进行实名验证；\n*激活码仅限本人使用，切勿外借他人。</string>
+    <string name="please_input_code_tips">说明\n*一个激活码只能使用一次，可使用多个激活码；\n*激活码需在租房到期之前使用，过期无效。</string>
 
     <string name="renter_relet">申请续租</string>
     <string name="renter_joint_rent">申请合租</string>
@@ -816,9 +816,11 @@
     <!--搜索-->
     <string name="search">搜索</string>
     <string name="search_edit_hint">请输入要搜索的房产、房产编号</string>
+    <string name="search_edit_hint_tips">请输入搜索内容</string>
     <string name="search_history_clear">删除搜索记录</string>
     <string name="roomlist_title_des">%1$s  %2$s号楼%3$s门%4$s</string>
     <string name="roomlist_description_des">%1$s | %2$s平米 | %3$s/%4$s层</string>
+    <string name="search_nothing_tips">暂无内容，换个关键词试试吧！</string>
 
     <!--房产-->
     <string name="warm_open_door">是否开门？</string>
@@ -997,6 +999,7 @@
     <string name="reset">重置</string>
     <string name="no_limit">不限</string>
     <string name="del_search_history">删除搜索历史</string>
+    <string name="please_input_content">请输入搜索内容</string>
 
 
     <!--人脸认证-->

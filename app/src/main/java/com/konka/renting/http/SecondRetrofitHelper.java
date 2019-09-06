@@ -1006,8 +1006,8 @@ public class SecondRetrofitHelper {
     /**
      * 手机号查询（是否查询）
      */
-    public Observable<DataInfo> phoneCheck(String mobile) {
-        return mApiService.phoneCheck(mobile);
+    public Observable<DataInfo> phoneCheck(String phone) {
+        return mApiService.phoneCheck(phone);
     }
 
 
@@ -1469,8 +1469,8 @@ public class SecondRetrofitHelper {
     /**
      * 小区房屋列表(2.4.2版本以后)
      */
-    public Observable<DataInfo<PageDataBean<GroupRoomListBean>>> groupRoomList(String page, String room_group_id, String rent_type, String keyword) {
-        return mApiService.groupRoomList(page, room_group_id, rent_type, keyword);
+    public Observable<DataInfo<PageDataBean<GroupRoomListBean>>> groupRoomList(String page, String room_group_id, String rent_type, String price_area_id,String room_type_id,String price_area,String keyword) {
+        return mApiService.groupRoomList(page, room_group_id, rent_type, price_area_id, room_type_id, price_area,keyword);
     }
 
     /**

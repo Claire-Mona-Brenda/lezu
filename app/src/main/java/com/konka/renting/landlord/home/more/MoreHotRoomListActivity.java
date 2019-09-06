@@ -105,12 +105,24 @@ public class MoreHotRoomListActivity extends BaseActivity {
                 spannableStringBuilder.append("|" + bean.getFloor() + "/" + bean.getTotal_floor() + "层");
                 viewHolder.setText(R.id.tv_date, spannableStringBuilder);
 
-                viewHolder.setText(R.id.tv_type, bean.getType() == 1 ? "短租" : "长租");
+                viewHolder.setText(R.id.tv_type, getString(bean.getType() == 1 ? R.string.short_rent : R.string.long_rent ));
                 viewHolder.setSelected(R.id.tv_type, bean.getType() == 2);
 
                 TextView tv_price = viewHolder.getView(R.id.tv_price);
-                String unit = bean.getType() == 1 ? "/天" : "/月";
-                tv_price.setText(bean.getHousing_price() + unit);
+                String unit = getString(bean.getType() == 1 ? R.string.public_house_pay_unit_day : R.string.public_house_pay_unit_mon);
+                String price = bean.getHousing_price();
+                if (!TextUtils.isEmpty(price)) {
+                    float priceF = Float.valueOf(bean.getHousing_price());
+                    int priceI = (int) priceF;
+                    if (priceF > priceI) {
+                        price = priceF + "";
+                    } else {
+                        price = priceI + "";
+                    }
+                } else {
+                    price = "";
+                }
+                tv_price.setText(price + unit);
 //                tv_price.setText(Html.fromHtml("<font color='#ff4707'>¥" + roomInfo.housing_price + "</font>/月"));
                 if (!TextUtils.isEmpty(bean.getThumb_image()))
                     Picasso.get().load(bean.getThumb_image()).into((ImageView) viewHolder.getView(R.id.iv_icon));

@@ -2,6 +2,7 @@ package com.konka.renting.landlord.house.activity;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -10,6 +11,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextPaint;
 import android.text.TextUtils;
@@ -97,6 +99,7 @@ public class AddHouseIntroduceActivity extends BaseActivity {
     private final int REQUEST_CODE_CHOOSE_PHOTO = 102;//图片来源选择图库
     private final int PHOTO_MAX_SUM = 6;   //  添加图片的最大数量
 
+    String photoFileName;
 
     RxPermissions rxPermissions;
 
@@ -248,8 +251,26 @@ public class AddHouseIntroduceActivity extends BaseActivity {
                     public void call(Boolean aBoolean) {
                         if (aBoolean) {
                             if (s.equals("相机")) {
-                                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                startActivityForResult(takePictureIntent, REQUEST_CODE_CHOOSE_CAMERA);
+                                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                                photoFileName = "JPEG_" + timeStamp + ".png";
+                                File f = new File(Environment.getExternalStorageDirectory() +"/konka/", photoFileName);
+                                File dir = new File(Environment.getExternalStorageDirectory() +"/konka/");
+                                if (!dir.exists()) {
+                                    dir.mkdirs();
+                                }
+                                if (f.exists()) {
+                                    f.delete();
+                                }
+                                if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.N){
+                                    takePhotoBiggerThan7(f.getAbsolutePath());
+                                }else {
+                                    // 加载路径图片路径
+                                    Uri mUri = Uri.fromFile(f);
+                                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                    // 指定存储路径，这样就可以保存原图了
+                                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, mUri);
+                                    startActivityForResult(takePictureIntent, REQUEST_CODE_CHOOSE_CAMERA);
+                                }
                             } else if (s.equals("图库")) {
 //                                Intent intent = new Intent(Intent.ACTION_PICK);
 //                                intent.setType("image/*");
@@ -263,7 +284,25 @@ public class AddHouseIntroduceActivity extends BaseActivity {
                     }
                 });
     }
-
+    private void takePhotoBiggerThan7(String absolutePath) {
+        Uri mCameraTempUri;
+        try {
+            ContentValues values = new ContentValues(1);
+            values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpg");
+            values.put(MediaStore.Images.Media.DATA, absolutePath);
+            mCameraTempUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION
+                    | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            if (mCameraTempUri != null) {
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, mCameraTempUri);
+                intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
+            }
+            startActivityForResult(intent, REQUEST_CODE_CHOOSE_CAMERA);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     private void selectPhoto() {
         Matisse.from(this)
                 .choose(MimeType.allOf())
@@ -285,12 +324,23 @@ public class AddHouseIntroduceActivity extends BaseActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_CODE_CHOOSE_CAMERA) {
-                Bundle extras = data.getExtras();
-                Bitmap imageBitmap = (Bitmap) extras.get("data");
-                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-                String imageFileName = "JPEG_" + timeStamp + ".jpg";
-                File f = saveBitmap(imageFileName, imageBitmap);
-                uploadPic(f, imageFileName);
+//                Bundle extras = data.getExtras();
+//                Bitmap imageBitmap = (Bitmap) extras.get("data");
+//                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+//                String imageFileName = "JPEG_" + timeStamp + ".jpg";
+//                File f = saveBitmap(imageFileName, imageBitmap);
+//                uploadPic(f, imageFileName);
+                File f = new File(Environment.getExternalStorageDirectory() +"/konka/", photoFileName);
+                File compressedImageFile;
+                try {
+                    // 图片压缩
+                    compressedImageFile = new Compressor(this).compressToFile(f);
+                    if (!compressedImageFile.exists())
+                        compressedImageFile.createNewFile();
+                    uploadPic(compressedImageFile, compressedImageFile.getName());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             } else if (requestCode == REQUEST_CODE_CHOOSE_PHOTO) {
                 if (data != null) {
 //                    Uri selectedImageUri = data.getData();

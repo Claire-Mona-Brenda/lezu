@@ -82,7 +82,7 @@ public class UpdatePhotoActivity extends BaseActivity {
                 String newPhone = mEditNewPhone.getText().toString();
                 if (TextUtils.isEmpty(newPhone)) {
                     showToast(R.string.update_phone_input_phone_hint);
-                } else if (newPhone.length() < 11 || !isPhone(newPhone)) {
+                } else if (newPhone.length() < 11) {
                     showToast(R.string.please_input_phone);
                 } else {
                     phoneCheck(newPhone);
@@ -91,11 +91,11 @@ public class UpdatePhotoActivity extends BaseActivity {
         }
     }
 
-    private boolean isPhone(String phone) {
-        boolean is = false;
-        is = Pattern.matches("^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\\d{8}$", phone);
-        return is;
-    }
+//    private boolean isPhone(String phone) {
+//        boolean is = false;
+//        is = Pattern.matches("^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\\d{8}$", phone);
+//        return is;
+//    }
 
     /****************************************接口********************************************************/
     private void phoneCheck(String phone) {
@@ -117,7 +117,7 @@ public class UpdatePhotoActivity extends BaseActivity {
                             getVerify(phone);
                         } else {
                             dismiss();
-                            showToast(R.string.update_phone_warm);
+                            showToast(dataInfo.msg());
                         }
                     }
                 });

@@ -1659,7 +1659,7 @@ public interface KonkaApiService {
      */
     @FormUrlEncoded
     @POST("index.php/api/user/phoneCheck")
-    Observable<DataInfo> phoneCheck(@Field("mobile") String mobile);
+    Observable<DataInfo> phoneCheck(@Field("phone") String phone);
 
     /**
      * 修改绑定手机
@@ -2204,6 +2204,9 @@ public interface KonkaApiService {
     Observable<DataInfo<PageDataBean<GroupRoomListBean>>> groupRoomList(@Query("page") String page,
                                                                         @Query("room_group_id") String room_group_id,
                                                                         @Query("rent_type") String rent_type,
+                                                                        @Query("price_area_id") String price_area_id,
+                                                                        @Query("room_type_id") String room_type_id,
+                                                                        @Query("price_area") String price_area,
                                                                         @Query("keyword") String keyword);
 
     /**

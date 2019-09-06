@@ -104,7 +104,19 @@ SearchResultFragment extends BaseFragment {
                 TextView tv_price = viewHolder.getView(R.id.tv_price);
 //                tv_price.setText(Html.fromHtml("<font color='#ff4707'>¥" + roomInfo.housing_price + "</font>/月"));
                 String unit = bean.getType() == 1 ? "天" : "月";
-                tv_price.setText("¥" + (int) Float.parseFloat(bean.getHousing_price()) + "/" + unit);
+                String price=bean.getHousing_price();
+                if (!TextUtils.isEmpty(price)){
+                    float priceF = Float.valueOf(bean.getHousing_price());
+                    int priceI = (int) priceF;
+                    if (priceF>priceI){
+                        price= priceF+"";
+                    }else{
+                        price= priceI+"";
+                    }
+                }else{
+                    price="";
+                }
+                tv_price.setText("¥" + price + "/" + unit);
                 if (!TextUtils.isEmpty(bean.getThumb_image()))
                     Picasso.get().load(bean.getThumb_image()).into((ImageView) viewHolder.getView(R.id.iv_icon));
                 else
@@ -177,6 +189,7 @@ SearchResultFragment extends BaseFragment {
                             mRoomInfos.clear();
                             mRoomInfos.addAll(dataInfo.data().getList());
                             mCommonAdapter.notifyDataSetChanged();
+                            ((SearchActivity)mActivity).showTips(mRoomInfos.size()==0);
                         } else {
                             dismiss();
                             showToast(dataInfo.msg());

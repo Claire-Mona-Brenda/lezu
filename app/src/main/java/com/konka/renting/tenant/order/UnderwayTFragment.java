@@ -116,7 +116,19 @@ public class UnderwayTFragment extends BaseFragment {
             public void convert(ViewHolder viewHolder, RenterOrderListBean listBean) {
                 if (!TextUtils.isEmpty(listBean.getHousing_price()) && Float.valueOf(listBean.getHousing_price()) != 0) {
                     String unit = listBean.getType() == 1 ? "/天" : "/月";
-                    viewHolder.setText(R.id.adapter_tv_room_price, "¥ " + (int) Float.parseFloat(listBean.getHousing_price()) + unit);
+                    String price=listBean.getHousing_price();
+                    if (!TextUtils.isEmpty(price)){
+                        float priceF = Float.valueOf(listBean.getHousing_price());
+                        int priceI = (int) priceF;
+                        if (priceF>priceI){
+                            price= priceF+"";
+                        }else{
+                            price= priceI+"";
+                        }
+                    }else{
+                        price="";
+                    }
+                    viewHolder.setText(R.id.adapter_tv_room_price, "¥ " + price + unit);
                     viewHolder.setVisible(R.id.adapter_tv_room_price, true);
                 } else {
                     viewHolder.setVisible(R.id.adapter_tv_room_price, false);

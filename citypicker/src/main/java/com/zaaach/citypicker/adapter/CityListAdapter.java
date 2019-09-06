@@ -119,8 +119,8 @@ public class CityListAdapter extends RecyclerView.Adapter<CityListAdapter.BaseVi
                     ((LocationViewHolder) holder).current.setText(R.string.cp_locate_failed);
                     break;
             }
-            ((LocationViewHolder) holder).current.setVisibility(View.GONE);
-            ((LocationViewHolder) holder).container.setVisibility(View.GONE);
+            ((LocationViewHolder) holder).current.setVisibility(View.VISIBLE);
+            ((LocationViewHolder) holder).container.setVisibility(View.VISIBLE);
             ((LocationViewHolder) holder).container.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

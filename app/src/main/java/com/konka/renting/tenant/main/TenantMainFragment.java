@@ -204,8 +204,6 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
         mTypeShort.setVisibility(View.GONE);
 
 
-
-
         initAdapter();
         initListent();
         initCity();
@@ -253,7 +251,19 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
             public void convert(ViewHolder viewHolder, RenterSearchListBean bean) {
                 viewHolder.setText(R.id.adapter_tenant_main_house_tv_name, bean.getRoom_name());
                 String unit_rent = bean.getType() == 1 ? getString(R.string.public_house_pay_unit_day) : getString(R.string.public_house_pay_unit_mon);
-                viewHolder.setText(R.id.adapter_tenant_main_house_tv_price, bean.getHousing_price() + unit_rent);
+                String price=bean.getHousing_price();
+                if (!TextUtils.isEmpty(price)){
+                    float priceF = Float.valueOf(bean.getHousing_price());
+                    int priceI = Float.valueOf(bean.getHousing_price()).intValue();
+                    if (priceF>priceI){
+                        price= priceF+"";
+                    }else{
+                        price= priceI+"";
+                    }
+                }else{
+                    price="";
+                }
+                viewHolder.setText(R.id.adapter_tenant_main_house_tv_price, price + unit_rent);
                 ImageView picView = viewHolder.getView(R.id.adapter_tenant_main_house_iv_icon);
                 if (!TextUtils.isEmpty(bean.getThumb_image())) {
                     Picasso.get().load(bean.getThumb_image()).error(R.mipmap.fangchan_jiazai).into(picView);
@@ -283,7 +293,19 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
                 spannableStringBuilder.append("|" + bean.getFloor() + "/" + bean.getTotal_floor() + "层");
                 viewHolder.setText(R.id.adapter_tenant_main_short_tv_info, spannableStringBuilder);
 
-                viewHolder.setText(R.id.adapter_tenant_main_short_tv_price, bean.getHousing_price());
+                String price=bean.getHousing_price();
+                if (!TextUtils.isEmpty(price)){
+                    float priceF = Float.valueOf(bean.getHousing_price());
+                    int priceI = (int) priceF;
+                    if (priceF>priceI){
+                        price= priceF+"";
+                    }else{
+                        price= priceI+"";
+                    }
+                }else{
+                    price="";
+                }
+                viewHolder.setText(R.id.adapter_tenant_main_short_tv_price,price);
                 viewHolder.setText(R.id.adapter_tenant_main_short_tv_name, bean.getRoom_name());
 
                 ImageView picView = viewHolder.getView(R.id.adapter_tenant_main_short_iv_icon);
@@ -317,7 +339,20 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
                 viewHolder.setText(R.id.adapter_tenant_main_recommend_tv_info, spannableStringBuilder);
 
                 viewHolder.setText(R.id.adapter_tenant_main_recommend_tv_name, bean.getRoom_name());
-                viewHolder.setText(R.id.adapter_tenant_main_recommend_tv_price, bean.getHousing_price());
+
+                String price=bean.getHousing_price();
+                if (!TextUtils.isEmpty(price)){
+                    float priceF = Float.valueOf(bean.getHousing_price());
+                    int priceI = (int) priceF;
+                    if (priceF>priceI){
+                        price= priceF+"";
+                    }else{
+                        price= priceI+"";
+                    }
+                }else{
+                    price="";
+                }
+                viewHolder.setText(R.id.adapter_tenant_main_recommend_tv_price, price);
                 viewHolder.setText(R.id.adapter_tenant_main_recommend_tv_price_unit, getString(bean.getType() == 1 ? R.string.house_info_rent_pay_unit_day : R.string.house_info_rent_pay_unit));
 
                 ImageView picView = viewHolder.getView(R.id.adapter_tenant_main_recommend_iv_icon);
@@ -413,6 +448,7 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
         getRecommendListData();
     }
 
+
     @OnClick({R.id.fragment_tenant_main_tv_choose_city, R.id.fragment_tenant_main_img_choose_city, R.id.fragment_tenant_main_tv_search,
             R.id.fragment_tenant_main_tv_long_rent, R.id.fragment_tenant_main_tv_short_rent, R.id.fragment_tenant_main_tv_find_house,
             R.id.fragment_tenant_main_tv_house_more, R.id.fragment_tenant_main_tv_short_more, R.id.fragment_tenant_main_ll_type_long, R.id.fragment_tenant_main_ll_type_short})
@@ -423,7 +459,7 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
                 selectionCity();
                 break;
             case R.id.fragment_tenant_main_tv_search://搜索房产
-                String search = mEdtAddress.getText().toString().replace(" ","");
+                String search = mEdtAddress.getText().toString().replace(" ", "");
                 if (TextUtils.isEmpty(search)) {
                     showToast(getString(R.string.please_input_search_string));
                 } else if (city == null) {
@@ -512,7 +548,8 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
                 .subscribe(new CommonSubscriber<DataInfo<PageDataBean<RenterSearchListBean>>>() {
                     @Override
                     public void onError(Throwable e) {
-
+                        mLlHouse.setVisibility(View.GONE);
+                        mRvHouse.setVisibility(View.GONE);
                     }
 
                     @Override
@@ -545,7 +582,8 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
                 .subscribe(new CommonSubscriber<DataInfo<PageDataBean<RenterSearchListBean>>>() {
                     @Override
                     public void onError(Throwable e) {
-
+                        mLlShort.setVisibility(View.GONE);
+                        mRvShort.setVisibility(View.GONE);
                     }
 
                     @Override
@@ -586,6 +624,9 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
                             } else {
                                 page_long--;
                             }
+                        }else{
+                            mLlRecommend.setVisibility(View.GONE);
+                            mRefreshRecommend.setVisibility(View.GONE);
                         }
                     }
 
@@ -698,7 +739,7 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
                 .setFragmentManager(getChildFragmentManager())    //此方法必须调用
                 .enableAnimation(true)    //启用动画效果
 //                .setAnimationStyle(anim)	//自定义动画
-//                .setLocatedCity(null)  //APP自身已定位的城市，默认为null（定位失败）
+                .setLocatedCity(locationCity)  //APP自身已定位的城市，默认为null（定位失败）
                 .setHotCities(mCities)    //指定热门城市
                 .setAllCities(mAllCities)
                 .setOnPickListener(new OnPickListener() {

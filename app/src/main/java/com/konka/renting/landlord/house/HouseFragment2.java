@@ -229,9 +229,18 @@ public class HouseFragment2 extends BaseFragment {
                 } else {//已发布
                     viewHolder.setText(R.id.status, getString(R.string.house_status_type_public));
                     viewHolder.setVisible(R.id.adapter_house_ll_rent_money, true);
-                    String price = "";
-                    if (!TextUtils.isEmpty(houseOrderInfoBean.getHousing_price())) {
-                        price = Float.valueOf(houseOrderInfoBean.getHousing_price()).intValue() + "";
+
+                    String price=houseOrderInfoBean.getHousing_price();
+                    if (!TextUtils.isEmpty(price)){
+                        float priceF = Float.valueOf(houseOrderInfoBean.getHousing_price());
+                        int priceI = (int) priceF;
+                        if (priceF>priceI){
+                            price= priceF+"";
+                        }else{
+                            price= priceI+"";
+                        }
+                    }else{
+                        price="";
                     }
                     viewHolder.setText(R.id.adapter_house_tv_rent_money, price);
                     viewHolder.setText(R.id.start_end, getString(R.string.end_to_rent));
