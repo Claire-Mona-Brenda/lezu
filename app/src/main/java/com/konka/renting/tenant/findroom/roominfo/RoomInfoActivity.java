@@ -66,7 +66,7 @@ public class RoomInfoActivity extends BaseActivity implements OnClickListener {
     AppBarLayout mAppBarLayout;
     ViewPager pager;
     LinearLayout bottom_views;
-//    Button btn_req;
+    //    Button btn_req;
     Button look_room;
     TextView tvTitle;
     TextView tvRoomName;
@@ -271,8 +271,8 @@ public class RoomInfoActivity extends BaseActivity implements OnClickListener {
         }
         tvRoomArea.setText(infoBean.getMeasure_area() + "平米");
         tvRoomFloor.setText(infoBean.getFloor() + "/" + infoBean.getTotal_floor() + "层");
-        tvRoomIntroduce.setText(TextUtils.isEmpty(infoBean.getRemark())?"暂无介绍":infoBean.getRemark());
-        tvRoomAddress.setText(infoBean.getAddress());
+        tvRoomIntroduce.setText(TextUtils.isEmpty(infoBean.getRemark()) ? "暂无介绍" : infoBean.getRemark());
+        tvRoomAddress.setText(infoBean.getProvince() + infoBean.getCity() + infoBean.getArea() + infoBean.getMap_address() + infoBean.getRoom_group() + infoBean.getAddress());
         room_no.setText(infoBean.getRoom_no());
         tvImgSum.setText("1/" + imageList.size());
         if (confitAdapter != null)
@@ -295,17 +295,17 @@ public class RoomInfoActivity extends BaseActivity implements OnClickListener {
 
             }
         });
-        String price=infoBean.getHousing_price();
-        if (!TextUtils.isEmpty(price)){
+        String price = infoBean.getHousing_price();
+        if (!TextUtils.isEmpty(price)) {
             float priceF = Float.valueOf(infoBean.getHousing_price());
             int priceI = (int) priceF;
-            if (priceF>priceI){
-                price= priceF+"";
-            }else{
-                price= priceI+"";
+            if (priceF > priceI) {
+                price = priceF + "";
+            } else {
+                price = priceI + "";
             }
-        }else{
-            price="";
+        } else {
+            price = "";
         }
         tvRoomMoney.setText("¥ " + price);
         if (infoBean.getType() == 1) {

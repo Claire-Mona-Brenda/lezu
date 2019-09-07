@@ -43,6 +43,11 @@ public class RoomSearchInfoBean implements Parcelable {
     private String litter_rent;
     private String property_rent;
     private String cost_rent;
+    private String province;
+    private String city;
+    private String area;
+    private String map_address;
+    private String room_group;
     private String address;
     private int total_floor;
     private int room_type_id;
@@ -78,6 +83,11 @@ public class RoomSearchInfoBean implements Parcelable {
         litter_rent = in.readString();
         property_rent = in.readString();
         cost_rent = in.readString();
+        province = in.readString();
+        city = in.readString();
+        area = in.readString();
+        map_address = in.readString();
+        room_group = in.readString();
         address = in.readString();
         total_floor = in.readInt();
         room_type_id = in.readInt();
@@ -178,6 +188,46 @@ public class RoomSearchInfoBean implements Parcelable {
 
     public void setCost_rent(String cost_rent) {
         this.cost_rent = cost_rent;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public String getMap_address() {
+        return map_address;
+    }
+
+    public void setMap_address(String map_address) {
+        this.map_address = map_address;
+    }
+
+    public String getRoom_group() {
+        return room_group;
+    }
+
+    public void setRoom_group(String room_group) {
+        this.room_group = room_group;
     }
 
     public String getAddress() {
@@ -388,6 +438,11 @@ public class RoomSearchInfoBean implements Parcelable {
         dest.writeString(litter_rent);
         dest.writeString(property_rent);
         dest.writeString(cost_rent);
+        dest.writeString(province);
+        dest.writeString(city);
+        dest.writeString(area);
+        dest.writeString(map_address);
+        dest.writeString(room_group);
         dest.writeString(address);
         dest.writeInt(total_floor);
         dest.writeInt(room_type_id);

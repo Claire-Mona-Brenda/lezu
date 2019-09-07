@@ -236,7 +236,11 @@ public class UserFragment extends BaseFragment {
                                     }
                                 }
                                 urlPic = userInfoBeanDataInfo.data().getThumb_headimgurl();
-                                mTvMoney.setText(Float.parseFloat(userInfoBeanDataInfo.data().getBalance()) + "");
+                                String balance=userInfoBeanDataInfo.data().getBalance();
+                                if (TextUtils.isEmpty(balance)){
+                                    balance = "";
+                                }
+                                mTvMoney.setText(balance);
 
                             }
 
@@ -260,42 +264,32 @@ public class UserFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_withdraw://提现
-                if (userInfoBean != null && userInfoBean.getIs_auth() == 1) {
+                if (userInfoBean != null) {
                     WithdrawcashActivity.toActivity(getContext(), userInfoBean.getBalance());
-                } else if (userInfoBean != null && userInfoBean.getIs_auth() == 0) {
-                    showRenZhengTips();
                 }
                 break;
             case R.id.tv_recharge://充值
-                if (userInfoBean != null && userInfoBean.getIs_auth() == 1) {
+                if (userInfoBean != null) {
                     RechargeActivity.toActivity(getContext());
-                } else if (userInfoBean != null && userInfoBean.getIs_auth() == 0) {
-                    showRenZhengTips();
                 }
                 break;
             case R.id.tv_rent_people://租客
-                if (userInfoBean != null && userInfoBean.getIs_auth() == 1)
+                if (userInfoBean != null)
                     HouseTenantListActivity.toActivity(getContext());
                 break;
             case R.id.tv_bill://账单
-                if (userInfoBean != null && userInfoBean.getIs_auth() == 1) {
+                if (userInfoBean != null) {
                     BillListActivity.toActivity(getContext());
-                } else if (userInfoBean != null && userInfoBean.getIs_auth() == 0) {
-                    showRenZhengTips();
                 }
                 break;
             case R.id.tv_collection://催租
-                if (userInfoBean != null && userInfoBean.getIs_auth() == 1) {
+                if (userInfoBean != null) {
                     MyCollectionActivity.toActivity(getContext());
-                } else if (userInfoBean != null && userInfoBean.getIs_auth() == 0) {
-                    showRenZhengTips();
                 }
                 break;
             case R.id.tv_message://消息
-                if (userInfoBean != null && userInfoBean.getIs_auth() == 1) {
+                if (userInfoBean != null) {
                     MessageActivity.toActivity(getContext());
-                } else if (userInfoBean != null && userInfoBean.getIs_auth() == 0) {
-                    showRenZhengTips();
                 }
                 break;
             case R.id.icon_user_setting://个人设置
@@ -305,7 +299,7 @@ public class UserFragment extends BaseFragment {
 //                ForgetPasswordActivity.toActivity(getContext(), LoginInfo.LANDLORD, LoginUserBean.getInstance().getMobile());
 //                break;
             case R.id.img_call_us://联系客服
-                if (userInfoBean != null){
+                if (userInfoBean != null) {
                     showCalll();
 
                 }
@@ -313,10 +307,8 @@ public class UserFragment extends BaseFragment {
                 break;
             case R.id.img_problem://常见问题
 //                WebviewActivity.toActivity(getActivity(), WebType.WEB_PROBLEM);
-                if (userInfoBean != null && userInfoBean.getIs_auth() == 1) {
+                if (userInfoBean != null) {
                     ProblemActivity.toActivity(getActivity());
-                } else if (userInfoBean != null && userInfoBean.getIs_auth() == 0) {
-                    showRenZhengTips();
                 }
                 break;
             case R.id.img_face://实名认证
@@ -399,10 +391,10 @@ public class UserFragment extends BaseFragment {
                         @Override
                         public void onClick(View v) {
                             callPopupWindow.dismiss();
-                            if (TextUtils.isEmpty(tel)){
+                            if (TextUtils.isEmpty(tel)) {
                                 callService();
 
-                            }else{
+                            } else {
                                 PhoneUtil.call(tel, getContext());
                             }
                         }

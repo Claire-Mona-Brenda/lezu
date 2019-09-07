@@ -598,10 +598,12 @@ public class ChooseLocationActivity extends BaseActivity implements PoiSearch.On
                 @Override
                 public void onClick(View view) {
                     String name = inputPopupWindow.getEdtContent().getText().toString();
-                    if (!TextUtils.isEmpty(name)) {
+                    if (!TextUtils.isEmpty(name.replace(" ",""))&&!TextUtils.isEmpty(choosePoiItem.getBusinessArea())) {
                         inputPopupWindow.dismiss();
                         roomGroupAdd(name);
-                    } else {
+                    }else if (TextUtils.isEmpty(choosePoiItem.getBusinessArea())){
+
+                    }else {
                         showToast(R.string.please_input_estate_name);
                     }
                 }
@@ -635,9 +637,10 @@ public class ChooseLocationActivity extends BaseActivity implements PoiSearch.On
     /*****************************************************接口*********************************************/
     private void roomGroupAdd(String name) {
         showLoadingDialog();
+        java.text.DecimalFormat df = new java.text.DecimalFormat("#.000000");
         Subscription subscription = SecondRetrofitHelper.getInstance().roomGroupAdd(name, choosePoiItem.getProvinceName(), choosePoiItem.getCityName(),
                 choosePoiItem.getAdName(), choosePoiItem.getBusinessArea(), choosePoiItem.getSnippet(),
-                choosePoiItem.getLatLonPoint().getLongitude() + "", choosePoiItem.getLatLonPoint().getLatitude() + "")
+                df.format(choosePoiItem.getLatLonPoint().getLongitude()), df.format(choosePoiItem.getLatLonPoint().getLatitude()))
                 .compose(RxUtil.<DataInfo<RoomGroupListBean>>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo<RoomGroupListBean>>() {
                     @Override

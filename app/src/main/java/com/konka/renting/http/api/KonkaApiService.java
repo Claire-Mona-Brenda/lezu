@@ -2214,5 +2214,6 @@ public interface KonkaApiService {
      */
     @GET("index.php/api/room/mapLocationSearch")
     Observable<DataInfo<List<MapLocationSearchBean>>> mapLocationSearch(@Query("city") String city,
+                                                                        @Query("rent_type") String rent_type,
                                                                         @Query("keyword") String keyword);
 }

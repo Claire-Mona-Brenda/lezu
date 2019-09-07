@@ -65,11 +65,13 @@ public class MapSearchActivity extends BaseActivity {
     DBManager dbManager;
 
     String cityName;
+    int rent_type;
     String search;
 
-    public static void toActivity(Context context, String cityName) {
+    public static void toActivity(Context context, String cityName,int rent_type) {
         Intent intent = new Intent(context, MapSearchActivity.class);
         intent.putExtra("cityName", cityName);
+        intent.putExtra("rent_type", rent_type);
         context.startActivity(intent);
     }
 
@@ -81,6 +83,7 @@ public class MapSearchActivity extends BaseActivity {
     @Override
     public void init() {
         cityName = getIntent().getStringExtra("cityName");
+        rent_type = getIntent().getIntExtra("rent_type",0);
         dbManager = new DBManager(this);
         initHistory();
         mCommonAdapter = new CommonAdapter<MapLocationSearchBean>(this, mRoomInfos, R.layout.adapter_map_location_search) {
@@ -222,7 +225,7 @@ public class MapSearchActivity extends BaseActivity {
 
     private void getSearchResultList(String keyword) {
         showLoadingDialog();
-        Subscription subscription = SecondRetrofitHelper.getInstance().mapLocationSearch(cityName, keyword)
+        Subscription subscription = SecondRetrofitHelper.getInstance().mapLocationSearch(cityName, rent_type+"",keyword)
                 .compose(RxUtil.<DataInfo<List<MapLocationSearchBean>>>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo<List<MapLocationSearchBean>>>() {
                     @Override

@@ -1476,7 +1476,7 @@ public class SecondRetrofitHelper {
     /**
      * 地图位置查询(2.4.2版本以后)
      */
-    public Observable<DataInfo<List<MapLocationSearchBean>>> mapLocationSearch(String city, String keyword) {
-        return mApiService.mapLocationSearch(city, keyword);
+    public Observable<DataInfo<List<MapLocationSearchBean>>> mapLocationSearch(String city, String rent_type,String keyword) {
+        return mApiService.mapLocationSearch(city, rent_type,keyword);
     }
 }

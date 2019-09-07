@@ -226,10 +226,8 @@ public class TenantUserFragment extends BaseFragment {
                 UserInfoActivity.toActivity(getContext(), LoginInfo.TENANT);
                 break;
             case R.id.tv_message://我的消息
-                if (infoBean != null && infoBean.getIs_identity() == 1) {
+                if (infoBean != null ) {
                     MessageActivity.toActivity(getActivity());
-                } else if (infoBean != null && infoBean.getIs_identity() == 0) {
-                    showRenZhengTips();
                 }
                 break;
             case R.id.tv_authentication://实名认证
@@ -240,10 +238,8 @@ public class TenantUserFragment extends BaseFragment {
                 }
                 break;
             case R.id.tv_problem://常见问题
-                if (infoBean != null && infoBean.getIs_identity() == 1) {
+                if (infoBean != null) {
                     ProblemActivity.toActivity(getActivity());
-                } else if (infoBean != null && infoBean.getIs_identity() == 0) {
-                    showRenZhengTips();
                 }
 //                WebviewActivity.toActivity(getContext(), WebType.WEB_PROBLEM);
                 break;
@@ -252,10 +248,8 @@ public class TenantUserFragment extends BaseFragment {
                 break;
             case R.id.tv_after_the_process://售后流程
 //                WebviewActivity.toActivity(getContext(), WebType.WEB_ABOUT);
-                if (infoBean != null && infoBean.getIs_identity() == 1) {
+                if (infoBean != null ) {
                     AfterProcessActivity.toActivity(getContext(), ((TenantMainActivity) getActivity()).mAppConfigBean.getDisclaimer());
-                } else if (infoBean != null && infoBean.getIs_identity() == 0) {
-                    showRenZhengTips();
                 }
                 break;
         }

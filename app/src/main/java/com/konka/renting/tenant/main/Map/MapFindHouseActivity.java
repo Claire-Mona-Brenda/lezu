@@ -560,7 +560,11 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
 
         TextOptions textOptions = new TextOptions();
         textOptions.position(new LatLng(lat, lng));
-        textOptions.text(mapSearchBean.getName() + " " + mapSearchBean.getCount() + "套");
+        String name=mapSearchBean.getName();
+        if (name.length()>6){
+            name=name.substring(0,6)+"...";
+        }
+        textOptions.text(name + " " + mapSearchBean.getCount() + "套");
         textOptions.backgroundColor(Color.parseColor("#00FF7500"));
         textOptions.fontColor(getResources().getColor(R.color.color_ffffff));
         textOptions.fontSize(getResources().getDimensionPixelSize(R.dimen.sp_12));
@@ -585,6 +589,7 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
                     if (aMap != null)
                         aMap.clear();
                     curr_level = 0;
+                    room_group_id="-1";
                     addMarkerInScreen();
                 }
                 break;
@@ -598,6 +603,7 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
                     if (aMap != null)
                         aMap.clear();
                     curr_level = 0;
+                    room_group_id="-1";
                     addMarkerInScreen();
                 }
                 break;
@@ -613,7 +619,7 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
                 mDrawerlayout.openDrawer(mLlFiltrate);
                 break;
             case R.id.activity_map_find_house_img_search:
-                MapSearchActivity.toActivity(this, cityName);
+                MapSearchActivity.toActivity(this, cityName,rent_type);
                 break;
             case R.id.activity_find_house_tv_reset:
                 if (rent_type == 1) {

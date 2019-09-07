@@ -324,7 +324,7 @@ public class HouseInfoActivity2 extends BaseActivity {
                             mTvFloor.setText(bean.getFloor() + "/" + bean.getTotal_floor() + getString(R.string.house_info_floor_unit));
                             mTvConfig.setText(getConfig(bean.getConfig()));
                             mTvIntroduce.setText(TextUtils.isEmpty(bean.getRemark()) ? getString(R.string.nothing) : bean.getRemark());
-                            mTvAddress.setText(bean.getProvince() + bean.getCity() + bean.getArea() + bean.getRoom_group() + bean.getAddress());
+                            mTvAddress.setText(bean.getProvince() + bean.getCity() + bean.getArea() +bean.getMap_address()+ bean.getRoom_group() + bean.getAddress());
                             //平台认证
                             if (bean.getAuth_image() != null && bean.getAuth_image().size() > 0) {
                                 mLlOfficial.setVisibility(View.VISIBLE);

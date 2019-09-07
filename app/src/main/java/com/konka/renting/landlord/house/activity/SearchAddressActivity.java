@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -31,9 +32,11 @@ import com.amap.api.services.district.DistrictItem;
 import com.amap.api.services.district.DistrictResult;
 import com.amap.api.services.district.DistrictSearch;
 import com.amap.api.services.district.DistrictSearchQuery;
+import com.amap.api.services.geocoder.BusinessArea;
 import com.amap.api.services.geocoder.GeocodeQuery;
 import com.amap.api.services.geocoder.GeocodeResult;
 import com.amap.api.services.geocoder.GeocodeSearch;
+import com.amap.api.services.geocoder.RegeocodeQuery;
 import com.amap.api.services.geocoder.RegeocodeResult;
 import com.amap.api.services.help.Inputtips;
 import com.amap.api.services.help.InputtipsQuery;
@@ -73,7 +76,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Subscription;
 
-public class SearchAddressActivity extends BaseActivity implements TextWatcher, Inputtips.InputtipsListener, PoiSearch.OnPoiSearchListener, DistrictSearch.OnDistrictSearchListener {
+public class SearchAddressActivity extends BaseActivity implements TextWatcher, Inputtips.InputtipsListener, PoiSearch.OnPoiSearchListener, DistrictSearch.OnDistrictSearchListener, GeocodeSearch.OnGeocodeSearchListener {
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.iv_back)
@@ -120,6 +123,7 @@ public class SearchAddressActivity extends BaseActivity implements TextWatcher, 
 
     CommonInputPopupWindow inputPopupWindow;
     PoiItem choosePoiItem;
+    GeocodeSearch geocoderSearch;
 
     public static void toActivity(Context context, ArrayList<City> mAllCities, ArrayList<HotCity> mCities, City city) {
         Intent intent = new Intent(context, SearchAddressActivity.class);
@@ -146,6 +150,8 @@ public class SearchAddressActivity extends BaseActivity implements TextWatcher, 
         if (city != null) {
             tvLocation.setText(city.getName());
         }
+        geocoderSearch = new GeocodeSearch(this);
+        geocoderSearch.setOnGeocodeSearchListener(this);
 
         poiItems = new ArrayList<>();
         commonAdapter = new CommonAdapter<PoiItem>(this, poiItems, R.layout.adapter_choose_location) {
@@ -158,6 +164,10 @@ public class SearchAddressActivity extends BaseActivity implements TextWatcher, 
                     public void onClick(View v) {
                         choosePoiItem = poiItem;
                         showInputPop(choosePoiItem.getTitle());
+                        if (TextUtils.isEmpty(choosePoiItem.getBusinessArea())) {
+                            RegeocodeQuery query = new RegeocodeQuery(new LatLonPoint(choosePoiItem.getLatLonPoint().getLatitude(), choosePoiItem.getLatLonPoint().getLongitude()), 100, GeocodeSearch.AMAP);
+                            geocoderSearch.getFromLocationAsyn(query);
+                        }
                     }
                 });
             }
@@ -421,11 +431,14 @@ public class SearchAddressActivity extends BaseActivity implements TextWatcher, 
             inputPopupWindow.setBtnRightOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Log.e("12313","====onClick======"+choosePoiItem.getBusinessArea());
                     String name = inputPopupWindow.getEdtContent().getText().toString();
-                    if (!TextUtils.isEmpty(name)) {
+                    if (!TextUtils.isEmpty(name.replace(" ",""))&&!TextUtils.isEmpty(choosePoiItem.getBusinessArea())) {
                         inputPopupWindow.dismiss();
                         roomGroupAdd(name);
-                    } else {
+                    } else if (TextUtils.isEmpty(choosePoiItem.getBusinessArea())){
+
+                    }else {
                         showToast(R.string.please_input_estate_name);
                     }
                 }
@@ -459,9 +472,10 @@ public class SearchAddressActivity extends BaseActivity implements TextWatcher, 
     /*****************************************************接口*********************************************/
     private void roomGroupAdd(String name) {
         showLoadingDialog();
+        java.text.DecimalFormat df = new java.text.DecimalFormat("#.000000");
         Subscription subscription = SecondRetrofitHelper.getInstance().roomGroupAdd(name, choosePoiItem.getProvinceName(), choosePoiItem.getCityName(),
                 choosePoiItem.getAdName(), choosePoiItem.getBusinessArea(), choosePoiItem.getSnippet(),
-                choosePoiItem.getLatLonPoint().getLongitude() + "", choosePoiItem.getLatLonPoint().getLatitude() + "")
+                df.format(choosePoiItem.getLatLonPoint().getLongitude()), df.format(choosePoiItem.getLatLonPoint().getLatitude()))
                 .compose(RxUtil.<DataInfo<RoomGroupListBean>>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo<RoomGroupListBean>>() {
                     @Override
@@ -483,5 +497,31 @@ public class SearchAddressActivity extends BaseActivity implements TextWatcher, 
                     }
                 });
         addSubscrebe(subscription);
+    }
+
+    /**
+     * 逆地理编码（坐标转地址）结果回调
+     */
+    @Override
+    public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {
+        String a ;
+        List<BusinessArea> businessAreaList = regeocodeResult.getRegeocodeAddress().getBusinessAreas();
+        if (businessAreaList.size() > 0) {
+            a = businessAreaList.get(0).getName();
+        } else if (!TextUtils.isEmpty(regeocodeResult.getRegeocodeAddress().getNeighborhood())) {
+            a = regeocodeResult.getRegeocodeAddress().getNeighborhood();
+        } else if (!TextUtils.isEmpty(regeocodeResult.getRegeocodeAddress().getTownship())) {
+            a = regeocodeResult.getRegeocodeAddress().getTownship();
+        }else{
+            a= choosePoiItem.getTitle();
+        }
+        if (TextUtils.isEmpty(choosePoiItem.getBusinessArea())) {
+            choosePoiItem.setBusinessArea(a);
+        }
+    }
+
+    @Override
+    public void onGeocodeSearched(GeocodeResult geocodeResult, int i) {
+
     }
 }
