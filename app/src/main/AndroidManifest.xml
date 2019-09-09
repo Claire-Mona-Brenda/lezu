@@ -124,7 +124,8 @@
         <activity
             android:name=".landlord.house.HouseEditActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
         <activity
             android:name=".landlord.house.HouseAddActivity"
             android:launchMode="singleTop"

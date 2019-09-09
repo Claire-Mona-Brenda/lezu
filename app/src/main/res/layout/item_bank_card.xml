@@ -1,16 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<com.mcxtzhang.swipemenulib.SwipeMenuLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:ios="false"
+    app:leftSwipe="true"
+    app:swipeEnable="true">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/yhk"
-        android:textColor="@color/color_404143"
-        android:textSize="@dimen/sp_15"
-        android:id="@+id/tv_bank_card"
-        android:layout_marginTop="@dimen/dp_20"
-        android:layout_marginBottom="@dimen/dp_20"
-        android:layout_marginLeft="@dimen/dp_10"/>
-</RelativeLayout>
+        android:layout_marginTop="@dimen/dp_28"
+        android:layout_marginEnd="@dimen/dp_28"
+        android:layout_marginStart="@dimen/dp_28"
+        android:background="@drawable/shape_bank_blue">
+        <ImageView
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:layout_margin="@dimen/dp_20"/>
+        <TextView
+            android:id="@+id/tv_bank_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/sp_12"
+            />
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/adapter_bank_card_tv_del"
+        android:layout_width="@dimen/dp_90"
+        android:layout_height="@dimen/dp_85"
+        android:background="@drawable/shape_rent_left"
+        android:text="@string/common_del"
+        android:textColor="@color/color_ffffff"
+        android:textSize="@dimen/sp_16"
+        android:gravity="center"/>
+
+</com.mcxtzhang.swipemenulib.SwipeMenuLayout>

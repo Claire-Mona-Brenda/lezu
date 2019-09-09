@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/open_popup_background"
+    >
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/open_popup_background"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:paddingTop="@dimen/dp_12"
+        android:paddingBottom="@dimen/dp_8">
+        <ImageView
+            android:id="@+id/pop_warm_img_title"
+            android:layout_width="@dimen/dp_32"
+            android:layout_height="@dimen/dp_32"/>
+        <TextView
+            android:id="@+id/pop_warm_tv_please"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_black"
+            android:textStyle="bold"
+            android:typeface="sans"
+            android:text="@string/please_text"
+            android:textSize="@dimen/sp_18"
+            android:layout_marginTop="@dimen/dp_6"/>
+
+        <TextView
+            android:id="@+id/pop_warm_tv_context"
+            android:layout_width="@dimen/dp_220"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_14"
+            android:layout_marginStart="@dimen/dp_30"
+            android:layout_marginEnd="@dimen/dp_30"
+            android:gravity="start"
+            android:textSize="@dimen/sp_16"
+            android:text="@string/bank_tips_no_support"
+            android:textColor="@color/color_000000"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:background="@color/style_line"/>
+        <TextView
+            android:id="@+id/pop_warm_tv_know"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_5"
+            android:text="@string/i_know"
+            android:gravity="center"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/sp_16"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

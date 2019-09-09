@@ -2,24 +2,27 @@ package com.konka.renting.landlord.user.withdrawcash;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.konka.renting.R;
 import com.konka.renting.base.BaseActivity;
-import com.konka.renting.bean.AddBankInfo;
-import com.konka.renting.bean.DataInfo;
-import com.konka.renting.bean.GetIssueBankBean;
-import com.konka.renting.http.RetrofitHelper;
-import com.konka.renting.http.subscriber.CommonSubscriber;
-import com.konka.renting.utils.RxBus;
-import com.konka.renting.utils.RxUtil;
+import com.konka.renting.widget.CommonInputPopupWindow;
+import com.konka.renting.widget.WarmPopupwindow;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.Subscription;
 
 public class AddBankCardActivity extends BaseActivity {
 
@@ -29,12 +32,28 @@ public class AddBankCardActivity extends BaseActivity {
     EditText mEtCardNum;
     @BindView(R.id.tv_type_select)
     TextView mTvTypeSelect;
-    @BindView(R.id.et_mobile)
-    EditText mEtMobile;
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+    @BindView(R.id.iv_back)
+    ImageView ivBack;
+    @BindView(R.id.tv_right)
+    TextView tvRight;
+    @BindView(R.id.iv_right)
+    ImageView ivRight;
+    @BindView(R.id.lin_title)
+    FrameLayout linTitle;
+    @BindView(R.id.img_tips)
+    ImageView imgTips;
+    @BindView(R.id.ll_warm)
+    LinearLayout llWarm;
+    @BindView(R.id.btn_complete)
+    Button btnComplete;
+
     private String id;
     private String name;
     private String cardnumber;
-    private String mobile;
+
+    WarmPopupwindow warmPopupwindow;
 
     public static void toActivity(Context context) {
         Intent intent = new Intent(context, AddBankCardActivity.class);
@@ -52,23 +71,26 @@ public class AddBankCardActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_type_select, R.id.btn_complete})
+    @OnClick({R.id.iv_back, R.id.tv_type_select,R.id.img_tips, R.id.btn_complete})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.iv_back:
+            case R.id.iv_back://返回
                 finish();
                 break;
-            case R.id.tv_type_select:
-                String number = mEtCardNum.getText().toString();
-                if (!TextUtils.isEmpty(number)) {
-                    getIssueBank(number);
-                } else {
-                    showToast("请输入银行卡号");
-                }
-
+//            case R.id.tv_type_select://
+//                String number = mEtCardNum.getText().toString();
+//                if (!TextUtils.isEmpty(number)) {
+//                    getIssueBank(number);
+//                } else {
+//                    showToast(R.string.please_input_card_num);
+//                }
+//
+//                break;
+            case R.id.img_tips://提示
+                showTipsPop();
                 break;
-            case R.id.btn_complete:
-                if (!TextUtils.isEmpty(name) || !TextUtils.isEmpty(cardnumber) || !TextUtils.isEmpty(mobile) || !TextUtils.isEmpty(mTvTypeSelect.getText().toString()))
+            case R.id.btn_complete://提交
+                if (!TextUtils.isEmpty(name) || !TextUtils.isEmpty(cardnumber))
                     comfirmAdd();
                 else
                     showToast("请输入完整信息");
@@ -79,8 +101,7 @@ public class AddBankCardActivity extends BaseActivity {
     private void comfirmAdd() {
         name = mEtHolder.getText().toString();
         cardnumber = mEtCardNum.getText().toString();
-        mobile = mEtMobile.getText().toString();
-        showError(name+cardnumber+id+mobile);
+        showError(name + cardnumber + id);
         showLoadingDialog();
 //        Subscription subscription = RetrofitHelper.getInstance().addBankCard(name, cardnumber, id, mobile)
 //                .compose(RxUtil.<AddBankInfo>rxSchedulerHelper())
@@ -135,4 +156,31 @@ public class AddBankCardActivity extends BaseActivity {
 //        addSubscrebe(subscription);
     }
 
+    /*******************************************弹窗***********************************************************/
+    private void showTipsPop() {
+        if (warmPopupwindow == null) {
+            warmPopupwindow = new WarmPopupwindow(mActivity);
+        }
+        showPopup(warmPopupwindow);
+    }
+
+    private void showPopup(PopupWindow popupWindow) {
+        // 开启 popup 时界面透明
+        WindowManager.LayoutParams lp = mActivity.getWindow().getAttributes();
+        lp.alpha = 0.5f;
+        mActivity.getWindow().setAttributes(lp);
+        mActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        // popupwindow 第一个参数指定popup 显示页面
+        popupWindow.showAtLocation((View) tvTitle.getParent(), Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL, 0, -200);     // 第一个参数popup显示activity页面
+        // popup 退出时界面恢复
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                WindowManager.LayoutParams lp = mActivity.getWindow().getAttributes();
+                lp.alpha = 1f;
+                mActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+                mActivity.getWindow().setAttributes(lp);
+            }
+        });
+    }
 }

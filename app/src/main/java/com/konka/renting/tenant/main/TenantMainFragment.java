@@ -485,7 +485,7 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
                 MoreHotRoomListActivity.toActivity(mActivity, getString(R.string.competitive_house), city == null ? "" : city.getName(), 0, 2);
                 break;
             case R.id.fragment_tenant_main_tv_short_more://热门短租
-                MoreHotRoomListActivity.toActivity(mActivity, getString(R.string.competitive_house), city == null ? "" : city.getName(), 1, 3);
+                MoreHotRoomListActivity.toActivity(mActivity, getString(R.string.competitive_short), city == null ? "" : city.getName(), 1, 3);
                 break;
             case R.id.fragment_tenant_main_ll_type_long://长租推荐
                 if (rent_type == 2) {

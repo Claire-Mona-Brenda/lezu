@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/style_bg_page"
     android:orientation="vertical">
 
     <include layout="@layout/include_title_text" />
@@ -14,12 +15,23 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <include layout="@layout/include_select_bank" />
-
             <include layout="@layout/include_withdraw_money" />
+
+            <include layout="@layout/include_select_bank" />
+            <Button
+                android:id="@+id/btn_withdraw"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_45"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_32"
+                android:background="@drawable/shape_button"
+                android:text="@string/common_sure"
+                android:textColor="@color/color_ffffff"
+                android:textSize="@dimen/sp_16" />
         </LinearLayout>
     </ScrollView>
 

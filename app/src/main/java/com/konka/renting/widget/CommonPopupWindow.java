@@ -38,7 +38,11 @@ public class CommonPopupWindow extends PopupWindow {
             }
         });
     }
-
+    public void setTitle(String title) {
+        if (tvTitle!=null){
+            tvTitle.setText(title);
+        }
+    }
     private void setPopupWindow() {
         this.setContentView(mView); //设置View
         this.setWidth(WindowManager.LayoutParams.WRAP_CONTENT);  //弹出窗宽度

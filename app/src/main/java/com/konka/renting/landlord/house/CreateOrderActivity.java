@@ -385,6 +385,7 @@ public class CreateOrderActivity extends BaseActivity {
                         }
                     })
                     .create();
+        commonPopupWindow.setTitle(getString(R.string.house_user) + " " + phone);
         showPopup(commonPopupWindow);
     }
 

@@ -8,6 +8,10 @@
 
     <include layout="@layout/include_title_white"/>
 
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -290,44 +294,45 @@
             <com.konka.renting.landlord.house.widget.PicRecordWidget
                 android:id="@+id/pic"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_150">
 
             </com.konka.renting.landlord.house.widget.PicRecordWidget>
 
-            <RelativeLayout
-                android:background="@android:color/white"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_marginTop="1dp">
-                <TextView
-                    android:textSize="@dimen/style_text_tips"
-                    android:textColor="@color/text_black"
-                    android:paddingTop="@dimen/dp_10"
-                    android:layout_marginBottom="@dimen/dp_5"
-                    android:id="@+id/info"
-                    android:layout_centerHorizontal="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <Button
-                    android:enabled="false"
-                    android:gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="60dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_below="@+id/info"
-                    android:layout_centerInParent="true"
-                    android:id="@+id/submit"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/selector_btn_enable_gray_org"
-                    android:text="@string/add_house_house_submit"
-                    android:textSize="@dimen/style_text_context"
-                    android:textColor="@color/color_ffffff"/>
-            </RelativeLayout>
+
         </LinearLayout>
 
     </ScrollView>
-
+    <RelativeLayout
+        android:background="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:elevation="@dimen/dp_10">
+        <TextView
+            android:textSize="@dimen/style_text_tips"
+            android:textColor="@color/text_black"
+            android:paddingTop="@dimen/dp_5"
+            android:id="@+id/info"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:enabled="false"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_30"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:layout_below="@+id/info"
+            android:layout_centerInParent="true"
+            android:id="@+id/submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_btn_enable_gray_org"
+            android:text="@string/add_house_house_submit"
+            android:textSize="@dimen/style_text_context"
+            android:textColor="@color/color_ffffff"/>
+    </RelativeLayout>
+</RelativeLayout>
 </LinearLayout>

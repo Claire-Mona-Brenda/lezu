@@ -5,152 +5,163 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/color_ffffff"
     tools:context="com.konka.renting.landlord.user.withdrawcash.AddBankCardActivity">
 
     <include layout="@layout/include_title_text"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:background="@color/style_line"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/please_bind_self"
-        android:textSize="@dimen/sp_13"
-        android:textColor="@color/color_666666"
-        android:layout_marginTop="@dimen/dp_10"
-        android:layout_marginLeft="@dimen/dp_10"/>
+        android:textSize="@dimen/sp_14"
+        android:textColor="@color/text_gray"
+        android:layout_marginTop="@dimen/dp_28"
+        android:layout_marginStart="@dimen/dp_30"
+        android:layout_marginBottom="@dimen/dp_13"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/color_ffffff">
+        android:layout_marginTop="@dimen/dp_12"
+        android:layout_marginStart="@dimen/dp_30"
+        android:layout_marginEnd="@dimen/dp_25">
         <TextView
+            android:id="@+id/tv_holder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/color_333333"
-            android:text="@string/cardholder"
-            android:textSize="@dimen/sp_15"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:layout_marginTop="@dimen/dp_20"
-            android:layout_marginBottom="@dimen/dp_20"
-            android:id="@+id/tv_holder"/>
+            android:layout_marginTop="@dimen/dp_8"
+            android:textColor="@color/text_black"
+            android:text="@string/name"
+            android:textSize="@dimen/sp_14" />
         <EditText
+            android:id="@+id/et_holder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/please_input_true_name"
-            android:layout_toRightOf="@+id/tv_holder"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:layout_centerVertical="true"
-            android:textColorHint="@color/color_999999"
-            android:textSize="@dimen/sp_15"
-            android:layout_marginRight="@dimen/dp_10"
-            android:id="@+id/et_holder"
+            android:layout_toEndOf="@+id/tv_holder"
+            android:textColorHint="@color/text_gray"
+            android:textSize="@dimen/sp_14"
+            android:layout_marginStart="@dimen/dp_25"
+            android:paddingBottom="@dimen/dp_8"
+            android:paddingTop="@dimen/dp_8"
             android:background="@color/color_ffffff"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:background="@color/style_line"
+            android:layout_below="@+id/tv_holder"
+            android:layout_marginTop="@dimen/dp_8"/>
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/color_ffffff"
-        android:layout_marginTop="@dimen/dp_1">
+        android:layout_marginTop="@dimen/dp_24"
+        android:layout_marginStart="@dimen/dp_30"
+        android:layout_marginEnd="@dimen/dp_25">
         <TextView
+            android:id="@+id/tv_card_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/color_333333"
+            android:layout_marginTop="@dimen/dp_8"
+            android:textColor="@color/text_black"
             android:text="@string/card_num"
-            android:textSize="@dimen/sp_15"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:layout_marginTop="@dimen/dp_20"
-            android:layout_marginBottom="@dimen/dp_20"
-            android:id="@+id/tv_card_num"/>
+            android:textSize="@dimen/sp_14" />
         <EditText
+            android:id="@+id/et_card_num"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/please_input_card_num"
-            android:layout_toRightOf="@+id/tv_card_num"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:layout_centerVertical="true"
-            android:textColorHint="@color/color_999999"
-            android:textSize="@dimen/sp_15"
+            android:layout_toEndOf="@+id/tv_card_num"
+            android:layout_marginStart="@dimen/dp_25"
+            android:background="@null"
+            android:paddingBottom="@dimen/dp_8"
+            android:paddingTop="@dimen/dp_8"
+            android:textColorHint="@color/text_gray"
+            android:textSize="@dimen/sp_14"
             android:inputType="number"
-            android:layout_marginRight="@dimen/dp_10"
-            android:id="@+id/et_card_num"
-            android:textColor="@color/color_333333"
-            android:background="@color/color_ffffff"/>
+            android:textColor="@color/text_black"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:background="@color/style_line"
+            android:layout_below="@+id/tv_card_num"
+            android:layout_marginTop="@dimen/dp_8"/>
     </RelativeLayout>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/please_select_type"
-        android:textSize="@dimen/sp_13"
-        android:textColor="@color/color_666666"
-        android:layout_marginTop="@dimen/dp_10"
-        android:layout_marginLeft="@dimen/dp_10"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/color_ffffff"
-        android:layout_marginTop="@dimen/dp_1">
+        android:layout_marginTop="@dimen/dp_32"
+        android:layout_marginStart="@dimen/dp_30"
+        android:layout_marginEnd="@dimen/dp_25">
         <TextView
+            android:id="@+id/tv_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/color_333333"
+            android:textColor="@color/text_black"
             android:text="@string/card_type"
-            android:textSize="@dimen/sp_15"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:layout_marginTop="@dimen/dp_20"
-            android:layout_marginBottom="@dimen/dp_20"
-            android:id="@+id/tv_type"/>
+            android:textSize="@dimen/sp_14"
+            />
         <TextView
+            android:id="@+id/tv_type_select"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/tv_type"
-            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_toEndOf="@+id/tv_type"
+            android:layout_marginStart="@dimen/dp_25"
+            android:textSize="@dimen/sp_14"
+            android:text="@string/bank_ccb"
+            android:textColor="@color/text_black" />
+        <ImageView
+            android:id="@+id/img_tips"
+            android:layout_width="@dimen/dp_22"
+            android:layout_height="@dimen/dp_22"
             android:layout_centerVertical="true"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:textSize="@dimen/sp_15"
-            android:drawableRight="@mipmap/icon_right"
-            android:paddingRight="@dimen/dp_10"
-            android:id="@+id/tv_type_select"
-            android:hint="@string/please_select_type"
-            android:textColor="@color/color_333333" />
+            android:layout_alignParentEnd="true"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:background="@color/style_line"
+            android:layout_below="@+id/tv_type"
+            android:layout_marginTop="@dimen/dp_8"/>
 
     </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
+
+    <LinearLayout
+        android:id="@+id/ll_warm"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/color_ffffff"
-        android:layout_marginTop="@dimen/dp_1">
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="@dimen/dp_11"
+        android:layout_marginStart="@dimen/dp_30"
+        android:layout_marginEnd="@dimen/dp_25"
+        android:visibility="invisible">
+        <ImageView
+            android:layout_width="@dimen/dp_14"
+            android:layout_height="@dimen/dp_14"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/color_333333"
-            android:text="@string/mobile_num"
-            android:textSize="@dimen/sp_15"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:layout_marginTop="@dimen/dp_20"
-            android:layout_marginBottom="@dimen/dp_20"
-            android:id="@+id/tv_mobile"/>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/please_input_bank_mobile"
-            android:layout_toRightOf="@+id/tv_mobile"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:layout_centerVertical="true"
-            android:textColorHint="@color/color_999999"
-            android:textSize="@dimen/sp_15"
-            android:inputType="number"
-            android:layout_marginRight="@dimen/dp_10"
-            android:id="@+id/et_mobile"
-            android:textColor="@color/color_333333"
-            android:background="@color/color_ffffff"/>
-    </RelativeLayout>
+            android:layout_marginStart="@dimen/dp_3"
+            android:textSize="@dimen/sp_12"
+            android:text="@string/bank_no_support"
+            android:textColor="@color/text_ren"
+            />
+    </LinearLayout>
+
+
     <Button
+        android:id="@+id/btn_complete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/sp_15"
-        android:text="@string/complete"
+        android:textSize="@dimen/sp_16"
+        android:text="@string/common_commit"
         android:textColor="@color/color_ffffff"
         android:background="@drawable/shape_button"
-        android:layout_marginLeft="@dimen/dp_20"
-        android:layout_marginRight="@dimen/dp_20"
-        android:layout_marginTop="@dimen/dp_20"
-        android:id="@+id/btn_complete"/>
+        android:layout_marginStart="@dimen/dp_18"
+        android:layout_marginEnd="@dimen/dp_18"
+        android:layout_marginTop="@dimen/dp_40"
+        />
 </LinearLayout>

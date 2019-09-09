@@ -309,8 +309,7 @@
                         android:background="@null"
                         android:hint="@string/please_input_wifi_pwd"
                         android:inputType="textPassword"
-                        android:textSize="@dimen/sp_15"
-                        android:digits="@string/login_pwd_input"/>
+                        android:textSize="@dimen/sp_15"/>
 
                 </RelativeLayout>
 
