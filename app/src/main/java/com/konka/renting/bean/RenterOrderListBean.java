@@ -22,7 +22,7 @@ public class RenterOrderListBean {
     private String order_no;//	订单编号
     private String room_id;//	房产id
     private int status;//	订单状态 1申请中 2已确认 3入住中 4申请退租 5过期
-    private int type;//	出租类型 1 短租 2长租
+    private int rent_type;//	出租类型 0未发布  1 短租 2长租
     private String start_time;//	开始日期
     private String end_time;//	结束日期
     private String housing_price;//	租金
@@ -74,12 +74,12 @@ public class RenterOrderListBean {
         this.status = status;
     }
 
-    public int getType() {
-        return type;
+    public int getRent_type() {
+        return rent_type;
     }
 
-    public void setType(int type) {
-        this.type = type;
+    public void setRent_type(int rent_type) {
+        this.rent_type = rent_type;
     }
 
     public String getStart_time() {

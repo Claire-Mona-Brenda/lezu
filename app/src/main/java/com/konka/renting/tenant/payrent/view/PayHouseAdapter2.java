@@ -70,7 +70,7 @@ public class PayHouseAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHold
         arg0.status.setText(getStringStatus(missionEnity.getStatus()));
         arg0.adress.setText(missionEnity.getRoom_name());
         int color;
-        if (missionEnity.getType() == 1) {
+        if (missionEnity.getRent_type() == 1) {
             //短8fc320
             arg0.h_lx.setText("【短租】");
             color = context.getResources().getColor(R.color.color_short);
@@ -82,13 +82,13 @@ public class PayHouseAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHold
         arg0.h_lx.setTextColor(color);
         arg0.dis_time.setText(missionEnity.getStart_time());
         arg0.end_time.setText(missionEnity.getEnd_time());
-        String unit = missionEnity.getType() == 1 ? "/天" : "/月";
+        String unit = missionEnity.getRent_type() == 1 ? "/天" : "/月";
         arg0.price.setText("¥" + (int) Float.parseFloat(missionEnity.getHousing_price()) + unit);
 
         if (missionEnity.getStatus() == 3) {//已入住
             arg0.connect.setVisibility(View.GONE);
             arg0.cancel.setVisibility(View.VISIBLE);
-            if (missionEnity.getType() == 1) {
+            if (missionEnity.getRent_type() == 1) {
                 //短租
                 arg0.cancel.setVisibility(View.GONE);
                 arg0.fwf.setVisibility(View.GONE);
@@ -149,7 +149,7 @@ public class PayHouseAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHold
         arg0.mLinOrder.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {//详情
-                TenantOrderDetailActivity.toActivity(context, missionEnity.getOrder_id(), missionEnity.getType() + "");
+                TenantOrderDetailActivity.toActivity(context, missionEnity.getOrder_id(), missionEnity.getRent_type() + "");
             }
         });
     }

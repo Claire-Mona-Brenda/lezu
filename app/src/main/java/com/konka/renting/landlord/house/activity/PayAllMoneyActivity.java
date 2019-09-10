@@ -357,7 +357,6 @@ public class PayAllMoneyActivity extends BaseActivity implements IPayResCall, Pa
 
     private void checkCode(String code) {
         showLoadingDialog();
-        showLoadingDialog();
         Subscription subscription = SecondRetrofitHelper.getInstance()
                 .promotionCodeDetail(code)
                 .compose(RxUtil.<DataInfo<PromotionCodeBean>>rxSchedulerHelper())

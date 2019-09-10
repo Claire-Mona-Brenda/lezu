@@ -63,12 +63,12 @@ public class PayHouseAdapter4 extends RecyclerView.Adapter<RecyclerView.ViewHold
 		arg0.status.setText(getStringStatus(missionEnity.getStatus()));
 		arg0.adress.setText(missionEnity.getRoom_name());
 		int color;
-		if (missionEnity.getType() == 1) {
+		if (missionEnity.getRent_type() == 1) {
 			//短8fc320
 			arg0.h_lx.setText("【短租】");
 			color = context.getResources().getColor(R.color.color_short);
 
-		} else if (missionEnity.getType() == 2) {
+		} else if (missionEnity.getRent_type() == 2) {
 			arg0.h_lx.setText("【长租】");
 			color = context.getResources().getColor(R.color.color_long);
 			//长
@@ -78,7 +78,7 @@ public class PayHouseAdapter4 extends RecyclerView.Adapter<RecyclerView.ViewHold
 		arg0.h_lx.setTextColor(color);
 		arg0.dis_time.setText(missionEnity.getStart_time());
 		arg0.end_time.setText(missionEnity.getEnd_time());
-		String unit = missionEnity.getType() == 1 ? "/天" : "/月";
+		String unit = missionEnity.getRent_type() == 1 ? "/天" : "/月";
 		arg0.price.setText("¥" + (int)Float.parseFloat(missionEnity.getHousing_price())+unit);
 
 		arg0.connect.setText("评价房产");
@@ -87,7 +87,7 @@ public class PayHouseAdapter4 extends RecyclerView.Adapter<RecyclerView.ViewHold
 		arg0.mLinOrder.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				TenantOrderDetailActivity.toActivity(context,missionEnity.getOrder_id(),missionEnity.getType()+"");			}
+				TenantOrderDetailActivity.toActivity(context,missionEnity.getOrder_id(),missionEnity.getRent_type()+"");			}
 		});
 	}
 

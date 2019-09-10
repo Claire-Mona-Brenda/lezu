@@ -127,8 +127,8 @@ public class DoneLFragment extends BaseFragment {
         commonAdapter = new CommonAdapter<RenterOrderListBean>(getContext(), mData, R.layout.adapter_underway_l) {
             @Override
             public void convert(ViewHolder viewHolder, RenterOrderListBean listBean) {
-                if (!TextUtils.isEmpty(listBean.getHousing_price()) && Float.valueOf(listBean.getHousing_price()) != 0) {
-                    String unit = listBean.getType() == 1 ? "/天" : "/月";
+                if (!TextUtils.isEmpty(listBean.getHousing_price()) && listBean.getRent_type() != 0) {
+                    String unit = listBean.getRent_type() == 1 ? "/天" : "/月";
                     String price=listBean.getHousing_price();
                     if (!TextUtils.isEmpty(price)){
                         float priceF = Float.valueOf(listBean.getHousing_price());

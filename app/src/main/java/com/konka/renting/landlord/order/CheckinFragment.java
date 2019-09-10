@@ -96,7 +96,7 @@ public class CheckinFragment extends BaseFragment {
         mAdapter = new CommonAdapter<RenterOrderListBean>(getContext(), mData, R.layout.item_list_checkin) {
             @Override
             public void convert(ViewHolder viewHolder, final RenterOrderListBean s, int i) {
-                String unit = s.getType() == 1 ? "/天" : "/月";
+                String unit = s.getRent_type() == 1 ? "/天" : "/月";
                 viewHolder.setText(R.id.tv_money, "¥ " + (int) Float.parseFloat(s.getHousing_price()) + unit);
                 viewHolder.setText(R.id.tv_order_number, s.getOrder_no());
                 ImageView ivPic = viewHolder.getView(R.id.icon_room);
@@ -111,7 +111,7 @@ public class CheckinFragment extends BaseFragment {
 
                 TextView tvShort = viewHolder.getView(R.id.tv_short);
                 TextView tvLong = viewHolder.getView(R.id.tv_long);
-                if (s.getType() == 1) {
+                if (s.getRent_type() == 1) {
                     tvShort.setVisibility(View.VISIBLE);
                     tvLong.setVisibility(View.GONE);
                 } else {
@@ -126,7 +126,7 @@ public class CheckinFragment extends BaseFragment {
         mListCheckin.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                OrderDetailActivity.toActivity(getContext(), mData.get(i).getOrder_id(), mData.get(i).getType() + "", mData.get(i).getOrder_no(), mData.get(i).getStatus() + "");
+                OrderDetailActivity.toActivity(getContext(), mData.get(i).getOrder_id(), mData.get(i).getRent_type() + "", mData.get(i).getOrder_no(), mData.get(i).getStatus() + "");
             }
         });
         addRxBusSubscribe(ChangeEvent.class, new Action1<ChangeEvent>() {

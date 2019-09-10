@@ -141,9 +141,9 @@ public class SecondRetrofitHelper {
 
     private static OkHttpClient createOkHttpClient(OkHttpClient.Builder builder) {
         // HttpLoggingInterceptor 打印请求到的json字符串和查看log
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        builder.addInterceptor(loggingInterceptor);
+//        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+//        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+//        builder.addInterceptor(loggingInterceptor);
 
         File cacheFile = new File(SecondRetrofitHelper.PATH_CACHE); //缓存文件夹
         Cache cache = new Cache(cacheFile, 1024 * 1024 * 50); // 创建缓存对象 缓存大小为50M
@@ -237,7 +237,7 @@ public class SecondRetrofitHelper {
                 BufferedSource source = responseBody.source();
                 source.request(Long.MAX_VALUE);
                 String respString = source.buffer().clone().readString(Charset.defaultCharset());
-                Log.d(TAG, "--->返回报文，respString = " + respString);
+//                Log.d(TAG, "--->返回报文，respString = " + respString);
                 // TODO 这里判断是否是登录超时的情况
                 JSONObject j = null;
                 try {
@@ -248,7 +248,7 @@ public class SecondRetrofitHelper {
                 // 这里与后台约定的状态码700表示登录超时【后台是java，客户端自己维护cookie，没有token机制。但此处如果刷新token，方法也一样】
                 if (j != null && j.optInt("status") == -1) {
                     RxBus.getDefault().post(new LogInAgainEvent());
-                    Log.e(TAG, "--->登录失效，自动重新登录");
+//                    Log.e(TAG, "--->登录失效，自动重新登录");
                     if (BaseActivity.getForegroundActivity() != null) {
                         LoginUserBean.getInstance().reset();
                         if (LoginUserBean.getInstance().isLandlord()) {

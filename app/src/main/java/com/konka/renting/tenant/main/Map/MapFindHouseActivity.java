@@ -352,7 +352,6 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
                                 is_no_limit_price_l = true;
                                 chooseLPriceList.clear();
                             }
-
                             priceAreaCommonAdapter.notifyDataSetChanged();
                         } else if (is) {
                             if (rent_type == 1) {
@@ -510,7 +509,11 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
         TextOptions textOptions1 = new TextOptions();
         textOptions1.position(new LatLng(lat, lng));
         textOptions1.align(Text.ALIGN_CENTER_HORIZONTAL, Text.ALIGN_BOTTOM);
-        textOptions1.text(mapSearchBean.getName());
+        String name=mapSearchBean.getName();
+        if (name.length()>5){
+            name=name.substring(0,5)+"...";
+        }
+        textOptions1.text(name);
         textOptions1.backgroundColor(Color.parseColor("#00FF7500"));
         textOptions1.fontColor(getResources().getColor(R.color.color_ffffff));
         textOptions1.fontSize(getResources().getDimensionPixelSize(R.dimen.sp_12));
@@ -625,14 +628,23 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
                 if (rent_type == 1) {
                     is_no_limit_price_r = true;
                     chooseSPriceList.clear();
+                    price_area_r = "";
+                    price_area_id_r = "";
                 } else {
                     is_no_limit_price_l = true;
                     chooseLPriceList.clear();
+                    price_area_l = "";
+                    price_area_id_l = "";
                 }
 
                 chooseTypeList.clear();
                 priceAreaCommonAdapter.notifyDataSetChanged();
                 roomTypeCommonAdapter.notifyDataSetChanged();
+                if (aMap != null)
+                    aMap.clear();
+                room_group_id="-1";
+                curr_level = 0;
+                addMarkerInScreen();
                 break;
             case R.id.activity_find_house_tv_sure:
                 String priceMin = mEdtPriceMin.getText().toString();
