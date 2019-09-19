@@ -14,6 +14,9 @@ public class LandlordUserBean  {
     private String phone;
     private int unread;
     private int is_auth;
+    private int is_login_pass;//登录密码 1是 0 否
+    private int is_withdraw_pass;//提现密码 1是 0 否
+    private int withdraw_num;//提现剩余次数
     private String thumb_headimgurl;
 
     public String getReal_name() {
@@ -62,6 +65,30 @@ public class LandlordUserBean  {
 
     public void setIs_auth(int is_auth) {
         this.is_auth = is_auth;
+    }
+
+    public int getIs_login_pass() {
+        return is_login_pass;
+    }
+
+    public void setIs_login_pass(int is_login_pass) {
+        this.is_login_pass = is_login_pass;
+    }
+
+    public int getIs_withdraw_pass() {
+        return is_withdraw_pass;
+    }
+
+    public void setIs_withdraw_pass(int is_withdraw_pass) {
+        this.is_withdraw_pass = is_withdraw_pass;
+    }
+
+    public int getWithdraw_num() {
+        return withdraw_num;
+    }
+
+    public void setWithdraw_num(int withdraw_num) {
+        this.withdraw_num = withdraw_num;
     }
 
     public String getThumb_headimgurl() {

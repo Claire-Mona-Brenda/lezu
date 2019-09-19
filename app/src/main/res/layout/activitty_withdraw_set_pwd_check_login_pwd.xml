@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_ffffff"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_title_text" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:background="@color/style_line" />
+
+    <TextView
+        android:id="@+id/activity_withdraw_set_pwd_check_login_pwd_tv_tips_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_28"
+        android:text="@string/please_input_login_pwd"
+        android:textColor="@color/text_black"
+        android:textSize="@dimen/sp_18" />
+
+    <TextView
+        android:id="@+id/activity_withdraw_set_pwd_check_login_pwd_tv_tips_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_black"
+        android:textSize="@dimen/sp_18" />
+
+    <EditText
+        android:id="@+id/activity_withdraw_set_pwd_check_login_pwd_edt_pwd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/dp_44"
+        android:background="@null"
+        android:inputType="textPassword"
+        android:layout_marginStart="@dimen/dp_33"
+        android:layout_marginEnd="@dimen/dp_33"
+        android:digits="@string/login_pwd_input"
+        android:textSize="@dimen/sp_18"
+        android:textColor="@color/text_black"
+        android:paddingTop="@dimen/dp_6"
+        android:paddingBottom="@dimen/dp_6"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_2"
+        android:background="@color/style_line"
+        android:layout_marginStart="@dimen/dp_33"
+        android:layout_marginEnd="@dimen/dp_33"/>
+
+    <Button
+        android:id="@+id/activity_withdraw_set_pwd_check_login_pwd_btn_next"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44"
+        android:layout_marginTop="@dimen/dp_70"
+        android:layout_marginStart="@dimen/dp_44"
+        android:layout_marginEnd="@dimen/dp_44"
+        android:background="@drawable/shape_main"
+        android:text="@string/common_next"
+        android:textColor="@color/color_ffffff"
+        android:textSize="@dimen/sp_16" />
+
+</LinearLayout>

@@ -3,10 +3,15 @@ package com.konka.renting.landlord.user.withdrawcash;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -17,12 +22,22 @@ import android.widget.TextView;
 
 import com.konka.renting.R;
 import com.konka.renting.base.BaseActivity;
+import com.konka.renting.bean.AddBankInfo;
+import com.konka.renting.bean.DataInfo;
+import com.konka.renting.bean.GetIssueBankBean;
+import com.konka.renting.http.RetrofitHelper;
+import com.konka.renting.http.SecondRetrofitHelper;
+import com.konka.renting.http.subscriber.CommonSubscriber;
+import com.konka.renting.utils.RxBus;
+import com.konka.renting.utils.RxUtil;
 import com.konka.renting.widget.CommonInputPopupWindow;
 import com.konka.renting.widget.WarmPopupwindow;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Subscription;
 
 public class AddBankCardActivity extends BaseActivity {
 
@@ -30,6 +45,8 @@ public class AddBankCardActivity extends BaseActivity {
     EditText mEtHolder;
     @BindView(R.id.et_card_num)
     EditText mEtCardNum;
+    @BindView(R.id.img_type_select)
+    ImageView mImgTypeSelect;
     @BindView(R.id.tv_type_select)
     TextView mTvTypeSelect;
     @BindView(R.id.tv_title)
@@ -42,14 +59,9 @@ public class AddBankCardActivity extends BaseActivity {
     ImageView ivRight;
     @BindView(R.id.lin_title)
     FrameLayout linTitle;
-    @BindView(R.id.img_tips)
-    ImageView imgTips;
-    @BindView(R.id.ll_warm)
-    LinearLayout llWarm;
     @BindView(R.id.btn_complete)
     Button btnComplete;
 
-    private String id;
     private String name;
     private String cardnumber;
 
@@ -69,9 +81,47 @@ public class AddBankCardActivity extends BaseActivity {
     public void init() {
         setTitleText(R.string.add_bank_title);
 
+        mEtCardNum.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    if (charSequence.toString().length()>=16){
+                        getIssueBank(charSequence.toString());
+                    }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        mEtCardNum.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                /*判断是否是“GO”键*/
+                if(actionId == EditorInfo.IME_ACTION_SEARCH){
+                    /*隐藏软键盘*/
+                    InputMethodManager imm = (InputMethodManager) textView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    if (imm.isActive()) {
+                        imm.hideSoftInputFromWindow(
+                                textView.getApplicationWindowToken(), 0);
+                    }
+                    if (mEtCardNum.getText().toString().length()>=16){
+                        getIssueBank(mEtCardNum.getText().toString());
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
+
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_type_select,R.id.img_tips, R.id.btn_complete})
+    @OnClick({R.id.iv_back, R.id.tv_type_select, R.id.btn_complete})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back://返回
@@ -84,13 +134,11 @@ public class AddBankCardActivity extends BaseActivity {
 //                } else {
 //                    showToast(R.string.please_input_card_num);
 //                }
-//
 //                break;
-            case R.id.img_tips://提示
-                showTipsPop();
-                break;
             case R.id.btn_complete://提交
-                if (!TextUtils.isEmpty(name) || !TextUtils.isEmpty(cardnumber))
+                name = mEtHolder.getText().toString();
+                cardnumber = mEtCardNum.getText().toString();
+                if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(cardnumber))
                     comfirmAdd();
                 else
                     showToast("请输入完整信息");
@@ -99,61 +147,54 @@ public class AddBankCardActivity extends BaseActivity {
     }
 
     private void comfirmAdd() {
-        name = mEtHolder.getText().toString();
-        cardnumber = mEtCardNum.getText().toString();
-        showError(name + cardnumber + id);
         showLoadingDialog();
-//        Subscription subscription = RetrofitHelper.getInstance().addBankCard(name, cardnumber, id, mobile)
-//                .compose(RxUtil.<AddBankInfo>rxSchedulerHelper())
-//                .subscribe(new CommonSubscriber<AddBankInfo>() {
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        dismiss();
-//                        doFailed();
-//                        showError(e.getMessage());
-//                    }
-//
-//                    @Override
-//                    public void onNext(AddBankInfo addBankBeanDataInfo) {
-//
-//                        dismiss();
-//                        if (addBankBeanDataInfo.getStatus() == 1) {
-//                            showToast(addBankBeanDataInfo.getInfo());
-//                            RxBus.getDefault().post(new AddBankEvent());
-//                            finish();
-//                        } else {
-//                            showToast(addBankBeanDataInfo.getInfo());
-//                        }
-//                    }
-//                });
-//        addSubscrebe(subscription);
+        Subscription subscription = SecondRetrofitHelper.getInstance().addBankCard(cardnumber, name)
+                .compose(RxUtil.<DataInfo>rxSchedulerHelper())
+                .subscribe(new CommonSubscriber<DataInfo>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        dismiss();
+                        doFailed();
+                        showError(e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(DataInfo dataInfo) {
+                        dismiss();
+                        if (dataInfo.success()) {
+                            RxBus.getDefault().post(new AddBankEvent());
+                            finish();
+                        } else {
+                            showToast(dataInfo.msg());
+                        }
+                    }
+                });
+        addSubscrebe(subscription);
     }
 
-    private void getIssueBank(String number) {
-//        showLoadingDialog();
-//        Subscription subscription = RetrofitHelper.getInstance().getIssueBank(number)
-//                .compose(RxUtil.<DataInfo<GetIssueBankBean>>rxSchedulerHelper())
-//                .subscribe(new CommonSubscriber<DataInfo<GetIssueBankBean>>() {
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        dismiss();
-//                        doFailed();
-//                        showError(e.getMessage());
-//                    }
-//
-//                    @Override
-//                    public void onNext(DataInfo<GetIssueBankBean> getIssueBankBeanDataInfo) {
-//
-//                        dismiss();
-//                        if (getIssueBankBeanDataInfo.success()) {
-//                            mTvTypeSelect.setText(getIssueBankBeanDataInfo.data().name);
-//                            id = getIssueBankBeanDataInfo.data().id;
-//                        } else {
-//                            showToast(getIssueBankBeanDataInfo.msg());
-//                        }
-//                    }
-//                });
-//        addSubscrebe(subscription);
+    private void getIssueBank(String card_no) {
+        Subscription subscription = SecondRetrofitHelper.getInstance().getIssueBank(card_no)
+                .compose(RxUtil.<DataInfo<GetIssueBankBean>>rxSchedulerHelper())
+                .subscribe(new CommonSubscriber<DataInfo<GetIssueBankBean>>() {
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataInfo<GetIssueBankBean> dataInfo) {
+                        if (dataInfo.success()) {
+                            mTvTypeSelect.setText(dataInfo.data().getBank_name());
+                            mImgTypeSelect.setVisibility(View.VISIBLE);
+                            if (!TextUtils.isEmpty(dataInfo.data().getBank_image())){
+                                Picasso.get().load(dataInfo.data().getBank_image()).into(mImgTypeSelect);
+                            }else{
+                                Picasso.get().load(R.mipmap.bank_other).into(mImgTypeSelect);
+                            }
+                        }
+                    }
+                });
+        addSubscrebe(subscription);
     }
 
     /*******************************************弹窗***********************************************************/

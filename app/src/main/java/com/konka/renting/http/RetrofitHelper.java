@@ -865,17 +865,7 @@ public class RetrofitHelper {
         return mApiService.getReminder(getToken(), page);
     }
 
-    public Observable<DataInfo<ListInfo<MyBankBean>>> getBankCard() {
-        return mApiService.getBankCard(getToken());
-    }
 
-    public Observable<AddBankInfo> addBankCard(String name, String number, String bankId, String tel) {
-        return mApiService.addBankBean(getToken(), name, number, bankId, tel);
-    }
-
-    public Observable<DataInfo<GetIssueBankBean>> getIssueBank(String number) {
-        return mApiService.getIssueBank(getToken(), number);
-    }
 
     public Observable<DataInfo> applyWithDraw(String bankId, String amount) {
         return mApiService.applyWithdraw(getToken(), bankId, amount);
@@ -1116,4 +1106,5 @@ public class RetrofitHelper {
     public Observable<DataInfo<PwsOrderDetailsBean>> queryPassword(String room_id, String merge_order_no) {
         return mApiService.queryPassword(getToken(), room_id,merge_order_no);
     }
+
 }

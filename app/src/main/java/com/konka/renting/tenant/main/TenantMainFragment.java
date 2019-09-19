@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -73,6 +74,8 @@ import static android.content.Context.MODE_PRIVATE;
 public class TenantMainFragment extends BaseFragment implements GeocodeSearch.OnGeocodeSearchListener, DistrictSearch.OnDistrictSearchListener {
 
     Unbinder unbinder;
+    @BindView(R.id.fragment_tenant_main_swipeRefreshLayout)
+    SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.fragment_tenant_main_tv_city)
     TextView mTvCity;
     @BindView(R.id.fragment_tenant_main_tv_choose_city)
@@ -140,6 +143,9 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
     int page_long = 1;
     int page_short = 1;
     int rent_type = 2;
+
+    boolean is_long_enable_loading = false;
+    boolean is_short_enable_loading = false;
 
     private List<HotCity> mCities = new ArrayList<>();
     private List<City> mAllCities = new ArrayList<>();
@@ -251,17 +257,17 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
             public void convert(ViewHolder viewHolder, RenterSearchListBean bean) {
                 viewHolder.setText(R.id.adapter_tenant_main_house_tv_name, bean.getRoom_name());
                 String unit_rent = bean.getType() == 1 ? getString(R.string.public_house_pay_unit_day) : getString(R.string.public_house_pay_unit_mon);
-                String price=bean.getHousing_price();
-                if (!TextUtils.isEmpty(price)){
+                String price = bean.getHousing_price();
+                if (!TextUtils.isEmpty(price)) {
                     float priceF = Float.valueOf(bean.getHousing_price());
                     int priceI = Float.valueOf(bean.getHousing_price()).intValue();
-                    if (priceF>priceI){
-                        price= priceF+"";
-                    }else{
-                        price= priceI+"";
+                    if (priceF > priceI) {
+                        price = priceF + "";
+                    } else {
+                        price = priceI + "";
                     }
-                }else{
-                    price="";
+                } else {
+                    price = "";
                 }
                 viewHolder.setText(R.id.adapter_tenant_main_house_tv_price, price + unit_rent);
                 ImageView picView = viewHolder.getView(R.id.adapter_tenant_main_house_iv_icon);
@@ -293,24 +299,24 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
                 spannableStringBuilder.append("|" + bean.getFloor() + "/" + bean.getTotal_floor() + "层");
                 viewHolder.setText(R.id.adapter_tenant_main_short_tv_info, spannableStringBuilder);
 
-                String price=bean.getHousing_price();
-                if (!TextUtils.isEmpty(price)){
+                String price = bean.getHousing_price();
+                if (!TextUtils.isEmpty(price)) {
                     float priceF = Float.valueOf(bean.getHousing_price());
                     int priceI = (int) priceF;
-                    if (priceF>priceI){
-                        price= priceF+"";
-                    }else{
-                        price= priceI+"";
+                    if (priceF > priceI) {
+                        price = priceF + "";
+                    } else {
+                        price = priceI + "";
                     }
-                }else{
-                    price="";
+                } else {
+                    price = "";
                 }
-                viewHolder.setText(R.id.adapter_tenant_main_short_tv_price,price);
+                viewHolder.setText(R.id.adapter_tenant_main_short_tv_price, price);
                 viewHolder.setText(R.id.adapter_tenant_main_short_tv_name, bean.getRoom_name());
 
                 ImageView picView = viewHolder.getView(R.id.adapter_tenant_main_short_iv_icon);
-                if (!TextUtils.isEmpty(bean.getThumb_image())) {
-                    Picasso.get().load(bean.getThumb_image()).error(R.mipmap.fangchan_jiazai).into(picView);
+                if (!TextUtils.isEmpty(bean.getImage())) {
+                    Picasso.get().load(bean.getImage()).error(R.mipmap.fangchan_jiazai).into(picView);
                 }
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -340,17 +346,17 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
 
                 viewHolder.setText(R.id.adapter_tenant_main_recommend_tv_name, bean.getRoom_name());
 
-                String price=bean.getHousing_price();
-                if (!TextUtils.isEmpty(price)){
+                String price = bean.getHousing_price();
+                if (!TextUtils.isEmpty(price)) {
                     float priceF = Float.valueOf(bean.getHousing_price());
                     int priceI = (int) priceF;
-                    if (priceF>priceI){
-                        price= priceF+"";
-                    }else{
-                        price= priceI+"";
+                    if (priceF > priceI) {
+                        price = priceF + "";
+                    } else {
+                        price = priceI + "";
                     }
-                }else{
-                    price="";
+                } else {
+                    price = "";
                 }
                 viewHolder.setText(R.id.adapter_tenant_main_recommend_tv_price, price);
                 viewHolder.setText(R.id.adapter_tenant_main_recommend_tv_price_unit, getString(bean.getType() == 1 ? R.string.house_info_rent_pay_unit_day : R.string.house_info_rent_pay_unit));
@@ -384,6 +390,29 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
     }
 
     private void initListent() {
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (city != null) {
+                    initDate();
+                } else {
+                    swipeRefreshLayout.setRefreshing(false);
+                    showToast(getString(R.string.please_choose_city));
+                }
+            }
+        });
+        mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+
+                if (verticalOffset >= 0) {
+                    swipeRefreshLayout.setEnabled(true);
+                } else {
+                    swipeRefreshLayout.setEnabled(false);
+                }
+            }
+        });
+
 //        mRefreshRecommend.setEnableRefresh(false);
         mRefreshRecommend.setEnableLoadmore(false);
         mRefreshRecommend.setOnLoadmoreListener(new OnLoadmoreListener() {
@@ -394,7 +423,7 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
                 } else {
                     page_long++;
                 }
-                getRecommendListData();
+                getRecommendListData(rent_type);
             }
         });
     }
@@ -445,7 +474,9 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
     private void initDate() {
         getHoustListData();
         getHotShortListData();
-        getRecommendListData();
+        getRecommendListData(2);
+        getRecommendListData(1);
+        swipeRefreshLayout.setRefreshing(false);
     }
 
 
@@ -498,11 +529,12 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
                 mTypeShort.setVisibility(View.GONE);
                 if (reLongList.size() <= 0) {
                     page_long = 1;
-                    getRecommendListData();
+                    getRecommendListData(rent_type);
                 } else {
                     recommendList.clear();
                     recommendList.addAll(reLongList);
                     recommendAdapter.notifyDataSetChanged();
+                    mRefreshRecommend.setEnableLoadmore(is_long_enable_loading);
                 }
                 break;
             case R.id.fragment_tenant_main_ll_type_short://短租推荐
@@ -516,11 +548,12 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
                 mTypeShort.setVisibility(View.VISIBLE);
                 if (reShortList.size() <= 0) {
                     page_short = 1;
-                    getRecommendListData();
+                    getRecommendListData(rent_type);
                 } else {
                     recommendList.clear();
                     recommendList.addAll(reShortList);
                     recommendAdapter.notifyDataSetChanged();
+                    mRefreshRecommend.setEnableLoadmore(is_short_enable_loading);
                 }
                 break;
         }
@@ -610,21 +643,25 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
     /**
      * 推荐房源
      */
-    private void getRecommendListData() {
-        final int page = (rent_type == 1 ? page_short : page_long);
-        Subscription subscription = SecondRetrofitHelper.getInstance().getRenterRoomList(page + "", "", city == null ? "" : city.getName(), "", "", rent_type + "", "1")
+    private void getRecommendListData(int type) {
+        final int page = (type == 1 ? page_short : page_long);
+        Subscription subscription = SecondRetrofitHelper.getInstance().getRenterRoomList(page + "", "", city == null ? "" : city.getName(), "", "", type + "", "1")
                 .compose(RxUtil.<DataInfo<PageDataBean<RenterSearchListBean>>>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo<PageDataBean<RenterSearchListBean>>>() {
                     @Override
                     public void onError(Throwable e) {
+                        mRefreshRecommend.finishLoadmore();
                         if (page > 1) {
-                            mRefreshRecommend.finishLoadmore();
-                            if (rent_type == 1) {
+                            if (type == 1) {
                                 page_short--;
                             } else {
                                 page_long--;
                             }
-                        }else{
+                        }
+                        if (reShortList.size() > 0 || reLongList.size() > 0) {
+                            mLlRecommend.setVisibility(View.VISIBLE);
+                            mRefreshRecommend.setVisibility(View.VISIBLE);
+                        } else {
                             mLlRecommend.setVisibility(View.GONE);
                             mRefreshRecommend.setVisibility(View.GONE);
                         }
@@ -632,22 +669,42 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
 
                     @Override
                     public void onNext(DataInfo<PageDataBean<RenterSearchListBean>> homeInfoDataInfo) {
-                        if (page > 1)
-                            mRefreshRecommend.finishLoadmore();
                         mRefreshRecommend.finishLoadmore();
                         if (homeInfoDataInfo.success()) {
-                            recommendList.clear();
-                            recommendList.addAll(homeInfoDataInfo.data().getList());
-                            recommendAdapter.notifyDataSetChanged();
-                            if (rent_type == 1) {
-                                reShortList.clear();
-                                reShortList.addAll(recommendList);
+                            if (page > 1) {
+                                if (type == 1) {
+                                    reShortList.addAll(homeInfoDataInfo.data().getList());
+                                } else {
+                                    reLongList.addAll(homeInfoDataInfo.data().getList());
+                                }
                             } else {
-                                reLongList.clear();
-                                reLongList.addAll(recommendList);
+                                if (type == 1) {
+                                    reShortList.clear();
+                                    reShortList.addAll(homeInfoDataInfo.data().getList());
+
+                                } else {
+                                    reLongList.clear();
+                                    reLongList.addAll(homeInfoDataInfo.data().getList());
+
+                                }
                             }
-                            mRefreshRecommend.setEnableLoadmore(homeInfoDataInfo.data().getPage() < homeInfoDataInfo.data().getTotalPage());
-                            if (recommendList.size() > 0) {
+                            if (rent_type == 1) {
+                                recommendList.clear();
+                                recommendList.addAll(reShortList);
+                            } else {
+                                recommendList.clear();
+                                recommendList.addAll(reLongList);
+                            }
+                            recommendAdapter.notifyDataSetChanged();
+                            if (type == 1 ){
+                                is_short_enable_loading=homeInfoDataInfo.data().getPage() < homeInfoDataInfo.data().getTotalPage();
+                                mRefreshRecommend.setEnableLoadmore(is_short_enable_loading);
+                            }else{
+                                is_long_enable_loading=homeInfoDataInfo.data().getPage() < homeInfoDataInfo.data().getTotalPage();
+                                mRefreshRecommend.setEnableLoadmore(is_long_enable_loading);
+                            }
+
+                            if (reShortList.size() > 0 || reLongList.size() > 0) {
                                 mLlRecommend.setVisibility(View.VISIBLE);
                                 mRefreshRecommend.setVisibility(View.VISIBLE);
                             } else {
@@ -655,9 +712,9 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
                                 mRefreshRecommend.setVisibility(View.GONE);
                             }
                         } else {
-                            if (page > 1 && rent_type == 1) {
+                            if (page > 1 && type == 1) {
                                 page_short--;
-                            } else if (page > 1 && rent_type == 2) {
+                            } else if (page > 1 && type == 2) {
                                 page_long--;
                             }
                             showToast(homeInfoDataInfo.msg());

@@ -366,6 +366,8 @@ public class MainActivity extends BaseMainActivity {
                                 LoginUserBean.getInstance().setIs_lodge_identity(userInfoBeanDataInfo.data().getIs_identity() + "");
                                 LoginUserBean.getInstance().setRealname(userInfoBeanDataInfo.data().getReal_name());
                                 LoginUserBean.getInstance().setIdentity(userInfoBeanDataInfo.data().getIdentity());
+                                LoginUserBean.getInstance().setIs_login_pass(userInfoBeanDataInfo.data().getIs_login_pass());
+                                LoginUserBean.getInstance().setIs_withdraw_pass(userInfoBeanDataInfo.data().getIs_withdraw_pass());
                                 LoginUserBean.getInstance().save();
                             }
                         } else {

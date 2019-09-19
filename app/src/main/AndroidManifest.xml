@@ -86,6 +86,21 @@
         <activity
             android:name=".landlord.user.withdrawcash.WithdrawDetailActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".landlord.user.withdrawcash.WithdrawPwdSettingActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity android:name=".landlord.user.withdrawcash.WithdrawPwdSettingAgainActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity android:name=".landlord.user.withdrawcash.CheckPhoneActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity android:name=".landlord.user.withdrawcash.ResultActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity android:name=".landlord.user.withdrawcash.WithdrawSetPwdCheckLoginPwdActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".landlord.user.tenantdeposit.TenantDepositActivity"
             android:screenOrientation="portrait" />
@@ -287,6 +302,9 @@
             android:name=".tenant.findroom.roominfo.RoomInfoActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
+        <activity android:name=".tenant.findroom.roominfo.RoomOrderActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".tenant.payrent.view.RoomPayCGActivity"
             android:screenOrientation="portrait" />

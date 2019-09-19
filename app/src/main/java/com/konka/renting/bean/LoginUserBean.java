@@ -54,11 +54,13 @@ public class LoginUserBean implements Serializable, Cloneable {
     String is_lodge_identity;
     private String mobile;
     private String realname;
-    private String  identity;
-    private String  id;
+    private String identity;
+    private String id;
     private String is_verification;
     private String verification_pwd;
     private String cardId;
+    private int is_login_pass;//登录密码 1是 0 否
+    private int is_withdraw_pass;//	提现密码 1是 0 否
 
     public String getIs_verification() {
         return is_verification;
@@ -129,8 +131,24 @@ public class LoginUserBean implements Serializable, Cloneable {
         return is_lodge_identity;
     }
 
-    public boolean isLandlord(){
-       return LoginInfo.isLandlord(mType);
+    public int getIs_login_pass() {
+        return is_login_pass;
+    }
+
+    public void setIs_login_pass(int is_login_pass) {
+        this.is_login_pass = is_login_pass;
+    }
+
+    public int getIs_withdraw_pass() {
+        return is_withdraw_pass;
+    }
+
+    public void setIs_withdraw_pass(int is_withdraw_pass) {
+        this.is_withdraw_pass = is_withdraw_pass;
+    }
+
+    public boolean isLandlord() {
+        return LoginInfo.isLandlord(mType);
     }
 
     public void reset() {
@@ -140,6 +158,8 @@ public class LoginUserBean implements Serializable, Cloneable {
         mobile = "";
         verification_pwd = "";
         is_verification = "";
+        is_login_pass = 0;
+        is_withdraw_pass = 0;
     }
 
     public void save() {

@@ -12,6 +12,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -37,6 +38,8 @@ import com.konka.renting.bean.LoginUserBean;
 import com.konka.renting.bean.UploadPicBean;
 import com.konka.renting.http.SecondRetrofitHelper;
 import com.konka.renting.http.subscriber.CommonSubscriber;
+import com.konka.renting.landlord.user.withdrawcash.CheckPhoneActivity;
+import com.konka.renting.landlord.user.withdrawcash.WithdrawSetPwdCheckLoginPwdActivity;
 import com.konka.renting.login.ForgetPasswordActivity;
 import com.konka.renting.login.LoginInfo;
 import com.konka.renting.login.LoginNewActivity;
@@ -74,7 +77,6 @@ public class UserInfoActivity extends BaseActivity implements CustompopupWindow.
     @BindView(R.id.tv_mobile)
     TextView mTvMobile;
 
-
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.iv_back)
@@ -93,6 +95,10 @@ public class UserInfoActivity extends BaseActivity implements CustompopupWindow.
     ImageView pwdRight;
     @BindView(R.id.re_pwd)
     RelativeLayout rePwd;
+    @BindView(R.id.tv_withdraw_pwd)
+    TextView tvWithdrawPwd;
+    @BindView(R.id.re_withdraw_pwd)
+    RelativeLayout reWithdrawPwd;
     @BindView(R.id.tv_bind)
     TextView tvBind;
     @BindView(R.id.bind_right)
@@ -110,6 +116,7 @@ public class UserInfoActivity extends BaseActivity implements CustompopupWindow.
     private static final int RESULT_CODE_CAMEA = 001;           //拍照
     private static final int RESULT_CODE_PHOTO = 002;           //相册
 
+
     private CustompopupWindow pop;          // popupWindow 弹出框
     private File path = new File(Environment.getExternalStorageDirectory().getPath());
     private File outputImage = new File(path + "/photo.jpg");
@@ -120,8 +127,10 @@ public class UserInfoActivity extends BaseActivity implements CustompopupWindow.
     private String headName;
     private String picPath;
     private int mType;
+    private int is_withdraw_pass;
 
     private LandlordUserDetailsInfoBean bean;
+
 
     public static void toActivity(Context context, int mType) {
         Intent intent = new Intent(context, UserInfoActivity.class);
@@ -140,9 +149,18 @@ public class UserInfoActivity extends BaseActivity implements CustompopupWindow.
     @Override
     public void init() {
         mType = getIntent().getIntExtra("mType", LoginInfo.LANDLORD);
+        is_withdraw_pass = LoginUserBean.getInstance().getIs_withdraw_pass();
 
+        Log.e("123123","==========="+is_withdraw_pass);
         setTitleText(R.string.user_setting);
         mTvRight.setVisibility(View.GONE);
+        if (mType==LoginInfo.LANDLORD) {
+            reWithdrawPwd.setVisibility(View.VISIBLE);
+            tvWithdrawPwd.setText(is_withdraw_pass == 1 ? R.string.restart_withdraw_pwd : R.string.set_withdraw_pwd);
+        }else{
+            reWithdrawPwd.setVisibility(View.GONE);
+        }
+
         requestPermission();      // 6.0申请拍照权限
         autoObtainStoragePermission();        //  自动获取sdk权限
         getData();
@@ -210,7 +228,7 @@ public class UserInfoActivity extends BaseActivity implements CustompopupWindow.
     }
 
 
-    @OnClick({R.id.iv_back, R.id.re_revise_photo, R.id.re_bind, R.id.tv_right, R.id.re_pwd, R.id.activity_user_info_tv_login_out})
+    @OnClick({R.id.iv_back, R.id.re_revise_photo, R.id.re_bind, R.id.tv_right, R.id.re_pwd, R.id.re_withdraw_pwd, R.id.activity_user_info_tv_login_out})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back://返回
@@ -224,22 +242,30 @@ public class UserInfoActivity extends BaseActivity implements CustompopupWindow.
                             Manifest.permission.CAMERA,
                             Manifest.permission.WRITE_EXTERNAL_STORAGE,
                             Manifest.permission.READ_EXTERNAL_STORAGE
-                    )
-                            .subscribe(new Action1<Boolean>() {
-                                @Override
-                                public void call(Boolean aBoolean) {
-                                    if (aBoolean) {
-                                        setPhoto(1);
-                                        type = 1;
-                                    } else {
-                                        showToast(getString(R.string.no_permissions));
-                                    }
-                                }
-                            });
+                    ).subscribe(new Action1<Boolean>() {
+                        @Override
+                        public void call(Boolean aBoolean) {
+                            if (aBoolean) {
+                                setPhoto(1);
+                                type = 1;
+                            } else {
+                                showToast(getString(R.string.no_permissions));
+                            }
+                        }
+                    });
                 break;
             case R.id.re_pwd://修改密码
                 if (bean != null)
                     ForgetPasswordActivity.toActivity(this, mType, bean.getPhone());
+                break;
+            case R.id.re_withdraw_pwd://设置或重置提现密码
+                if (bean != null) {
+                    if (is_withdraw_pass == 1) {
+                        CheckPhoneActivity.toActivity(mActivity, LoginUserBean.getInstance().getMobile());
+                    } else {
+                        WithdrawSetPwdCheckLoginPwdActivity.toActivity(mActivity);
+                    }
+                }
                 break;
             case R.id.re_bind://修改手机
                 if (bean != null)

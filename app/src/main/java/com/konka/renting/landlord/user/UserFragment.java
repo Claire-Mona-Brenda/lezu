@@ -31,9 +31,13 @@ import com.konka.renting.landlord.user.userinfo.NewFaceDectectActivity;
 import com.konka.renting.landlord.user.userinfo.RenZhengInfoActivity;
 import com.konka.renting.landlord.user.userinfo.UpdateEvent;
 import com.konka.renting.landlord.user.userinfo.UserInfoActivity;
+import com.konka.renting.landlord.user.withdrawcash.AddBankCardActivity;
 import com.konka.renting.landlord.user.withdrawcash.RechargeActivity;
 import com.konka.renting.landlord.user.withdrawcash.RechargeEvent;
+import com.konka.renting.landlord.user.withdrawcash.SelectBankCardActivity;
+import com.konka.renting.landlord.user.withdrawcash.WithdrawDetailActivity;
 import com.konka.renting.landlord.user.withdrawcash.WithdrawEvent;
+import com.konka.renting.landlord.user.withdrawcash.WithdrawSetPwdCheckLoginPwdActivity;
 import com.konka.renting.landlord.user.withdrawcash.WithdrawcashActivity;
 import com.konka.renting.login.LoginInfo;
 import com.konka.renting.login.LoginNewActivity;
@@ -67,6 +71,8 @@ public class UserFragment extends BaseFragment {
     @BindView(R.id.tv_message_sum)
     TextView mTvMessageSum;
 
+    @BindView(R.id.tv_my_bank_card)
+    TextView tvMyBankCard;
     @BindView(R.id.icon_user_setting)
     ImageView imgUserSetting;
     @BindView(R.id.tv_recharge)
@@ -104,6 +110,7 @@ public class UserFragment extends BaseFragment {
     String urlPic;
     RenZhengTipsPopup renZhengTipsPopup;
     CommonPopupWindow callPopupWindow;
+    CommonPopupWindow setPwdPopupWindow;
     String tel;
 
     public UserFragment() {
@@ -236,8 +243,8 @@ public class UserFragment extends BaseFragment {
                                     }
                                 }
                                 urlPic = userInfoBeanDataInfo.data().getThumb_headimgurl();
-                                String balance=userInfoBeanDataInfo.data().getBalance();
-                                if (TextUtils.isEmpty(balance)){
+                                String balance = userInfoBeanDataInfo.data().getBalance();
+                                if (TextUtils.isEmpty(balance)) {
                                     balance = "";
                                 }
                                 mTvMoney.setText(balance);
@@ -258,14 +265,23 @@ public class UserFragment extends BaseFragment {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.tv_bill, R.id.tv_collection, R.id.tv_message, R.id.icon_user_setting,
+    @OnClick({R.id.tv_bill, R.id.tv_collection, R.id.tv_message, R.id.icon_user_setting, R.id.tv_my_bank_card,
             R.id.tv_withdraw, R.id.tv_recharge, R.id.img_call_us, R.id.img_face,
             R.id.tv_rent_people, R.id.img_problem})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.tv_my_bank_card://银行卡
+                if (userInfoBean != null) {
+                    SelectBankCardActivity.toActivity(mActivity, false);
+                }
+                break;
             case R.id.tv_withdraw://提现
                 if (userInfoBean != null) {
-                    WithdrawcashActivity.toActivity(getContext(), userInfoBean.getBalance());
+                    if (userInfoBean.getIs_withdraw_pass() == 1) {
+                        WithdrawDetailActivity.toActivity(getContext(), userInfoBean.getBalance(),userInfoBean.getWithdraw_num());
+                    } else {
+                        showSetPwd();
+                    }
                 }
                 break;
             case R.id.tv_recharge://充值
@@ -382,6 +398,29 @@ public class UserFragment extends BaseFragment {
         showPopup(renZhengTipsPopup);
     }
 
+    /**
+     * 设置提现密码提醒
+     */
+    private void showSetPwd() {
+        if (setPwdPopupWindow == null)
+            setPwdPopupWindow = new CommonPopupWindow.Builder(mActivity)
+                    .setTitle(getString(R.string.tips))
+                    .setContent(getString(R.string.tips_no_to_setting_withdraw_pwd))
+                    .setRightBtnString(getString(R.string.to_setting))
+                    .setRightBtnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            setPwdPopupWindow.dismiss();
+                            WithdrawSetPwdCheckLoginPwdActivity.toActivity(mActivity);
+                        }
+                    })
+                    .create();
+        showPopup(setPwdPopupWindow);
+    }
+
+    /**
+     * 是否联系客服
+     */
     private void showCalll() {
         if (callPopupWindow == null)
             callPopupWindow = new CommonPopupWindow.Builder(mActivity)

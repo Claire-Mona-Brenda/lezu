@@ -53,7 +53,7 @@ public class WithdrawcashActivity extends BaseActivity {
                 WithdrawRecordActivity.toActivity(this);
                 break;
             case R.id.btn_withdraw:
-                WithdrawDetailActivity.toActivity(this,balance);
+//                WithdrawDetailActivity.toActivity(this,balance);
                 break;
         }
     }

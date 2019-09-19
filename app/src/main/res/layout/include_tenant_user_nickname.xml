@@ -14,9 +14,9 @@
             android:id="@+id/icon_user_photo"
             android:layout_width="@dimen/dp_65"
             android:layout_height="@dimen/dp_65"
-            android:layout_marginRight="@dimen/dp_40"
+            android:layout_marginEnd="@dimen/dp_40"
             android:layout_marginTop="@dimen/dp_40"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
 
             android:src="@mipmap/touxiang" />
         <TextView
@@ -24,28 +24,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_50"
-            android:layout_marginLeft="@dimen/dp_50"
+            android:layout_marginStart="@dimen/dp_50"
             android:gravity="center"
-            android:text="@string/user_name"
+            android:text="- -"
             android:textColor="@color/color_ffffff"
             android:textSize="@dimen/style_text_title" />
         <TextView
             android:id="@+id/tv_user_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="18*******102"
+            android:text="- -"
             android:textColor="@color/color_ffffff"
             android:textSize="@dimen/style_text_context"
             android:layout_marginTop="@dimen/dp_5"
             android:layout_below="@+id/tv_user_nickname"
-            android:layout_alignLeft="@+id/tv_user_nickname"/>
+            android:layout_alignStart="@+id/tv_user_nickname"/>
         <ImageView
             android:id="@+id/img_user_isAuthentication"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp_12"
+            android:layout_marginStart="@dimen/dp_12"
             android:src="@mipmap/notattestation_icon"
-            android:layout_toRightOf="@+id/tv_user_phone"
+            android:layout_toEndOf="@+id/tv_user_phone"
             android:layout_alignBottom="@+id/tv_user_phone"/>
 
 

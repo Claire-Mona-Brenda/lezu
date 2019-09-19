@@ -355,6 +355,9 @@ public class TenantMainActivity extends BaseMainActivity {
                             LoginUserBean.getInstance().setIs_lodge_identity(tenantUserinfoBeanDataInfo.data().getIs_identity() + "");
                             LoginUserBean.getInstance().setRealname(tenantUserinfoBeanDataInfo.data().getReal_name());
                             LoginUserBean.getInstance().setIdentity(tenantUserinfoBeanDataInfo.data().getIdentity());
+                            LoginUserBean.getInstance().setMobile(tenantUserinfoBeanDataInfo.data().getPhone());
+                            LoginUserBean.getInstance().setIs_login_pass(tenantUserinfoBeanDataInfo.data().getIs_login_pass());
+                            LoginUserBean.getInstance().setIs_withdraw_pass(tenantUserinfoBeanDataInfo.data().getIs_withdraw_pass());
                             LoginUserBean.getInstance().save();
                         } else {
                             showToast(tenantUserinfoBeanDataInfo.msg());

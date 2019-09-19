@@ -29,6 +29,7 @@ public class RenterSearchListBean {
     private int measure_area;
     private String room_type;
     private String thumb_image;
+    private String image;
 
     public String getRoom_id() {
         return room_id;
@@ -124,5 +125,13 @@ public class RenterSearchListBean {
 
     public void setThumb_image(String thumb_image) {
         this.thumb_image = thumb_image;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

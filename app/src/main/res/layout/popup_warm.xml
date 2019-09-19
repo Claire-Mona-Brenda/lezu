@@ -15,7 +15,8 @@
         <ImageView
             android:id="@+id/pop_warm_img_title"
             android:layout_width="@dimen/dp_32"
-            android:layout_height="@dimen/dp_32"/>
+            android:layout_height="@dimen/dp_32"
+            android:src="@mipmap/doubt_png_20pt"/>
         <TextView
             android:id="@+id/pop_warm_tv_please"
             android:layout_width="wrap_content"
@@ -31,12 +32,13 @@
             android:id="@+id/pop_warm_tv_context"
             android:layout_width="@dimen/dp_220"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dp_14"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_28"
             android:layout_marginStart="@dimen/dp_30"
             android:layout_marginEnd="@dimen/dp_30"
             android:gravity="start"
             android:textSize="@dimen/sp_16"
-            android:text="@string/bank_tips_no_support"
+            android:text="@string/bank_tips_withdraw"
             android:textColor="@color/color_000000"/>
         <View
             android:layout_width="match_parent"

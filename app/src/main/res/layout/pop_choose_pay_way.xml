@@ -46,6 +46,7 @@
     </LinearLayout>
 
     <View
+        android:id="@+id/pop_choose_pay_view_alipay"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_1"
         android:layout_marginStart="@dimen/dp_36"
@@ -75,6 +76,7 @@
     </LinearLayout>
 
     <View
+        android:id="@+id/pop_choose_pay_view_wxpay"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_1"
         android:layout_marginStart="@dimen/dp_36"
@@ -103,6 +105,7 @@
     </LinearLayout>
 
     <View
+        android:id="@+id/pop_choose_pay_view_qianbao"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_1"
         android:layout_marginStart="@dimen/dp_36"

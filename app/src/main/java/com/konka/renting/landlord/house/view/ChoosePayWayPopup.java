@@ -13,7 +13,8 @@ import com.konka.renting.R;
 
 public class ChoosePayWayPopup extends PopupWindow implements View.OnClickListener {
     private View mView;
-    public LinearLayout llAliPay, llWxPay, llQianBao;
+    private LinearLayout llAliPay, llWxPay, llQianBao;
+    private View viewAliPay, viewWxPay, viewQianBao;
     OnCall onCall;
 
     public ChoosePayWayPopup(Context context) {
@@ -32,6 +33,10 @@ public class ChoosePayWayPopup extends PopupWindow implements View.OnClickListen
         llWxPay = mView.findViewById(R.id.pop_choose_pay_ll_wxpay);
         llQianBao = mView.findViewById(R.id.pop_choose_pay_ll_qianbao);
 
+        viewAliPay = mView.findViewById(R.id.pop_choose_pay_view_alipay);
+        viewWxPay = mView.findViewById(R.id.pop_choose_pay_view_wxpay);
+        viewQianBao = mView.findViewById(R.id.pop_choose_pay_view_qianbao);
+
         llAliPay.setOnClickListener(this);
         llWxPay.setOnClickListener(this);
         llQianBao.setOnClickListener(this);
@@ -43,6 +48,13 @@ public class ChoosePayWayPopup extends PopupWindow implements View.OnClickListen
         this.setFocusable(true);  //弹出窗可触摸
         this.setBackgroundDrawable(new ColorDrawable(0x00000000));   //设置背景透明
 //        this.setAnimationStyle(R.style.mypopupwindow_anim_style);   //弹出动画
+    }
+
+    public void setLlQianBaoVisibility(boolean is){
+        if (llQianBao!=null){
+            llQianBao.setVisibility(is?View.VISIBLE:View.GONE);
+            viewQianBao.setVisibility(is?View.VISIBLE:View.GONE);
+        }
     }
 
     public OnCall getOnCall() {

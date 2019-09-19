@@ -28,12 +28,12 @@ import rx.Observable;
 public interface KonkaApiService {
 
     //    //测试环境
-//    String HOST = "https://lettest.youlejiakeji.com/";
-//    String SecondHost = "https://lezuxiaowo-test.youlejiakeji.com";
+    String HOST = "https://lettest.youlejiakeji.com/";
+    String SecondHost = "https://lezuxiaowo-test.youlejiakeji.com";
 
     //正式环境
-    String HOST = "https://let.youlejiakeji.com/";
-    String SecondHost = "https://lezuxiaowo.youlejiakeji.com";
+//    String HOST = "https://let.youlejiakeji.com/";
+//    String SecondHost = "https://lezuxiaowo.youlejiakeji.com";
 
 
     @FormUrlEncoded
@@ -670,21 +670,6 @@ public interface KonkaApiService {
     Observable<DataInfo<ListInfo<CollectionListBean>>> getReminder(@Query("token") String token,
                                                                    @Query("p") int page);
 
-    @GET("index.php/Service/BankCard/getBankCard")
-    Observable<DataInfo<ListInfo<MyBankBean>>> getBankCard(@Query("token") String token);
-
-    @FormUrlEncoded
-    @POST("index.php/Service/BankCard/addBankCard")
-    Observable<AddBankInfo> addBankBean(@Field("token") String token,
-                                        @Field("name") String name,
-                                        @Field("number") String bumber,
-                                        @Field("bank_card") String id,
-                                        @Field("tel") String tel);
-
-    @FormUrlEncoded
-    @POST("index.php/Service/BankCard/getIssuingBank")
-    Observable<DataInfo<GetIssueBankBean>> getIssueBank(@Field("token") String token,
-                                                        @Field("number") String number);
 
     @FormUrlEncoded
     @POST("index.php/Service/LandlordMy/applyWithdraw")
@@ -1408,7 +1393,7 @@ public interface KonkaApiService {
 
     /**
      * 获取租客端房产列表
-     *
+     * <p>
      * rent_type  0 默认 1 短租 2长租
      * type   0 默认 1推荐 2精品 3热门
      */
@@ -2120,13 +2105,13 @@ public interface KonkaApiService {
     @FormUrlEncoded
     @POST("index.php/api/room/roomGroupAdd")
     Observable<DataInfo<RoomGroupListBean>> roomGroupAdd(@Field("name") String name,
-                                      @Field("province") String province,
-                                      @Field("city") String city,
-                                      @Field("area") String area,
-                                      @Field("business") String business,
-                                      @Field("address") String address,
-                                      @Field("lng") String lng,
-                                      @Field("lat") String lat);
+                                                         @Field("province") String province,
+                                                         @Field("city") String city,
+                                                         @Field("area") String area,
+                                                         @Field("business") String business,
+                                                         @Field("address") String address,
+                                                         @Field("lng") String lng,
+                                                         @Field("lat") String lat);
 
     /**
      * 小区列表(2.4.2版本以后)
@@ -2216,4 +2201,84 @@ public interface KonkaApiService {
     Observable<DataInfo<List<MapLocationSearchBean>>> mapLocationSearch(@Query("city") String city,
                                                                         @Query("rent_type") String rent_type,
                                                                         @Query("keyword") String keyword);
+
+    /**************************************************版本2.4.3*************************************************/
+    /**
+     * 添加银行卡
+     */
+    @FormUrlEncoded
+    @POST("index.php/api/bank_card/add")
+    Observable<DataInfo> addBankBean(@Field("card_no") String card_no,
+                                     @Field("username") String username);
+
+    /**
+     * 银行卡验证
+     */
+    @GET("index.php/api/bank_card/check")
+    Observable<DataInfo<GetIssueBankBean>> getIssueBank(@Query("card_no") String card_no);
+
+    /**
+     * 银行卡列表
+     */
+    @GET("index.php/api/bank_card/index")
+    Observable<DataInfo<PageDataBean<MyBankBean>>> getBankCardList(@Query("page") String page);
+
+    /**
+     * 删除银行卡
+     */
+    @FormUrlEncoded
+    @POST("index.php/api/bank_card/del")
+    Observable<DataInfo> delBankBean(@Field("card_id") String card_id);
+
+    /**
+     * 设置提现密码 适用设置，修改，重置
+     */
+    @FormUrlEncoded
+    @POST("index.php/api/user/setWithdrawPassword")
+    Observable<DataInfo> setWithdrawPassword(@Field("code") String code,
+                                             @Field("withdraw_password") String withdraw_password);
+
+    /**
+     * 设置提现密码-密码验证
+     * <p>
+     * type  1 登入密码 2提现密码
+     */
+    @FormUrlEncoded
+    @POST("index.php/api/user/checkPassword")
+    Observable<DataInfo<CheckWithdrawPwdBean>> checkPassword(@Field("type") String type,
+                                                             @Field("password") String password);
+
+    /**
+     * 设置提现密码-手机验证码验证
+     */
+    @FormUrlEncoded
+    @POST("index.php/api/user/checkVerify")
+    Observable<DataInfo<CheckWithdrawPwdBean>> checkVerify(@Field("verify") String verify);
+
+    /**
+     * 提现申请
+     */
+    @FormUrlEncoded
+    @POST("index.php/api/user/withdraw")
+    Observable<DataInfo> withdraw(@Field("code") String code,
+                                  @Field("card_id") String card_id);
+
+    /**
+     * 租客下单
+     */
+    @FormUrlEncoded
+    @POST("index.php/api/pay/rentOrder")
+    Observable<DataInfo<PayBean>> rentOrder(@Field("room_id") String room_id,
+                                  @Field("start_time") String start_time,
+                                  @Field("end_time") String end_time,
+                                  @Field("payment") String payment);//1微信 2支付宝
+
+    /**
+     * 价格计算
+     */
+    @FormUrlEncoded
+    @POST("index.php/api/room_order/price")
+    Observable<DataInfo<RoomOederPriceBean>> rentOrderPrice(@Field("room_id") String room_id,
+                                   @Field("start_time") String start_time,
+                                   @Field("end_time") String end_time);
 }

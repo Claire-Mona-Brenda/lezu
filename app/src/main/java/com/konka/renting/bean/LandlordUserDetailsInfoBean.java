@@ -19,12 +19,14 @@ public class LandlordUserDetailsInfoBean {
     private String sex;
     private String age;
     private String phone;
-    private int is_identity;
+    private int is_identity;//	1已认证 0 未认证
     private String identity;
     private String identity_just;
     private String identity_back;
     private String start_time;
     private String end_time;
+    private int is_login_pass;//登录密码 1是 0 否
+    private int is_withdraw_pass;//	提现密码 1是 0 否
 
     public String getReal_name() {
         return real_name;
@@ -120,5 +122,21 @@ public class LandlordUserDetailsInfoBean {
 
     public void setEnd_time(String end_time) {
         this.end_time = end_time;
+    }
+
+    public int getIs_login_pass() {
+        return is_login_pass;
+    }
+
+    public void setIs_login_pass(int is_login_pass) {
+        this.is_login_pass = is_login_pass;
+    }
+
+    public int getIs_withdraw_pass() {
+        return is_withdraw_pass;
+    }
+
+    public void setIs_withdraw_pass(int is_withdraw_pass) {
+        this.is_withdraw_pass = is_withdraw_pass;
     }
 }

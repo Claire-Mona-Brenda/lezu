@@ -181,6 +181,7 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
 
     Subscription timeSubscription;
     boolean isTimer = false;
+    boolean isInitCity = true;
 
     double curr_lat = 0;
     double curr_lng = 0;
@@ -202,6 +203,8 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
         mMapview.onCreate(savedInstanceState);
         if (aMap == null)
             aMap = mMapview.getMap();
+        geocoderSearch = new GeocodeSearch(mActivity);
+        geocoderSearch.setOnGeocodeSearchListener(this);
         initMap();
     }
 
@@ -219,10 +222,8 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
         mTvShortRent.setSelected(false);
         mViewShortLine.setVisibility(View.INVISIBLE);
 
-        geocoderSearch = new GeocodeSearch(mActivity);
-        geocoderSearch.setOnGeocodeSearchListener(this);
-        GeocodeQuery query = new GeocodeQuery(cityName, cityName);
-        geocoderSearch.getFromLocationNameAsyn(query);
+
+
 
         initAdapter();
         initPop();
@@ -271,6 +272,15 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
             public void onCameraChangeFinish(CameraPosition postion) {
                 if (!isTimer)
                     addMarkerInScreen();
+            }
+        });
+        aMap.setOnMapLoadedListener(new AMap.OnMapLoadedListener() {
+            @Override
+            public void onMapLoaded() {
+                if (geocoderSearch != null) {
+                    GeocodeQuery query = new GeocodeQuery(cityName, cityName);
+                    geocoderSearch.getFromLocationNameAsyn(query);
+                }
             }
         });
         aMap.setOnMapTouchListener(new AMap.OnMapTouchListener() {
@@ -370,9 +380,22 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
 
                         } else if (bean.getId() != -1) {
                             if (rent_type == 1) {
-                                chooseSPriceList.remove(bean);
+                                int size=chooseSPriceList.size();
+                                for (int i = 0; i < size; i++) {
+                                    if (chooseSPriceList.get(i).getId()==bean.getId()){
+                                        chooseSPriceList.remove(i);
+                                        break;
+                                    }
+                                }
+
                             } else {
-                                chooseLPriceList.remove(bean);
+                                int size=chooseLPriceList.size();
+                                for (int i = 0; i < size; i++) {
+                                    if (chooseLPriceList.get(i).getId()==bean.getId()){
+                                        chooseLPriceList.remove(i);
+                                        break;
+                                    }
+                                }
                             }
                         } else {
                             if (rent_type == 1) {
@@ -509,9 +532,9 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
         TextOptions textOptions1 = new TextOptions();
         textOptions1.position(new LatLng(lat, lng));
         textOptions1.align(Text.ALIGN_CENTER_HORIZONTAL, Text.ALIGN_BOTTOM);
-        String name=mapSearchBean.getName();
-        if (name.length()>5){
-            name=name.substring(0,5)+"...";
+        String name = mapSearchBean.getName();
+        if (name.length() > 5) {
+            name = name.substring(0, 5) + "...";
         }
         textOptions1.text(name);
         textOptions1.backgroundColor(Color.parseColor("#00FF7500"));
@@ -563,9 +586,9 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
 
         TextOptions textOptions = new TextOptions();
         textOptions.position(new LatLng(lat, lng));
-        String name=mapSearchBean.getName();
-        if (name.length()>6){
-            name=name.substring(0,6)+"...";
+        String name = mapSearchBean.getName();
+        if (name.length() > 6) {
+            name = name.substring(0, 6) + "...";
         }
         textOptions.text(name + " " + mapSearchBean.getCount() + "套");
         textOptions.backgroundColor(Color.parseColor("#00FF7500"));
@@ -592,7 +615,7 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
                     if (aMap != null)
                         aMap.clear();
                     curr_level = 0;
-                    room_group_id="-1";
+                    room_group_id = "-1";
                     addMarkerInScreen();
                 }
                 break;
@@ -606,7 +629,7 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
                     if (aMap != null)
                         aMap.clear();
                     curr_level = 0;
-                    room_group_id="-1";
+                    room_group_id = "-1";
                     addMarkerInScreen();
                 }
                 break;
@@ -622,7 +645,7 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
                 mDrawerlayout.openDrawer(mLlFiltrate);
                 break;
             case R.id.activity_map_find_house_img_search:
-                MapSearchActivity.toActivity(this, cityName,rent_type);
+                MapSearchActivity.toActivity(this, cityName, rent_type);
                 break;
             case R.id.activity_find_house_tv_reset:
                 if (rent_type == 1) {
@@ -642,7 +665,7 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
                 roomTypeCommonAdapter.notifyDataSetChanged();
                 if (aMap != null)
                     aMap.clear();
-                room_group_id="-1";
+                room_group_id = "-1";
                 curr_level = 0;
                 addMarkerInScreen();
                 break;
@@ -704,7 +727,7 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
                 mDrawerlayout.closeDrawer(mLlFiltrate);
                 if (aMap != null)
                     aMap.clear();
-                room_group_id="-1";
+                room_group_id = "-1";
                 curr_level = 0;
                 addMarkerInScreen();
                 break;
@@ -867,7 +890,7 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
         }
         String price_area_id = rent_type == 1 ? price_area_id_r : price_area_id_l;
         String price_area = rent_type == 1 ? price_area_r : price_area_l;
-        Subscription subscription = (SecondRetrofitHelper.getInstance().groupRoomList(page + "", room_group_id, rent_type + "",  price_area_id, room_type_id,price_area,"")
+        Subscription subscription = (SecondRetrofitHelper.getInstance().groupRoomList(page + "", room_group_id, rent_type + "", price_area_id, room_type_id, price_area, "")
                 .compose(RxUtil.<DataInfo<PageDataBean<GroupRoomListBean>>>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo<PageDataBean<GroupRoomListBean>>>() {
                     @Override

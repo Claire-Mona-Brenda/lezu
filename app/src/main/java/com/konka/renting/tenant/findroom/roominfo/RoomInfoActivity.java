@@ -66,7 +66,7 @@ public class RoomInfoActivity extends BaseActivity implements OnClickListener {
     AppBarLayout mAppBarLayout;
     ViewPager pager;
     LinearLayout bottom_views;
-    //    Button btn_req;
+    Button btn_req;
     Button look_room;
     TextView tvTitle;
     TextView tvRoomName;
@@ -183,9 +183,9 @@ public class RoomInfoActivity extends BaseActivity implements OnClickListener {
         mAppBarLayout = findViewById(R.id.activity_room_info_appbarlayout);
         picstandardWidget = findViewById(R.id.stantard);
         pager = (ViewPager) findViewById(R.id.fliper);
-//        btn_req = (Button) findViewById(R.id.request_room);
+        btn_req = (Button) findViewById(R.id.request_room);
         look_room = (Button) findViewById(R.id.look_room);
-//        btn_req.setOnClickListener(this);
+        btn_req.setOnClickListener(this);
         tvTitle = findViewById(R.id.text_title);
         tvImgSum = findViewById(R.id.activity_room_info_tv_img_sum);
         tvRoomName = (TextView) findViewById(R.id.tv_room_name);
@@ -275,6 +275,15 @@ public class RoomInfoActivity extends BaseActivity implements OnClickListener {
         tvRoomAddress.setText(infoBean.getProvince() + infoBean.getCity() + infoBean.getArea() + infoBean.getMap_address() + infoBean.getRoom_group() + infoBean.getAddress());
         room_no.setText(infoBean.getRoom_no());
         tvImgSum.setText("1/" + imageList.size());
+        if (infoBean.getType()==1 && infoBean.getIs_device() == 1) {
+            btn_req.setVisibility(View.VISIBLE);
+            look_room.setBackgroundResource(R.drawable.shape_white);
+            look_room.setTextColor(getResources().getColor(R.color.text_black));
+        } else {
+            btn_req.setVisibility(View.GONE);
+            look_room.setBackgroundResource(R.drawable.selector_enable_org_gray);
+            look_room.setTextColor(getResources().getColor(R.color.color_ffffff));
+        }
         if (confitAdapter != null)
             confitAdapter.notifyDataSetChanged();
         viewPagerAdapter = new PicViewPagerAdapter(this, imageList);
@@ -383,10 +392,11 @@ public class RoomInfoActivity extends BaseActivity implements OnClickListener {
     @Override
     public void onClick(View arg0) {
         switch (arg0.getId()) {
-//            case R.id.request_room:
-//                if (infoBean == null)
-//                    return;
-//                if (LoginUserBean.getInstance().getIs_lodge_identity().equals("1")) {
+            case R.id.request_room:
+                if (infoBean == null)
+                    return;
+                if (LoginUserBean.getInstance().getIs_lodge_identity().equals("1")) {
+                    RoomOrderActivity.toActivity(mActivity, infoBean);
 //                    if (btn_req.getText().toString().contains("合租")) {
 //                        if (infoBean.getIs_rent() == 0) {
 //                            ShowToastUtil.showWarningToast(context, "已申请，请勿重复申请");
@@ -403,10 +413,10 @@ public class RoomInfoActivity extends BaseActivity implements OnClickListener {
 //                    } else {
 //                        isRenting();
 //                    }
-//                } else {
-//                    NewFaceDectectActivity.toActivity(this, 1);
-//                }
-//                break;
+                } else {
+                    NewFaceDectectActivity.toActivity(this, 1);
+                }
+                break;
             case R.id.back:
                 this.finish();
                 break;

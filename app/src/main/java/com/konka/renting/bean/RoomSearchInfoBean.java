@@ -62,6 +62,7 @@ public class RoomSearchInfoBean implements Parcelable {
     private String publish_time;
     private String landlord_name;
     private String landlord_phone;
+    private String landlord_headimgurl;
     private String member_name;
     private String member_phone;
     private String room_type;
@@ -72,6 +73,7 @@ public class RoomSearchInfoBean implements Parcelable {
     private List<String> thumb_auth_image;
     private List<String> thumb_image;
     private int is_rent;//判断租客是否具有租此房源的条件 0不可以申请 1可以申请
+    private int is_device;//房产是否绑定设备 1已绑定  0未绑定
 
 
     protected RoomSearchInfoBean(Parcel in) {
@@ -102,6 +104,7 @@ public class RoomSearchInfoBean implements Parcelable {
         publish_time = in.readString();
         landlord_name = in.readString();
         landlord_phone = in.readString();
+        landlord_headimgurl = in.readString();
         member_name = in.readString();
         member_phone = in.readString();
         room_type = in.readString();
@@ -112,6 +115,7 @@ public class RoomSearchInfoBean implements Parcelable {
         thumb_auth_image = in.createStringArrayList();
         thumb_image = in.createStringArrayList();
         is_rent = in.readInt();
+        is_device = in.readInt();
     }
 
     public static final Creator<RoomSearchInfoBean> CREATOR = new Creator<RoomSearchInfoBean>() {
@@ -342,6 +346,14 @@ public class RoomSearchInfoBean implements Parcelable {
         this.landlord_phone = landlord_phone;
     }
 
+    public String getLandlord_headimgurl() {
+        return landlord_headimgurl;
+    }
+
+    public void setLandlord_headimgurl(String landlord_headimgurl) {
+        this.landlord_headimgurl = landlord_headimgurl;
+    }
+
     public String getMember_name() {
         return member_name;
     }
@@ -422,6 +434,14 @@ public class RoomSearchInfoBean implements Parcelable {
         this.is_rent = is_rent;
     }
 
+    public int getIs_device() {
+        return is_device;
+    }
+
+    public void setIs_device(int is_device) {
+        this.is_device = is_device;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -457,6 +477,7 @@ public class RoomSearchInfoBean implements Parcelable {
         dest.writeString(publish_time);
         dest.writeString(landlord_name);
         dest.writeString(landlord_phone);
+        dest.writeString(landlord_headimgurl);
         dest.writeString(member_name);
         dest.writeString(member_phone);
         dest.writeString(room_type);
@@ -467,5 +488,6 @@ public class RoomSearchInfoBean implements Parcelable {
         dest.writeStringList(thumb_auth_image);
         dest.writeStringList(thumb_image);
         dest.writeInt(is_rent);
+        dest.writeInt(is_device);
     }
 }

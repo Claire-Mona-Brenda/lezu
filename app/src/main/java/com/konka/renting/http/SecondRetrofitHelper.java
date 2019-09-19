@@ -11,6 +11,7 @@ import com.konka.renting.R;
 import com.konka.renting.base.BaseActivity;
 import com.konka.renting.base.BaseApplication;
 import com.konka.renting.bean.ActivateBean;
+import com.konka.renting.bean.AddBankInfo;
 import com.konka.renting.bean.AddHouseBean;
 import com.konka.renting.bean.AddRentingBean;
 import com.konka.renting.bean.AgentBean;
@@ -20,6 +21,7 @@ import com.konka.renting.bean.BillDetailBean;
 import com.konka.renting.bean.BillListBean;
 import com.konka.renting.bean.BindGatewaySearchBean;
 import com.konka.renting.bean.CheckGatewayStatusBean;
+import com.konka.renting.bean.CheckWithdrawPwdBean;
 import com.konka.renting.bean.CityBean;
 import com.konka.renting.bean.CityInfo;
 import com.konka.renting.bean.ClockSetManagerItemBean;
@@ -28,6 +30,7 @@ import com.konka.renting.bean.DeviceInfo;
 import com.konka.renting.bean.DevicesOpenPasswordBean;
 import com.konka.renting.bean.GatewayDetailBean;
 import com.konka.renting.bean.GatewayInfo;
+import com.konka.renting.bean.GetIssueBankBean;
 import com.konka.renting.bean.GroupRoomListBean;
 import com.konka.renting.bean.HomeInfo;
 import com.konka.renting.bean.HouseConfigBean;
@@ -44,6 +47,7 @@ import com.konka.renting.bean.MapLocationSearchBean;
 import com.konka.renting.bean.MapSearchBean;
 import com.konka.renting.bean.MessageListBean;
 import com.konka.renting.bean.MoneyBean;
+import com.konka.renting.bean.MyBankBean;
 import com.konka.renting.bean.NativePwdBean;
 import com.konka.renting.bean.OpenCityBean;
 import com.konka.renting.bean.OpenDoorListbean;
@@ -62,6 +66,7 @@ import com.konka.renting.bean.RenterSearchListBean;
 import com.konka.renting.bean.RentingDateBean;
 import com.konka.renting.bean.RoomGroupListBean;
 import com.konka.renting.bean.RoomInfo;
+import com.konka.renting.bean.RoomOederPriceBean;
 import com.konka.renting.bean.RoomPriceAreaBean;
 import com.konka.renting.bean.RoomSearchInfoBean;
 import com.konka.renting.bean.RoomTypeBean;
@@ -141,9 +146,9 @@ public class SecondRetrofitHelper {
 
     private static OkHttpClient createOkHttpClient(OkHttpClient.Builder builder) {
         // HttpLoggingInterceptor 打印请求到的json字符串和查看log
-//        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-//        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-//        builder.addInterceptor(loggingInterceptor);
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        builder.addInterceptor(loggingInterceptor);
 
         File cacheFile = new File(SecondRetrofitHelper.PATH_CACHE); //缓存文件夹
         Cache cache = new Cache(cacheFile, 1024 * 1024 * 50); // 创建缓存对象 缓存大小为50M
@@ -1462,21 +1467,92 @@ public class SecondRetrofitHelper {
     /**
      * 地图找房(2.4.2版本以后)
      */
-    public Observable<DataInfo<List<MapSearchBean>>> mapSearch( String level,String point1,String point2,String rent_type,String price_area_id,String room_type_id,String price_area,String keyword) {
-        return mApiService.mapSearch(level, point1, point2,  rent_type,price_area_id, room_type_id, price_area, keyword);
+    public Observable<DataInfo<List<MapSearchBean>>> mapSearch(String level, String point1, String point2, String rent_type, String price_area_id, String room_type_id, String price_area, String keyword) {
+        return mApiService.mapSearch(level, point1, point2, rent_type, price_area_id, room_type_id, price_area, keyword);
     }
 
     /**
      * 小区房屋列表(2.4.2版本以后)
      */
-    public Observable<DataInfo<PageDataBean<GroupRoomListBean>>> groupRoomList(String page, String room_group_id, String rent_type, String price_area_id,String room_type_id,String price_area,String keyword) {
-        return mApiService.groupRoomList(page, room_group_id, rent_type, price_area_id, room_type_id, price_area,keyword);
+    public Observable<DataInfo<PageDataBean<GroupRoomListBean>>> groupRoomList(String page, String room_group_id, String rent_type, String price_area_id, String room_type_id, String price_area, String keyword) {
+        return mApiService.groupRoomList(page, room_group_id, rent_type, price_area_id, room_type_id, price_area, keyword);
     }
 
     /**
      * 地图位置查询(2.4.2版本以后)
      */
-    public Observable<DataInfo<List<MapLocationSearchBean>>> mapLocationSearch(String city, String rent_type,String keyword) {
-        return mApiService.mapLocationSearch(city, rent_type,keyword);
+    public Observable<DataInfo<List<MapLocationSearchBean>>> mapLocationSearch(String city, String rent_type, String keyword) {
+        return mApiService.mapLocationSearch(city, rent_type, keyword);
+    }
+
+    /*********************************************版本2.4.3*************************************************/
+    /**
+     * 添加银行卡
+     */
+    public Observable<DataInfo> addBankCard(String card_no, String username) {
+        return mApiService.addBankBean(card_no, username);
+    }
+
+    /**
+     * 银行卡验证
+     */
+    public Observable<DataInfo<GetIssueBankBean>> getIssueBank(String card_no) {
+        return mApiService.getIssueBank(card_no);
+    }
+
+    /**
+     * 银行卡列表
+     */
+    public Observable<DataInfo<PageDataBean<MyBankBean>>> getBankCardList(String page) {
+        return mApiService.getBankCardList(page);
+    }
+
+    /**
+     * 删除银行卡
+     */
+    public Observable<DataInfo> delBankBean(String card_id) {
+        return mApiService.delBankBean(card_id);
+    }
+
+    /**
+     * 设置提现密码 适用设置，修改，重置
+     */
+    public Observable<DataInfo> setWithdrawPassword(String code, String withdraw_password) {
+        return mApiService.setWithdrawPassword(code, withdraw_password);
+    }
+
+    /**
+     * 设置提现密码-密码验证
+     */
+    public Observable<DataInfo<CheckWithdrawPwdBean>> checkPassword(String type, String password) {
+        return mApiService.checkPassword(type, password);
+    }
+
+    /**
+     * 设置提现密码-手机验证码验证
+     */
+    public Observable<DataInfo<CheckWithdrawPwdBean>> checkVerify(String verify) {
+        return mApiService.checkVerify(verify);
+    }
+
+    /**
+     * 提现申请
+     */
+    public Observable<DataInfo> withdraw(String code, String card_id) {
+        return mApiService.withdraw(code, card_id);
+    }
+
+    /**
+     * 租客下单
+     */
+    public Observable<DataInfo<PayBean>> rentOrder(String room_id, String start_time, String end_time, String payment) {
+        return mApiService.rentOrder(room_id, start_time, end_time, payment);
+    }
+
+    /**
+     * 价格计算
+     */
+    public Observable<DataInfo<RoomOederPriceBean>> rentOrderPrice(String room_id, String start_time, String end_time) {
+        return mApiService.rentOrderPrice(room_id, start_time, end_time);
     }
 }

@@ -39,6 +39,7 @@
     <string name="yhk">招商银行（8888）</string>
     <string name="to_yhk">到账银行卡</string>
     <string name="select_to">请选择到账银行</string>
+    <string name="please_input_withdraw_money">请输入提现金额</string>
     <string name="recharge_money">充值金额</string>
     <string name="withdraw_money">提现金额</string>
     <string name="purse_balance">钱包余额</string>
@@ -120,6 +121,7 @@
     <string name="bank_no_support">暂不支持其它银行</string>
     <string name="i_know">我知道了</string>
     <string name="bank_tips_no_support">目前仅支持中国建设银行，暂不支持其它银行，敬请谅解与期待！</string>
+    <string name="bank_tips_withdraw">提现的金额固定为钱包所有余额，且每月最多可提现3次。</string>
     <string name="card_type">银行</string>
     <string name="mobile_num">手机号</string>
     <string name="complete">完成</string>
@@ -180,6 +182,34 @@
     <string name="please_balance_pay">是否从钱包余额中扣除</string>
     <string name="no_permissions">未取得相机相关权限，请在手机设置启用相机相关权限后再进行操作</string>
 
+    <!--支付提现-->
+    <string name="tips_del_bank_card">是否删除此银行卡？</string>
+    <string name="please_input_pwd_number">请输入6位数字密码</string>
+    <string name="please_input_pwd_number_again">请再次输入6位数字密码</string>
+    <string name="setting_pwd_number">设置提现密码</string>
+    <string name="title_withdraw_pwd">提现密码</string>
+
+    <string name="withdraw_num_tips">本月提取剩余次数</string>
+    <string name="withdraw_num">（%d次）</string>
+    <string name="please_choose_bank_card">请选择提现银行卡</string>
+    <string name="no_balance">无提现余额</string>
+
+    <string name="tips_phone_number_">当前手机号：</string>
+    <string name="title_check_phone">验证手机</string>
+    <string name="title_check_login">验证账号</string>
+
+    <string name="tips_no_to_setting_withdraw_pwd">还没有设置提现密码</string>
+    <string name="to_setting">前往设置</string>
+    <string name="setting_result_success">设置成功</string>
+
+    <string name="please_input_login_pwd">请输入登录密码</string>
+
+    <string name="title_withdraw_result">提现结果</string>
+    <string name="tips_withdraw_result_success">提交成功</string>
+    <string name="tips_withdraw_result_tips">预计到账时间1-3天</string>
+
+
+
     <!--租客端首页-->
     <string name="map_find_house">地图找房</string>
     <string name="competitive_house">精品房源</string>
@@ -190,6 +220,7 @@
     <string name="competitive_house_long">长租房源</string>
     <string name="competitive_house_short">短租房源</string>
     <string name="more">更多</string>
+    <string name="more_">更多></string>
 
     <!--房客(tenant)-->
     <string name="tenant_main_findroom">找房</string>
@@ -244,6 +275,8 @@
 
     <string name="choose_date">选择入住时间</string>
     <string name="choose_time_date">请选择时间日期</string>
+    <string name="choose_start_time_date">请选择入住时间</string>
+    <string name="choose_end_time_date">请选择退房时间</string>
     <string name="please_choose_date">请选择入住日期和退租日期</string>
     <string name="warn_end_time_not_same">退房时间已被出租，请重新选择</string>
 
@@ -266,9 +299,22 @@
 
     <!--申请租房-->
     <string name="apply_rent_house">申请租房</string>
+    <string name="apply_rent_order">立即预订</string>
     <string name="apply_house_call_landlord">联系房东</string>
     <string name="apply_house_call_tenant">联系租客</string>
     <string name="remark">备注留言</string>
+    <string name="room_order_fill_tips">支付成功后暂不支持在线取消订单，如有需要请联系房东。</string>
+    <string name="room_order_fill_date_tips">入住时间为中午12:00之后，退房时间为中午12:00之前</string>
+
+    <string name="self_info">本人信息</string>
+    <string name="pay_money">支付金额</string>
+    <string name="pay_result">支付结果</string>
+    <string name="pay_success">支付成功</string>
+    <string name="pay_fail">支付失败</string>
+    <string name="pay_cancel">支付取消</string>
+    <string name="pay_success_tips">（你可以在订单中查看此订单详情）</string>
+    <string name="to_pay">去支付</string>
+    <string name="order_fill">订单填写</string>
 
 
     <!--订单列表/订单详情-->
@@ -398,6 +444,7 @@
     <string name="common_next">下一步</string>
     <string name="server_end_time">服务费到期</string>
     <string name="server_renew">马上续费 >></string>
+    <string name="server_pay">服务费充值 ></string>
     <string name="device_gateway_check_status">查询状态</string>
 
     <string name="warn_confirm">确定</string>
@@ -463,6 +510,10 @@
     <string name="forget_password_new_hint">请输入新密码</string>
     <string name="forget_password_sure">再次确认</string>
     <string name="forget_password_sure_hint">请再次输入密码</string>
+
+    <string name="set_login_pwd">修改登录密码</string>
+    <string name="set_withdraw_pwd">设置提现密码</string>
+    <string name="restart_withdraw_pwd">重置提现密码</string>
 
     <!--修改手机-->
     <string name="update_phone_title">修改手机号</string>
@@ -667,6 +718,7 @@
     <string name="open_check_pwd_key_click">查看钥匙孔密码</string>
     <string name="open_check_pwd_pop_tips">*密码时效与租房时间相同，前后均无效。</string>
     <string name="warm_open_no_on_rent">未到入住时间，请入住后再操作</string>
+    <string name="end_time">到期</string>
 
     <!--开门管理-->
     <string name="open_other_setting">其他功能</string>
@@ -747,8 +799,10 @@
     <string name="error_no_choose_sever_type">未获取到服务费套餐信息</string>
     <string name="please_talk_pay_install">请提醒房东缴纳安装费用</string>
 
+    <string name="my_bank_card_icon">我的银行卡></string>
+
     <!--我的-->
-    <string name="my_money">资产余额</string>
+    <string name="my_money">钱包余额</string>
     <string name="money_unit">元</string>
     <string name="money_unit_1">¥</string>
 

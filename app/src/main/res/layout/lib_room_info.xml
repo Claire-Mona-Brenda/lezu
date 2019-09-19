@@ -451,6 +451,8 @@
         android:layout_gravity="bottom"
         android:paddingStart="@dimen/dp_10"
         android:paddingEnd="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_1"
         android:visibility="gone"
         android:elevation="@dimen/dp_10">
 
@@ -464,7 +466,6 @@
             android:layout_weight="1"
             android:text="@string/apply_house_call_landlord"
             android:textSize="@dimen/lib_house_edit_text"
-            android:layout_marginTop="@dimen/dp_10"
             android:layout_marginEnd="@dimen/dp_20"
             android:layout_marginStart="@dimen/dp_20"
             android:visibility="visible"/>
@@ -476,7 +477,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/apply_rent_house"
+            android:text="@string/apply_rent_order"
             android:textSize="@dimen/lib_house_edit_text"
             android:visibility="gone"/>
 
