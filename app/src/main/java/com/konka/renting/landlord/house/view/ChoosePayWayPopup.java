@@ -44,7 +44,8 @@ public class ChoosePayWayPopup extends PopupWindow implements View.OnClickListen
 
     private void setPopupWindow() {
         this.setContentView(mView); //设置View
-        this.setWidth(LinearLayout.LayoutParams.MATCH_PARENT);
+        this.setWidth(WindowManager.LayoutParams.MATCH_PARENT);  //弹出窗宽度
+        this.setHeight(WindowManager.LayoutParams.WRAP_CONTENT); //弹出高度
         this.setFocusable(true);  //弹出窗可触摸
         this.setBackgroundDrawable(new ColorDrawable(0x00000000));   //设置背景透明
 //        this.setAnimationStyle(R.style.mypopupwindow_anim_style);   //弹出动画

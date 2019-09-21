@@ -27,6 +27,7 @@ import com.konka.renting.base.IPayResCall;
 import com.konka.renting.bean.DataInfo;
 import com.konka.renting.bean.LoginUserBean;
 import com.konka.renting.bean.PayBean;
+import com.konka.renting.bean.PayRentRefreshEvent;
 import com.konka.renting.bean.RentingDateBean;
 import com.konka.renting.bean.RoomOederPriceBean;
 import com.konka.renting.bean.RoomSearchInfoBean;
@@ -435,6 +436,7 @@ public class RoomOrderActivity extends BaseActivity implements IPayResCall, PayS
         switch (type) {
             case 0:
                 // 支付成功
+                RxBus.getDefault().post(new PayRentRefreshEvent());
                 ResultActivity.toActivity(mActivity, getString(R.string.pay_result), getString(R.string.pay_success), getString(R.string.pay_success_tips), true);
                 finish();
                 break;

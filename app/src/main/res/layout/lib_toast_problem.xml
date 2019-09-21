@@ -3,9 +3,11 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
+    android:padding="@dimen/dp_10"
     android:gravity="center"
     android:layout_gravity="center"
-    android:background="@drawable/lib_warning_msg_bg">
+    android:background="@drawable/shape_bg_black_tran">
+    <!--    android:background="@drawable/lib_warning_msg_bg"-->
 
     <ImageView
         android:id="@+id/warning_img"
@@ -19,7 +21,7 @@
         android:id="@+id/warningmsg"
          android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
         android:textColor="@color/color_ffffff"
         android:textSize="18sp"
         />

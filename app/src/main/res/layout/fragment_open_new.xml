@@ -14,47 +14,67 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
 
             <RelativeLayout
                 android:id="@+id/fragment_open_new_rl_top_bar"
                 android:layout_width="@dimen/dp_310"
-                android:layout_height="@dimen/dp_48">
+                android:layout_height="@dimen/dp_34"
+                android:layout_marginTop="@dimen/dp_10">
 
                 <ImageView
                     android:id="@+id/fragment_open_new_img_msg"
-                    android:layout_width="@dimen/dp_22"
-                    android:layout_height="@dimen/dp_20"
+                    android:layout_width="@dimen/dp_34"
+                    android:layout_height="@dimen/dp_34"
+                    android:padding="@dimen/dp_5"
                     android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true" />
+                    android:src="@mipmap/msg_no"/>
+                <ImageView
+                    android:id="@+id/fragment_open_new_img_add_order"
+                    android:layout_width="@dimen/dp_34"
+                    android:layout_height="@dimen/dp_34"
+                    android:padding="@dimen/dp_5"
+                    android:layout_marginEnd="@dimen/dp_6"
+                    android:layout_toStartOf="@+id/fragment_open_new_img_msg"
+                    android:src="@mipmap/activation"/>
             </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_15"
+                android:layout_marginTop="@dimen/dp_10"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/fragment_open_new_tv_item_circle_left"
-                    android:layout_width="@dimen/dp_15"
-                    android:layout_height="@dimen/dp_15"
-                    android:layout_marginEnd="@dimen/dp_15"
-                    android:background="@drawable/shape_circle_gray_purple" />
+                    android:layout_width="@dimen/dp_14"
+                    android:layout_height="@dimen/dp_14"
+                    android:layout_marginEnd="@dimen/dp_11"
+                    android:background="@drawable/shape_circle_black_tran"
+                    android:gravity="center"
+                    android:textSize="@dimen/sp_8"
+                    android:textColor="@color/text_white"/>
 
                 <TextView
                     android:id="@+id/fragment_open_new_tv_item_circle_concent"
-                    android:layout_width="@dimen/dp_15"
-                    android:layout_height="@dimen/dp_15"
-                    android:background="@drawable/shape_white_more" />
+                    android:layout_width="@dimen/dp_18"
+                    android:layout_height="@dimen/dp_18"
+                    android:background="@drawable/shape_circle_white_tran"
+                    android:gravity="center"
+                    android:textSize="@dimen/sp_12"
+                    android:textColor="@color/text_white"/>
 
                 <TextView
                     android:id="@+id/fragment_open_new_tv_item_circle_right"
-                    android:layout_width="@dimen/dp_15"
-                    android:layout_height="@dimen/dp_15"
-                    android:layout_marginStart="@dimen/dp_15"
-                    android:background="@drawable/shape_circle_gray_purple" />
+                    android:layout_width="@dimen/dp_14"
+                    android:layout_height="@dimen/dp_14"
+                    android:layout_marginStart="@dimen/dp_11"
+                    android:background="@drawable/shape_circle_black_tran"
+                    android:gravity="center"
+                    android:textSize="@dimen/sp_8"
+                    android:textColor="@color/text_white"/>
             </LinearLayout>
 
             <androidx.viewpager.widget.ViewPager

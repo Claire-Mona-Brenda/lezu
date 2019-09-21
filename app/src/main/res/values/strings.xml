@@ -548,6 +548,7 @@
     <string name="house_public_tips">请注意：长租请填写一个月收费价格，短租请填写一天收费价格</string>
     <string name="house_public_input_money">请输入金额</string>
 
+    <string name="warm_open_no_order">无入住订单</string>
     <string name="warm_open_no_device">请先添加门锁</string>
     <string name="warm_open_no_gateway">请先添加网关</string>
     <string name="warm_del_context_no">已申请删除房产，不能发布房源信息</string>
@@ -725,12 +726,15 @@
     <string name="open_pwd_self">自定义密码</string>
     <string name="open_pwd_time">时效性密码</string>
     <string name="gateway_setting">设置网关</string>
+    <string name="gateway_set">网关设置</string>
     <string name="open_pwd">开门密码</string>
+    <string name="to">至</string>
     <string name="open_manage_pwd">管理员密码</string>
     <string name="open_fingerprint">指纹管理</string>
     <string name="open_ic_card">IC卡管理</string>
     <string name="open_remote">遥控器管理</string>
     <string name="open_sync_service">同步门锁服务费时间</string>
+    <string name="open_sync_service_2">同步服务费</string>
     <string name="open_gateway_restart">重启网关</string>
     <string name="pwd_restart">重置密码</string>
     <string name="popup_warm_pwd_time">遇到问题？戳我～</string>
@@ -738,6 +742,7 @@
     <string name="open_manage_pwd_tips">管理员密码：</string>
     <string name="open_manage_add_people">添加使用账号</string>
     <string name="open_manage_add_rent">添加使用者</string>
+    <string name="open_manage_open_history_">开门记录></string>
 
     <string name="tips_get_authority_content">房产已出租，权限失效！</string>
     <string name="get_authority">维修获取</string>

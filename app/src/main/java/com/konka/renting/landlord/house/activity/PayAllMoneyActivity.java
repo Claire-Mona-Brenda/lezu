@@ -282,7 +282,7 @@ public class PayAllMoneyActivity extends BaseActivity implements IPayResCall, Pa
         getWindow().setAttributes(lp);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
         // popupwindow 第一个参数指定popup 显示页面
-        popupWindow.showAtLocation((View) tvTitle.getParent().getParent(), gravity, 0, 0);     // 第一个参数popup显示activity页面
+        popupWindow.showAtLocation((View) linTitle.getParent(), gravity, 0, 0);     // 第一个参数popup显示activity页面
         // popup 退出时界面恢复
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override

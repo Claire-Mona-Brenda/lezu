@@ -3,6 +3,8 @@ package com.konka.renting.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.List;
+
 /**
  * Created by kaite on 2018/5/22.
  */
@@ -41,6 +43,10 @@ public class OpenDoorListbean implements Parcelable {
     private String password;
     private String order_no;
     private String order_id;
+    private List<OpenHistoryLogBean> log;
+
+    public OpenDoorListbean() {
+    }
 
     protected OpenDoorListbean(Parcel in) {
         room_id = in.readString();
@@ -61,6 +67,7 @@ public class OpenDoorListbean implements Parcelable {
         password = in.readString();
         order_no = in.readString();
         order_id = in.readString();
+        log = in.createTypedArrayList(OpenHistoryLogBean.CREATOR);
     }
 
     public static final Creator<OpenDoorListbean> CREATOR = new Creator<OpenDoorListbean>() {
@@ -219,30 +226,39 @@ public class OpenDoorListbean implements Parcelable {
         this.order_id = order_id;
     }
 
+    public List<OpenHistoryLogBean> getLog() {
+        return log;
+    }
+
+    public void setLog(List<OpenHistoryLogBean> log) {
+        this.log = log;
+    }
+
     @Override
     public int describeContents() {
         return 0;
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(room_id);
-        dest.writeInt(type);
-        dest.writeInt(status);
-        dest.writeInt(is_install);
-        dest.writeInt(is_rent);
-        dest.writeInt(is_share_rent);
-        dest.writeInt(is_pub);
-        dest.writeString(start_time);
-        dest.writeString(end_time);
-        dest.writeString(gateway_id);
-        dest.writeString(gateway_version);
-        dest.writeString(device_id);
-        dest.writeString(service_time);
-        dest.writeString(room_name);
-        dest.writeString(status_text);
-        dest.writeString(password);
-        dest.writeString(order_no);
-        dest.writeString(order_id);
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(room_id);
+        parcel.writeInt(type);
+        parcel.writeInt(status);
+        parcel.writeInt(is_install);
+        parcel.writeInt(is_rent);
+        parcel.writeInt(is_share_rent);
+        parcel.writeInt(is_pub);
+        parcel.writeString(start_time);
+        parcel.writeString(end_time);
+        parcel.writeString(gateway_id);
+        parcel.writeString(gateway_version);
+        parcel.writeString(device_id);
+        parcel.writeString(service_time);
+        parcel.writeString(room_name);
+        parcel.writeString(status_text);
+        parcel.writeString(password);
+        parcel.writeString(order_no);
+        parcel.writeString(order_id);
+        parcel.writeTypedList(log);
     }
 }

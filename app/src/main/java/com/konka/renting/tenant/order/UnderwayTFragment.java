@@ -7,6 +7,7 @@ import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.SuperscriptSpan;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import com.konka.renting.R;
 import com.konka.renting.base.BaseFragment;
 import com.konka.renting.bean.DataInfo;
 import com.konka.renting.bean.PageDataBean;
+import com.konka.renting.bean.PayRentRefreshEvent;
 import com.konka.renting.bean.RenterOrderListBean;
 import com.konka.renting.event.LandlordOrderApplyEvent;
 import com.konka.renting.http.SecondRetrofitHelper;
@@ -94,6 +96,12 @@ public class UnderwayTFragment extends BaseFragment {
         addRxBusSubscribe(ConfirmEvent.class, new Action1<ConfirmEvent>() {
             @Override
             public void call(ConfirmEvent confirmEvent) {
+                mSrlRefresh.autoRefresh();
+            }
+        });
+        addRxBusSubscribe(PayRentRefreshEvent.class, new Action1<PayRentRefreshEvent>() {
+            @Override
+            public void call(PayRentRefreshEvent locationRefreshEvent) {
                 mSrlRefresh.autoRefresh();
             }
         });

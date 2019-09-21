@@ -12,151 +12,229 @@
 
         <RelativeLayout
             android:layout_width="@dimen/dp_310"
-            android:layout_height="@dimen/dp_420"
+            android:layout_height="@dimen/dp_410"
             android:layout_marginTop="@dimen/dp_5"
             android:background="@drawable/shape_user">
+
             <ImageView
                 android:id="@+id/adapter_open_item_img_open"
-                android:layout_width="@dimen/dp_136"
-                android:layout_height="@dimen/dp_136"
+                android:layout_width="@dimen/dp_138"
+                android:layout_height="@dimen/dp_138"
                 android:layout_centerHorizontal="true"
-                android:padding="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_50"
-                android:src="@drawable/open_button_animation_1"/>
-            <ImageView
+                android:padding="@dimen/dp_3"
+                android:src="@mipmap/open_icon" />
+
+            <com.konka.renting.tenant.opendoor.OpenRotationAnimatorView
                 android:id="@+id/adapter_open_item_img_open_animation"
-                android:layout_width="@dimen/dp_136"
-                android:layout_height="@dimen/dp_136"
+                android:layout_width="@dimen/dp_138"
+                android:layout_height="@dimen/dp_138"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/dp_50"
-                android:background="@mipmap/open_animation_circle"
-                />
+                android:visibility="gone" />
+
             <TextView
                 android:id="@+id/adapter_open_item_tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:layout_below="@+id/adapter_open_item_img_open"
-                android:textSize="@dimen/sp_18"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dp_20"
                 android:textColor="@color/text_black"
+                android:textSize="@dimen/sp_18"
                 android:textStyle="bold"
-                android:typeface="sans"
-                android:layout_marginTop="@dimen/dp_20"/>
+                android:typeface="sans" />
+
+            <TextView
+                android:id="@+id/adapter_open_item_tv_tips_rent_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/adapter_open_item_tv_name"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dp_4"
+                android:layout_marginStart="@dimen/dp_4"
+                android:layout_marginEnd="@dimen/dp_4"
+                android:text="@string/to"
+                android:textColor="@color/color_999999"
+                android:textSize="@dimen/sp_12" />
+            <TextView
+                android:id="@+id/adapter_open_item_tv_rent_time_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toStartOf="@+id/adapter_open_item_tv_tips_rent_time"
+                android:layout_alignTop="@+id/adapter_open_item_tv_tips_rent_time"
+                android:text=" - - "
+                android:textColor="@color/color_999999"
+                android:textSize="@dimen/sp_12" />
+            <TextView
+                android:id="@+id/adapter_open_item_tv_rent_time_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/adapter_open_item_tv_tips_rent_time"
+                android:layout_alignTop="@+id/adapter_open_item_tv_tips_rent_time"
+                android:text=" - - "
+                android:textColor="@color/color_999999"
+                android:textSize="@dimen/sp_12" />
             <TextView
                 android:id="@+id/adapter_open_item_tv_more_history"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_below="@+id/adapter_open_item_tv_name"
-                android:textSize="@dimen/sp_12"
-                android:textColor="@color/text_blue"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/dp_83"
+                android:layout_marginTop="@dimen/dp_8"
+                android:layout_marginEnd="@dimen/dp_10"
                 android:padding="@dimen/dp_10"
-                android:text="@string/more_"
-                android:layout_marginTop="@dimen/dp_10"
-                android:layout_marginEnd="@dimen/dp_20"/>
-            <TextView
-                android:id="@+id/adapter_open_item_tv_history_content_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/adapter_open_item_tv_more_history"
-                android:textSize="@dimen/sp_12"
-                android:textColor="@color/text_gray"
-                android:layout_marginStart="@dimen/dp_20"/>
-            <TextView
-                android:id="@+id/adapter_open_item_tv_history_time_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/adapter_open_item_tv_history_content_1"
-                android:layout_alignParentEnd="true"
-                android:textSize="@dimen/sp_12"
-                android:textColor="@color/text_gray"
-                android:layout_marginStart="@dimen/dp_20"
-                android:layout_marginEnd="@dimen/dp_30"/>
-            <TextView
-                android:id="@+id/adapter_open_item_tv_history_content_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/adapter_open_item_tv_history_content_1"
-                android:textSize="@dimen/sp_12"
-                android:textColor="@color/text_gray"
-                android:layout_marginTop="@dimen/dp_10"
-                android:layout_marginStart="@dimen/dp_20"/>
-            <TextView
-                android:id="@+id/adapter_open_item_tv_history_time_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/adapter_open_item_tv_history_content_2"
-                android:layout_alignParentEnd="true"
-                android:textSize="@dimen/sp_12"
-                android:textColor="@color/text_gray"
-                android:layout_marginStart="@dimen/dp_20"
-                android:layout_marginEnd="@dimen/dp_30"/>
-            <TextView
-                android:id="@+id/adapter_open_item_tv_open_pwd"
+                android:text="@string/open_manage_open_history_"
+                android:textColor="@color/text_blue"
+                android:textSize="@dimen/sp_12" />
+
+            <LinearLayout
+                android:id="@+id/adapter_open_item_ll_open_pwd"
                 android:layout_width="@dimen/dp_103"
                 android:layout_height="@dimen/dp_42"
-                android:gravity="center"
-                android:textColor="@color/text_black"
-                android:textSize="@dimen/sp_14"
-                android:text="@string/open_pwd"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="@dimen/dp_42"/>
-            <TextView
-                android:id="@+id/adapter_open_item_tv_"
+                android:layout_marginBottom="@dimen/dp_42"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_15"
+                    android:layout_height="@dimen/dp_15"
+                    android:layout_marginEnd="@dimen/dp_3"
+                    android:src="@mipmap/opendoorpass" />
+
+                <TextView
+                    android:id="@+id/adapter_open_item_tv_open_pwd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/open_pwd"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/sp_14" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/adapter_open_item_ll_add_user"
                 android:layout_width="@dimen/dp_103"
                 android:layout_height="@dimen/dp_42"
+                android:layout_alignTop="@+id/adapter_open_item_ll_open_pwd"
+                android:layout_toEndOf="@+id/adapter_open_item_ll_open_pwd"
                 android:gravity="center"
-                android:textColor="@color/text_black"
-                android:textSize="@dimen/sp_14"
-                android:text="@string/open_pwd"
-                android:layout_toEndOf="@+id/adapter_open_item_tv_open_pwd"
-                android:layout_alignTop="@+id/adapter_open_item_tv_open_pwd"
-                android:layout_marginBottom="@dimen/dp_42"/>
-            <TextView
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_15"
+                    android:layout_height="@dimen/dp_15"
+                    android:layout_marginEnd="@dimen/dp_3"
+                    android:src="@mipmap/add_user" />
+
+                <TextView
+                    android:id="@+id/adapter_open_item_tv_add_user"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/open_manage_add_rent"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/sp_14" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/adapter_open_item_ll_gateway_set"
                 android:layout_width="@dimen/dp_103"
                 android:layout_height="@dimen/dp_42"
+                android:layout_alignTop="@+id/adapter_open_item_ll_add_user"
+                android:layout_toEndOf="@+id/adapter_open_item_ll_add_user"
                 android:gravity="center"
-                android:textColor="@color/text_black"
-                android:textSize="@dimen/sp_14"
-                android:text="@string/open_pwd"
-                android:layout_toEndOf="@+id/adapter_open_item_tv_"
-                android:layout_alignTop="@+id/adapter_open_item_tv_"
-                android:layout_marginBottom="@dimen/dp_42"/>
-            <TextView
-                android:id="@+id/adapter_open_item_tv_2"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_15"
+                    android:layout_height="@dimen/dp_15"
+                    android:layout_marginEnd="@dimen/dp_3"
+                    android:src="@mipmap/gateway" />
+
+                <TextView
+                    android:id="@+id/adapter_open_item_tv_gateway_set"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/gateway_set"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/sp_14" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/adapter_open_item_ll_manager"
                 android:layout_width="@dimen/dp_103"
                 android:layout_height="@dimen/dp_42"
-                android:gravity="center"
-                android:textColor="@color/text_black"
-                android:textSize="@dimen/sp_14"
-                android:text="@string/open_pwd"
-                android:layout_alignParentBottom="true"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_4"
-                android:background="@drawable/shape_line_dashed"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="@dimen/dp_83"/>
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_15"
+                    android:layout_height="@dimen/dp_15"
+                    android:layout_marginEnd="@dimen/dp_3"
+                    android:src="@mipmap/admin" />
+
+                <TextView
+                    android:id="@+id/adapter_open_item_tv_manager"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/open_manage_pwd"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/sp_14" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/adapter_open_item_ll_sync"
+                android:layout_width="@dimen/dp_103"
+                android:layout_height="@dimen/dp_42"
+                android:layout_alignTop="@+id/adapter_open_item_ll_manager"
+                android:layout_toEndOf="@+id/adapter_open_item_ll_manager"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_15"
+                    android:layout_height="@dimen/dp_15"
+                    android:layout_marginEnd="@dimen/dp_3"
+                    android:src="@mipmap/syn" />
+
+                <TextView
+                    android:id="@+id/adapter_open_item_tv_sync"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/open_sync_service_2"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/sp_14" />
+            </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_1"
-                android:background="@color/style_line"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/dp_83"
+                android:background="@color/style_line" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="@dimen/dp_42"
-                android:layout_marginStart="@dimen/dp_20"
-                android:layout_marginEnd="@dimen/dp_20"/>
+                android:background="@color/style_line" />
+
             <View
                 android:layout_width="@dimen/dp_1"
-                android:layout_height="@dimen/dp_85"
-                android:background="@color/style_line"
-                android:layout_toEndOf="@+id/adapter_open_item_tv_open_pwd"
-                android:layout_alignTop="@+id/adapter_open_item_tv_open_pwd"/>
+                android:layout_height="@dimen/dp_83"
+                android:layout_alignTop="@+id/adapter_open_item_ll_open_pwd"
+                android:layout_toEndOf="@+id/adapter_open_item_ll_open_pwd"
+                android:background="@color/style_line" />
+
             <View
                 android:layout_width="@dimen/dp_1"
-                android:layout_height="@dimen/dp_85"
-                android:background="@color/style_line"
-                android:layout_toEndOf="@+id/adapter_open_item_tv_"
-                android:layout_alignTop="@+id/adapter_open_item_tv_"/>
+                android:layout_height="@dimen/dp_83"
+                android:layout_alignTop="@+id/adapter_open_item_ll_add_user"
+                android:layout_toEndOf="@+id/adapter_open_item_ll_add_user"
+                android:background="@color/style_line" />
 
         </RelativeLayout>
 

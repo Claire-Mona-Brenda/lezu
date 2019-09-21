@@ -30,6 +30,7 @@ import com.konka.renting.http.subscriber.CommonSubscriber;
 import com.konka.renting.landlord.house.PaySeverActivity;
 import com.konka.renting.landlord.house.widget.ShowToastUtil;
 import com.konka.renting.landlord.user.userinfo.NewFaceDectectActivity;
+import com.konka.renting.utils.DateTimeUtil;
 import com.konka.renting.utils.RxUtil;
 import com.konka.renting.utils.SharedPreferenceUtil;
 import com.konka.renting.utils.UIUtils;
@@ -273,10 +274,9 @@ public class OpenFragment extends BaseFragment {
             OpenDoorListbean listbean = mData.get(current);
             tvName.setText(listbean.getRoom_name());
             imgType.setImageResource(listbean.getStatus() == 2 ? R.mipmap.opendoor_notcheckin_icon : R.mipmap.opendoor_checkin_icon);
-            tvServerTime.setText(listbean.getService_time());
             tvServerTime.setText(listbean.getService_time().equals("0") ? (listbean.getIs_install() == 0 ? getString(R.string.house_sever_end_time_emty) : getString(R.string.house_sever_end_time_end)) : listbean.getService_time());
-            mTvRenttime.setText(listbean.getStart_time());
-            mTvEndtime.setText(listbean.getEnd_time());
+            mTvRenttime.setText(TextUtils.isEmpty(listbean.getStart_time())?" - - ":listbean.getStart_time().split(" ")[0]);
+            mTvEndtime.setText(TextUtils.isEmpty(listbean.getEnd_time())?" - - ":listbean.getEnd_time().split(" ")[0]);
             if (listbean.getType() == 1) {
                 rlRentLong.setVisibility(View.GONE);
                 rlRentShort.setVisibility(View.VISIBLE);

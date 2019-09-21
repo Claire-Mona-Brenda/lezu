@@ -38,6 +38,7 @@ import com.konka.renting.service.GeTuiIntentService;
 import com.konka.renting.service.GeTuiPushService;
 import com.konka.renting.tenant.main.TenantMainFragment;
 import com.konka.renting.tenant.opendoor.OpenFragment;
+import com.konka.renting.tenant.opendoor.OpenNewFragment;
 import com.konka.renting.tenant.order.TenantOrderFragment;
 import com.konka.renting.tenant.payrent.PayRentFragment;
 import com.konka.renting.tenant.user.TenantUserFragment;
@@ -111,7 +112,8 @@ public class TenantMainActivity extends BaseMainActivity {
 //                RxBus.getDefault().post(new RefreshFindRoomEvent());
 //                break;
             case 1:
-                mFragments[index] = OpenFragment.newInstance();
+//                mFragments[index] = OpenFragment.newInstance();
+                mFragments[index] = OpenNewFragment.newInstance();
                 break;
             case 2:
                 mFragments[index] = TenantOrderFragment.newInstance();
