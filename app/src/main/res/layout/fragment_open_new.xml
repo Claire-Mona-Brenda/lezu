@@ -80,7 +80,7 @@
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/fragment_open_new_view_page_item"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_470" />
+                android:layout_height="@dimen/dp_440" />
 
             <TextView
                 android:id="@+id/fragment_open_new_tv_server_pay"
@@ -106,25 +106,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginEnd="@dimen/dp_6"
                     android:gravity="center"
-                    android:text="- -"
-                    android:textColor="@color/color_ffffff"
-                    android:textSize="@dimen/sp_12" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center"
-                    android:text="@string/end_time"
+                    android:text="- - -"
                     android:textColor="@color/color_ffffff"
                     android:textSize="@dimen/sp_12" />
 
                 <ImageView
                     android:id="@+id/fragment_open_new_img_server_end_time_tips"
                     android:layout_width="@dimen/dp_18"
-                    android:layout_height="@dimen/dp_18" />
+                    android:layout_height="@dimen/dp_18"
+                    android:src="@mipmap/pro"
+                    android:layout_marginStart="@dimen/dp_6"/>
             </LinearLayout>
         </LinearLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

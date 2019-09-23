@@ -110,7 +110,15 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.user.bill.BillActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name=".landlord.user.bill.BillMonInfoActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
+        <activity android:name=".landlord.user.bill.BillTypeActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".landlord.user.collection.MyCollectionActivity"
             android:launchMode="singleTop"
@@ -224,6 +232,7 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
 
+
         <activity
             android:name=".landlord.house.view.SZLSActivity"
             android:screenOrientation="portrait" />
@@ -323,6 +332,7 @@
         <activity
             android:name=".tenant.payrent.view.PayDetailActivity"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".tenant.payrent.view.HouseACHActivity"
             android:screenOrientation="portrait"
@@ -488,6 +498,9 @@
             android:name=".tenant.opendoor.AddCodeActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
+        <activity android:name=".tenant.opendoor.OpenHistoryActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".login.RegistPasswordActivity"
             android:screenOrientation="portrait" />

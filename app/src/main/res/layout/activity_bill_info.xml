@@ -2,78 +2,46 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/style_bg_page"
+    android:background="@color/color_ffffff"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <include layout="@layout/include_title_white" />
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_130"
+        android:layout_height="@dimen/dp_103"
         android:background="@mipmap/orange_bg">
+        <TextView
+            android:id="@+id/activityt_bill_info_tv_way"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_18"
+            android:textSize="@dimen/sp_18"
+            android:textColor="@color/text_white"
+            android:typeface="sans"
+            android:textStyle="bold"/>
         <TextView
             android:id="@+id/activityt_bill_info_tv_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/color_ffffff"
             android:textSize="@dimen/style_text_menoy_1"
-            android:text="+ 2192"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/dp_20"/>
-        <TextView
-            android:id="@+id/activityt_bill_info_tv_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/color_ffffff"
-            android:textSize="@dimen/style_text_context"
-            android:text="2018-10-18  18:15:00"
-            android:layout_below="@+id/activityt_bill_info_tv_money"
-            android:layout_alignRight="@+id/activityt_bill_info_tv_money"
-            android:layout_marginTop="@dimen/dp_5"/>
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/dp_25"
+            android:layout_marginTop="@dimen/dp_42"/>
     </RelativeLayout>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/style_bg_card_1"
-        android:textColor="@color/text_black"
+        android:textColor="@color/color_cccccc"
         android:textSize="@dimen/style_text_context"
         android:text="@string/bill_explain"
-        android:paddingLeft="@dimen/dp_20"
+        android:paddingStart="@dimen/dp_20"
+        android:paddingEnd="@dimen/dp_1"
         android:paddingTop="@dimen/dp_10"
         android:paddingBottom="@dimen/dp_10"/>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/style_bg_card_2">
-        <TextView
-            android:id="@+id/activity_info_tv_number_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/style_bg_card_1"
-            android:textColor="@color/text_black"
-            android:textSize="@dimen/style_text_context"
-            android:text="@string/bill_info_number"
-            android:layout_marginLeft="@dimen/dp_20"
-            android:layout_marginTop="@dimen/dp_15" />
-        <TextView
-            android:id="@+id/activity_info_tv_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/style_bg_card_1"
-            android:textColor="@color/text_black"
-            android:textSize="@dimen/style_text_context"
-            android:text="ZWX201827373844648"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/dp_20"
-            android:layout_alignTop="@+id/activity_info_tv_number_title" />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_1"
-            android:background="@color/style_line"
-            android:layout_below="@+id/activity_info_tv_number_title"
-            android:layout_marginTop="@dimen/dp_15"/>
-    </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -82,22 +50,19 @@
             android:id="@+id/activity_info_tv_type_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/style_bg_card_1"
             android:textColor="@color/text_black"
             android:textSize="@dimen/style_text_context"
             android:text="@string/bill_info_type"
-            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginStart="@dimen/dp_20"
             android:layout_marginTop="@dimen/dp_15" />
         <TextView
             android:id="@+id/activity_info_tv_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/style_bg_card_1"
             android:textColor="@color/text_black"
             android:textSize="@dimen/style_text_context"
-            android:text="房租类型"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/dp_20"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/dp_20"
             android:layout_alignTop="@+id/activity_info_tv_type_title" />
         <View
             android:layout_width="match_parent"
@@ -107,6 +72,95 @@
             android:layout_marginTop="@dimen/dp_15"/>
     </RelativeLayout>
     <RelativeLayout
+        android:id="@+id/activityt_bill_info_rl_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/style_bg_card_2">
+        <TextView
+            android:id="@+id/activity_info_tv_status_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/style_text_context"
+            android:text="@string/bill_info_status"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_15" />
+        <TextView
+            android:id="@+id/activityt_bill_info_tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_ren"
+            android:textSize="@dimen/style_text_context"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:layout_alignTop="@+id/activity_info_tv_status_title" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:background="@color/style_line"
+            android:layout_below="@+id/activity_info_tv_status_title"
+            android:layout_marginTop="@dimen/dp_15"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/style_bg_card_2">
+        <TextView
+            android:id="@+id/activity_info_tv_time_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/style_text_context"
+            android:text="@string/bill_info_time"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_15" />
+        <TextView
+            android:id="@+id/activityt_bill_info_tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/style_text_context"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:layout_alignTop="@+id/activity_info_tv_time_title" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:background="@color/style_line"
+            android:layout_below="@+id/activity_info_tv_time_title"
+            android:layout_marginTop="@dimen/dp_15"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/style_bg_card_2">
+        <TextView
+            android:id="@+id/activity_info_tv_number_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/style_text_context"
+            android:text="@string/bill_info_number"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_15" />
+        <TextView
+            android:id="@+id/activity_info_tv_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/style_text_context"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:layout_alignTop="@+id/activity_info_tv_number_title" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:background="@color/style_line"
+            android:layout_below="@+id/activity_info_tv_number_title"
+            android:layout_marginTop="@dimen/dp_15"/>
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/activity_info_rl_endtime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -115,21 +169,19 @@
             android:id="@+id/activity_info_tv_endtime_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/style_bg_card_1"
             android:textColor="@color/text_black"
             android:textSize="@dimen/style_text_context"
             android:text="@string/bill_info_endtime"
-            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginStart="@dimen/dp_20"
             android:layout_marginTop="@dimen/dp_15" />
         <TextView
             android:id="@+id/activity_info_tv_endtime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/style_bg_card_1"
             android:textColor="@color/text_black"
             android:textSize="@dimen/style_text_context"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/dp_20"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/dp_20"
             android:layout_alignTop="@+id/activity_info_tv_endtime_title" />
         <View
             android:layout_width="match_parent"
@@ -146,22 +198,19 @@
             android:id="@+id/activity_info_tv_more_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/style_bg_card_1"
             android:textColor="@color/text_black"
             android:textSize="@dimen/style_text_context"
             android:text="@string/bill_info_more"
-            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginStart="@dimen/dp_20"
             android:layout_marginTop="@dimen/dp_15" />
         <TextView
             android:id="@+id/activity_info_tv_more"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/style_bg_card_1"
             android:textColor="@color/text_black"
             android:textSize="@dimen/style_text_context"
-            android:text="备注信息"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/dp_20"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/dp_20"
             android:layout_alignTop="@+id/activity_info_tv_more_title" />
         <View
             android:layout_width="match_parent"

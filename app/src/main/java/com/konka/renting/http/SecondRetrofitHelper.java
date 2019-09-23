@@ -26,6 +26,7 @@ import com.konka.renting.bean.CityBean;
 import com.konka.renting.bean.CityInfo;
 import com.konka.renting.bean.ClockSetManagerItemBean;
 import com.konka.renting.bean.DataInfo;
+import com.konka.renting.bean.DeviceHistoryBean;
 import com.konka.renting.bean.DeviceInfo;
 import com.konka.renting.bean.DevicesOpenPasswordBean;
 import com.konka.renting.bean.GatewayDetailBean;
@@ -1554,5 +1555,12 @@ public class SecondRetrofitHelper {
      */
     public Observable<DataInfo<RoomOederPriceBean>> rentOrderPrice(String room_id, String start_time, String end_time) {
         return mApiService.rentOrderPrice(room_id, start_time, end_time);
+    }
+
+    /**
+     * 开门记录
+     */
+    public Observable<DataInfo<PageDataBean<DeviceHistoryBean>>> openRoomRecord(String room_id, String page) {
+        return mApiService.openRoomRecord(room_id, page);
     }
 }

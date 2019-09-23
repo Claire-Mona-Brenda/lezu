@@ -59,19 +59,31 @@ public class BillListRecycleAdapter extends RecyclerView.Adapter<BillListRecycle
 
         vh.type.setText(bean.getTitle());
         String str = "";
-        if (bean.getType() == 1)
-            str = "";
-        else if (bean.getType() == 4)
-            str = "+";
-        else
-            str = "-";
+        if (bean.getType() == 1) {
+            str = "+ ";
+            vh.money.setTextColor(mContext.getResources().getColor(R.color.text_green));
+        } else if (bean.getType() == 4) {
+            str = "+ ";
+            vh.money.setTextColor(mContext.getResources().getColor(R.color.text_green));
+        }else {
+            str = "- ";
+            vh.money.setTextColor(mContext.getResources().getColor(R.color.text_ren));
+        }
         vh.money.setText(str + bean.getAmount());
         vh.date.setText(bean.getCreate_time());
-        vh.itemView.setOnClickListener(new View.OnClickListener() {
+        vh.rlContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mOnItemClickListen != null) {
                     mOnItemClickListen.onClick(i);
+                }
+            }
+        });
+        vh.rlMon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mOnItemClickListen != null) {
+                    mOnItemClickListen.onMonClick(i);
                 }
             }
         });
@@ -89,10 +101,12 @@ public class BillListRecycleAdapter extends RecyclerView.Adapter<BillListRecycle
         TextView money;
         TextView date;
         RelativeLayout rlMon;
+        RelativeLayout rlContent;
 
         public VH(@NonNull View itemView) {
             super(itemView);
             rlMon = itemView.findViewById(R.id.adapter_rl_mon);
+            rlContent = itemView.findViewById(R.id.adapter_bill_list_rl_content);
             time = itemView.findViewById(R.id.adapter_tv_time);
             type = itemView.findViewById(R.id.adapter_tv_type);
             money = itemView.findViewById(R.id.adapter_tv_money);
@@ -129,5 +143,7 @@ public class BillListRecycleAdapter extends RecyclerView.Adapter<BillListRecycle
 
     public interface OnItemClickListen {
         void onClick(int position);
+
+        void onMonClick(int position);
     }
 }

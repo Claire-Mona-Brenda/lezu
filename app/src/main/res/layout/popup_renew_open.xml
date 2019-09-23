@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <ImageView
+        android:layout_width="@dimen/dp_28"
+        android:layout_height="@dimen/dp_10"
+        android:src="@mipmap/trigon_push_up"
+        android:layout_marginStart="@dimen/dp_120"/>
+    <LinearLayout
+        android:layout_width="@dimen/dp_200"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_user"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/pop_tv_end_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/dp_12"
+            android:paddingBottom="@dimen/dp_12"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/sp_12"/>
+    </LinearLayout>
+
+
+</LinearLayout>

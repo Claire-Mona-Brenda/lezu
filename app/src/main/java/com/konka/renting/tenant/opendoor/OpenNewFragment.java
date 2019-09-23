@@ -83,6 +83,7 @@ public class OpenNewFragment extends BaseFragment {
     OpenItemAdapter openItemAdapter;
 
     CommonPopupWindow popupWindow;
+    OpenRenewPopup openRenewPopup;
 
     public static OpenNewFragment newInstance() {
         OpenNewFragment fragment = new OpenNewFragment();
@@ -156,6 +157,8 @@ public class OpenNewFragment extends BaseFragment {
                 OpenDoorListbean openDoorListbean = mData.get(position);
                 if (TextUtils.isEmpty(openDoorListbean.getOrder_id())) {
                     ShowToastUtil.showNormalToast(getContext(), getString(R.string.warm_open_no_order));
+                } else {
+                    OpenHistoryActivity.toActivity(mActivity,openDoorListbean.getRoom_id());
                 }
             }
 
@@ -329,6 +332,19 @@ public class OpenNewFragment extends BaseFragment {
                 }
                 break;
             case R.id.fragment_open_new_img_server_end_time_tips:
+                OpenDoorListbean openDoorListbean = mData.get(current);
+                if (TextUtils.isEmpty(openDoorListbean.getOrder_id())) {
+                    ShowToastUtil.showNormalToast(getContext(), getString(R.string.warm_open_no_order));
+                } else {
+                    String time;
+                    if (openDoorListbean.getOrder_id() != null) {
+                        time = openDoorListbean.getService_time().equals("0") ? (openDoorListbean.getIs_install() == 0 ? "- - -" + getString(R.string.end_time) : getString(R.string.house_sever_end_time_end)) : (openDoorListbean.getService_time() + getString(R.string.end_time));
+                    } else {
+                        time = "- - -" + getString(R.string.end_time);
+                    }
+                    showRenewPopup(mImgServerEndTimeTips, time);
+
+                }
                 break;
         }
     }
@@ -350,10 +366,10 @@ public class OpenNewFragment extends BaseFragment {
             mViewPageItem.setCurrentItem(current);
         OpenDoorListbean listbean = mData.get(current);
         if (listbean.getOrder_id() != null) {
-            mTvServerEndTime.setText(listbean.getService_time().equals("0") ? (listbean.getIs_install() == 0 ? getString(R.string.house_sever_end_time_emty) : getString(R.string.house_sever_end_time_end)) : listbean.getService_time());
+            mTvServerEndTime.setText(listbean.getService_time().equals("0") ? (listbean.getIs_install() == 0 ? getString(R.string.house_sever_end_time_emty) : getString(R.string.house_sever_end_time_end)) : (listbean.getService_time() + getString(R.string.end_time)));
 
         } else {
-            mTvServerEndTime.setText("- - -");
+            mTvServerEndTime.setText("- - -" + getString(R.string.end_time));
         }
         mTvItemCircleConcent.setText(size <= 0 ? "" : current + 1 + "");
         mTvItemCircleLeft.setText(current == 0 ? "" : current + "");
@@ -487,6 +503,17 @@ public class OpenNewFragment extends BaseFragment {
                 mActivity.getWindow().setAttributes(lp);
             }
         });
+    }
+
+    /**
+     * 服务费到期提示
+     */
+    private void showRenewPopup(View imgDoubt, String endTime) {
+        if (openRenewPopup == null)
+            openRenewPopup = new OpenRenewPopup(mActivity);
+        openRenewPopup.setTime(String.format(getString(R.string.door_open_popup_end_time), endTime));
+        openRenewPopup.showAsDropDown(imgDoubt, -getResources().getDimensionPixelSize(R.dimen.dp_125), 0);
+
     }
 
 }

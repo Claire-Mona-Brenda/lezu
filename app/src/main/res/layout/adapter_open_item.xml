@@ -12,7 +12,7 @@
 
         <RelativeLayout
             android:layout_width="@dimen/dp_310"
-            android:layout_height="@dimen/dp_410"
+            android:layout_height="@dimen/dp_400"
             android:layout_marginTop="@dimen/dp_5"
             android:background="@drawable/shape_user">
 

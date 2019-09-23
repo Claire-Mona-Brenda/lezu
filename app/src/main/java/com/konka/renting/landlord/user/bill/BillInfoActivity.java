@@ -2,6 +2,10 @@ package com.konka.renting.landlord.user.bill;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.konka.renting.R;
@@ -13,6 +17,7 @@ import com.konka.renting.http.subscriber.CommonSubscriber;
 import com.konka.renting.utils.RxUtil;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Subscription;
 
@@ -33,6 +38,22 @@ public class BillInfoActivity extends BaseActivity {
     TextView tvMore;
 
     String id;
+    @BindView(R.id.iv_back)
+    ImageView ivBack;
+    @BindView(R.id.tv_right)
+    TextView tvRight;
+    @BindView(R.id.iv_right)
+    ImageView ivRight;
+    @BindView(R.id.lin_title)
+    FrameLayout linTitle;
+    @BindView(R.id.activityt_bill_info_tv_way)
+    TextView mTvWay;
+    @BindView(R.id.activityt_bill_info_tv_status)
+    TextView mTvStatus;
+    @BindView(R.id.activityt_bill_info_rl_status)
+    RelativeLayout mRlStatus;
+    @BindView(R.id.activity_info_rl_endtime)
+    RelativeLayout mRlEndtime;
 
     public static void toActivity(Context context, String id) {
         Intent intent = new Intent(context, BillInfoActivity.class);
@@ -67,7 +88,7 @@ public class BillInfoActivity extends BaseActivity {
                         super.onNext(dataInfo);
                         if (dataInfo.success()) {
                             BillDetailBean bean = dataInfo.data();
-                            tvMoney.setText("￥"+bean.getAmount());
+                            tvMoney.setText("￥" + bean.getAmount());
                             tvTime.setText(bean.getCreate_time());
                             tvNumber.setText(bean.getOrder_no());
                             tvType.setText(switchType(bean.getType()));
@@ -107,4 +128,5 @@ public class BillInfoActivity extends BaseActivity {
     public void onViewClicked() {
         finish();
     }
+
 }

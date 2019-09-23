@@ -16,6 +16,7 @@ import com.konka.renting.http.SecondRetrofitHelper;
 import com.konka.renting.http.subscriber.CommonSubscriber;
 import com.konka.renting.landlord.user.bill.BillInfoActivity;
 import com.konka.renting.landlord.user.bill.BillListRecycleAdapter;
+import com.konka.renting.landlord.user.bill.BillMonInfoActivity;
 import com.konka.renting.utils.RxUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -63,6 +64,11 @@ public class BillListActivity extends BaseActivity {
             @Override
             public void onClick(int position) {
                 BillInfoActivity.toActivity(BillListActivity.this,listBeans.get(position).getId());
+            }
+
+            @Override
+            public void onMonClick(int position) {
+                BillMonInfoActivity.toActivity(BillListActivity.this,listBeans.get(position).getId());
             }
         });
         mRecycle.setAdapter(recycleAdapter);

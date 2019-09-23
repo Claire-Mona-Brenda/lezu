@@ -2269,9 +2269,9 @@ public interface KonkaApiService {
     @FormUrlEncoded
     @POST("index.php/api/pay/rentOrder")
     Observable<DataInfo<PayBean>> rentOrder(@Field("room_id") String room_id,
-                                  @Field("start_time") String start_time,
-                                  @Field("end_time") String end_time,
-                                  @Field("payment") String payment);//1微信 2支付宝
+                                            @Field("start_time") String start_time,
+                                            @Field("end_time") String end_time,
+                                            @Field("payment") String payment);//1微信 2支付宝
 
     /**
      * 价格计算
@@ -2279,6 +2279,14 @@ public interface KonkaApiService {
     @FormUrlEncoded
     @POST("index.php/api/room_order/price")
     Observable<DataInfo<RoomOederPriceBean>> rentOrderPrice(@Field("room_id") String room_id,
-                                   @Field("start_time") String start_time,
-                                   @Field("end_time") String end_time);
+                                                            @Field("start_time") String start_time,
+                                                            @Field("end_time") String end_time);
+
+    /**
+     * 开门记录
+     */
+    @FormUrlEncoded
+    @POST("index.php/api/room/openRoomRecord")
+    Observable<DataInfo<PageDataBean<DeviceHistoryBean>>> openRoomRecord(@Field("room_id") String room_id,
+                                                                         @Field("page") String page);
 }

@@ -720,6 +720,10 @@
     <string name="open_check_pwd_pop_tips">*密码时效与租房时间相同，前后均无效。</string>
     <string name="warm_open_no_on_rent">未到入住时间，请入住后再操作</string>
     <string name="end_time">到期</string>
+    <string name="device_item_history_content">%1$s %2$s</string>
+    <string name="title_history">历史记录</string>
+    <string name="door_open_popup_end_time">门锁服务费于%s</string>
+
 
     <!--开门管理-->
     <string name="open_other_setting">其他功能</string>
@@ -845,10 +849,20 @@
     <string name="bill_income_tips">收：</string>
     <string name="bill_info">账单详情</string>
     <string name="bill_explain">账单说明</string>
-    <string name="bill_info_number">账单号</string>
-    <string name="bill_info_type">账单类型</string>
+    <string name="bill_info_number">单号</string>
+    <string name="bill_info_type">类型</string>
+    <string name="bill_info_status">状态</string>
+    <string name="bill_info_time">时间</string>
     <string name="bill_info_endtime">账期</string>
     <string name="bill_info_more">备注</string>
+    <string name="bill_info_mon_income">月总收入</string>
+    <string name="bill_info_pay">充值</string>
+    <string name="bill_info_get">提现</string>
+    <string name="bill_info_house">房产</string>
+
+    <string name="bill_info_get_status_1">提现中</string>
+    <string name="bill_info_get_status_2">提现成功</string>
+    <string name="bill_info_get_status_3">提现失败</string>
 
     <string name="bill_info_type_1">充值</string>
     <string name="bill_info_type_2">服务费支付 </string>

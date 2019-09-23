@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/frame_top"
+        android:layout_width="match_parent"
+        android:paddingStart="@dimen/dp_28"
+        android:paddingEnd="@dimen/dp_20"
+        android:paddingBottom="@dimen/dp_10"
+        android:layout_height="@dimen/dp_50"
+        android:gravity="bottom">
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/sp_18"/>
+
+        <TextView
+            android:id="@+id/tv_week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_929292"
+            android:layout_marginStart="@dimen/dp_10"
+            android:textSize="@dimen/sp_13"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_25"
+        android:paddingStart="@dimen/dp_28"
+        android:paddingEnd="@dimen/dp_1">
+
+
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:drawableStart="@drawable/sel_device_history_circle"
+            android:drawablePadding="@dimen/dp_10"
+            android:gravity="center_vertical"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/sp_12"/>
+
+    </RelativeLayout>
+</LinearLayout>
