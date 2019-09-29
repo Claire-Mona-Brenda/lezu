@@ -3,6 +3,7 @@ package com.konka.renting.landlord.user.withdrawcash;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
@@ -41,7 +42,21 @@ public class WithdrawcashPwdPopup extends PopupWindow {
         this.setHeight(WindowManager.LayoutParams.WRAP_CONTENT); //弹出高度
         this.setFocusable(true);  //弹出窗可触摸
         this.setBackgroundDrawable(new ColorDrawable(0x00000000));   //设置背景透明
+        //防止虚拟软键盘被弹出菜单遮住
+        this.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 //        this.setAnimationStyle(R.style.mypopupwindow_anim_style);   //弹出动画
+    }
+
+    public void setPasswordViewFouse(){
+        if (passwordView != null) {
+            passwordView.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    passwordView.showInput();
+                }
+            }, 500);
+
+        }
     }
 
     public void setListent(PasswordView.PasswordListener listent) {

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/style_bg_page"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_title_text" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_28"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_45"
+            android:background="@drawable/shape_pwd_time_top_bg"
+            >
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp_45"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/dp_14"
+                android:paddingEnd="@dimen/dp_20"
+                android:text="@string/open_pwd_self"
+                android:textStyle="bold"
+                android:typeface="sans"
+                android:textColor="@color/color_ffffff"
+                android:textSize="@dimen/sp_17" />
+            <ImageView
+                android:id="@+id/activity_self_pwd_img_add"
+                android:layout_width="@dimen/dp_32"
+                android:layout_height="@dimen/dp_32"
+                android:padding="@dimen/dp_5"
+                android:src="@mipmap/add"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="@dimen/dp_12"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/activity_self_pwd_tv_tips"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_90"
+            android:gravity="center"
+            android:text="@string/open_tips_pwd_self"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/sp_13"
+            android:background="@color/color_ffffff" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/activity_self_pwd_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@mipmap/pwd_line"
+            android:dividerHeight="@dimen/dp_6"
+            android:scrollbars="none"
+            android:visibility="gone"/>
+    </LinearLayout>
+
+</LinearLayout>

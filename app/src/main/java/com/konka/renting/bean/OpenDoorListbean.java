@@ -32,6 +32,7 @@ public class OpenDoorListbean implements Parcelable {
     private int is_rent;//是否有合租 1有 0否
     private int is_share_rent;//合租订单 1是 0否
     private int is_pub;//0未发布 1已发布
+    private int is_generate_password;//0没有计算密码 1有计算密码
     private String start_time;
     private String end_time;
     private String gateway_id;
@@ -56,6 +57,7 @@ public class OpenDoorListbean implements Parcelable {
         is_rent = in.readInt();
         is_share_rent = in.readInt();
         is_pub = in.readInt();
+        is_generate_password = in.readInt();
         start_time = in.readString();
         end_time = in.readString();
         gateway_id = in.readString();
@@ -136,6 +138,14 @@ public class OpenDoorListbean implements Parcelable {
 
     public void setIs_pub(int is_pub) {
         this.is_pub = is_pub;
+    }
+
+    public int getIs_generate_password() {
+        return is_generate_password;
+    }
+
+    public void setIs_generate_password(int is_generate_password) {
+        this.is_generate_password = is_generate_password;
     }
 
     public String getStart_time() {
@@ -248,6 +258,7 @@ public class OpenDoorListbean implements Parcelable {
         parcel.writeInt(is_rent);
         parcel.writeInt(is_share_rent);
         parcel.writeInt(is_pub);
+        parcel.writeInt(is_generate_password);
         parcel.writeString(start_time);
         parcel.writeString(end_time);
         parcel.writeString(gateway_id);

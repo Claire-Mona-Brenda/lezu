@@ -30,11 +30,11 @@ import com.amap.api.services.district.DistrictItem;
 import com.amap.api.services.district.DistrictResult;
 import com.amap.api.services.district.DistrictSearch;
 import com.amap.api.services.district.DistrictSearchQuery;
-import com.amap.api.services.geocoder.GeocodeQuery;
 import com.amap.api.services.geocoder.GeocodeResult;
 import com.amap.api.services.geocoder.GeocodeSearch;
 import com.amap.api.services.geocoder.RegeocodeResult;
 import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.konka.renting.R;
 import com.konka.renting.base.BaseFragment;
 import com.konka.renting.bean.DataInfo;
@@ -112,6 +112,8 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
     SmartRefreshLayout mRefreshRecommend;
     @BindView(R.id.fragment_tenant_main_appBarLayout)
     AppBarLayout mAppBarLayout;
+    @BindView(R.id.fragment_tenant_main_collapsingToolbarLayout)
+    CollapsingToolbarLayout mCollapsingToolbarLayout;
     @BindView(R.id.fragment_tenant_main_tv_type_long)
     TextView mTvTypeLong;
     @BindView(R.id.fragment_tenant_main_view_type_long)
@@ -137,6 +139,7 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
     SharedPreferences sharedPreferences;
 
     PinYinUtils pinYinUtils;
+
     //当前选中的级别
     private String selectedLevel = COUNTRY;
 
@@ -359,7 +362,7 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
                     price = "";
                 }
                 viewHolder.setText(R.id.adapter_tenant_main_recommend_tv_price, price);
-                viewHolder.setText(R.id.adapter_tenant_main_recommend_tv_price_unit, getString(bean.getType() == 1 ? R.string.house_info_rent_pay_unit_day : R.string.house_info_rent_pay_unit));
+                viewHolder.setText(R.id.adapter_tenant_main_recommend_tv_price_unit, getString(bean.getType() == 1 ? R.string.public_house_pay_unit_day : R.string.public_house_pay_unit_mon));
 
                 ImageView picView = viewHolder.getView(R.id.adapter_tenant_main_recommend_iv_icon);
                 if (!TextUtils.isEmpty(bean.getThumb_image())) {
@@ -386,6 +389,8 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
         mRvHouse.setAdapter(houseAdapter);
         mRvShort.setAdapter(shortAdapter);
         mRvRecommend.setAdapter(recommendAdapter);
+
+
 
     }
 
@@ -474,6 +479,8 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
     private void initDate() {
         getHoustListData();
         getHotShortListData();
+        page_long=1;
+        page_short=1;
         getRecommendListData(2);
         getRecommendListData(1);
         swipeRefreshLayout.setRefreshing(false);
@@ -658,12 +665,18 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
                                 page_long--;
                             }
                         }
+//                        AppBarLayout.LayoutParams  mAppBarParams = (AppBarLayout.LayoutParams) mCollapsingToolbarLayout.getLayoutParams();
                         if (reShortList.size() > 0 || reLongList.size() > 0) {
                             mLlRecommend.setVisibility(View.VISIBLE);
                             mRefreshRecommend.setVisibility(View.VISIBLE);
+//                            mAppBarParams.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
+//                            mCollapsingToolbarLayout.setLayoutParams(mAppBarParams);
+
                         } else {
                             mLlRecommend.setVisibility(View.GONE);
                             mRefreshRecommend.setVisibility(View.GONE);
+//                            mAppBarParams.setScrollFlags(0);
+//                            mCollapsingToolbarLayout.setLayoutParams(mAppBarParams);
                         }
                     }
 
@@ -696,11 +709,11 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
                                 recommendList.addAll(reLongList);
                             }
                             recommendAdapter.notifyDataSetChanged();
-                            if (type == 1 ){
-                                is_short_enable_loading=homeInfoDataInfo.data().getPage() < homeInfoDataInfo.data().getTotalPage();
+                            if (type == 1) {
+                                is_short_enable_loading = homeInfoDataInfo.data().getPage() < homeInfoDataInfo.data().getTotalPage();
                                 mRefreshRecommend.setEnableLoadmore(is_short_enable_loading);
-                            }else{
-                                is_long_enable_loading=homeInfoDataInfo.data().getPage() < homeInfoDataInfo.data().getTotalPage();
+                            } else {
+                                is_long_enable_loading = homeInfoDataInfo.data().getPage() < homeInfoDataInfo.data().getTotalPage();
                                 mRefreshRecommend.setEnableLoadmore(is_long_enable_loading);
                             }
 

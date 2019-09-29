@@ -48,12 +48,6 @@
         android:layout_marginStart="@dimen/dp_8"
         android:layout_marginTop="@dimen/dp_6">
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/sp_16"
-            android:textColor="@color/text_org"
-            android:text="@string/money_unit_1"/>
-        <TextView
             android:id="@+id/adapter_tenant_main_short_tv_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -65,7 +59,7 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/sp_16"
             android:textColor="@color/text_org"
-            android:text="@string/house_info_rent_pay_unit_day"/>
+            android:text="@string/public_house_pay_unit_day"/>
     </LinearLayout>
 
 </LinearLayout>

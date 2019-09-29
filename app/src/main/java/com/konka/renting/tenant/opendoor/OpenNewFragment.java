@@ -1,6 +1,5 @@
 package com.konka.renting.tenant.opendoor;
 
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -9,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -21,6 +21,7 @@ import com.konka.renting.base.BaseFragment;
 import com.konka.renting.bean.DataInfo;
 import com.konka.renting.bean.LoginUserBean;
 import com.konka.renting.bean.OpenDoorListbean;
+import com.konka.renting.bean.PayRentRefreshEvent;
 import com.konka.renting.event.AddCodeEvent;
 import com.konka.renting.event.AddShareRentEvent;
 import com.konka.renting.event.TentantOpenDoorEvent;
@@ -63,6 +64,10 @@ public class OpenNewFragment extends BaseFragment {
     TextView mTvItemCircleConcent;
     @BindView(R.id.fragment_open_new_tv_item_circle_right)
     TextView mTvItemCircleRight;
+    @BindView(R.id.fragment_open_new_tv_input_code)
+    TextView mTvInputCode;
+    @BindView(R.id.fragment_open_new_rl_empty)
+    RelativeLayout mRlEmpty;
     @BindView(R.id.fragment_open_new_view_page_item)
     ViewPager mViewPageItem;
     @BindView(R.id.fragment_open_new_tv_server_pay)
@@ -73,6 +78,10 @@ public class OpenNewFragment extends BaseFragment {
     ImageView mImgServerEndTimeTips;
     @BindView(R.id.fragment_open_new_srl_refresh)
     SwipeRefreshLayout mSrlRefresh;
+    @BindView(R.id.fragment_open_new_rl_item_circle)
+    LinearLayout mRlItemCircle;
+    @BindView(R.id.fragment_open_new_ll_server_end_time)
+    LinearLayout mLlServerEndTime;
 
     private final String KEY_ORDER_ID = "key_open_order_id";
 
@@ -148,7 +157,6 @@ public class OpenNewFragment extends BaseFragment {
                     ShowToastUtil.showNormalToast(getContext(), getString(R.string.please_talk_pay_install));
                 } else {
                     openDoor(position);
-//                    openItemAdapter.startOpenAnimation(position);
                 }
             }
 
@@ -158,7 +166,7 @@ public class OpenNewFragment extends BaseFragment {
                 if (TextUtils.isEmpty(openDoorListbean.getOrder_id())) {
                     ShowToastUtil.showNormalToast(getContext(), getString(R.string.warm_open_no_order));
                 } else {
-                    OpenHistoryActivity.toActivity(mActivity,openDoorListbean.getRoom_id());
+                    OpenHistoryActivity.toActivity(mActivity, openDoorListbean.getRoom_id());
                 }
             }
 
@@ -172,7 +180,8 @@ public class OpenNewFragment extends BaseFragment {
                 } else if (openDoorListbean.getStatus() <= 2) {
                     ShowToastUtil.showNormalToast(mActivity, getString(R.string.warm_open_no_on_rent));
                 } else {
-                    DevicesOpenPasswordActivity.toActivity(mActivity, openDoorListbean.getDevice_id(), openDoorListbean.getRoom_id());
+//                    DevicesOpenPasswordActivity.toActivity(mActivity, openDoorListbean.getDevice_id(), openDoorListbean.getRoom_id());
+                    OpenPwdWayActivity.toActivity(mActivity, openDoorListbean.getDevice_id(), openDoorListbean.getRoom_id(),openDoorListbean.getIs_generate_password());
                 }
             }
 
@@ -213,7 +222,9 @@ public class OpenNewFragment extends BaseFragment {
                     ShowToastUtil.showNormalToast(getContext(), getString(R.string.warm_open_no_order));
                 } else if (TextUtils.isEmpty(openDoorListbean.getDevice_id())) {
                     ShowToastUtil.showNormalToast(getContext(), getString(R.string.warm_open_no_device));
-                } else if (openDoorListbean.getIs_rent() == 1) {
+                } else if (openDoorListbean.getIs_share_rent() == 1){
+                    ShowToastUtil.showNormalToast(getContext(), getString(R.string.tips_share_rent_no_authority));
+                }else if (openDoorListbean.getIs_rent() == 1) {
                     ShareRentListActivity.toActivity(mActivity, openDoorListbean.getOrder_id());
                 } else {
                     AddRentPeopleActivity.toActivity(mActivity, openDoorListbean.getOrder_id(), true);
@@ -229,7 +240,9 @@ public class OpenNewFragment extends BaseFragment {
                     ShowToastUtil.showNormalToast(getContext(), getString(R.string.warm_open_no_device));
                 } else if (openDoorListbean.getStatus() <= 2) {
                     ShowToastUtil.showNormalToast(mActivity, getString(R.string.warm_open_no_on_rent));
-                } else {
+                }  else if (openDoorListbean.getIs_share_rent() == 1){
+                    ShowToastUtil.showNormalToast(getContext(), getString(R.string.tips_share_rent_no_authority));
+                }else {
                     ManagePwdActivity.toActivity(mActivity, openDoorListbean.getRoom_id());
                 }
             }
@@ -292,6 +305,7 @@ public class OpenNewFragment extends BaseFragment {
                 for (int i = 0; i < size; i++) {
                     if (mData.get(i).getOrder_id().equals(addShareRentEvent.getOrder_id())) {
                         mData.get(i).setIs_rent(addShareRentEvent.getHave());
+                        openItemAdapter.notifyDataSetChanged();
                         break;
                     }
                 }
@@ -303,13 +317,20 @@ public class OpenNewFragment extends BaseFragment {
                 AddCodeActivity.toActivity(mActivity);
             }
         });
+        addRxBusSubscribe(PayRentRefreshEvent.class, new Action1<PayRentRefreshEvent>() {
+            @Override
+            public void call(PayRentRefreshEvent payRentRefreshEvent) {
+                initData();
+            }
+        });
     }
 
-    @OnClick({R.id.fragment_open_new_img_msg, R.id.fragment_open_new_tv_server_pay, R.id.fragment_open_new_img_server_end_time_tips})
+    @OnClick({R.id.fragment_open_new_img_msg, R.id.fragment_open_new_tv_server_pay, R.id.fragment_open_new_tv_input_code, R.id.fragment_open_new_img_add_order, R.id.fragment_open_new_img_server_end_time_tips})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fragment_open_new_img_msg://消息
                 break;
+            case R.id.fragment_open_new_tv_input_code://输入激活码
             case R.id.fragment_open_new_img_add_order://输入激活码
                 if (!LoginUserBean.getInstance().getIs_lodge_identity().equals("1")) {
                     NewFaceDectectActivity.toActivity(getActivity(), 1);
@@ -399,6 +420,17 @@ public class OpenNewFragment extends BaseFragment {
                             if (mData.size() <= 0) {
                                 OpenDoorListbean bean = new OpenDoorListbean();
                                 mData.add(bean);
+                                mViewPageItem.setVisibility(View.GONE);
+                                mRlEmpty.setVisibility(View.VISIBLE);
+                                mRlItemCircle.setVisibility(View.INVISIBLE);
+                                mLlServerEndTime.setVisibility(View.GONE);
+                                mTvServerPay.setVisibility(View.GONE);
+                            } else {
+                                mViewPageItem.setVisibility(View.VISIBLE);
+                                mRlEmpty.setVisibility(View.GONE);
+                                mRlItemCircle.setVisibility(View.VISIBLE);
+                                mLlServerEndTime.setVisibility(View.VISIBLE);
+                                mTvServerPay.setVisibility(View.VISIBLE);
                             }
                             openItemAdapter.notifyDataSetChanged();
                             refreshData();

@@ -3,6 +3,7 @@ package com.konka.renting.landlord.user.withdrawcash;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.CompoundButton;
@@ -209,7 +210,6 @@ public class RechargeActivity extends BaseActivity implements IPayResCall, PaySt
 
     @Override
     public void payResCall(int type, String reason) {
-
         switch (type) {
             case 0:
                 // TODO: 2018/4/30 成功

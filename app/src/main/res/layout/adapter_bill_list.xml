@@ -21,7 +21,6 @@
             android:layout_height="wrap_content"
             android:textColor="@color/text_gray"
             android:textSize="@dimen/sp_16" />
-
         <ImageView
             android:layout_width="@dimen/dp_14"
             android:layout_height="@dimen/dp_14"

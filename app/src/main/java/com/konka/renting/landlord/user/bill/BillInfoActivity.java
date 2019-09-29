@@ -3,6 +3,7 @@ package com.konka.renting.landlord.user.bill;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -54,6 +55,10 @@ public class BillInfoActivity extends BaseActivity {
     RelativeLayout mRlStatus;
     @BindView(R.id.activity_info_rl_endtime)
     RelativeLayout mRlEndtime;
+    @BindView(R.id.activity_info_tv_belance)
+    TextView tvBelance;
+    @BindView(R.id.activity_info_rl_belance)
+    RelativeLayout rlBelance;
 
     public static void toActivity(Context context, String id) {
         Intent intent = new Intent(context, BillInfoActivity.class);
@@ -74,7 +79,7 @@ public class BillInfoActivity extends BaseActivity {
     }
 
     private void getData() {
-        Subscription subscription = SecondRetrofitHelper.getInstance().getBillDetail(id)
+        Subscription subscription = SecondRetrofitHelper.getInstance().getBillDetail2(id)
                 .compose(RxUtil.<DataInfo<BillDetailBean>>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo<BillDetailBean>>() {
                     @Override
@@ -88,13 +93,19 @@ public class BillInfoActivity extends BaseActivity {
                         super.onNext(dataInfo);
                         if (dataInfo.success()) {
                             BillDetailBean bean = dataInfo.data();
-                            tvMoney.setText("￥" + bean.getAmount());
+                            tvMoney.setText(switchPay(bean.getType())+bean.getAmount());
+                            tvBelance.setText(getString(R.string.money_unit_1) + bean.getBalance());
                             tvTime.setText(bean.getCreate_time());
                             tvNumber.setText(bean.getOrder_no());
-                            tvType.setText(switchType(bean.getType()));
-                            if (bean.getStart_date() != null)
-                                tvEndtime.setText(bean.getStart_date() + "至" + bean.getEnd_date());
+                            mTvWay.setText(switchType(bean.getType()));
+                            tvType.setText(payType(bean.getType()));
                             tvMore.setText(bean.getRemark());
+                            if (bean.getType()==5){
+                                mRlStatus.setVisibility(View.VISIBLE);
+                                mTvStatus.setText(switchStatus(bean.getStatus()));
+                            }else{
+                                mRlStatus.setVisibility(View.GONE);
+                            }
                         } else {
                             showToast(dataInfo.msg());
                             finish();
@@ -118,6 +129,63 @@ public class BillInfoActivity extends BaseActivity {
                 break;
             case 4:
                 s = getString(R.string.bill_info_type_4);
+                break;
+            case 5:
+                s = getString(R.string.bill_info_type_5);
+                break;
+            case 6:
+                s = getString(R.string.bill_info_type_6);
+                break;
+        }
+        return s;
+    }
+
+    private String payType(int type) {
+        String s = "";
+        switch (type) {
+            case 1://充值
+            case 4://服务费退款
+            case 6://房租
+                s = getString(R.string.bill_info_pay_type_1);
+                break;
+            case 2://服务费支付
+            case 3://安装费
+            case 5://提现
+                s = getString(R.string.bill_info_pay_type_2);
+                break;
+        }
+        return s;
+    }
+
+    private String switchStatus(int status) {
+        String s = "";
+        switch (status) {
+            case 0:
+                s = getString(R.string.bill_info_get_status_1);
+                break;
+            case 1:
+                s = getString(R.string.bill_info_get_status_2);
+                break;
+            case 2:
+                s = getString(R.string.bill_info_get_status_3);
+                break;
+
+        }
+        return s;
+    }
+
+    private String switchPay(int type) {
+        String s = "";
+        switch (type) {
+            case 1://充值
+            case 4://服务费退款
+            case 6://房租
+                s = "+";
+                break;
+            case 2://服务费支付
+            case 3://安装费
+            case 5://提现
+                s = "-";
                 break;
         }
         return s;

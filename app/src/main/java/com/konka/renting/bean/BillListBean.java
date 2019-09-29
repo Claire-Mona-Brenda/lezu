@@ -11,7 +11,8 @@ public class BillListBean {
      */
 
     private String id;
-    private int type;//账单类型 1充值 2服务费支付 3安装费 4服务费退款
+    private int type;//账单类型 1充值 2服务费支付 3安装费 4服务费退款 5提现 6房租
+    private int status;//提现 0提现中/1提现成功/2提现失败
     private String amount;
     private String create_time;
     private String title;
@@ -30,6 +31,14 @@ public class BillListBean {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public String getAmount() {

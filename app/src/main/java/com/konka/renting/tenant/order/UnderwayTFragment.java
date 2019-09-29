@@ -19,17 +19,28 @@ import android.widget.PopupWindow;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
 import com.konka.renting.R;
+import com.konka.renting.base.BaseApplication;
 import com.konka.renting.base.BaseFragment;
+import com.konka.renting.base.IPayResCall;
 import com.konka.renting.bean.DataInfo;
 import com.konka.renting.bean.PageDataBean;
+import com.konka.renting.bean.PayBean;
 import com.konka.renting.bean.PayRentRefreshEvent;
 import com.konka.renting.bean.RenterOrderListBean;
+import com.konka.renting.bean.WxPayBean;
 import com.konka.renting.event.LandlordOrderApplyEvent;
 import com.konka.renting.http.SecondRetrofitHelper;
 import com.konka.renting.http.subscriber.CommonSubscriber;
+import com.konka.renting.landlord.house.view.ChoosePayWayPopup;
+import com.konka.renting.landlord.house.view.PayStatusDialog;
 import com.konka.renting.landlord.order.ConfirmEvent;
+import com.konka.renting.landlord.user.withdrawcash.ResultActivity;
+import com.konka.renting.utils.AliPayUtil;
+import com.konka.renting.utils.RxBus;
 import com.konka.renting.utils.RxUtil;
+import com.konka.renting.utils.WXPayUtils;
 import com.konka.renting.widget.CommonPopupWindow;
 import com.mcxtzhang.commonadapter.rv.CommonAdapter;
 import com.mcxtzhang.commonadapter.rv.ViewHolder;
@@ -48,7 +59,7 @@ import butterknife.Unbinder;
 import rx.Subscription;
 import rx.functions.Action1;
 
-public class UnderwayTFragment extends BaseFragment {
+public class UnderwayTFragment extends BaseFragment implements IPayResCall, PayStatusDialog.PayReTry {
 
     Unbinder unbinder;
     @BindView(R.id.fragment_upderway_rv_recycler)
@@ -59,6 +70,9 @@ public class UnderwayTFragment extends BaseFragment {
     private List<RenterOrderListBean> mData = new ArrayList<>();
     private int page;
     CommonAdapter<RenterOrderListBean> commonAdapter;
+
+    ChoosePayWayPopup choosePayWayPopup;
+    int payment = 0;
 
 
     public static UnderwayTFragment newInstance() {
@@ -142,6 +156,15 @@ public class UnderwayTFragment extends BaseFragment {
                     viewHolder.setVisible(R.id.adapter_tv_room_price, false);
                 }
 
+                if (listBean.getIs_pay()==0){
+                    viewHolder.setVisible(R.id.adapter_tv_pay_time, true);
+                    viewHolder.setVisible(R.id.adapter_tv_to_pay, true);
+                    viewHolder.setText(R.id.adapter_tv_pay_time, String.format(getString(R.string.please_end_time_to_pay),listBean.getExpire_time()));
+                }else{
+                    viewHolder.setVisible(R.id.adapter_tv_pay_time, false);
+                    viewHolder.setVisible(R.id.adapter_tv_to_pay, false);
+                }
+
                 ImageView ivPic = viewHolder.getView(R.id.adapter_icon_room);
                 if (!TextUtils.isEmpty(listBean.getThumb_image()))
                     Picasso.get().load(listBean.getThumb_image()).into(ivPic);
@@ -163,6 +186,13 @@ public class UnderwayTFragment extends BaseFragment {
                 spannableStringBuilder.append(getArea(listBean.getMeasure_area()));
                 spannableStringBuilder.append("|" + listBean.getFloor() + "/" + listBean.getTotal_floor() + "层");
                 viewHolder.setText(R.id.adapter_tv_room_info, spannableStringBuilder);
+
+                viewHolder.setOnClickListener(R.id.adapter_tv_to_pay, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        showPayWayPopup(listBean.getOrder_id());
+                    }
+                });
 
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -244,6 +274,157 @@ public class UnderwayTFragment extends BaseFragment {
                     }
                 });
         addSubscrebe(subscription);
+    }
+
+    /**
+     * 继续支付
+     */
+    public void continueRentOrder(String order_id,int payment) {
+        showLoadingDialog();
+        Subscription subscription = SecondRetrofitHelper.getInstance().continueRentOrder(order_id, payment + "")
+                .compose(RxUtil.<DataInfo<PayBean>>rxSchedulerHelper())
+                .subscribe(new CommonSubscriber<DataInfo<PayBean>>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        dismiss();
+                    }
+
+                    @Override
+                    public void onNext(DataInfo<PayBean> dataInfo) {
+                        dismiss();
+                        if (dataInfo.success()) {
+                            switch (payment) {
+                                case 2://支付宝支付
+                                    ali(dataInfo.data().getData().toString());
+                                    break;
+                                case 1://微信支付
+                                    WxPayBean wxPayInfo = new Gson().fromJson(new Gson().toJson(dataInfo.data().getData()), WxPayBean.class);
+                                    wechat(wxPayInfo);
+                                    break;
+
+                            }
+                        } else {
+                            showToast(dataInfo.msg());
+                        }
+                    }
+                });
+        addSubscrebe(subscription);
+    }
+
+    /************************************************支付**************************************************/
+    public void ali(String info) {
+        AliPayUtil.ALiPayBuilder builder = new AliPayUtil.ALiPayBuilder();
+        builder.build().toALiPay(mActivity, info);
+    }
+
+    public void wechat(WxPayBean data) {
+
+//        appid：应用ID
+//        partnerid：商户号
+//        prepayid：预支付交易会话ID
+//        package：扩展字段
+//        noncestr：随机字符串
+//        timestamp：时间戳
+//        sign：签名
+
+        WXPayUtils.WXPayBuilder builder = new WXPayUtils.WXPayBuilder();
+        String appid = data.appid;//应用ID
+        String partnerid = data.partnerid;//商户号
+        String prepayid = data.prepayid;//预支付交易会话ID
+        String _package = data.packageX;//扩展字段w
+        String noncestr = data.noncestr;//随机字符串
+        String timestamp = new Double(data.timestamp).longValue() + "";//时间戳
+        String sign = data.sign;//签名
+
+        builder.setAppId(appid)
+                .setPartnerId(partnerid)
+                .setPrepayId(prepayid)
+                .setPackageValue(_package)
+                .setNonceStr(noncestr)
+                .setTimeStamp(timestamp)
+                .setSign(sign)
+                .build().toWXPayNotSign(mActivity, appid);
+    }
+
+
+    @Override
+    public void payResCall(int type, String reason) {
+        switch (type) {
+            case 0:
+                // 支付成功
+                RxBus.getDefault().post(new PayRentRefreshEvent());
+                ResultActivity.toActivity(mActivity, getString(R.string.pay_result), getString(R.string.pay_success), getString(R.string.pay_success_tips), true);
+                break;
+            case -1:
+//                if (!(payStatusDialog != null && payStatusDialog.isShowing())) {
+//                    payStatusDialog = new PayStatusDialog(this, false, bond).setFailReason(reason).setPayReTry(this);
+//                    payStatusDialog.show();
+//                }
+                showToast(getString(R.string.pay_fail));
+
+//                UIUtils.displayToast("支付失败");
+                break;
+            case -2:
+                showToast(getString(R.string.pay_cancel));
+//                Toast.makeText()
+//                UIUtils.displayToast("支付取消!!!");
+                break;
+        }
+    }
+
+    @Override
+    public void reTry() {
+
+    }
+    /************************************************弹窗**************************************************/
+    /**
+     * 支付方式选择
+     */
+    private void showPayWayPopup(String order_id) {
+        if (choosePayWayPopup == null) {
+            choosePayWayPopup = new ChoosePayWayPopup(mActivity);
+            choosePayWayPopup.setLlQianBaoVisibility(false);
+            choosePayWayPopup.setOnCall(new ChoosePayWayPopup.OnCall() {
+                @Override
+                public void aliPay() {
+                    payment = 2;
+                    continueRentOrder(order_id,2);
+                }
+
+                @Override
+                public void wxPay() {
+                    payment = 1;
+                    continueRentOrder(order_id,1);
+                }
+
+                @Override
+                public void qianBaoPay() {
+
+                }
+            });
+        }
+        ((BaseApplication) mActivity.getApplication()).curPay = this;
+        showPopup(choosePayWayPopup, Gravity.BOTTOM);
+
+    }
+    private void showPopup(PopupWindow popupWindow, int gravity) {
+        // 开启 popup 时界面透明
+        WindowManager.LayoutParams lp = mActivity.getWindow().getAttributes();
+        lp.alpha = 0.5f;
+        mActivity.getWindow().setAttributes(lp);
+        mActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        // popupwindow 第一个参数指定popup 显示页面
+        popupWindow.showAtLocation((View) mSrlRefresh.getParent(), gravity, 0, -200);     // 第一个参数popup显示activity页面
+        // popup 退出时界面恢复
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                WindowManager.LayoutParams lp = mActivity.getWindow().getAttributes();
+                lp.alpha = 1f;
+                mActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+                mActivity.getWindow().setAttributes(lp);
+            }
+        });
     }
 
 }

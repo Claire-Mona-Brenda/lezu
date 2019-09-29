@@ -52,12 +52,14 @@ public class BillTypeActivity extends BaseActivity {
 
     CommonAdapter<BillListBean> commonAdapter;
     List<BillListBean> listBeans = new ArrayList<>();
-    String id;
+    String type, year, month;
     int page = 1;
 
-    public static void toActivity(Context context, String id) {
+    public static void toActivity(Context context, String type, String year, String month) {
         Intent intent = new Intent(context, BillTypeActivity.class);
-        intent.putExtra("id", id);
+        intent.putExtra("type", type);
+        intent.putExtra("year", year);
+        intent.putExtra("month", month);
         context.startActivity(intent);
     }
 
@@ -68,21 +70,31 @@ public class BillTypeActivity extends BaseActivity {
 
     @Override
     public void init() {
+        type = getIntent().getStringExtra("type");
+        year = getIntent().getStringExtra("year");
+        month = getIntent().getStringExtra("month");
+
+        String title = "";
+        if (type.equals("1")) {
+            title = getString(R.string.bill_info_pay);
+        } else if (type.equals("5")) {
+            title = getString(R.string.bill_info_get);
+        } else {
+            title = getString(R.string.bill_info_house);
+        }
+        tvTitle.setText(title);
+
+
         commonAdapter = new CommonAdapter<BillListBean>(mActivity, listBeans, R.layout.adapter_bill_list_item) {
             @Override
             public void convert(ViewHolder viewHolder, BillListBean bean) {
 
                 viewHolder.setText(R.id.adapter_tv_type, bean.getTitle());
-                String str = "";
-                if (bean.getType() == 1) {
-                    str = "+ ";
-                    viewHolder.setTextColor(R.id.adapter_tv_money, mContext.getResources().getColor(R.color.text_green));
-                } else if (bean.getType() == 4) {
-                    str = "+ ";
-                    viewHolder.setTextColor(R.id.adapter_tv_money, mContext.getResources().getColor(R.color.text_green));
-                } else {
-                    str = "- ";
+                String str = payType(bean.getType());
+                if (str.equals("-")) {
                     viewHolder.setTextColor(R.id.adapter_tv_money, mContext.getResources().getColor(R.color.text_ren));
+                } else {
+                    viewHolder.setTextColor(R.id.adapter_tv_money, mContext.getResources().getColor(R.color.text_green));
                 }
                 viewHolder.setText(R.id.adapter_tv_money, str + bean.getAmount());
                 viewHolder.setText(R.id.adapter_tv_date, bean.getCreate_time());
@@ -121,33 +133,59 @@ public class BillTypeActivity extends BaseActivity {
     }
 
 
+    private String payType(int type) {
+        String s = "";
+        switch (type) {
+            case 1://充值
+            case 4://服务费退款
+            case 6://房租
+                s = "+";
+                break;
+            case 2://服务费支付
+            case 3://安装费
+            case 5://提现
+                s = "-";
+                break;
+        }
+        return s;
+    }
+
     /*******************************************************接口*****************************************/
     private void getData(boolean isRe) {
-        if (isRe){
-            page=1;
-        }else{
+        if (isRe) {
+            page = 1;
+        } else {
             page++;
         }
-        Subscription subscription = SecondRetrofitHelper.getInstance().getAccountBillList(page+"")
+        Subscription subscription = SecondRetrofitHelper.getInstance().getAccountBillList2(page + "", type, year, month)
                 .compose(RxUtil.<DataInfo<PageDataBean<BillListBean>>>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo<PageDataBean<BillListBean>>>() {
                     @Override
                     public void onError(Throwable e) {
-                        mSrlList.finishLoadmore();
-                        page--;
+                        if (isRe) {
+                            mSrlList.finishRefresh();
+                        } else {
+                            mSrlList.finishLoadmore();
+                            page--;
+                        }
                     }
 
                     @Override
                     public void onNext(DataInfo<PageDataBean<BillListBean>> dataInfo) {
-                        mSrlList.finishLoadmore();
                         if (dataInfo.success()) {
                             listBeans.clear();
                             listBeans.addAll(dataInfo.data().getList());
                             commonAdapter.notifyDataSetChanged();
                             mSrlList.setEnableLoadmore(false);
-                        }else{
-                            page--;
+                        } else {
+                            if (!isRe)
+                                page--;
                             showToast(dataInfo.msg());
+                        }
+                        if (isRe) {
+                            mSrlList.finishRefresh();
+                        } else {
+                            mSrlList.finishLoadmore();
                         }
 
                     }

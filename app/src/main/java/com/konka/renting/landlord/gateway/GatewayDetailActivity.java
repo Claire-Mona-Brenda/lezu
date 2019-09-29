@@ -8,23 +8,16 @@ import android.widget.Button;
 import android.widget.TextView;
 
 
-import com.j256.ormlite.dao.Dao;
 import com.konka.renting.R;
 import com.konka.renting.base.BaseActivity;
 import com.konka.renting.bean.DataInfo;
 import com.konka.renting.bean.GatewayDetailBean;
-import com.konka.renting.bean.GatewayInfo;
 import com.konka.renting.event.DelGatewayEvent;
 import com.konka.renting.event.EditGatwayEvent;
-import com.konka.renting.http.RetrofitHelper;
 import com.konka.renting.http.SecondRetrofitHelper;
 import com.konka.renting.http.subscriber.CommonSubscriber;
-import com.konka.renting.sql.KonkaSqlHelper;
 import com.konka.renting.utils.RxBus;
 import com.konka.renting.utils.RxUtil;
-
-import java.sql.SQLException;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 import rx.Subscription;
@@ -144,13 +137,6 @@ public class GatewayDetailActivity extends BaseActivity {
                     public void onNext(DataInfo dataInfo) {
                         dismiss();
                         if (dataInfo.success()) {
-
-//                            try {
-//                                Dao<GatewayInfo, String> dao = KonkaSqlHelper.getHelper(GatewayDetailActivity.this).getDao(GatewayInfo.class);
-//                                dao.deleteById(gatewayId);
-//                            } catch (SQLException e) {
-//                                e.printStackTrace();
-//                            }
                             RxBus.getDefault().post(new DelGatewayEvent());
                             finish();
                         } else {

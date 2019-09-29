@@ -75,6 +75,17 @@ public class WithdrawPwdSettingAgainActivity extends BaseActivity {
         pwd = getIntent().getStringExtra("pwd");
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mPvPwd.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mPvPwd.showInput();
+            }
+        }, 500);
+    }
+
 
     @OnClick({R.id.iv_back, R.id.activity_withdraw_set_pwd_again_btn_next})
     public void onViewClicked(View view) {

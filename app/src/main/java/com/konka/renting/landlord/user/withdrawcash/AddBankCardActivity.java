@@ -16,21 +16,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.konka.renting.R;
 import com.konka.renting.base.BaseActivity;
-import com.konka.renting.bean.AddBankInfo;
 import com.konka.renting.bean.DataInfo;
 import com.konka.renting.bean.GetIssueBankBean;
-import com.konka.renting.http.RetrofitHelper;
 import com.konka.renting.http.SecondRetrofitHelper;
 import com.konka.renting.http.subscriber.CommonSubscriber;
 import com.konka.renting.utils.RxBus;
 import com.konka.renting.utils.RxUtil;
-import com.konka.renting.widget.CommonInputPopupWindow;
 import com.konka.renting.widget.WarmPopupwindow;
 import com.squareup.picasso.Picasso;
 
@@ -61,9 +57,12 @@ public class AddBankCardActivity extends BaseActivity {
     FrameLayout linTitle;
     @BindView(R.id.btn_complete)
     Button btnComplete;
+    @BindView(R.id.et_phone)
+    EditText etPhone;
 
     private String name;
     private String cardnumber;
+    private String phone;
 
     WarmPopupwindow warmPopupwindow;
 
@@ -89,9 +88,9 @@ public class AddBankCardActivity extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    if (charSequence.toString().length()>=16){
-                        getIssueBank(charSequence.toString());
-                    }
+                if (charSequence.toString().length() >= 16) {
+                    getIssueBank(charSequence.toString());
+                }
             }
 
             @Override
@@ -103,14 +102,14 @@ public class AddBankCardActivity extends BaseActivity {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                 /*判断是否是“GO”键*/
-                if(actionId == EditorInfo.IME_ACTION_SEARCH){
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     /*隐藏软键盘*/
                     InputMethodManager imm = (InputMethodManager) textView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                     if (imm.isActive()) {
                         imm.hideSoftInputFromWindow(
                                 textView.getApplicationWindowToken(), 0);
                     }
-                    if (mEtCardNum.getText().toString().length()>=16){
+                    if (mEtCardNum.getText().toString().length() >= 16) {
                         getIssueBank(mEtCardNum.getText().toString());
                     }
                     return true;
@@ -138,17 +137,22 @@ public class AddBankCardActivity extends BaseActivity {
             case R.id.btn_complete://提交
                 name = mEtHolder.getText().toString();
                 cardnumber = mEtCardNum.getText().toString();
-                if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(cardnumber))
+                phone = etPhone.getText().toString();
+
+                if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(cardnumber)&&phone.length()==11) {
                     comfirmAdd();
-                else
-                    showToast("请输入完整信息");
+                }else if (phone.length()<11){
+                    showToast(R.string.please_input_phone);
+                }else {
+                    showToast(R.string.please_input_all_info);
+                }
                 break;
         }
     }
 
     private void comfirmAdd() {
         showLoadingDialog();
-        Subscription subscription = SecondRetrofitHelper.getInstance().addBankCard(cardnumber, name)
+        Subscription subscription = SecondRetrofitHelper.getInstance().addBankCard(cardnumber, name,phone)
                 .compose(RxUtil.<DataInfo>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo>() {
                     @Override
@@ -186,9 +190,9 @@ public class AddBankCardActivity extends BaseActivity {
                         if (dataInfo.success()) {
                             mTvTypeSelect.setText(dataInfo.data().getBank_name());
                             mImgTypeSelect.setVisibility(View.VISIBLE);
-                            if (!TextUtils.isEmpty(dataInfo.data().getBank_image())){
+                            if (!TextUtils.isEmpty(dataInfo.data().getBank_image())) {
                                 Picasso.get().load(dataInfo.data().getBank_image()).into(mImgTypeSelect);
-                            }else{
+                            } else {
                                 Picasso.get().load(R.mipmap.bank_other).into(mImgTypeSelect);
                             }
                         }
@@ -224,4 +228,5 @@ public class AddBankCardActivity extends BaseActivity {
             }
         });
     }
+
 }

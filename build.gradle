@@ -12,6 +12,10 @@ buildscript {
         maven {
             url "http://mvn.mob.com/android"
         }
+        // 添加下面的内容
+        flatDir {
+            dirs 'libs'
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.5.0'

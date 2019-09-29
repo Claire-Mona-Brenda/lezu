@@ -28,8 +28,9 @@ public class WXPayUtils {
         Log.e(TAG, "toWXPayNotSign: appid = "+appid );
         iwxapi = WXAPIFactory.createWXAPI(context, appid, true); //初始化微信api
         iwxapi.registerApp(appid); //注册appid  appid可以在开发平台获取
-        Log.e("wxpay_data", "appid:" + builder.getAppId() + "partnerid:" + builder.getPartnerId() + "prepayid：" + builder.getPrepayId() + "_package：" + builder.getPackageValue() + "noncestr：" + builder.getNonceStr() + "timestamp：" + builder.getTimeStamp() + "sign：" + builder.getSign());
-
+        if (!iwxapi.isWXAppInstalled()){
+            UIUtils.displayToast("未安装微信客户端");
+        }
         PayReq request = new PayReq(); //调起微信APP的对象
         //下面是设置必要的参数，也就是前面说的参数,这几个参数从何而来请看上面说明
         request.appId = builder.getAppId();

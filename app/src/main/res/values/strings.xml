@@ -114,6 +114,7 @@
     <string name="add_bank">添加</string>
     <string name="add_bank_title">添加银行卡</string>
     <string name="please_bind_self">请输入提现的银行卡信息</string>
+    <string name="please_bind_self_phone">请输入银行卡预留手机号码</string>
     <string name="cardholder">持卡人</string>
     <string name="card_num">卡号</string>
     <string name="please_select_type">请选择银行卡类型</string>
@@ -182,6 +183,11 @@
     <string name="please_balance_pay">是否从钱包余额中扣除</string>
     <string name="no_permissions">未取得相机相关权限，请在手机设置启用相机相关权限后再进行操作</string>
 
+    <string name="pyq">朋友圈</string>
+    <string name="wechat">微信</string>
+    <string name="qq">QQ</string>
+    <string name="weibo">微博</string>
+
     <!--支付提现-->
     <string name="tips_del_bank_card">是否删除此银行卡？</string>
     <string name="please_input_pwd_number">请输入6位数字密码</string>
@@ -203,6 +209,7 @@
     <string name="setting_result_success">设置成功</string>
 
     <string name="please_input_login_pwd">请输入登录密码</string>
+    <string name="please_input_all_info">请输入完整信息</string>
 
     <string name="title_withdraw_result">提现结果</string>
     <string name="tips_withdraw_result_success">提交成功</string>
@@ -253,7 +260,7 @@
     <string name="please_input_days">请填写有效期天数</string>
     <string name="please_input_days_no_0">有效期天数应大于0</string>
     <string name="add_success">添加成功</string>
-    <string name="tips_pwd_time">密码不固定，不定时自动刷新</string>
+    <string name="tips_pwd_time">如果密码失效，请点右上角手动刷新</string>
     <string name="warm_no_to_add_pwd_more">门锁设置的密码数量不能超过7个</string>
 
     <string name="houes_id">房间</string>
@@ -272,6 +279,8 @@
     <string name="warn_input_date">请选择入住时间和退房时间</string>
     <string name="warn_input_mobile">请填写正确的手机号码</string>
     <string name="tips_no_register_mobile">提示：请注意该手机号码为未注册号码</string>
+
+    <string name="please_end_time_to_pay">请在%s之前完成支付</string>
 
     <string name="choose_date">选择入住时间</string>
     <string name="choose_time_date">请选择时间日期</string>
@@ -314,6 +323,7 @@
     <string name="pay_cancel">支付取消</string>
     <string name="pay_success_tips">（你可以在订单中查看此订单详情）</string>
     <string name="to_pay">去支付</string>
+    <string name="to_pay_2">去付款</string>
     <string name="order_fill">订单填写</string>
 
 
@@ -721,7 +731,7 @@
     <string name="warm_open_no_on_rent">未到入住时间，请入住后再操作</string>
     <string name="end_time">到期</string>
     <string name="device_item_history_content">%1$s %2$s</string>
-    <string name="title_history">历史记录</string>
+    <string name="title_history_open">开门记录</string>
     <string name="door_open_popup_end_time">门锁服务费于%s</string>
 
 
@@ -729,6 +739,10 @@
     <string name="open_other_setting">其他功能</string>
     <string name="open_pwd_self">自定义密码</string>
     <string name="open_pwd_time">时效性密码</string>
+    <string name="open_pwd_short">临时密码</string>
+    <string name="once_pwd">一次性密码</string>
+    <string name="timer_pwd">计时密码</string>
+    <string name="times_pwd">计次密码</string>
     <string name="gateway_setting">设置网关</string>
     <string name="gateway_set">网关设置</string>
     <string name="open_pwd">开门密码</string>
@@ -747,7 +761,35 @@
     <string name="open_manage_add_people">添加使用账号</string>
     <string name="open_manage_add_rent">添加使用者</string>
     <string name="open_manage_open_history_">开门记录></string>
+    <string name="no_info">暂无数据</string>
 
+    <string name="timer">计时</string>
+    <string name="timer_start_time">请设置生效时间</string>
+    <string name="timer_end_time">请设置失效时间</string>
+
+    <string name="timer_start_time_">生效时间：</string>
+    <string name="timer_end_time_">失效时间：</string>
+
+    <string name="times">计次</string>
+    <string name="times_times_">使用次数：</string>
+    <string name="times_use_time_">密码有效期：</string>
+    <string name="please_input_times">请输入次数（1～999）</string>
+
+    <string name="times_num">次</string>
+    <string name="times_day">天</string>
+
+    <string name="please_set_manage_pwd">管理员密码获取失败，请前往管理员密码重新设置管理员密码</string>
+
+    <string name="refresh_min">5分钟刷新</string>
+    <string name="manual_operation_input">手动输入</string>
+    <string name="once_pwd_tips">使用一次后就失效</string>
+    <string name="timer_pwd_tips">自定义使用时间</string>
+    <string name="times_pwd_tips">自定义使用次数</string>
+
+    <string name="once_pwd_tips2">一次性密码，使用一次后失效</string>
+    <string name="once_pwd_tips3">此为离线密码无法保存，请及时记录和使用。</string>
+
+    <string name="tips_share_rent_no_authority">很抱歉，合租用户不能进行此操作</string>
     <string name="tips_get_authority_content">房产已出租，权限失效！</string>
     <string name="get_authority">维修获取</string>
 
@@ -854,6 +896,7 @@
     <string name="bill_info_status">状态</string>
     <string name="bill_info_time">时间</string>
     <string name="bill_info_endtime">账期</string>
+    <string name="bill_info_belance">钱包剩余</string>
     <string name="bill_info_more">备注</string>
     <string name="bill_info_mon_income">月总收入</string>
     <string name="bill_info_pay">充值</string>
@@ -865,9 +908,19 @@
     <string name="bill_info_get_status_3">提现失败</string>
 
     <string name="bill_info_type_1">充值</string>
-    <string name="bill_info_type_2">服务费支付 </string>
+    <string name="bill_info_type_2">服务费支付</string>
     <string name="bill_info_type_3">安装费</string>
     <string name="bill_info_type_4">服务费退款</string>
+    <string name="bill_info_type_5">提现</string>
+    <string name="bill_info_type_6">房租</string>
+
+    <string name="bill_info_pay_type_1">收入</string>
+    <string name="bill_info_pay_type_2">支出</string>
+
+    <string name="year">年</string>
+    <string name="month">月</string>
+    <string name="bill_title_year_month">%s年%s月账单</string>
+
 
     <!--抄表-->
     <string name="copy_title">抄表</string>

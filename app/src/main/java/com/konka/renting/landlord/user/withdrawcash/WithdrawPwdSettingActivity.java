@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -67,10 +68,19 @@ public class WithdrawPwdSettingActivity extends BaseActivity {
                 finish();
             }
         });
-
-
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mPvPwd.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mPvPwd.showInput();
+            }
+        }, 500);
+
+    }
 
     @OnClick({R.id.iv_back, R.id.activity_withdraw_set_pwd_btn_next})
     public void onViewClicked(View view) {

@@ -156,7 +156,6 @@ dependencies {
     implementation project(':citypicker')
     //    implementation files('libs/AMap_Location_V3.8.0_20180201.jar')
     implementation 'com.getui:sdk:2.13.2.0'
-    implementation files('libs/alipaySdk-20180403.jar')
     //    compile 'liji.library.dev:citypickerview:3.1.6'
     //    compile 'com.github.vondear:RxTools:v1.7.8.1'
     implementation files('libs/ormlite-android-5.0.jar')
@@ -194,6 +193,7 @@ dependencies {
     implementation project(':android-pickers')
     implementation project(':faceplatform')
     implementation project(':library')
+    implementation files('libs\\alipaySdk-15.6.5-20190718211148.aar')
 //    implementation "com.android.support:exifinterface:28.0.0"
 //    implementation 'com.android.support:support-media-compat:28.0.0'
 //    implementation 'com.android.support:animated-vector-drawable:28.0.0'

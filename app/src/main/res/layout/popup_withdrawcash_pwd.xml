@@ -23,7 +23,9 @@
         android:layout_marginStart="@dimen/dp_30"
         android:layout_marginEnd="@dimen/dp_30"
         app:passwordLength="6"
-        app:cipherEnable="true"/>
+        app:cipherEnable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"/>
     <TextView
         android:id="@+id/pop_withdrawcash_pwd_tv_forget"
         android:layout_width="wrap_content"

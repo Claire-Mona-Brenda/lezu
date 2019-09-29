@@ -19,6 +19,7 @@ import com.konka.renting.bean.AppConfigBean;
 import com.konka.renting.bean.BannerListbean;
 import com.konka.renting.bean.BillDetailBean;
 import com.konka.renting.bean.BillListBean;
+import com.konka.renting.bean.BillStatisticsBean;
 import com.konka.renting.bean.BindGatewaySearchBean;
 import com.konka.renting.bean.CheckGatewayStatusBean;
 import com.konka.renting.bean.CheckWithdrawPwdBean;
@@ -31,6 +32,8 @@ import com.konka.renting.bean.DeviceInfo;
 import com.konka.renting.bean.DevicesOpenPasswordBean;
 import com.konka.renting.bean.GatewayDetailBean;
 import com.konka.renting.bean.GatewayInfo;
+import com.konka.renting.bean.GeneratePasswordBean;
+import com.konka.renting.bean.GeneratePwdBean;
 import com.konka.renting.bean.GetIssueBankBean;
 import com.konka.renting.bean.GroupRoomListBean;
 import com.konka.renting.bean.HomeInfo;
@@ -1490,8 +1493,8 @@ public class SecondRetrofitHelper {
     /**
      * 添加银行卡
      */
-    public Observable<DataInfo> addBankCard(String card_no, String username) {
-        return mApiService.addBankBean(card_no, username);
+    public Observable<DataInfo> addBankCard(String card_no, String username,String phone) {
+        return mApiService.addBankBean(card_no, username,phone);
     }
 
     /**
@@ -1551,6 +1554,13 @@ public class SecondRetrofitHelper {
     }
 
     /**
+     * 继续支付
+     */
+    public Observable<DataInfo<PayBean>> continueRentOrder(String order_id, String payment) {
+        return mApiService.continueRentOrder(order_id, payment);
+    }
+
+    /**
      * 价格计算
      */
     public Observable<DataInfo<RoomOederPriceBean>> rentOrderPrice(String room_id, String start_time, String end_time) {
@@ -1562,5 +1572,47 @@ public class SecondRetrofitHelper {
      */
     public Observable<DataInfo<PageDataBean<DeviceHistoryBean>>> openRoomRecord(String room_id, String page) {
         return mApiService.openRoomRecord(room_id, page);
+    }
+
+    /**
+     * 账单列表
+     */
+    public Observable<DataInfo<PageDataBean<BillListBean>>> getAccountBillList2(String page,String type,String year,String month) {
+        return mApiService.getAccountBillList2(page,type, year, month);
+    }
+
+    /**
+     * 获取账单详情
+     */
+    public Observable<DataInfo<BillDetailBean>> getBillDetail2(String id) {
+        return mApiService.getBillDetail2(id);
+    }
+
+    /**
+     * 获取账单统计
+     */
+    public Observable<DataInfo<BillStatisticsBean>> getBillStatistics(String year, String month) {
+        return mApiService.getBillStatistics(year, month);
+    }
+
+    /**
+     * 计算密码-添加密码
+     */
+    public Observable<DataInfo<GeneratePwdBean>> addGeneratePassword(String type, String password,String device_id, String num, String start_time, String end_time) {
+        return mApiService.addGeneratePassword(type,password, device_id,num,start_time,end_time);
+    }
+
+    /**
+     * 计算密码-添加密码
+     */
+    public Observable<DataInfo> delGeneratePassword(String id) {
+        return mApiService.delGeneratePassword(id);
+    }
+
+    /**
+     * 计算密码-添加密码
+     */
+    public Observable<DataInfo<List<GeneratePasswordBean>>> getGeneratePasswordList() {
+        return mApiService.getGeneratePasswordList();
     }
 }

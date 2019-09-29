@@ -151,7 +151,6 @@ public class UserInfoActivity extends BaseActivity implements CustompopupWindow.
         mType = getIntent().getIntExtra("mType", LoginInfo.LANDLORD);
         is_withdraw_pass = LoginUserBean.getInstance().getIs_withdraw_pass();
 
-        Log.e("123123","==========="+is_withdraw_pass);
         setTitleText(R.string.user_setting);
         mTvRight.setVisibility(View.GONE);
         if (mType==LoginInfo.LANDLORD) {

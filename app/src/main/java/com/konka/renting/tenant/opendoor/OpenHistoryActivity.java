@@ -77,7 +77,7 @@ public class OpenHistoryActivity extends BaseActivity {
     public void init() {
         room_id = getIntent().getStringExtra("room_id");
 
-        tvTitle.setText(R.string.title_history);
+        tvTitle.setText(R.string.title_history_open);
         tvTitle.setTypeface(Typeface.SANS_SERIF);
         TextPaint paint = tvTitle.getPaint();
         paint.setFakeBoldText(true);

@@ -11,6 +11,7 @@ import android.text.TextPaint;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -77,6 +78,20 @@ public class CheckPhoneActivity extends BaseActivity {
         mTvPhoneNumber.setText(phone);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mEdtCode.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mEdtCode.setFocusable(true);
+                mEdtCode.requestFocus();
+                InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.showSoftInput(mEdtCode, 0);
+            }
+        },500 );
+    }
+
 
     @OnClick({R.id.iv_back, R.id.tv_getVerify, R.id.activity_check_phone_btn_next})
     public void onViewClicked(View view) {
@@ -139,7 +154,6 @@ public class CheckPhoneActivity extends BaseActivity {
                     @Override
                     public void onNext(DataInfo info) {
                         if (info.success()) {
-                            doSuccess();
                             countTimer(tvGetVerify);
                         } else {
                             showToast(info.msg());

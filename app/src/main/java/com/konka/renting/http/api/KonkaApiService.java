@@ -2209,7 +2209,8 @@ public interface KonkaApiService {
     @FormUrlEncoded
     @POST("index.php/api/bank_card/add")
     Observable<DataInfo> addBankBean(@Field("card_no") String card_no,
-                                     @Field("username") String username);
+                                     @Field("username") String username,
+                                     @Field("phone") String phone);
 
     /**
      * 银行卡验证
@@ -2274,6 +2275,14 @@ public interface KonkaApiService {
                                             @Field("payment") String payment);//1微信 2支付宝
 
     /**
+     * 继续支付
+     */
+    @FormUrlEncoded
+    @POST("index.php/api/pay/continueRentOrder")
+    Observable<DataInfo<PayBean>> continueRentOrder(@Field("order_id") String order_id,
+                                                    @Field("payment") String payment);//1微信 2支付宝
+
+    /**
      * 价格计算
      */
     @FormUrlEncoded
@@ -2289,4 +2298,55 @@ public interface KonkaApiService {
     @POST("index.php/api/room/openRoomRecord")
     Observable<DataInfo<PageDataBean<DeviceHistoryBean>>> openRoomRecord(@Field("room_id") String room_id,
                                                                          @Field("page") String page);
+
+    /**
+     * 获取账单列表
+     */
+    @GET("index.php/api/landlord_center/accountBill_2_4_3")
+    Observable<DataInfo<PageDataBean<BillListBean>>> getAccountBillList2(@Query("page") String page,
+                                                                         @Query("type") String type,
+                                                                         @Query("year") String year,
+                                                                         @Query("month") String month);
+
+    /**
+     * 获取账单详情
+     */
+    @FormUrlEncoded
+    @POST("index.php/api/landlord_center/billDetail_2_4_3")
+    Observable<DataInfo<BillDetailBean>> getBillDetail2(@Field("id") String id);
+
+    /**
+     * 获取账单统计
+     * <p>
+     * month 月 0或者空 返回整年数据
+     */
+    @FormUrlEncoded
+    @POST("index.php/api/landlord_center/billStatistics")
+    Observable<DataInfo<BillStatisticsBean>> getBillStatistics(@Field("year") String year,
+                                                               @Field("month") String month);
+
+    /**
+     * 计算密码-添加密码
+     */
+    @FormUrlEncoded
+    @POST("index.php/api/generate_password/add")
+    Observable<DataInfo<GeneratePwdBean>> addGeneratePassword(@Field("type") String type,//1 计次 2计时
+                                                              @Field("password") String password,//管理员密码
+                                                              @Field("device_id") String device_id,
+                                                              @Field("num") String num,
+                                                              @Field("start_time") String start_time,
+                                                              @Field("end_time") String end_time);
+
+    /**
+     * 计算密码-删除密码
+     */
+    @FormUrlEncoded
+    @POST("index.php/api/generate_password/del")
+    Observable<DataInfo> delGeneratePassword(@Field("id") String id);
+
+    /**
+     * 获取密码列表
+     */
+    @GET("index.php/api/generate_password/index")
+    Observable<DataInfo<List<GeneratePasswordBean>>> getGeneratePasswordList();
 }

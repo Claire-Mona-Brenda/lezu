@@ -43,7 +43,9 @@
         android:textSize="@dimen/sp_18"
         android:textColor="@color/text_black"
         android:paddingTop="@dimen/dp_6"
-        android:paddingBottom="@dimen/dp_6"/>
+        android:paddingBottom="@dimen/dp_6"
+        android:focusableInTouchMode="true"
+        android:focusable="true"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_2"

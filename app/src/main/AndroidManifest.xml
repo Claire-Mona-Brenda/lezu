@@ -15,17 +15,6 @@
         <!--android:appComponentFactory=""-->
         <!--tools:replace="android:appComponentFactory"-->
         <!--android:extractNativeLibs="true"-->
-        <activity
-            android:name="com.alipay.sdk.app.H5PayActivity"
-            android:exported="false"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden" />
-        <!-- 拍照、相册7.0权限设置 -->
-        <activity
-            android:name="com.alipay.sdk.app.H5AuthActivity"
-            android:exported="false"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity
             android:name=".wxapi.WXPayEntryActivity"
@@ -565,6 +554,28 @@
             android:name=".tenant.opendoor.DevicesOpenPasswordActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".tenant.opendoor.OpenPwdWayActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity android:name=".tenant.opendoor.ShortPwdActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".tenant.opendoor.SelfPwdActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".tenant.opendoor.OncePwdActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".tenant.opendoor.SetTimerPwdActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".tenant.opendoor.SetTimesPwdActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".tenant.opendoor.PwdResultActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".tenant.findroom.roominfo.AllCommentActivity"
             android:screenOrientation="portrait" />

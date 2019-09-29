@@ -11,18 +11,15 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.j256.ormlite.dao.Dao;
 import com.konka.renting.R;
 import com.konka.renting.base.BaseActivity;
 import com.konka.renting.bean.DataInfo;
 import com.konka.renting.bean.GatewayInfo;
 import com.konka.renting.event.DelGatewayEvent;
-import com.konka.renting.event.RebootEvent;
 import com.konka.renting.http.SecondRetrofitHelper;
 import com.konka.renting.http.subscriber.CommonSubscriber;
 import com.konka.renting.landlord.gateway.widget.RebootPopup;
 import com.konka.renting.landlord.house.widget.ShowToastUtil;
-import com.konka.renting.sql.KonkaSqlHelper;
 import com.konka.renting.utils.RxUtil;
 import com.mcxtzhang.commonadapter.lvgv.CommonAdapter;
 import com.mcxtzhang.commonadapter.lvgv.ViewHolder;
@@ -31,7 +28,6 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -182,16 +178,6 @@ public class UserGatewayListActivity extends BaseActivity {
         });
     }
 
-//    private void initGatewayCache() {
-//        try {
-//            Dao<GatewayInfo, String> dao = KonkaSqlHelper.getHelper(this).getDao(GatewayInfo.class);
-//            List<GatewayInfo> list = dao.queryForAll();
-//            mGatewayInfos.addAll(list);
-//            mGatewayInfoCommonAdapter.notifyDataSetChanged();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     @OnClick({R.id.iv_back, R.id.iv_right})
     public void onViewClicked(View view) {
@@ -233,18 +219,6 @@ public class UserGatewayListActivity extends BaseActivity {
                     }
                 });
         addSubscrebe(subscription);
-    }
-
-    private void saveGatewayCache(List<GatewayInfo> list) {
-        if (list == null || list.isEmpty())
-            return;
-        try {
-            Dao<GatewayInfo, String> dao = KonkaSqlHelper.getHelper(this).getDao(GatewayInfo.class);
-            KonkaSqlHelper.getHelper(this).deleteTable(GatewayInfo.class);
-            dao.create(list);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
 }

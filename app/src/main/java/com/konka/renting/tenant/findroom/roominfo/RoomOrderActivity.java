@@ -34,6 +34,8 @@ import com.konka.renting.bean.RoomSearchInfoBean;
 import com.konka.renting.bean.WxPayBean;
 import com.konka.renting.event.ChooseDateEvent;
 import com.konka.renting.event.PublicCancelEvent;
+import com.konka.renting.event.TenantMainSwitchFragmentEvent;
+import com.konka.renting.event.TenantRoomInfoEvent;
 import com.konka.renting.event.TentantOpenDoorEvent;
 import com.konka.renting.http.SecondRetrofitHelper;
 import com.konka.renting.http.subscriber.CommonSubscriber;
@@ -123,9 +125,12 @@ public class RoomOrderActivity extends BaseActivity implements IPayResCall, PayS
     String bond;
     PayStatusDialog payStatusDialog;
     int payment = 0;
+    String order_id;
 
     String startDate;
     String endDate;
+    String chooseStartDate;
+    String chooseEndDate;
 
 
     public static void toActivity(Context context, RoomSearchInfoBean infoBean) {
@@ -179,7 +184,6 @@ public class RoomOrderActivity extends BaseActivity implements IPayResCall, PayS
     }
 
     private void initData() {
-        Log.e("123123", "-initData----");
         String room_type;
         if (infoBean.getRoom_type().contains("_")) {
             String[] t = infoBean.getRoom_type().split("_");
@@ -269,13 +273,25 @@ public class RoomOrderActivity extends BaseActivity implements IPayResCall, PayS
                 @Override
                 public void aliPay() {
                     payment = 2;
-                    rentOrder();
+                    if (TextUtils.isEmpty(order_id)){
+                        rentOrder();
+                    }else if (!chooseStartDate.equals(startDate)||!chooseEndDate.equals(endDate)){
+                        rentOrder();
+                    }else{
+                        continueRentOrder();
+                    }
                 }
 
                 @Override
                 public void wxPay() {
                     payment = 1;
-                    rentOrder();
+                    if (TextUtils.isEmpty(order_id)){
+                        rentOrder();
+                    }else if (!chooseStartDate.equals(startDate)||!chooseEndDate.equals(endDate)){
+                        rentOrder();
+                    }else{
+                        continueRentOrder();
+                    }
                 }
 
                 @Override
@@ -315,6 +331,47 @@ public class RoomOrderActivity extends BaseActivity implements IPayResCall, PayS
     public void rentOrder() {
         showLoadingDialog();
         Subscription subscription = SecondRetrofitHelper.getInstance().rentOrder(infoBean.getRoom_id(), startDate + " 12:00:00", endDate + " 12:00:00", payment + "")
+                .compose(RxUtil.<DataInfo<PayBean>>rxSchedulerHelper())
+                .subscribe(new CommonSubscriber<DataInfo<PayBean>>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        dismiss();
+                    }
+
+                    @Override
+                    public void onNext(DataInfo<PayBean> dataInfo) {
+                        dismiss();
+                        if (dataInfo.success()) {
+                            order_id = dataInfo.data().getOrder_id();
+                            chooseStartDate = startDate;
+                            chooseEndDate = endDate;
+                            RxBus.getDefault().post(new PayRentRefreshEvent());
+                            RxBus.getDefault().post(new TenantMainSwitchFragmentEvent(2));
+                            switch (payment) {
+                                case 2://支付宝支付
+                                    ali(dataInfo.data().getData().toString());
+                                    break;
+                                case 1://微信支付
+                                    WxPayBean wxPayInfo = new Gson().fromJson(new Gson().toJson(dataInfo.data().getData()), WxPayBean.class);
+                                    wechat(wxPayInfo);
+                                    break;
+
+                            }
+                        } else {
+                            showToast(dataInfo.msg());
+                        }
+                    }
+                });
+        addSubscrebe(subscription);
+    }
+
+
+    /**
+     * 继续支付
+     */
+    public void continueRentOrder() {
+        showLoadingDialog();
+        Subscription subscription = SecondRetrofitHelper.getInstance().continueRentOrder(order_id, payment + "")
                 .compose(RxUtil.<DataInfo<PayBean>>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo<PayBean>>() {
                     @Override
@@ -387,6 +444,7 @@ public class RoomOrderActivity extends BaseActivity implements IPayResCall, PayS
                     public void onNext(DataInfo<List<RentingDateBean>> dataInfo) {
                         dismiss();
                         if (dataInfo.success()) {
+                            rentingDates.clear();
                             rentingDates.addAll(dataInfo.data());
                         }
                     }
@@ -437,6 +495,8 @@ public class RoomOrderActivity extends BaseActivity implements IPayResCall, PayS
             case 0:
                 // 支付成功
                 RxBus.getDefault().post(new PayRentRefreshEvent());
+                RxBus.getDefault().post(new TenantMainSwitchFragmentEvent(2));
+                RxBus.getDefault().post(new TenantRoomInfoEvent(-11));
                 ResultActivity.toActivity(mActivity, getString(R.string.pay_result), getString(R.string.pay_success), getString(R.string.pay_success_tips), true);
                 finish();
                 break;
@@ -445,11 +505,13 @@ public class RoomOrderActivity extends BaseActivity implements IPayResCall, PayS
 //                    payStatusDialog = new PayStatusDialog(this, false, bond).setFailReason(reason).setPayReTry(this);
 //                    payStatusDialog.show();
 //                }
+                getRentDate();
                 showToast(getString(R.string.pay_fail));
 
 //                UIUtils.displayToast("支付失败");
                 break;
             case -2:
+                getRentDate();
                 showToast(getString(R.string.pay_cancel));
 //                Toast.makeText()
 //                UIUtils.displayToast("支付取消!!!");

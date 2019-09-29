@@ -28,6 +28,8 @@ public class RenterOrderListBean {
     private String housing_price;//	租金
     private int sponsor_type;//	发起订单人 1房东 2租房
     private int order_type;//	订单类型 1首租 2续租
+    private int is_pay;//	是否已支付 1是 0否
+    private String expire_time;//	付款截止时间
     private String thumb_image;//	房产缩略图
     private String room_name;//房产名称
     private String gateway_id;//	网关id
@@ -116,6 +118,22 @@ public class RenterOrderListBean {
 
     public int getOrder_type() {
         return order_type;
+    }
+
+    public int getIs_pay() {
+        return is_pay;
+    }
+
+    public void setIs_pay(int is_pay) {
+        this.is_pay = is_pay;
+    }
+
+    public String getExpire_time() {
+        return expire_time;
+    }
+
+    public void setExpire_time(String expire_time) {
+        this.expire_time = expire_time;
     }
 
     public void setOrder_type(int order_type) {

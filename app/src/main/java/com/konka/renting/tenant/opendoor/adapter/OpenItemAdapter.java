@@ -98,8 +98,6 @@ public class OpenItemAdapter extends PagerAdapter {
                         if (onCall != null) {
                             onCall.onClickOpen(position);
                         }
-                        Log.e("qweqeqew","============"+mImgOpenAnimation.getVisibility()+"===="+position);
-
                         break;
                     case R.id.adapter_open_item_tv_more_history://更多
                         if (onCall != null) {
@@ -200,7 +198,6 @@ public class OpenItemAdapter extends PagerAdapter {
         }
 
         mImgOpen.setEnabled(false);
-        Log.e("12313","==========startOpenAnimation=====VISIBLE==="+position);
         mImgOpenAnimation.setVisibility(View.VISIBLE);
         ObjectAnimator objectAnimator1 = ObjectAnimator.ofFloat(mImgOpenAnimation, "endAngle", 0f, 360f);
         ObjectAnimator objectAnimator2 = ObjectAnimator.ofFloat(mImgOpenAnimation, "endAngle", -360f, 0f);
@@ -225,14 +222,12 @@ public class OpenItemAdapter extends PagerAdapter {
 
             @Override
             public void onAnimationEnd(Animator animator) {
-                Log.e("12313","==========onAnimationEnd=====GONE");
                 mImgOpenAnimation.setVisibility(View.GONE);
                 mImgOpenAnimation.setTag(null);
             }
 
             @Override
             public void onAnimationCancel(Animator animator) {
-                Log.e("12313","==========onAnimationCancel=====GONE");
                 mImgOpenAnimation.setVisibility(View.GONE);
                 mImgOpenAnimation.setTag(null);
             }

@@ -26,6 +26,7 @@ import com.konka.renting.landlord.gateway.GetManagePwdAuthorityActivity;
 import com.konka.renting.landlord.gateway.ManagePwdActivity;
 import com.konka.renting.tenant.opendoor.ClockSetManageActivity;
 import com.konka.renting.tenant.opendoor.DevicesOpenPasswordActivity;
+import com.konka.renting.tenant.opendoor.OpenPwdWayActivity;
 import com.konka.renting.utils.RxUtil;
 import com.konka.renting.widget.CommonPopupWindow;
 import com.konka.renting.widget.CommonSurePopupWindow;
@@ -133,7 +134,9 @@ public class OpenManageActivity extends BaseActivity {
                 break;
             case R.id.activity_open_manage_rl_set_pwd://设置开锁密码
                 if (bean.getStatus() < 2) {
-                    DevicesOpenPasswordActivity.toActivity(this, bean.getDevice_id(), bean.getRoom_id());
+//                    DevicesOpenPasswordActivity.toActivity(this, bean.getDevice_id(), bean.getRoom_id());
+                    OpenPwdWayActivity.toActivity(mActivity, bean.getDevice_id(), bean.getRoom_id(),bean.getIs_generate_password());
+
                 } else {
                     showTips(getString(R.string.tips_get_authority_content));
                 }

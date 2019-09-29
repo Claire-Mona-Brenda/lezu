@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -62,6 +63,19 @@ public class WithdrawSetPwdCheckLoginPwdActivity extends BaseActivity {
         paint.setFakeBoldText(true);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mEdtPwd.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mEdtPwd.setFocusable(true);
+                mEdtPwd.requestFocus();
+                InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.showSoftInput(mEdtPwd, 0);
+            }
+        },500 );
+    }
 
     @OnClick({R.id.iv_back, R.id.activity_withdraw_set_pwd_check_login_pwd_btn_next})
     public void onViewClicked(View view) {

@@ -129,11 +129,20 @@ public class WithdrawDetailActivity extends BaseActivity implements PasswordView
                     card_id = "";
                     tvSelectBank.setText("");
                     mTvBankCard.setText("");
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString(BANK_CARD_ID, card_id);
+                    editor.commit();
                 }
             }
         });
 
         getBankCardList();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        card_id = sharedPreferences.getString(BANK_CARD_ID, "");
     }
 
     @OnClick({R.id.iv_back, R.id.btn_withdraw, R.id.img_tips, R.id.rl_select_bank})
@@ -252,10 +261,12 @@ public class WithdrawDetailActivity extends BaseActivity implements PasswordView
                                     }
                                 }
                             } else {
+                                boolean isHave = false;
                                 int size = list.size();
                                 for (int i = 0; i < size; i++) {
                                     MyBankBean myBankBean = list.get(i);
                                     if (card_id.equals(myBankBean.getCard_id() + "")) {
+                                        isHave = true;
                                         tvSelectBank.setText(myBankBean.getBank_name());
                                         mTvBankCard.setText(myBankBean.getCard_no());
                                         if (!TextUtils.isEmpty(myBankBean.getBank_image())) {
@@ -265,6 +276,19 @@ public class WithdrawDetailActivity extends BaseActivity implements PasswordView
                                         }
                                         break;
                                     }
+                                }
+                                if (!isHave && list != null && list.size() > 0) {
+                                    MyBankBean myBankBean = list.get(0);
+                                    card_id = myBankBean.getCard_id() + "";
+                                    tvSelectBank.setText(myBankBean.getBank_name());
+                                    mTvBankCard.setText(myBankBean.getCard_no());
+                                    if (!TextUtils.isEmpty(myBankBean.getBank_image())) {
+                                        Picasso.get().load(myBankBean.getBank_image()).into(imgBankIcon);
+                                    } else {
+                                        Picasso.get().load(R.mipmap.bank_other).into(imgBankIcon);
+                                    }
+                                } else if (!isHave) {
+                                    card_id = null;
                                 }
                             }
                         } else {
@@ -290,6 +314,7 @@ public class WithdrawDetailActivity extends BaseActivity implements PasswordView
             }
         });
         showPopup(withdrawcashPwdPopup);
+        withdrawcashPwdPopup.setPasswordViewFouse();
     }
 
     private void showTipsPop() {

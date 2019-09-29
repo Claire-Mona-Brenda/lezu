@@ -59,6 +59,16 @@
             android:textStyle="bold"
             android:typeface="sans"/>
     </RelativeLayout>
+    <TextView
+        android:id="@+id/adapter_tv_pay_time"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_35"
+        android:gravity="center"
+        android:background="#F2F9FF"
+        android:textColor="@color/text_blue"
+        android:textSize="@dimen/sp_14"
+        android:text="@string/please_end_time_to_pay"
+        android:visibility="gone"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -99,6 +109,18 @@
             android:layout_alignTop="@+id/tv_tips_end"
             android:textColor="@color/text_black"
             android:textSize="@dimen/sp_13"/>
+        <TextView
+            android:id="@+id/adapter_tv_to_pay"
+            android:layout_width="@dimen/dp_95"
+            android:layout_height="@dimen/dp_30"
+            android:background="@drawable/shape_button_main"
+            android:textSize="@dimen/sp_14"
+            android:textColor="@color/text_white"
+            android:text="@string/to_pay_2"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 </LinearLayout>

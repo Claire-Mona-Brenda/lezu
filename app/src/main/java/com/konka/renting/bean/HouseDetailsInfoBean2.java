@@ -54,6 +54,7 @@ public class HouseDetailsInfoBean2 implements Parcelable {
     private int is_del;
     private int is_install;//0未缴纳安装费 1已缴纳安装费
     private int is_pub;//0未发布 1已发布
+    private int is_generate_password;//0没有计算密码功能 1有计算密码功能
     private int service_status;
     private String service_date;
     private String device_id;
@@ -93,6 +94,7 @@ public class HouseDetailsInfoBean2 implements Parcelable {
         is_del = in.readInt();
         is_install = in.readInt();
         is_pub = in.readInt();
+        is_generate_password = in.readInt();
         service_status = in.readInt();
         service_date = in.readString();
         device_id = in.readString();
@@ -276,6 +278,14 @@ public class HouseDetailsInfoBean2 implements Parcelable {
         this.is_pub = is_pub;
     }
 
+    public int getIs_generate_password() {
+        return is_generate_password;
+    }
+
+    public void setIs_generate_password(int is_generate_password) {
+        this.is_generate_password = is_generate_password;
+    }
+
     public int getService_status() {
         return service_status;
     }
@@ -440,6 +450,7 @@ public class HouseDetailsInfoBean2 implements Parcelable {
         dest.writeInt(is_del);
         dest.writeInt(is_install);
         dest.writeInt(is_pub);
+        dest.writeInt(is_generate_password);
         dest.writeInt(service_status);
         dest.writeString(service_date);
         dest.writeString(device_id);

@@ -15,8 +15,10 @@ public class BillDetailBean {
 
     private int id;//账单id
     private String order_no;//账单编号
-    private int type;//账单类型 1充值 2服务费支付 3安装费 4服务费退款
+    private int type;//账单类型 1充值 2服务费支付 3安装费 4服务费退款 5提现 6房租
+    private int status;//提现 0提现中/1提现成功/2提现失败
     private String amount;//金额
+    private String balance;//余额
     private String create_time;//产生时间
     private String remark;//描述
     private int payment;//支付方式 1微信 支付宝 3余额
@@ -47,12 +49,28 @@ public class BillDetailBean {
         this.type = type;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     public String getAmount() {
         return amount;
     }
 
     public void setAmount(String amount) {
         this.amount = amount;
+    }
+
+    public String getBalance() {
+        return balance;
+    }
+
+    public void setBalance(String balance) {
+        this.balance = balance;
     }
 
     public String getCreate_time() {

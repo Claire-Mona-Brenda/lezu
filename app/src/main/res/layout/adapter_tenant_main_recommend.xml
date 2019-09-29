@@ -47,12 +47,7 @@
         android:layout_below="@+id/adapter_tenant_main_recommend_tv_info"
         android:layout_alignStart="@+id/adapter_tenant_main_recommend_tv_info"
         android:layout_marginTop="@dimen/dp_4">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/sp_16"
-            android:textColor="@color/text_org"
-            android:text="@string/money_unit_1"/>
+
         <TextView
             android:id="@+id/adapter_tenant_main_recommend_tv_price"
             android:layout_width="wrap_content"
@@ -66,7 +61,7 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/sp_16"
             android:textColor="@color/text_org"
-            android:text="@string/house_info_rent_pay_unit_day"/>
+            android:text="@string/public_house_pay_unit_day"/>
     </LinearLayout>
     <View
         android:layout_width="match_parent"

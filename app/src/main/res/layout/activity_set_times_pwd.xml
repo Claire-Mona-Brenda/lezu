@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_ffffff">
+    <include layout="@layout/include_title_text" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:background="@color/style_line"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_black"
+        android:textSize="@dimen/sp_16"
+        android:text="@string/times"
+        android:layout_marginTop="@dimen/dp_40"
+        android:layout_marginStart="@dimen/dp_25"
+        />
+    <EditText
+        android:id="@+id/activity_set_times_pwd_edt_num"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dp_15"
+        android:paddingBottom="@dimen/dp_10"
+        android:paddingStart="@dimen/dp_25"
+        android:paddingEnd="@dimen/dp_25"
+        android:textSize="@dimen/sp_14"
+        android:hint="@string/please_input_times"
+        android:textColorHint="@color/color_cccccc"
+        android:textColor="@color/text_black"
+        android:inputType="number"
+        android:maxLength="3"
+        android:background="@null"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:background="@color/style_line"
+        android:layout_marginStart="@dimen/dp_25"
+        android:layout_marginEnd="@dimen/dp_25"/>
+
+    <TextView
+        android:id="@+id/activity_set_times_pwd_tv_create"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44"
+        android:gravity="center"
+        android:layout_marginStart="@dimen/dp_22"
+        android:layout_marginEnd="@dimen/dp_22"
+        android:layout_marginTop="@dimen/dp_60"
+        android:textColor="@color/text_white"
+        android:textSize="@dimen/sp_16"
+        android:text="@string/to_create"
+        android:background="@drawable/shape_button"/>
+</LinearLayout>

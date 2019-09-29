@@ -127,8 +127,6 @@ public class PwsOrderDetailsActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
-                finish();
-                break;
             case R.id.activity_pws_order_details_tv_sure:
                 finish();
                 break;

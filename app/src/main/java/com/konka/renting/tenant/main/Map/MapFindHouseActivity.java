@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -151,20 +152,20 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
 
     int rent_type = 2;//1 短租 2 长租
     int page = 1;
-    boolean is_no_limit_price_r = true;
-    boolean is_no_limit_price_l = true;
+    boolean is_no_limit_price_r = true;//短租
+    boolean is_no_limit_price_l = true;//长租
     int curr_level = 11;
-    String price_area_id_l = "";
-    String price_area_id_r = "";
+    String price_area_id_l = "";//长租
+    String price_area_id_r = "";//短租
     String room_type_id = "";
-    String price_area_l = "";
-    String price_area_r = "";
+    String price_area_l = "";//长租
+    String price_area_r = "";//短租
 
     String cityName;
     AMap aMap;
 
-    List<RoomPriceAreaBean> priceAreaList;
-    List<RoomTypeListBean> roomTypeList;
+    List<RoomPriceAreaBean> priceAreaList = new ArrayList<>();
+    List<RoomTypeListBean> roomTypeList = new ArrayList<>();
 
     List<RoomPriceAreaBean> chooseLPriceList = new ArrayList<>();
     List<RoomPriceAreaBean> chooseSPriceList = new ArrayList<>();
@@ -223,10 +224,9 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
         mViewShortLine.setVisibility(View.INVISIBLE);
 
 
-
-
         initAdapter();
         initPop();
+        initListener();
         getRoomPriceAreaList();
         getRoomTypeList();
 
@@ -250,6 +250,103 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
             }
         });
 
+    }
+
+    private void initListener() {
+        mDrawerlayout.setDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+
+            }
+
+            @Override
+            public void onDrawerOpened(@NonNull View drawerView) {
+
+            }
+
+            @Override
+            public void onDrawerClosed(@NonNull View drawerView) {
+                if (rent_type == 2) {//长租
+                    if (priceAreaList.size() <= 0) {
+                        return;
+                    }
+                    if (!TextUtils.isEmpty(price_area_l)) {
+                        String[] p = price_area_l.split("-");
+                        mEdtPriceMin.setText(p[0]);
+                        mEdtPriceMax.setText(p[1]);
+                        mEdtPriceMin.setSelection(p[0].length());
+                        mEdtPriceMax.setSelection(p[1].length());
+                        is_no_limit_price_l = true;
+                        priceAreaCommonAdapter.notifyDataSetChanged();
+
+                    } else if (TextUtils.isEmpty(price_area_id_l)) {
+                        mEdtPriceMin.setText("");
+                        mEdtPriceMax.setText("");
+                        is_no_limit_price_l = true;
+                        chooseLPriceList.clear();
+                        priceAreaCommonAdapter.notifyDataSetChanged();
+                    } else {
+                        mEdtPriceMin.setText("");
+                        mEdtPriceMax.setText("");
+                        String[] ids = price_area_id_l.split(",");
+                        chooseLPriceList.clear();
+                        int len = ids.length;
+                        for (int i = 0; i < len; i++) {
+                            int size=priceAreaList.size();
+                            for (int j = 0; j < size; j++) {
+                                if (ids[i].equals(priceAreaList.get(j).getId()+"")){
+                                    chooseLPriceList.add(priceAreaList.get(j));
+                                    break;
+                                }
+                            }
+                        }
+                        priceAreaCommonAdapter.notifyDataSetChanged();
+                    }
+                } else {//短租
+                    if (priceAreaList.size() <= 0) {
+                        return;
+                    }
+                    if (!TextUtils.isEmpty(price_area_r)) {
+                        String[] p = price_area_r.split("-");
+                        mEdtPriceMin.setText(p[0]);
+                        mEdtPriceMax.setText(p[1]);
+                        mEdtPriceMin.setSelection(p[0].length());
+                        mEdtPriceMax.setSelection(p[1].length());
+                        is_no_limit_price_r = true;
+                        priceAreaCommonAdapter.notifyDataSetChanged();
+
+                    } else if (TextUtils.isEmpty(price_area_id_r)) {
+                        mEdtPriceMin.setText("");
+                        mEdtPriceMax.setText("");
+                        is_no_limit_price_r = true;
+                        chooseSPriceList.clear();
+                        priceAreaCommonAdapter.notifyDataSetChanged();
+                    } else {
+                        mEdtPriceMin.setText("");
+                        mEdtPriceMax.setText("");
+                        String[] ids = price_area_id_r.split(",");
+                        chooseSPriceList.clear();
+                        int len = ids.length;
+                        for (int i = 0; i < len; i++) {
+                            int size=priceAreaList.size();
+                            for (int j = 0; j < size; j++) {
+                                if (ids[i].equals(priceAreaList.get(j).getId()+"")){
+                                    chooseSPriceList.add(priceAreaList.get(j));
+                                    break;
+                                }
+                            }
+                        }
+                        priceAreaCommonAdapter.notifyDataSetChanged();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+
+            }
+        });
     }
 
 
@@ -304,8 +401,6 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
     }
 
     private void initAdapter() {
-        roomTypeList = new ArrayList<>();
-        priceAreaList = new ArrayList<>();
 
         priceAreaCommonAdapter = new CommonAdapter<RoomPriceAreaBean>(this, priceAreaList, R.layout.adapter_find_map_filtrate_price) {
             @Override
@@ -380,18 +475,18 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
 
                         } else if (bean.getId() != -1) {
                             if (rent_type == 1) {
-                                int size=chooseSPriceList.size();
+                                int size = chooseSPriceList.size();
                                 for (int i = 0; i < size; i++) {
-                                    if (chooseSPriceList.get(i).getId()==bean.getId()){
+                                    if (chooseSPriceList.get(i).getId() == bean.getId()) {
                                         chooseSPriceList.remove(i);
                                         break;
                                     }
                                 }
 
                             } else {
-                                int size=chooseLPriceList.size();
+                                int size = chooseLPriceList.size();
                                 for (int i = 0; i < size; i++) {
-                                    if (chooseLPriceList.get(i).getId()==bean.getId()){
+                                    if (chooseLPriceList.get(i).getId() == bean.getId()) {
                                         chooseLPriceList.remove(i);
                                         break;
                                     }
@@ -602,10 +697,10 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
     @OnClick({R.id.activity_map_find_house_img_back, R.id.activity_map_find_house_ll_long_rent, R.id.activity_map_find_house_ll_short_rent, R.id.activity_map_find_house_img_filtrate, R.id.activity_map_find_house_img_search, R.id.activity_find_house_tv_reset, R.id.activity_find_house_tv_sure})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.activity_map_find_house_img_back:
+            case R.id.activity_map_find_house_img_back://返回
                 finish();
                 break;
-            case R.id.activity_map_find_house_ll_long_rent:
+            case R.id.activity_map_find_house_ll_long_rent://切换长租
                 if (rent_type != 2) {
                     rent_type = 2;
                     mTvLongRent.setSelected(true);
@@ -619,7 +714,7 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
                     addMarkerInScreen();
                 }
                 break;
-            case R.id.activity_map_find_house_ll_short_rent:
+            case R.id.activity_map_find_house_ll_short_rent://切换短租
                 if (rent_type != 1) {
                     rent_type = 1;
                     mTvLongRent.setSelected(false);
@@ -633,7 +728,7 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
                     addMarkerInScreen();
                 }
                 break;
-            case R.id.activity_map_find_house_img_filtrate:
+            case R.id.activity_map_find_house_img_filtrate://筛选
                 String title = getString(rent_type == 1 ? R.string.competitive_house_short : R.string.competitive_house_long);
                 if (!mTvTitle.getText().toString().equals(title)) {
                     priceAreaList.clear();
@@ -644,7 +739,7 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
                 mTvTitle.setText(title);
                 mDrawerlayout.openDrawer(mLlFiltrate);
                 break;
-            case R.id.activity_map_find_house_img_search:
+            case R.id.activity_map_find_house_img_search://搜索
                 MapSearchActivity.toActivity(this, cityName, rent_type);
                 break;
             case R.id.activity_find_house_tv_reset:
@@ -669,7 +764,7 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
                 curr_level = 0;
                 addMarkerInScreen();
                 break;
-            case R.id.activity_find_house_tv_sure:
+            case R.id.activity_find_house_tv_sure://筛选确定
                 String priceMin = mEdtPriceMin.getText().toString();
                 String priceMax = mEdtPriceMax.getText().toString();
 

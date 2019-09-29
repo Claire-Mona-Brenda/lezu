@@ -3,12 +3,10 @@ package com.konka.renting.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.j256.ormlite.table.DatabaseTable;
 
 /**
  * Created by jzxiang on 26/01/2018.
  */
-@DatabaseTable(tableName = "gateway")
 public class GatewayInfo implements Parcelable {
 
 

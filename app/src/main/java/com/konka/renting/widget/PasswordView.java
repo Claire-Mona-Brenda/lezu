@@ -397,6 +397,11 @@ public class PasswordView extends View {
         }
     }
 
+    public void showInput(){
+        requestFocus();
+        inputManager.showSoftInput(this, InputMethodManager.SHOW_FORCED);
+    }
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {

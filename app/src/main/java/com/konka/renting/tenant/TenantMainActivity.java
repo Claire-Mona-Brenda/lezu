@@ -25,9 +25,11 @@ import com.konka.renting.bean.DataInfo;
 import com.konka.renting.bean.LandlordUserDetailsInfoBean;
 import com.konka.renting.bean.LoginUserBean;
 import com.konka.renting.bean.OpenCityBean;
+import com.konka.renting.bean.PayRentRefreshEvent;
 import com.konka.renting.event.AddCodeSuccessEvent;
 import com.konka.renting.event.LocationEvent;
 import com.konka.renting.event.RefreshFindRoomEvent;
+import com.konka.renting.event.TenantMainSwitchFragmentEvent;
 import com.konka.renting.http.RetrofitHelper;
 import com.konka.renting.http.SecondRetrofitHelper;
 import com.konka.renting.http.subscriber.CommonSubscriber;
@@ -68,6 +70,9 @@ public class TenantMainActivity extends BaseMainActivity {
     DensityUtil densityUtil = new DensityUtil();
     UpdateAppPopupwindow updateAppPopupwindow;
     public AppConfigBean mAppConfigBean;
+
+    boolean isSwitchFragment=false;
+    int switchFragment_index=0;
 
 
     public static void toActivity(Context context) {
@@ -203,6 +208,13 @@ public class TenantMainActivity extends BaseMainActivity {
                 selectionCity();
             }
         });
+        addRxBusSubscribe(TenantMainSwitchFragmentEvent.class, new Action1<TenantMainSwitchFragmentEvent>() {
+            @Override
+            public void call(TenantMainSwitchFragmentEvent event) {
+                isSwitchFragment=true;
+                switchFragment_index=event.getIndex();
+            }
+        });
 //        getServerCity();
         getAllCity();
 //        Log.e("mobile", LoginUserBean.getInstance().getMobile());
@@ -331,6 +343,10 @@ public class TenantMainActivity extends BaseMainActivity {
             getUserInfo();
         }
         //neadGoTo(getIntent());
+        if (isSwitchFragment){
+            isSwitchFragment=false;
+            menuItemClicked(switchFragment_index);
+        }
     }
 
     private void getUserInfo() {

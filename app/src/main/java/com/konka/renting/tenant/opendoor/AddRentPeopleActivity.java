@@ -105,6 +105,7 @@ public class AddRentPeopleActivity extends BaseActivity {
                         if (dataInfo.success()) {
                             dismiss();
                             if (isNeedTo) {
+                                RxBus.getDefault().post(new AddShareRentEvent(1, order_id));
                                 ShareRentListActivity.toActivity(mActivity, order_id);
                             } else {
                                 RxBus.getDefault().post(new AddShareRentEvent(1, order_id));

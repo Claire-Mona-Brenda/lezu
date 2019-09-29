@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/style_bg_page"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_title_text" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:background="@drawable/shape_pwd_time_top_bg"
+        android:gravity="center_vertical">
+        <TextView
+            android:id="@+id/activity_pwd_result_tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/timer_pwd"
+            android:textStyle="bold"
+            android:typeface="sans"
+            android:textColor="@color/color_ffffff"
+            android:textSize="@dimen/sp_17"
+            android:paddingStart="@dimen/dp_14"
+            android:paddingEnd="@dimen/dp_14"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:background="@color/color_ffffff"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+        <TextView
+            android:id="@+id/activity_pwd_result_tv_pwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_28"
+            android:textColor="@color/text_black"
+            android:textStyle="bold"
+            android:typeface="sans"
+            android:layout_marginTop="@dimen/dp_25"
+            />
+        <RelativeLayout
+            android:id="@+id/activity_pwd_result_rl_timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:visibility="invisible">
+            <TextView
+                android:id="@+id/activity_pwd_result_tv_timer_tips_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp_13"
+                android:textColor="@color/text_gray"
+                android:text="@string/timer_start_time_" />
+            <TextView
+                android:id="@+id/activity_pwd_result_tv_timer_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/activity_pwd_result_tv_timer_tips_start"
+                android:layout_alignTop="@+id/activity_pwd_result_tv_timer_tips_start"
+                android:textSize="@dimen/sp_13"
+                android:textColor="@color/text_gray" />
+            <TextView
+                android:id="@+id/activity_pwd_result_tv_timer_tips_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/activity_pwd_result_tv_timer_tips_start"
+                android:layout_marginTop="@dimen/dp_4"
+                android:textSize="@dimen/sp_13"
+                android:textColor="@color/text_gray"
+                android:text="@string/timer_end_time_" />
+            <TextView
+                android:id="@+id/activity_pwd_result_tv_timer_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/activity_pwd_result_tv_timer_tips_end"
+                android:layout_alignTop="@+id/activity_pwd_result_tv_timer_tips_end"
+                android:textSize="@dimen/sp_13"
+                android:textColor="@color/text_gray" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/activity_pwd_result_rl_times"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:visibility="gone">
+            <TextView
+                android:id="@+id/activity_pwd_result_tv_times_tips_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp_13"
+                android:textColor="@color/text_gray"
+                android:text="@string/times_times_" />
+            <TextView
+                android:id="@+id/activity_pwd_result_tv_times_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/activity_pwd_result_tv_times_tips_start"
+                android:layout_alignTop="@+id/activity_pwd_result_tv_times_tips_start"
+                android:textSize="@dimen/sp_13"
+                android:textColor="@color/text_gray" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/activity_pwd_result_tv_times_start"
+                android:layout_alignTop="@+id/activity_pwd_result_tv_times_start"
+                android:textSize="@dimen/sp_13"
+                android:textColor="@color/text_gray"
+                android:text="@string/times_num"/>
+            <TextView
+                android:id="@+id/activity_pwd_result_tv_times_tips_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/activity_pwd_result_tv_times_tips_start"
+                android:layout_marginTop="@dimen/dp_4"
+                android:textSize="@dimen/sp_13"
+                android:textColor="@color/text_gray"
+                android:text="@string/times_use_time_" />
+            <TextView
+                android:id="@+id/activity_pwd_result_tv_times_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/activity_pwd_result_tv_times_tips_end"
+                android:layout_alignTop="@+id/activity_pwd_result_tv_times_tips_end"
+                android:textSize="@dimen/sp_13"
+                android:textColor="@color/text_gray" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/activity_pwd_result_tv_times_end"
+                android:layout_alignTop="@+id/activity_pwd_result_tv_times_end"
+                android:textSize="@dimen/sp_13"
+                android:textColor="@color/text_gray"
+                android:text="@string/times_day"/>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/activity_pwd_result_tv_copy"
+            android:layout_width="@dimen/dp_75"
+            android:layout_height="@dimen/dp_28"
+            android:background="@drawable/shape_button"
+            android:textColor="@color/text_white"
+            android:textSize="@dimen/sp_12"
+            android:text="@string/copy"
+            android:gravity="center"
+            android:layout_marginBottom="@dimen/dp_22"/>
+    </LinearLayout>
+
+</LinearLayout>
