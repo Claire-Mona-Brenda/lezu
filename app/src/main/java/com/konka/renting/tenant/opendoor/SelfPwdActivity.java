@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.konka.renting.R;
@@ -113,6 +114,8 @@ public class SelfPwdActivity extends BaseActivity {
                 });
             }
         };
+        mRv.setLayoutManager(new LinearLayoutManager(this));
+        mRv.setAdapter(adapter);
 
         addRxBusSubscribe(DeviceOpenPwdListEvent.class, new Action1<DeviceOpenPwdListEvent>() {
             @Override
@@ -120,6 +123,8 @@ public class SelfPwdActivity extends BaseActivity {
                 refresh();
             }
         });
+
+        refresh();
 
     }
 

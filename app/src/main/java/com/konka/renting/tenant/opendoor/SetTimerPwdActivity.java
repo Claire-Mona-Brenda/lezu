@@ -128,7 +128,9 @@ public class SetTimerPwdActivity extends BaseActivity {
                     showToast(R.string.timer_start_time);
                 } else if (TextUtils.isEmpty(start)) {
                     showToast(R.string.timer_end_time);
-                } else {
+                } else if (DateTimeUtil.stringToDate(start,FORMAT_DATE).getTime()>=DateTimeUtil.stringToDate(end,FORMAT_DATE).getTime()){
+                    showToast(R.string.timer_start_no_to_more_end_time);
+                }else {
                     addGeneratePassword();
                 }
                 break;

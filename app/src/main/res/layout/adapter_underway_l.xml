@@ -112,5 +112,14 @@
             android:text="@string/cancel_order"
             android:layout_alignParentEnd="true"
             />
+        <ImageView
+            android:id="@+id/adapter_img_cancel"
+            android:layout_width="@dimen/dp_70"
+            android:layout_height="@dimen/dp_50"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:src="@mipmap/order_cancel"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:visibility="gone"/>
     </RelativeLayout>
 </LinearLayout>

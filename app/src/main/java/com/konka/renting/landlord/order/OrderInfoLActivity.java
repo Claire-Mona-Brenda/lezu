@@ -102,6 +102,14 @@ public class OrderInfoLActivity extends BaseActivity {
     TextView tvTipsCreateTime;
     @BindView(R.id.activity_order_info_tv_create_time)
     TextView mTvCreateTime;
+    @BindView(R.id.tv_tips_cancel_type)
+    TextView tvTipsCancelType;
+    @BindView(R.id.activity_order_info_tv_cancel_type)
+    TextView tvCancelType;
+    @BindView(R.id.tv_tips_refund_type)
+    TextView tvTipsRefundType;
+    @BindView(R.id.activity_order_info_tv_refund_type)
+    TextView tvRefundType;
 
     RenterOrderInfoBean infoBean;
     int type = 0;//0 进行中  1已完成
@@ -188,17 +196,17 @@ public class OrderInfoLActivity extends BaseActivity {
         if (!TextUtils.isEmpty(infoBean.getHousing_price()) && Float.valueOf(infoBean.getHousing_price()) != 0) {
             mTvRoomPrice.setVisibility(View.VISIBLE);
             String unit = infoBean.getType() == 1 ? "/天" : "/月";
-            String price=infoBean.getHousing_price();
-            if (!TextUtils.isEmpty(price)){
+            String price = infoBean.getHousing_price();
+            if (!TextUtils.isEmpty(price)) {
                 float priceF = Float.valueOf(infoBean.getHousing_price());
                 int priceI = (int) priceF;
-                if (priceF>priceI){
-                    price= priceF+"";
-                }else{
-                    price= priceI+"";
+                if (priceF > priceI) {
+                    price = priceF + "";
+                } else {
+                    price = priceI + "";
                 }
-            }else{
-                price="";
+            } else {
+                price = "";
             }
             mTvRoomPrice.setText("¥ " + price + unit);
             mLlPushType.setVisibility(View.VISIBLE);
@@ -249,6 +257,26 @@ public class OrderInfoLActivity extends BaseActivity {
 
         mTvOrderNo.setText(infoBean.getOrder_no());
         mTvCreateTime.setText(infoBean.getCreate_time());
+
+        if (infoBean.getStatus() == 7) {
+            tvTipsCancelType.setVisibility(View.VISIBLE);
+            tvCancelType.setVisibility(View.VISIBLE);
+            tvCancelType.setText(R.string.order_status_7);
+            if (infoBean.getRefund_status() != 0) {
+                tvTipsRefundType.setVisibility(View.VISIBLE);
+                tvRefundType.setVisibility(View.VISIBLE);
+                tvRefundType.setText(R.string.refund_back);
+            } else {
+                tvTipsRefundType.setVisibility(View.GONE);
+                tvRefundType.setVisibility(View.GONE);
+            }
+        } else {
+            tvTipsCancelType.setVisibility(View.GONE);
+            tvCancelType.setVisibility(View.GONE);
+            tvTipsRefundType.setVisibility(View.GONE);
+            tvRefundType.setVisibility(View.GONE);
+
+        }
 
     }
 

@@ -121,6 +121,15 @@
             android:layout_centerVertical="true"
             android:gravity="center"
             android:visibility="gone"/>
+        <ImageView
+            android:id="@+id/adapter_img_cancel"
+            android:layout_width="@dimen/dp_70"
+            android:layout_height="@dimen/dp_50"
+            android:src="@mipmap/order_cancel"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 </LinearLayout>

@@ -129,17 +129,17 @@ public class DoneLFragment extends BaseFragment {
             public void convert(ViewHolder viewHolder, RenterOrderListBean listBean) {
                 if (!TextUtils.isEmpty(listBean.getHousing_price()) && listBean.getRent_type() != 0) {
                     String unit = listBean.getRent_type() == 1 ? "/天" : "/月";
-                    String price=listBean.getHousing_price();
-                    if (!TextUtils.isEmpty(price)){
+                    String price = listBean.getHousing_price();
+                    if (!TextUtils.isEmpty(price)) {
                         float priceF = Float.valueOf(listBean.getHousing_price());
                         int priceI = (int) priceF;
-                        if (priceF>priceI){
-                            price= priceF+"";
-                        }else{
-                            price= priceI+"";
+                        if (priceF > priceI) {
+                            price = priceF + "";
+                        } else {
+                            price = priceI + "";
                         }
-                    }else{
-                        price="";
+                    } else {
+                        price = "";
                     }
                     viewHolder.setText(R.id.adapter_tv_room_price, "¥ " + price + unit);
                     viewHolder.setVisible(R.id.adapter_tv_room_price, true);
@@ -169,6 +169,7 @@ public class DoneLFragment extends BaseFragment {
                 spannableStringBuilder.append("|" + listBean.getFloor() + "/" + listBean.getTotal_floor() + "层");
                 viewHolder.setText(R.id.adapter_tv_room_info, spannableStringBuilder);
                 viewHolder.setVisible(R.id.adapter_tv_cancel, false);
+                viewHolder.setVisible(R.id.adapter_img_cancel, listBean.getStatus() == 7);
 
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override

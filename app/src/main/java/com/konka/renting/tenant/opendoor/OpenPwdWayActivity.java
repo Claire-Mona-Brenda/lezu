@@ -85,19 +85,19 @@ public class OpenPwdWayActivity extends BaseActivity {
             case R.id.iv_back:
                 finish();
                 break;
-            case R.id.activity_open_pwd_way_rl_short_pwd:
+            case R.id.activity_open_pwd_way_rl_short_pwd://临时密码
                 ShortPwdActivity.toActivity(this, deviceId, room_id);
                 break;
-            case R.id.activity_open_pwd_way_rl_self_pwd:
+            case R.id.activity_open_pwd_way_rl_self_pwd://自定义密码
                 SelfPwdActivity.toActivity(this, deviceId, room_id);
                 break;
-            case  R.id.activity_open_pwd_way_rl_once_pwd:
+            case  R.id.activity_open_pwd_way_rl_once_pwd://一次性密码
                 OncePwdActivity.toActivity(this, deviceId, room_id);
                 break;
-            case R.id.activity_open_pwd_way_rl_timer_pwd:
+            case R.id.activity_open_pwd_way_rl_timer_pwd://计时密码
                 SetTimerPwdActivity.toActivity(this,deviceId,room_id);
                 break;
-            case R.id.activity_open_pwd_way_rl_times_pwd:
+            case R.id.activity_open_pwd_way_rl_times_pwd://计次密码
                 SetTimesPwdActivity.toActivity(this,deviceId,room_id);
                 break;
         }

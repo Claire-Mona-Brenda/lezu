@@ -29,6 +29,7 @@ public class RenterOrderListBean {
     private int sponsor_type;//	发起订单人 1房东 2租房
     private int order_type;//	订单类型 1首租 2续租
     private int is_pay;//	是否已支付 1是 0否
+    private int refund_status;//	退款状态 0正常 1退款中 2完成退款
     private String expire_time;//	付款截止时间
     private String thumb_image;//	房产缩略图
     private String room_name;//房产名称
@@ -126,6 +127,14 @@ public class RenterOrderListBean {
 
     public void setIs_pay(int is_pay) {
         this.is_pay = is_pay;
+    }
+
+    public int getRefund_status() {
+        return refund_status;
+    }
+
+    public void setRefund_status(int refund_status) {
+        this.refund_status = refund_status;
     }
 
     public String getExpire_time() {

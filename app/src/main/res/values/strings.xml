@@ -2,7 +2,7 @@
     <string name="app_name">乐租小窝</string>
 
     <string name="do_success">操作成功</string>
-    <string name="do_failed">操作失败</string>
+    <string name="do_failed">操作失效</string>
     <string name="loading">请求中,请稍候</string>
 
     <string name="main_main">首页</string>
@@ -414,8 +414,12 @@
     <string name="tips_deposit_money">押金</string>
     <string name="tips_order_no">订单号</string>
     <string name="tips_create_time">创建时间</string>
+    <string name="tips_cancel_type">订单类型</string>
+    <string name="tips_refund_type">退款方式</string>
     <string name="tips_landlord_">房东：</string>
     <string name="tips_tenant_">租客：</string>
+
+    <string name="refund_back">原路返回</string>
 
     <!--租客管理-->
     <string name="dialog_renter_manage_apply_title">合租申请</string>
@@ -766,6 +770,7 @@
     <string name="timer">计时</string>
     <string name="timer_start_time">请设置生效时间</string>
     <string name="timer_end_time">请设置失效时间</string>
+    <string name="timer_start_no_to_more_end_time">设置的生效时间应小于失效时间</string>
 
     <string name="timer_start_time_">生效时间：</string>
     <string name="timer_end_time_">失效时间：</string>

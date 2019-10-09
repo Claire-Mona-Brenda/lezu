@@ -67,6 +67,7 @@ public class RenterOrderInfoBean {
     private String account;//激活码
     private int is_online;// 0线下
     private int is_pub;// 是否发布
+    private int refund_status;// 退款状态 0正常 1退款中 2完成退款
 
     public String getOrder_id() {
         return order_id;
@@ -354,6 +355,14 @@ public class RenterOrderInfoBean {
 
     public void setIs_pub(int is_pub) {
         this.is_pub = is_pub;
+    }
+
+    public int getRefund_status() {
+        return refund_status;
+    }
+
+    public void setRefund_status(int refund_status) {
+        this.refund_status = refund_status;
     }
 
     public static class LandlordBean {
