@@ -196,6 +196,7 @@
     <string name="title_withdraw_pwd">提现密码</string>
 
     <string name="withdraw_num_tips">本月提取剩余次数</string>
+    <string name="withdraw_num_no">本月提取次数已用完，请下个月再申请</string>
     <string name="withdraw_num">（%d次）</string>
     <string name="please_choose_bank_card">请选择提现银行卡</string>
     <string name="no_balance">无提现余额</string>
@@ -400,6 +401,7 @@
     <string name="order_status_5">过期</string>
     <string name="order_status_6">租客取消</string>
     <string name="order_status_7">房东取消</string>
+    <string name="order_status_8">逾期未完成支付，订单取消</string>
 
     <string name="order_title_underway">进行中</string>
     <string name="order_title_done">已完成</string>

@@ -55,9 +55,7 @@
             android:layout_alignStart="@+id/adapter_tv_room_info"
             android:layout_marginTop="@dimen/dp_6"
             android:textSize="@dimen/sp_16"
-            android:textColor="@color/text_ren"
-            android:textStyle="bold"
-            android:typeface="sans"/>
+            android:textColor="@color/text_ren" />
     </RelativeLayout>
     <TextView
         android:id="@+id/adapter_tv_pay_time"

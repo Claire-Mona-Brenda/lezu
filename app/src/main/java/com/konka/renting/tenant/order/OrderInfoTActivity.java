@@ -231,6 +231,12 @@ public class OrderInfoTActivity extends BaseActivity {
                 tvRefundType.setVisibility(View.GONE);
                 tvTipsRefundType.setVisibility(View.GONE);
             }
+        } else if (infoBean.getStatus() == 8) {
+            tvRefundType.setVisibility(View.GONE);
+            tvTipsRefundType.setVisibility(View.GONE);
+            tvTipsCancelType.setVisibility(View.VISIBLE);
+            tvCancelType.setVisibility(View.VISIBLE);
+            tvCancelType.setText(R.string.order_status_8);
         } else {
             tvTipsCancelType.setVisibility(View.GONE);
             tvCancelType.setVisibility(View.GONE);

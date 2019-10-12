@@ -401,6 +401,9 @@ public class PasswordView extends View {
         requestFocus();
         inputManager.showSoftInput(this, InputMethodManager.SHOW_FORCED);
     }
+    public void hideInput(){
+        inputManager.hideSoftInputFromWindow(this.getWindowToken(), 0);
+    }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {

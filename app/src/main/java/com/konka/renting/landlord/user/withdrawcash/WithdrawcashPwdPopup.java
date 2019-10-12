@@ -59,6 +59,13 @@ public class WithdrawcashPwdPopup extends PopupWindow {
         }
     }
 
+    public void hidePasswordViewFouse(){
+        if (passwordView != null) {
+            passwordView.hideInput();
+
+        }
+    }
+
     public void setListent(PasswordView.PasswordListener listent) {
         if (passwordView != null)
             passwordView.setPasswordListener(listent);
@@ -74,5 +81,11 @@ public class WithdrawcashPwdPopup extends PopupWindow {
     public void setForgetListent(View.OnClickListener  onClickListener) {
         if (tvForget != null)
             tvForget.setOnClickListener(onClickListener);
+    }
+
+    @Override
+    public void dismiss() {
+        hidePasswordViewFouse();
+        super.dismiss();
     }
 }

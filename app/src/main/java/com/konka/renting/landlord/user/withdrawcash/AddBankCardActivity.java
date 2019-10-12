@@ -88,9 +88,9 @@ public class AddBankCardActivity extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (charSequence.toString().length() >= 16) {
-                    getIssueBank(charSequence.toString());
-                }
+//                if (charSequence.toString().length() >= 16) {
+//                    getIssueBank(charSequence.toString());
+//                }
             }
 
             @Override

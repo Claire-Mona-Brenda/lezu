@@ -267,6 +267,10 @@ public class OpenNewFragment extends BaseFragment {
 
             @Override
             public void onPageScrollStateChanged(int state) {
+                if(mData.size()==1){
+                    mSrlRefresh.setEnabled(true);
+                    return;
+                }
                 if (state == 1) {
                     mSrlRefresh.setEnabled(false);
                 } else if (state == 2) {
@@ -385,6 +389,9 @@ public class OpenNewFragment extends BaseFragment {
         }
         if (mData.size() > 0)
             mViewPageItem.setCurrentItem(current);
+        if(mData.size()==1){
+            mSrlRefresh.setEnabled(true);
+        }
         OpenDoorListbean listbean = mData.get(current);
         if (listbean.getOrder_id() != null) {
             mTvServerEndTime.setText(listbean.getService_time().equals("0") ? (listbean.getIs_install() == 0 ? getString(R.string.house_sever_end_time_emty) : getString(R.string.house_sever_end_time_end)) : (listbean.getService_time() + getString(R.string.end_time)));
@@ -433,6 +440,7 @@ public class OpenNewFragment extends BaseFragment {
                                 mTvServerPay.setVisibility(View.VISIBLE);
                             }
                             openItemAdapter.notifyDataSetChanged();
+                            mViewPageItem.setAdapter(openItemAdapter);
                             refreshData();
                         } else {
                             showToast(payOrderDataInfo.msg());

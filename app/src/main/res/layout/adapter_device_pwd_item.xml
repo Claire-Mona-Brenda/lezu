@@ -8,7 +8,8 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@color/color_ffffff"
-    android:padding="@dimen/dp_15">
+    android:padding="@dimen/dp_15"
+    android:layout_marginBottom="@dimen/dp_5">
     <TextView
         android:id="@+id/adapter_device_item_tv_pwd"
         android:layout_width="wrap_content"

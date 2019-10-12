@@ -128,6 +128,8 @@
                 android:id="@+id/tv_room_name"
                 android:paddingTop="@dimen/dp_10"
                 android:textSize="@dimen/style_text_title"
+                android:textStyle="bold"
+                android:typeface="sans"
                 android:paddingRight="@dimen/dp_10"
                 android:paddingLeft="@dimen/dp_15"
                 android:layout_width="match_parent"
@@ -151,7 +153,9 @@
                     android:layout_centerVertical="true"
                     android:textColor="@color/text_ren"
                     android:textSize="@dimen/style_text_title"
-                    android:text="¥- -" />
+                    android:textStyle="bold"
+                    android:typeface="sans"
+                    android:text="- -" />
                 <TextView
                     android:id="@+id/tv_room_money_unit"
                     android:layout_marginLeft="@dimen/dp_4"
@@ -161,7 +165,9 @@
                     android:layout_centerVertical="true"
                     android:textColor="@color/text_ren"
                     android:textSize="@dimen/style_text_title"
-                    android:text="/月" />
+                    android:textStyle="bold"
+                    android:typeface="sans"
+                    android:text="@string/public_house_pay_unit_mon" />
 
                 <TextView
                     android:id="@+id/tv_rent_type"

@@ -316,13 +316,13 @@ public class RoomInfoActivity extends BaseActivity implements OnClickListener {
         } else {
             price = "";
         }
-        tvRoomMoney.setText("¥ " + price);
+        tvRoomMoney.setText( price);
         if (infoBean.getType() == 1) {
-            tvRoomMoneyUnit.setText("/天");
+            tvRoomMoneyUnit.setText(getString(R.string.public_house_pay_unit_day));
             tvRentType.setText(R.string.short_rent);
             tvRentType.setSelected(false);
         } else {
-            tvRoomMoneyUnit.setText("/月");
+            tvRoomMoneyUnit.setText(getString(R.string.public_house_pay_unit_mon));
             tvRentType.setText(R.string.long_rent);
             tvRentType.setSelected(true);
         }

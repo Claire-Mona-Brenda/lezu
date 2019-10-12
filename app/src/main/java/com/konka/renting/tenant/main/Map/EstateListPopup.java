@@ -80,7 +80,7 @@ public class EstateListPopup extends PopupWindow {
 
                 viewHolder.setText(R.id.adapter_map_search_room_tv_name, bean.getRoom_name());
                 viewHolder.setText(R.id.adapter_map_search_room_tv_price, Float.valueOf(bean.getHousing_price()).intValue() + "");
-                viewHolder.setText(R.id.adapter_map_search_room_tv_price_unit, mContext.getString(bean.getType() == 1 ? R.string.house_info_rent_pay_unit_day : R.string.house_info_rent_pay_unit));
+                viewHolder.setText(R.id.adapter_map_search_room_tv_price_unit, mContext.getString(bean.getType() == 1 ? R.string.public_house_pay_unit_day : R.string.public_house_pay_unit_mon));
 
                 ImageView picView = viewHolder.getView(R.id.adapter_map_search_room_iv_icon);
                 if (!TextUtils.isEmpty(bean.getThumb_image())) {

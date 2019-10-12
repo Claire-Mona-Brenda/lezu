@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -142,23 +143,25 @@ public class WithdrawDetailActivity extends BaseActivity implements PasswordView
     @Override
     protected void onResume() {
         super.onResume();
-        card_id = sharedPreferences.getString(BANK_CARD_ID, "");
+//        card_id = sharedPreferences.getString(BANK_CARD_ID, "");
     }
 
     @OnClick({R.id.iv_back, R.id.btn_withdraw, R.id.img_tips, R.id.rl_select_bank})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.iv_back:
+            case R.id.iv_back://返回
                 finish();
                 break;
-            case R.id.btn_withdraw:
+            case R.id.btn_withdraw://提现
                 if (TextUtils.isEmpty(card_id)) {
                     showToast(R.string.please_choose_bank_card);
                 } else if (TextUtils.isEmpty(balance)) {
                     showToast(R.string.no_balance);
                 } else if (Float.valueOf(balance) <= 0) {
                     showToast(R.string.no_balance);
-                } else {
+                }else if (num<=0){
+                    showToast(R.string.withdraw_num_no);
+                }else {
                     showPop();
                 }
 //                if (!TextUtils.isEmpty(ammount) && !TextUtils.isEmpty(bankCard)) {
@@ -169,10 +172,10 @@ public class WithdrawDetailActivity extends BaseActivity implements PasswordView
 //                } else
 //                    showToast(R.string.please_input_withdraw_money);
                 break;
-            case R.id.rl_select_bank:
+            case R.id.rl_select_bank://选择银行卡
                 SelectBankCardActivity.toActivity(this, true);
                 break;
-            case R.id.img_tips:
+            case R.id.img_tips://提示
                 showTipsPop();
                 break;
         }
@@ -340,6 +343,7 @@ public class WithdrawDetailActivity extends BaseActivity implements PasswordView
                 lp.alpha = 1f;
                 mActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
                 mActivity.getWindow().setAttributes(lp);
+
             }
         });
     }
@@ -362,4 +366,8 @@ public class WithdrawDetailActivity extends BaseActivity implements PasswordView
 
     }
 
+    public void hideInput(){
+        InputMethodManager inputMethodManager= (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+    }
 }

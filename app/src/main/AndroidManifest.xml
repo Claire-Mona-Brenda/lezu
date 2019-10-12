@@ -352,10 +352,12 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.user.withdrawcash.SelectBankCardActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".landlord.user.withdrawcash.AddBankCardActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".landlord.user.userinfo.FaceDetectActivity"
             android:launchMode="singleTop"

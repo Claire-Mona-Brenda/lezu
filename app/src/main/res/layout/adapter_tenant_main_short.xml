@@ -27,6 +27,8 @@
             android:layout_gravity="bottom"
             android:textColor="@color/color_ffffff"
             android:textSize="@dimen/sp_16"
+            android:textStyle="bold"
+            android:typeface="sans"
             android:paddingStart="@dimen/dp_8"
             android:paddingEnd="@dimen/dp_8"
             android:lines="1"

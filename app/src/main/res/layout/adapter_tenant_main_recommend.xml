@@ -29,6 +29,8 @@
         android:layout_alignTop="@+id/adapter_tenant_main_recommend_card"
         android:lines="1"
         android:ellipsize="end"
+        android:typeface="sans"
+        android:textStyle="bold"
         android:textSize="@dimen/sp_16"
         android:textColor="@color/text_black"/>
     <TextView
