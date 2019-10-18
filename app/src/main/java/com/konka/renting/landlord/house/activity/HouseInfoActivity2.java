@@ -250,7 +250,7 @@ public class HouseInfoActivity2 extends BaseActivity {
                     DevListActivity.toActivity(mActivity, bean.getRoom_id() + "", bean.getStatus(), bean.getIs_install() == 0, false);
                 break;
             case R.id.activity_house_info_ll_open_manege://开门管理
-                if (bean != null && !bean.getDevice_id().equals("") && bean.getStatus() < 2)
+                if (bean != null && !bean.getDevice_id().equals("") && (bean.getIs_generate_password() == 0 || (bean.getIs_generate_password() == 1 && bean.getStatus() < 2)))
                     OpenManageActivity.toActivity(mActivity, bean);
                 else if (bean != null && bean.getDevice_id().equals("")) {
                     showToast(R.string.warm_open_no_device);
@@ -324,7 +324,7 @@ public class HouseInfoActivity2 extends BaseActivity {
                             mTvFloor.setText(bean.getFloor() + "/" + bean.getTotal_floor() + getString(R.string.house_info_floor_unit));
                             mTvConfig.setText(getConfig(bean.getConfig()));
                             mTvIntroduce.setText(TextUtils.isEmpty(bean.getRemark()) ? getString(R.string.nothing) : bean.getRemark());
-                            mTvAddress.setText(bean.getProvince() + bean.getCity() + bean.getArea() +bean.getMap_address()+ bean.getRoom_group() + bean.getAddress());
+                            mTvAddress.setText(bean.getProvince() + bean.getCity() + bean.getArea() + bean.getMap_address() + bean.getRoom_group() + bean.getAddress());
                             //平台认证
                             if (bean.getAuth_image() != null && bean.getAuth_image().size() > 0) {
                                 mLlOfficial.setVisibility(View.VISIBLE);

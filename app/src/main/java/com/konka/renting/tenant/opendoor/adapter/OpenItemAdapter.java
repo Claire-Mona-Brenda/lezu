@@ -76,15 +76,17 @@ public class OpenItemAdapter extends PagerAdapter {
         TextView mTvGatewaySet = view.findViewById(R.id.adapter_open_item_tv_gateway_set);
         TextView mTvManager = view.findViewById(R.id.adapter_open_item_tv_manager);
         TextView mTvSync = view.findViewById(R.id.adapter_open_item_tv_sync);
+        TextView mTvKeyPwd = view.findViewById(R.id.adapter_open_item_tv_key_pwd);
 
         LinearLayout mLlOpenPwd = view.findViewById(R.id.adapter_open_item_ll_open_pwd);
         LinearLayout mLlAddUser = view.findViewById(R.id.adapter_open_item_ll_add_user);
         LinearLayout mLlGatewaySet = view.findViewById(R.id.adapter_open_item_ll_gateway_set);
         LinearLayout mLlManager = view.findViewById(R.id.adapter_open_item_ll_manager);
         LinearLayout mLlSync = view.findViewById(R.id.adapter_open_item_ll_sync);
-
+        LinearLayout mLlKeyPwd = view.findViewById(R.id.adapter_open_item_ll_key_pwd);
 
         OpenDoorListbean doorListbean = mData.get(position);
+        mLlKeyPwd.setVisibility(doorListbean.getIs_generate_password() == 0 ? View.VISIBLE : View.GONE);
         mImgStatus.setImageResource(doorListbean.getStatus() == 2 ? R.mipmap.opendoor_notcheckin_icon : R.mipmap.opendoor_checkin_icon);
         mTvName.setText(doorListbean.getRoom_name() == null ? "- -" : doorListbean.getRoom_name());
         mTvRentTimeStart.setText(TextUtils.isEmpty(doorListbean.getStart_time()) ? " - - " : doorListbean.getStart_time().split(" ")[0]);
@@ -129,6 +131,11 @@ public class OpenItemAdapter extends PagerAdapter {
                             onCall.onClickSync(position);
                         }
                         break;
+                    case R.id.adapter_open_item_ll_key_pwd://钥匙孔密码
+                        if (onCall != null) {
+                            onCall.onClickKeyPwd(position);
+                        }
+                        break;
                 }
 
             }
@@ -141,6 +148,7 @@ public class OpenItemAdapter extends PagerAdapter {
         mLlGatewaySet.setOnClickListener(clickListener);
         mLlManager.setOnClickListener(clickListener);
         mLlSync.setOnClickListener(clickListener);
+        mLlKeyPwd.setOnClickListener(clickListener);
 
         view.setTag(position);
         viewList.add(view);
@@ -346,7 +354,6 @@ public class OpenItemAdapter extends PagerAdapter {
             animatorSet.cancel();
             mImgOpenAnimation.setTag(null);
         }
-        Log.e("12313","==========cancelTimer=====GONE");
         mImgOpenAnimation.setVisibility(View.GONE);
     }
 
@@ -388,6 +395,8 @@ public class OpenItemAdapter extends PagerAdapter {
         void onClickGateway(int position);
 
         void onClickSync(int position);
+
+        void onClickKeyPwd(int position);
 
         void onClickAddUser(int position);
 

@@ -109,6 +109,7 @@ public class OpenManageActivity extends BaseActivity {
         bean = getIntent().getParcelableExtra(HouseDetailsInfoBean2.class.getSimpleName());
 
         tvTitle.setText(R.string.house_info_setting_clock_manage);
+        rlKeyPwd.setVisibility(bean.getIs_generate_password()==0?View.VISIBLE:View.GONE);
 
 //        rlManagePwd.setVisibility(bean.getStatus() == 2 ? View.GONE : View.VISIBLE);
 
@@ -149,14 +150,12 @@ public class OpenManageActivity extends BaseActivity {
                 }
                 break;
             case R.id.activity_open_manage_rl_key_pwd://钥匙孔密码
-                if (bean.getStatus() < 2&& (queryTime <= 0 || queryTime >= 10)) {
+                if (queryTime <= 0 || queryTime >= 10) {
                     showKeyPwdPopup();
                     keyPwdPopupwindow.setPwd(getString(R.string.tips_loading));
                     getKeyPwd();
-                } else if (bean.getStatus() < 2) {
-                    showKeyPwdPopup();
                 } else {
-                    showTips(getString(R.string.tips_get_authority_content));
+                    showKeyPwdPopup();
                 }
                 break;
             case R.id.activity_open_manage_rl_set_gateway://设置网关

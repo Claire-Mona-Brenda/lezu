@@ -22,6 +22,7 @@ import com.konka.renting.bean.DataInfo;
 import com.konka.renting.bean.LoginUserBean;
 import com.konka.renting.bean.OpenDoorListbean;
 import com.konka.renting.bean.PayRentRefreshEvent;
+import com.konka.renting.bean.QueryPwdBean;
 import com.konka.renting.event.AddCodeEvent;
 import com.konka.renting.event.AddShareRentEvent;
 import com.konka.renting.event.TentantOpenDoorEvent;
@@ -37,15 +38,19 @@ import com.konka.renting.utils.RxUtil;
 import com.konka.renting.utils.SharedPreferenceUtil;
 import com.konka.renting.utils.UIUtils;
 import com.konka.renting.widget.CommonPopupWindow;
+import com.konka.renting.widget.KeyPwdPopup;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import rx.Observable;
 import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 public class OpenNewFragment extends BaseFragment {
@@ -84,7 +89,7 @@ public class OpenNewFragment extends BaseFragment {
     LinearLayout mLlServerEndTime;
 
     private final String KEY_ORDER_ID = "key_open_order_id";
-
+    final int QUERY_TIME_MAX = 10;
 
     private String mSelId = "";
     private int current = 0;
@@ -93,6 +98,8 @@ public class OpenNewFragment extends BaseFragment {
 
     CommonPopupWindow popupWindow;
     OpenRenewPopup openRenewPopup;
+    private KeyPwdPopup keyPwdPopupwindow;//查看钥匙锁密码
+    private int queryKeyPwdTime = QUERY_TIME_MAX;//查询钥匙孔密码倒计时
 
     public static OpenNewFragment newInstance() {
         OpenNewFragment fragment = new OpenNewFragment();
@@ -212,6 +219,25 @@ public class OpenNewFragment extends BaseFragment {
                     ShowToastUtil.showNormalToast(mActivity, getString(R.string.warm_open_no_on_rent));
                 } else {
                     showSyncSeverPopup();
+                }
+            }
+
+            @Override
+            public void onClickKeyPwd(int position) {//钥匙孔密码
+                OpenDoorListbean openDoorListbean = mData.get(position);
+                if ( !openDoorListbean.getDevice_id().equals("")) {
+                    if (queryKeyPwdTime <= 0 || queryKeyPwdTime >= 10) {
+                        showKeyPwdPopup(openDoorListbean.getRoom_id());
+                        keyPwdPopupwindow.setPwd(getString(R.string.tips_loading));
+                        getKeyPwd(openDoorListbean.getRoom_id());
+                    } else {
+                        showKeyPwdPopup(openDoorListbean.getRoom_id());
+                    }
+
+                } else if (openDoorListbean.getDevice_id().equals("")) {
+                    ShowToastUtil.showNormalToast(mActivity, getString(R.string.warm_open_no_device));
+                } else {
+                    ShowToastUtil.showNormalToast(mActivity, getString(R.string.warm_open_no_on_rent));
                 }
             }
 
@@ -506,7 +532,132 @@ public class OpenNewFragment extends BaseFragment {
         addSubscrebe(subscription);
     }
 
+    /**
+     * 获取钥匙孔密码
+     * */
+    private void getKeyPwd(String room_id) {
+        Subscription subscription = SecondRetrofitHelper.getInstance().lockPwd(room_id, "9")
+                .compose(RxUtil.<DataInfo<QueryPwdBean>>rxSchedulerHelper())
+                .subscribe(new CommonSubscriber<DataInfo<QueryPwdBean>>() {
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onNext(DataInfo<QueryPwdBean> info) {
+                        if (info.success()) {
+                            if (TextUtils.isEmpty(info.data().getId())) {
+                                queryKeyPwdTime = 0;
+                                keyPwdPopupwindow.setPwd(info.data().getPassword());
+                            } else {
+                                queryPwdTimer(5, info.data().getId(),room_id);
+                            }
+                        } else {
+                            showToast(info.msg());
+                        }
+
+                    }
+                });
+        addSubscrebe(subscription);
+    }
+
+    /**
+     * 密码刷新
+     * */
+    private void passwordRefresh(String room_id) {
+        Subscription subscription = SecondRetrofitHelper.getInstance().passwordRefresh(room_id, "9")
+                .compose(RxUtil.<DataInfo<QueryPwdBean>>rxSchedulerHelper())
+                .subscribe(new CommonSubscriber<DataInfo<QueryPwdBean>>() {
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onNext(DataInfo<QueryPwdBean> info) {
+                        if (info.success()) {
+                            if (TextUtils.isEmpty(info.data().getId())) {
+                                queryKeyPwdTime = 0;
+                                keyPwdPopupwindow.setPwd(info.data().getPassword());
+                            } else {
+                                queryKeyPwdTime = QUERY_TIME_MAX;
+                                queryPwdTimer(5, info.data().getId(),room_id);
+                            }
+                        } else {
+                            showToast(info.msg());
+                        }
+
+                    }
+                });
+        addSubscrebe(subscription);
+    }
+
+    /**
+     * 密码查询
+     * */
+    private void queryPasswordResult(final String password_id,String room_id) {
+        Subscription subscription = SecondRetrofitHelper.getInstance().queryPasswordResult(password_id)
+                .compose(RxUtil.<DataInfo>rxSchedulerHelper())
+                .subscribe(new CommonSubscriber<DataInfo>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        queryPwdTimer(1, password_id,room_id);
+                    }
+
+                    @Override
+                    public void onNext(DataInfo dataInfo) {
+                        if (dataInfo.success()) {
+                            getKeyPwd(room_id);
+                        } else {
+                            queryPwdTimer(1, password_id,room_id);
+                        }
+
+                    }
+                });
+        addSubscrebe(subscription);
+    }
+
     /****************************************************弹窗**********************************************/
+    /**
+     * 展示钥匙孔密码
+     */
+    private void showKeyPwdPopup(String room_id) {
+        if (keyPwdPopupwindow == null) {
+            keyPwdPopupwindow = new KeyPwdPopup(mActivity);
+            keyPwdPopupwindow.setOnClickListen(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (queryKeyPwdTime <= 0 || queryKeyPwdTime > 10) {
+                        keyPwdPopupwindow.dismiss();
+                        showPasswordRefreshPopup(room_id);
+                    }
+                }
+            });
+        }
+        showPopup(keyPwdPopupwindow);
+    }
+
+    /**
+     * 是否重置密码
+     */
+    private void showPasswordRefreshPopup(String room_id) {
+        popupWindow = new CommonPopupWindow.Builder(mActivity)
+                .setTitle(getString(R.string.tips))
+                .setContent(getString(R.string.tips_refresh_pwd))
+                .setRightBtnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popupWindow.setOnDismissListener(null);
+                        popupWindow.dismiss();
+                        keyPwdPopupwindow.setPwd(getString(R.string.tips_loading));
+                        showKeyPwdPopup(room_id);
+                        passwordRefresh(room_id);
+                    }
+                })
+                .create();
+        showPopup(popupWindow);
+
+    }
+
     /**
      * 是否同步服务费时间
      */
@@ -555,5 +706,26 @@ public class OpenNewFragment extends BaseFragment {
         openRenewPopup.showAsDropDown(imgDoubt, -getResources().getDimensionPixelSize(R.dimen.dp_125), 0);
 
     }
+    /*************************************************计时处理*****************************************************************/
 
+
+    private void queryPwdTimer(long delay, final String password_id,String room_id) {
+        if (queryKeyPwdTime <= 0) {
+            return;
+        }
+        queryKeyPwdTime--;
+        Subscription subscription = Observable.timer(delay, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
+                .subscribe(new CommonSubscriber<Long>() {
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Long aLong) {
+                        queryPasswordResult(password_id,room_id);
+                    }
+                });
+        addSubscrebe(subscription);
+    }
 }
