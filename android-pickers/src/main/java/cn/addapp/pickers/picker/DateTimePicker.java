@@ -2,6 +2,7 @@ package cn.addapp.pickers.picker;
 
 import android.app.Activity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -28,6 +29,7 @@ import cn.addapp.pickers.widget.WheelView;
 
 /**
  * 日期时间选择器，可同时选中日期及时间，另见{@link DatePicker}和{@link TimePicker}
+ *
  * @author matt
  * blog: addapp.cn
  * @since 2015/9/29
@@ -59,6 +61,11 @@ public class DateTimePicker extends WheelPicker {
      */
     public static final int HOUR_12 = 4;
 
+    /**
+     * 年月日时
+     */
+    public static final int YEAR_MONTH_DAY_HOUR = 5;
+
     private ArrayList<String> years = new ArrayList<>();
     private ArrayList<String> months = new ArrayList<>();
     private ArrayList<String> days = new ArrayList<>();
@@ -66,7 +73,7 @@ public class DateTimePicker extends WheelPicker {
     private ArrayList<String> minutes = new ArrayList<>();
     private String yearLabel = "年", monthLabel = "月", dayLabel = "日";
     private String hourLabel = "时", minuteLabel = "分";
-    private int selectedYearIndex = 0, selectedMonthIndex = 0, selectedDayIndex = 0,selectedHourIndex = 0,selectedMinuteIndex = 0;
+    private int selectedYearIndex = 0, selectedMonthIndex = 0, selectedDayIndex = 0, selectedHourIndex = 0, selectedMinuteIndex = 0;
     private String selectedHour = "", selectedMinute = "";
     private OnWheelListener onWheelListener;
     private OnDateTimePickListener onDateTimePickListener;
@@ -75,9 +82,9 @@ public class DateTimePicker extends WheelPicker {
     private int endYear = 2020, endMonth = 12, endDay = 31;
     private int startHour, startMinute = 0;
     private int endHour, endMinute = 59;
-    private int stepMinute=1,stepHour=1;//时间间隔
+    private int stepMinute = 1, stepHour = 1;//时间间隔
 
-    @IntDef(value = {NONE, YEAR_MONTH_DAY, YEAR_MONTH, MONTH_DAY})
+    @IntDef(value = {NONE, YEAR_MONTH_DAY, YEAR_MONTH, MONTH_DAY, YEAR_MONTH_DAY_HOUR})
     @Retention(RetentionPolicy.SOURCE)
     public @interface DateMode {
     }
@@ -100,7 +107,7 @@ public class DateTimePicker extends WheelPicker {
         if (dateMode == NONE && timeMode == NONE) {
             throw new IllegalArgumentException("The modes are NONE at the same time");
         }
-        if (dateMode == YEAR_MONTH_DAY && timeMode != NONE) {
+        if ((dateMode == YEAR_MONTH_DAY || dateMode == YEAR_MONTH_DAY_HOUR) && timeMode != NONE) {
             if (screenWidthPixels < 720) {
                 textSize = 14;//年月日时分，比较宽，设置字体小一点才能显示完整
             } else if (screenWidthPixels < 480) {
@@ -264,7 +271,7 @@ public class DateTimePicker extends WheelPicker {
      * 设置默认选中的年月日时分
      */
     public void setSelectedItem(int year, int month, int day, int hour, int minute) {
-        if (dateMode != YEAR_MONTH_DAY) {
+        if (dateMode != YEAR_MONTH_DAY && dateMode != YEAR_MONTH_DAY_HOUR) {
             throw new IllegalArgumentException("Date mode invalid");
         }
         LogUtils.verbose(this, "change months and days while set selected");
@@ -277,7 +284,7 @@ public class DateTimePicker extends WheelPicker {
         if (timeMode != NONE) {
             selectedHour = DateUtils.fillZero(hour);
             selectedMinute = DateUtils.fillZero(minute);
-            if ( hours.size() == 0) {
+            if (hours.size() == 0) {
                 LogUtils.verbose(this, "init hours before make view");
                 initHourData();
             }
@@ -289,9 +296,9 @@ public class DateTimePicker extends WheelPicker {
     }
 
     /**
-     * 设置默认选中的年月时分或者月日时分
+     * 设置默认选中的年月时分或者月日时分或者年月日时
      */
-    public void setSelectedItem(int yearOrMonth, int monthOrDay, int hour, int minute) {
+    public void setSelectedItem(int yearOrMonth, int monthOrDay, int hourOrDay, int minuteOrhour) {
         if (dateMode == YEAR_MONTH_DAY) {
             throw new IllegalArgumentException("Date mode invalid");
         }
@@ -308,10 +315,17 @@ public class DateTimePicker extends WheelPicker {
             changeMonthData(yearOrMonth);
             selectedYearIndex = findItemIndex(years, yearOrMonth);
             selectedMonthIndex = findItemIndex(months, monthOrDay);
+        } else if (dateMode == YEAR_MONTH_DAY_HOUR) {
+            LogUtils.verbose(this, "change months and days while set selected");
+            changeMonthData(yearOrMonth);
+            changeDayData(yearOrMonth, monthOrDay);
+            selectedYearIndex = findItemIndex(years, yearOrMonth);
+            selectedMonthIndex = findItemIndex(months, monthOrDay);
+            selectedDayIndex = findItemIndex(days, hourOrDay);
         }
         if (timeMode != NONE) {
-            selectedHour = DateUtils.fillZero(hour);
-            selectedMinute = DateUtils.fillZero(minute);
+            selectedHour = DateUtils.fillZero(minuteOrhour);
+            selectedMinute = DateUtils.fillZero(minuteOrhour);
         }
     }
 
@@ -324,7 +338,7 @@ public class DateTimePicker extends WheelPicker {
     }
 
     public String getSelectedYear() {
-        if (dateMode == YEAR_MONTH_DAY || dateMode == YEAR_MONTH) {
+        if (dateMode == YEAR_MONTH_DAY || dateMode == YEAR_MONTH||dateMode==YEAR_MONTH_DAY_HOUR) {
             if (years.size() <= selectedYearIndex) {
                 selectedYearIndex = years.size() - 1;
             }
@@ -344,10 +358,10 @@ public class DateTimePicker extends WheelPicker {
     }
 
     public String getSelectedDay() {
-        if (dateMode == YEAR_MONTH_DAY || dateMode == MONTH_DAY) {
+        if (dateMode == YEAR_MONTH_DAY || dateMode == MONTH_DAY||dateMode==YEAR_MONTH_DAY_HOUR) {
             if (days.size() <= selectedDayIndex) {
                 selectedDayIndex = days.size() - 1;
-                }
+            }
             return days.get(selectedDayIndex);
         }
         return "";
@@ -370,8 +384,9 @@ public class DateTimePicker extends WheelPicker {
     @NonNull
     @Override
     protected View makeCenterView() {
+        Log.e("13123","=========makeCenterView======"+months.size());
         // 如果未设置默认项，则需要在此初始化数据
-        if ((dateMode == YEAR_MONTH_DAY || dateMode == YEAR_MONTH) && years.size() == 0) {
+        if ((dateMode == YEAR_MONTH_DAY || dateMode == YEAR_MONTH || dateMode == YEAR_MONTH_DAY_HOUR) && years.size() == 0) {
             LogUtils.verbose(this, "init years before make view");
             initYearData();
         }
@@ -380,7 +395,7 @@ public class DateTimePicker extends WheelPicker {
             int selectedYear = DateUtils.trimZero(getSelectedYear());
             changeMonthData(selectedYear);
         }
-        if ((dateMode == YEAR_MONTH_DAY || dateMode == MONTH_DAY) && days.size() == 0) {
+        if ((dateMode == YEAR_MONTH_DAY || dateMode == MONTH_DAY || dateMode == YEAR_MONTH_DAY_HOUR) && days.size() == 0) {
             LogUtils.verbose(this, "init days before make view");
             int selectedYear;
             if (dateMode == YEAR_MONTH_DAY) {
@@ -403,34 +418,34 @@ public class DateTimePicker extends WheelPicker {
         LinearLayout layout = new LinearLayout(activity);
         layout.setOrientation(LinearLayout.HORIZONTAL);
         layout.setGravity(Gravity.CENTER);
-        if (dateMode!=NONE && timeMode != NONE) {
+        if (dateMode != NONE && timeMode != NONE) {
             layout.setWeightSum(5);
-        }else{
-            if(dateMode==YEAR_MONTH_DAY){
+        } else {
+            if (dateMode == YEAR_MONTH_DAY) {
                 layout.setWeightSum(3);
-            }else {
+            } else {
                 layout.setWeightSum(2);
             }
         }
         LinearLayout.LayoutParams wheelViewParams;
         LinearLayout.LayoutParams labelViewParams;
-        if(weightEnable){
-            wheelViewParams = new LinearLayout.LayoutParams(0,WRAP_CONTENT);
+        if (weightEnable) {
+            wheelViewParams = new LinearLayout.LayoutParams(0, WRAP_CONTENT);
             wheelViewParams.weight = 1.0f;
 //            labelViewParams= new LinearLayout.LayoutParams(0,WRAP_CONTENT);
 //            labelViewParams.weight = 0.5f;
-        }else{
-            wheelViewParams = new LinearLayout.LayoutParams(WRAP_CONTENT,WRAP_CONTENT);
+        } else {
+            wheelViewParams = new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
         }
-        labelViewParams = new LinearLayout.LayoutParams(WRAP_CONTENT,WRAP_CONTENT);
+        labelViewParams = new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
 //        wheelViewParams.gravity = Gravity.CENTER;
-        if(wheelModeEnable){
+        if (wheelModeEnable) {
             final WheelView yearView = new WheelView(activity);
             final WheelView monthView = new WheelView(activity);
             final WheelView dayView = new WheelView(activity);
             final WheelView hourView = new WheelView(activity);
             final WheelView minuteView = new WheelView(activity);
-            if (dateMode == YEAR_MONTH_DAY || dateMode == YEAR_MONTH) {
+            if (dateMode == YEAR_MONTH_DAY || dateMode == YEAR_MONTH || dateMode == YEAR_MONTH_DAY_HOUR) {
                 yearView.setCanLoop(canLoop);
                 yearView.setTextSize(textSize);//must be called before setDateList
                 yearView.setSelectedTextColor(textColorFocus);
@@ -464,7 +479,7 @@ public class DateTimePicker extends WheelPicker {
                     }
                 });
                 layout.addView(yearView);
-                if (!TextUtils.isEmpty(yearLabel)){
+                if (!TextUtils.isEmpty(yearLabel)) {
                     TextView labelView = new TextView(activity);
                     labelView.setLayoutParams(labelViewParams);
                     labelView.setTextColor(textColorFocus);
@@ -493,11 +508,11 @@ public class DateTimePicker extends WheelPicker {
 //                        if (!canLinkage) {
 //                            return;
 //                        }
-                        if (dateMode == YEAR_MONTH_DAY || dateMode == MONTH_DAY) {
+                        if (dateMode == YEAR_MONTH_DAY || dateMode == MONTH_DAY||dateMode==YEAR_MONTH_DAY_HOUR) {
                             LogUtils.verbose(this, "change days after month wheeled");
                             selectedDayIndex = 0;//重置日子索引
                             int selectedYear;
-                            if (dateMode == YEAR_MONTH_DAY) {
+                            if (dateMode == YEAR_MONTH_DAY||dateMode==YEAR_MONTH_DAY_HOUR) {
                                 selectedYear = DateUtils.trimZero(getSelectedYear());
                             } else {
                                 selectedYear = Calendar.getInstance(Locale.CHINA).get(Calendar.YEAR);
@@ -509,7 +524,7 @@ public class DateTimePicker extends WheelPicker {
                     }
                 });
                 layout.addView(monthView);
-                if (!TextUtils.isEmpty(monthLabel)){
+                if (!TextUtils.isEmpty(monthLabel)) {
                     TextView labelView = new TextView(activity);
                     labelView.setLayoutParams(labelViewParams);
                     labelView.setTextColor(textColorFocus);
@@ -518,7 +533,7 @@ public class DateTimePicker extends WheelPicker {
                     layout.addView(labelView);
                 }
             }
-            if (dateMode == YEAR_MONTH_DAY || dateMode == MONTH_DAY) {
+            if (dateMode == YEAR_MONTH_DAY || dateMode == MONTH_DAY || dateMode == YEAR_MONTH_DAY_HOUR) {
                 dayView.setCanLoop(canLoop);
                 dayView.setTextSize(textSize);//must be called before setDateList
                 dayView.setSelectedTextColor(textColorFocus);
@@ -538,7 +553,7 @@ public class DateTimePicker extends WheelPicker {
                     }
                 });
                 layout.addView(dayView);
-                if (!TextUtils.isEmpty(dayLabel)){
+                if (!TextUtils.isEmpty(dayLabel)) {
                     TextView labelView = new TextView(activity);
                     labelView.setLayoutParams(labelViewParams);
                     labelView.setTextColor(textColorFocus);
@@ -577,7 +592,7 @@ public class DateTimePicker extends WheelPicker {
                     }
                 });
                 layout.addView(hourView);
-                if (!TextUtils.isEmpty(hourLabel)){
+                if (!TextUtils.isEmpty(hourLabel)) {
                     TextView labelView = new TextView(activity);
                     labelView.setLayoutParams(labelViewParams);
                     labelView.setTextColor(textColorFocus);
@@ -585,6 +600,8 @@ public class DateTimePicker extends WheelPicker {
                     labelView.setText(hourLabel);
                     layout.addView(labelView);
                 }
+            }
+            if (timeMode != NONE && dateMode == NONE) {
                 //分钟
                 minuteView.setCanLoop(canLoop);
                 minuteView.setTextSize(textSize);//must be called before setDateList
@@ -606,7 +623,7 @@ public class DateTimePicker extends WheelPicker {
                         }
                     }
                 });
-                if (!TextUtils.isEmpty(minuteLabel)){
+                if (!TextUtils.isEmpty(minuteLabel)) {
                     TextView labelView = new TextView(activity);
                     labelView.setLayoutParams(labelViewParams);
                     labelView.setTextColor(textColorFocus);
@@ -615,14 +632,14 @@ public class DateTimePicker extends WheelPicker {
                     layout.addView(labelView);
                 }
             }
-        }else{
+        } else {
             final WheelListView yearView = new WheelListView(activity);
             final WheelListView monthView = new WheelListView(activity);
             final WheelListView dayView = new WheelListView(activity);
             final WheelListView hourView = new WheelListView(activity);
             final WheelListView minuteView = new WheelListView(activity);
 
-            if (dateMode == YEAR_MONTH_DAY || dateMode == YEAR_MONTH) {
+            if (dateMode == YEAR_MONTH_DAY || dateMode == YEAR_MONTH || dateMode == YEAR_MONTH_DAY_HOUR) {
                 yearView.setLayoutParams(wheelViewParams);
                 yearView.setTextSize(textSize);
                 yearView.setSelectedTextColor(textColorFocus);
@@ -674,7 +691,7 @@ public class DateTimePicker extends WheelPicker {
                 monthView.setItems(months, selectedMonthIndex);
                 monthView.setOnWheelChangeListener(new WheelListView.OnWheelChangeListener() {
                     @Override
-                    public void onItemSelected( int index, String item) {
+                    public void onItemSelected(int index, String item) {
                         selectedMonthIndex = index;
                         if (onWheelListener != null) {
                             onWheelListener.onMonthWheeled(selectedMonthIndex, item);
@@ -682,11 +699,11 @@ public class DateTimePicker extends WheelPicker {
 //                        if (!canLinkage) {
 //                            return;
 //                        }
-                        if (dateMode == YEAR_MONTH_DAY || dateMode == MONTH_DAY) {
+                        if (dateMode == YEAR_MONTH_DAY || dateMode == MONTH_DAY||dateMode==YEAR_MONTH_DAY_HOUR) {
                             LogUtils.verbose(this, "change days after month wheeled");
                             selectedDayIndex = 0;//重置日子索引
                             int selectedYear;
-                            if (dateMode == YEAR_MONTH_DAY) {
+                            if (dateMode == YEAR_MONTH_DAY||dateMode==YEAR_MONTH_DAY_HOUR) {
                                 selectedYear = DateUtils.trimZero(getSelectedYear());
                             } else {
                                 selectedYear = Calendar.getInstance(Locale.CHINA).get(Calendar.YEAR);
@@ -707,7 +724,7 @@ public class DateTimePicker extends WheelPicker {
                 }
             }
 
-            if (dateMode == YEAR_MONTH_DAY || dateMode == MONTH_DAY) {
+            if (dateMode == YEAR_MONTH_DAY || dateMode == MONTH_DAY || dateMode == YEAR_MONTH_DAY_HOUR) {
                 dayView.setLayoutParams(wheelViewParams);
                 dayView.setTextSize(textSize);
                 dayView.setSelectedTextColor(textColorFocus);
@@ -770,7 +787,8 @@ public class DateTimePicker extends WheelPicker {
                     labelView.setText(hourLabel);
                     layout.addView(labelView);
                 }
-
+            }
+            if (timeMode != NONE && dateMode == NONE) {
                 minuteView.setLayoutParams(wheelViewParams);
                 minuteView.setTextSize(textSize);
                 minuteView.setSelectedTextColor(textColorFocus);
@@ -815,7 +833,12 @@ public class DateTimePicker extends WheelPicker {
         String day = getSelectedDay();
         String hour = getSelectedHour();
         String minute = getSelectedMinute();
+
+        Log.e("123123","========year=="+year+"=month="+month+"=day="+day+"=hour="+hour+"=minute="+minute);
         switch (dateMode) {
+            case YEAR_MONTH_DAY_HOUR:
+                ((OnYearMonthDayHourPickListener) onDateTimePickListener).onDateTimePicked(year, month, day, hour);
+                break;
             case YEAR_MONTH_DAY:
                 ((OnYearMonthDayTimePickListener) onDateTimePickListener).onDateTimePicked(year, month, day, hour, minute);
                 break;
@@ -867,6 +890,7 @@ public class DateTimePicker extends WheelPicker {
     }
 
     private void changeMonthData(int selectedYear) {
+        Log.e("123123", "===selectedYear="+selectedYear+"====startMonth===" + startMonth + "=endMonth=" + endMonth + "==startYear="+startYear+ "==endYear="+endYear);
         months.clear();
         if (startMonth < 1 || endMonth < 1 || startMonth > 12 || endMonth > 12) {
             throw new IllegalArgumentException("Month out of range [1-12]");
@@ -897,6 +921,8 @@ public class DateTimePicker extends WheelPicker {
     }
 
     private void changeDayData(int selectedYear, int selectedMonth) {
+        Log.e("changeDayData", "===selectedYear="+selectedYear+"==selectedMonth=="+selectedMonth+"====startMonth===" + startMonth + "=endMonth=" + endMonth + "==startYear="+startYear+ "==endYear="+endYear);
+
         int maxDays = DateUtils.calculateDaysInMonth(selectedYear, selectedMonth);
         days.clear();
         if (selectedYear == startYear && selectedMonth == startMonth
@@ -940,19 +966,19 @@ public class DateTimePicker extends WheelPicker {
                 startMinute = endMinute;
                 endMinute = temp;
             }
-            for (int i = startMinute; i <= endMinute; i+= stepMinute) {
+            for (int i = startMinute; i <= endMinute; i += stepMinute) {
                 minutes.add(DateUtils.fillZero(i));
             }
         } else if (selectedHour == startHour) {
-            for (int i = startMinute; i <= 59; i+= stepMinute) {
+            for (int i = startMinute; i <= 59; i += stepMinute) {
                 minutes.add(DateUtils.fillZero(i));
             }
         } else if (selectedHour == endHour) {
-            for (int i = 0; i <= endMinute; i+= stepMinute) {
+            for (int i = 0; i <= endMinute; i += stepMinute) {
                 minutes.add(DateUtils.fillZero(i));
             }
         } else {
-            for (int i = 0; i <= 59; i+= stepMinute) {
+            for (int i = 0; i <= 59; i += stepMinute) {
                 minutes.add(DateUtils.fillZero(i));
             }
         }
@@ -977,6 +1003,12 @@ public class DateTimePicker extends WheelPicker {
     }
 
     protected interface OnDateTimePickListener {
+
+    }
+
+    public interface OnYearMonthDayHourPickListener extends OnDateTimePickListener {
+
+        void onDateTimePicked(String year, String month, String day, String hour);
 
     }
 

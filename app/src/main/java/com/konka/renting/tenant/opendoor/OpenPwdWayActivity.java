@@ -66,15 +66,15 @@ public class OpenPwdWayActivity extends BaseActivity {
 
         tvTitle.setText(R.string.open_pwd);
 
-//        if (is_generate_password==0){
-//            mRlOncePwd.setVisibility(View.GONE);
-//            mRlTimerPwd.setVisibility(View.GONE);
-//            mRlTimesPwd.setVisibility(View.GONE);
-//        }else{
+        if (is_generate_password==0){
+            mRlOncePwd.setVisibility(View.GONE);
+            mRlTimerPwd.setVisibility(View.GONE);
+            mRlTimesPwd.setVisibility(View.GONE);
+        }else{
             mRlOncePwd.setVisibility(View.VISIBLE);
             mRlTimerPwd.setVisibility(View.VISIBLE);
             mRlTimesPwd.setVisibility(View.VISIBLE);
-//        }
+        }
 
 
     }

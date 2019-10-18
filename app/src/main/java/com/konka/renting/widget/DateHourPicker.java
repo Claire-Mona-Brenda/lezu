@@ -1,69 +1,64 @@
-package cn.addapp.pickers.picker;
+package com.konka.renting.widget;
 
 import android.app.Activity;
 
-/**
- * 日期选择器
- * @author matt
- * blog: addapp.cn
- */
-public class DatePicker extends DateTimePicker {
+import cn.addapp.pickers.picker.DatePicker;
+import cn.addapp.pickers.picker.DateTimePicker;
 
-    public DatePicker(Activity activity) {
-        this(activity, YEAR_MONTH_DAY);
+public class DateHourPicker extends DateTimePicker {
+    public DateHourPicker(Activity activity) {
+        this(activity, YEAR_MONTH_DAY_HOUR);
+    }
+
+    public DateHourPicker(Activity activity, @DateMode int mode) {
+        super(activity, mode, HOUR_24);
+    }
+
+    public DateHourPicker(Activity activity, @DateMode int mode, @TimeMode int timeMode) {
+        super(activity, mode, timeMode);
     }
 
     /**
-     * @see #YEAR_MONTH_DAY
-     * @see #YEAR_MONTH
-     * @see #MONTH_DAY
+     * 设置年月日时的单位
      */
-    public DatePicker(Activity activity, @DateMode int mode) {
-        super(activity, mode, NONE);
+    public void setLabel(String yearLabel, String monthLabel, String dayLabel, String hourLabel) {
+        super.setLabel(yearLabel, monthLabel, dayLabel, hourLabel, "");
     }
 
     /**
-     * 设置年月日的单位
-     */
-    public void setLabel(String yearLabel, String monthLabel, String dayLabel) {
-        super.setLabel(yearLabel, monthLabel, dayLabel, "", "");
-    }
-
-    /**
-     * 设置范围：开始的年月日
+     * 设置范围：开始的年月日时
      */
     public void setRangeStart(int startYear, int startMonth, int startDay) {
         super.setDateRangeStart(startYear, startMonth, startDay);
     }
 
     /**
-     * 设置范围：结束的年月日
+     * 设置范围：结束的年月日时
      */
     public void setRangeEnd(int endYear, int endMonth, int endDay) {
         super.setDateRangeEnd(endYear, endMonth, endDay);
     }
 
     /**
-     * 设置范围：开始的年月日
+     * 设置范围：开始的年月日时
      */
     public void setRangeStart(int startYearOrMonth, int startMonthOrDay) {
         super.setDateRangeStart(startYearOrMonth, startMonthOrDay);
     }
 
     /**
-     * 设置范围：结束的年月日
+     * 设置范围：结束的年月日时
      */
     public void setRangeEnd(int endYearOrMonth, int endMonthOrDay) {
         super.setDateRangeEnd(endYearOrMonth, endMonthOrDay);
     }
 
 
-
     /**
-     * 设置默认选中的年月日
+     * 设置默认选中的年月日时
      */
-    public void setSelectedItem(int year, int month, int day) {
-        super.setSelectedItem(year, month, day, 0, 0);
+    public void setSelectedItem(int year, int month, int day,int hour) {
+        super.setSelectedItem(year, month, day, hour);
     }
 
     /**
@@ -96,7 +91,7 @@ public class DatePicker extends DateTimePicker {
 
             @Override
             public void onHourWheeled(int index, String hour) {
-
+                listener.onHourWheeled(index, hour);
             }
 
             @Override
@@ -131,10 +126,23 @@ public class DatePicker extends DateTimePicker {
                     ((OnMonthDayPickListener) listener).onDatePicked(month, day);
                 }
             });
+        }else if (listener instanceof OnYearMonthDayHourPickListener) {
+            super.setOnDateTimePickListener(new DateTimePicker.OnYearMonthDayHourPickListener() {
+                @Override
+                public void onDateTimePicked(String year, String month, String day, String hour) {
+                    ((OnYearMonthDayHourPickListener) listener).onDatePicked(year, month, day, hour);
+                }
+            });
         }
     }
 
-    public interface OnDatePickListener {
+    protected interface OnDatePickListener {
+
+    }
+
+    public interface OnYearMonthDayHourPickListener extends OnDatePickListener {
+
+        void onDatePicked(String year, String month, String day, String hour);
 
     }
 
@@ -164,6 +172,7 @@ public class DatePicker extends DateTimePicker {
 
         void onDayWheeled(int index, String day);
 
-    }
+        void onHourWheeled(int index, String hour);
 
+    }
 }

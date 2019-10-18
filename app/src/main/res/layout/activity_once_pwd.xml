@@ -42,14 +42,62 @@
             android:typeface="sans"
             android:layout_marginTop="@dimen/dp_25"
             />
-        <TextView
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/sp_13"
-            android:textColor="@color/text_gray"
-            android:text="@string/once_pwd_tips2"
             android:layout_marginTop="@dimen/dp_10"
-            android:layout_marginBottom="@dimen/dp_20"/>
+            android:layout_marginBottom="@dimen/dp_20">
+            <TextView
+                android:id="@+id/activity_pwd_result_tv_times_tips_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp_13"
+                android:textColor="@color/text_gray"
+                android:text="@string/times_times_" />
+            <TextView
+                android:id="@+id/activity_pwd_result_tv_times_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/activity_pwd_result_tv_times_tips_start"
+                android:layout_alignTop="@+id/activity_pwd_result_tv_times_tips_start"
+                android:textSize="@dimen/sp_13"
+                android:textColor="@color/text_gray"
+                android:text="1"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/activity_pwd_result_tv_times_start"
+                android:layout_alignTop="@+id/activity_pwd_result_tv_times_start"
+                android:textSize="@dimen/sp_13"
+                android:textColor="@color/text_gray"
+                android:text="@string/times_num"/>
+            <TextView
+                android:id="@+id/activity_pwd_result_tv_times_tips_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/activity_pwd_result_tv_times_tips_start"
+                android:layout_marginTop="@dimen/dp_4"
+                android:textSize="@dimen/sp_13"
+                android:textColor="@color/text_gray"
+                android:text="@string/times_use_time_" />
+            <TextView
+                android:id="@+id/activity_pwd_result_tv_times_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/activity_pwd_result_tv_times_tips_end"
+                android:layout_alignTop="@+id/activity_pwd_result_tv_times_tips_end"
+                android:textSize="@dimen/sp_13"
+                android:textColor="@color/text_gray"
+                android:text="1"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/activity_pwd_result_tv_times_end"
+                android:layout_alignTop="@+id/activity_pwd_result_tv_times_end"
+                android:textSize="@dimen/sp_13"
+                android:textColor="@color/text_gray"
+                android:text="@string/times_day"/>
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/activity_once_pwd_tv_copy"

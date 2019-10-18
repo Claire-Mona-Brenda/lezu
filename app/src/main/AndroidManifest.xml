@@ -120,9 +120,6 @@
             android:name=".landlord.user.myorder.MyOrderActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".landlord.user.setting.SeetingActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".landlord.order.CollectRentActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -233,9 +230,6 @@
             android:name=".landlord.home.tenanter.TenantListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".login.LoginActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".login.LoginNewActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
@@ -266,9 +260,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.home.freehouse.FreeHouseActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".login.ChoiceIdentityActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".landlord.home.copy.CopyListActivity"
@@ -492,9 +483,6 @@
         <activity android:name=".tenant.opendoor.OpenHistoryActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".login.RegistPasswordActivity"
-            android:screenOrientation="portrait" />
         <activity
             android:name=".tenant.payrent.ApplyCheckoutActivity"
             android:screenOrientation="portrait" />

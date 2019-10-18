@@ -4,7 +4,7 @@ package com.konka.renting.http.subscriber;
 import com.konka.renting.base.BaseActivity;
 import com.konka.renting.bean.DataInfo;
 import com.konka.renting.bean.LoginUserBean;
-import com.konka.renting.login.LoginActivity;
+import com.konka.renting.login.LoginNewActivity;
 
 import retrofit2.HttpException;
 import rx.Subscriber;
@@ -36,9 +36,9 @@ public abstract class CommonSubscriber<T> extends Subscriber<T> {
         if (e instanceof HttpException &&((HttpException) e).code() == 404){
             LoginUserBean.getInstance().reset();
             if (LoginUserBean.getInstance().isLandlord()){
-                LoginActivity.toLandlordActivity(mAct);
+                LoginNewActivity.toLandlordActivity(mAct);
             }else {
-                LoginActivity.toTenantActivity(mAct);
+                LoginNewActivity.toTenantActivity(mAct);
             }
         }
     }

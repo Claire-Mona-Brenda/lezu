@@ -91,7 +91,7 @@ public class PwdResultActivity extends BaseActivity {
 
         mTvPwd.setText(pwd);
         if (isTimer){
-            tvTitle.setText(R.string.timer_pwd);
+            mTvTitle.setText(R.string.timer_pwd);
 
             mRlTimer.setVisibility(View.VISIBLE);
             mRlTimes.setVisibility(View.GONE);
@@ -99,7 +99,7 @@ public class PwdResultActivity extends BaseActivity {
             mTvTimerStart.setText(start);
             mTvTimerEnd.setText(end);
         }else{
-            tvTitle.setText(R.string.times_pwd);
+            mTvTitle.setText(R.string.times_pwd);
 
             mRlTimer.setVisibility(View.GONE);
             mRlTimes.setVisibility(View.VISIBLE);

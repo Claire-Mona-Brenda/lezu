@@ -21,6 +21,7 @@ import com.konka.renting.http.SecondRetrofitHelper;
 import com.konka.renting.http.subscriber.CommonSubscriber;
 import com.konka.renting.utils.DateTimeUtil;
 import com.konka.renting.utils.RxUtil;
+import com.konka.renting.widget.DateHourPicker;
 import com.konka.renting.widget.ShareAppPopup;
 
 import java.util.Date;
@@ -35,6 +36,7 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 
 import static com.konka.renting.utils.DateTimeUtil.FORMAT_DATE;
+import static com.konka.renting.utils.DateTimeUtil.FORMAT_DATE_TIME_SECOND;
 
 public class SetTimerPwdActivity extends BaseActivity {
     @BindView(R.id.tv_title)
@@ -72,7 +74,7 @@ public class SetTimerPwdActivity extends BaseActivity {
     GeneratePwdBean generatePwdBean;
 
     private ShareAppPopup shareAppPopup;
-    DatePicker picker;
+    DateHourPicker picker;
 
     boolean isStart = true;
     String start;
@@ -128,9 +130,9 @@ public class SetTimerPwdActivity extends BaseActivity {
                     showToast(R.string.timer_start_time);
                 } else if (TextUtils.isEmpty(start)) {
                     showToast(R.string.timer_end_time);
-                } else if (DateTimeUtil.stringToDate(start,FORMAT_DATE).getTime()>=DateTimeUtil.stringToDate(end,FORMAT_DATE).getTime()){
+                } else if (DateTimeUtil.stringToDate(start, FORMAT_DATE_TIME_SECOND).getTime() >= DateTimeUtil.stringToDate(end, FORMAT_DATE_TIME_SECOND).getTime()) {
                     showToast(R.string.timer_start_no_to_more_end_time);
-                }else {
+                } else {
                     addGeneratePassword();
                 }
                 break;
@@ -245,25 +247,27 @@ public class SetTimerPwdActivity extends BaseActivity {
     /**************************************************************************************************/
     public void onYearMonthDayPicker() {
         if (picker == null) {
-            String today = DateTimeUtil.getFormatToday(FORMAT_DATE);
-            int y = Integer.valueOf(today.split("-")[0]);
-            int m = Integer.valueOf(today.split("-")[1]);
-            int d = Integer.valueOf(today.split("-")[2]);
-            picker = new DatePicker(this);
+            String today = DateTimeUtil.getFormatToday(FORMAT_DATE_TIME_SECOND);
+            int y = Integer.valueOf(today.split(" ")[0].split("-")[0]);
+            int m = Integer.valueOf(today.split(" ")[0].split("-")[1]);
+            int d = Integer.valueOf(today.split(" ")[0].split("-")[2]);
+            int h = Integer.valueOf(today.split(" ")[1].split(":")[0]);
+            picker = new DateHourPicker(this);
             picker.setCanLoop(false);
             picker.setWheelModeEnable(true);
+            picker.setCanLinkage(true);
             picker.setTopPadding(15);
             picker.setRangeStart(y, m, d);
             picker.setRangeEnd(y + 2, 6, 1);
-            picker.setSelectedItem(y, m, d);
+            picker.setSelectedItem(y, m, d, 0);
             picker.setWeightEnable(true);
             picker.setSubmitTextColor(0xFF309BEA);//顶部确定按钮文字颜色
             picker.setLineColor(Color.WHITE);
             picker.setSelectedTextColor(Color.BLACK);
-            picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
+            picker.setOnDatePickListener(new DateHourPicker.OnYearMonthDayHourPickListener() {
                 @Override
-                public void onDatePicked(String year, String month, String day) {
-                    String time = year + "-" + month + "-" + day;
+                public void onDatePicked(String year, String month, String day, String hour) {
+                    String time = year + "-" + month + "-" + day + " " + hour + ":00:00";
                     if (isStart) {
                         start = time;
                         mTvStartTime.setText(time);
