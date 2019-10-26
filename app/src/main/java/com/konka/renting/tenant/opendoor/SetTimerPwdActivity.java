@@ -128,9 +128,11 @@ public class SetTimerPwdActivity extends BaseActivity {
                     showToast(R.string.please_set_manage_pwd);
                 } else if (TextUtils.isEmpty(start)) {
                     showToast(R.string.timer_start_time);
-                } else if (TextUtils.isEmpty(start)) {
+                } else if (TextUtils.isEmpty(end)) {
                     showToast(R.string.timer_end_time);
-                } else if (DateTimeUtil.stringToDate(start, FORMAT_DATE_TIME_SECOND).getTime() >= DateTimeUtil.stringToDate(end, FORMAT_DATE_TIME_SECOND).getTime()) {
+                } else if(DateTimeUtil.stringToDate(end, FORMAT_DATE_TIME_SECOND).getTime()<new Date().getTime()){
+                    showToast(R.string.timer_end_no_to_more_now_time);
+                }else if (DateTimeUtil.stringToDate(start, FORMAT_DATE_TIME_SECOND).getTime() >= DateTimeUtil.stringToDate(end, FORMAT_DATE_TIME_SECOND).getTime()) {
                     showToast(R.string.timer_start_no_to_more_end_time);
                 } else {
                     addGeneratePassword();

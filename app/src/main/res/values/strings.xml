@@ -773,6 +773,7 @@
     <string name="timer_start_time">请设置生效时间</string>
     <string name="timer_end_time">请设置失效时间</string>
     <string name="timer_start_no_to_more_end_time">设置的生效时间应小于失效时间</string>
+    <string name="timer_end_no_to_more_now_time">失效时间请不要早于当前时间</string>
 
     <string name="timer_start_time_">生效时间：</string>
     <string name="timer_end_time_">失效时间：</string>

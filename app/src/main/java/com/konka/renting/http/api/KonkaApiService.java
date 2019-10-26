@@ -28,12 +28,12 @@ import rx.Observable;
 public interface KonkaApiService {
 
     //    //测试环境
-    String HOST = "https://lettest.youlejiakeji.com/";
-    String SecondHost = "https://lezuxiaowo-test.youlejiakeji.com";
+//    String HOST = "https://lettest.youlejiakeji.com/";
+//    String SecondHost = "https://lezuxiaowo-test.youlejiakeji.com";
 
     //正式环境
-//    String HOST = "https://let.youlejiakeji.com/";
-//    String SecondHost = "https://lezuxiaowo.youlejiakeji.com";
+    String HOST = "https://let.youlejiakeji.com/";
+    String SecondHost = "https://lezuxiaowo.youlejiakeji.com";
 
 
     @FormUrlEncoded

@@ -39,6 +39,7 @@ import com.konka.renting.base.BaseActivity;
 import com.konka.renting.bean.DataInfo;
 import com.konka.renting.bean.HouseConfigBean;
 import com.konka.renting.bean.HouseDetailsInfoBean2;
+import com.konka.renting.event.CreateOrderEvent;
 import com.konka.renting.event.DelHouseEvent;
 import com.konka.renting.event.HousePublishEvent;
 import com.konka.renting.event.LandlordHouseInfoEvent;
@@ -200,6 +201,12 @@ public class HouseInfoActivity2 extends BaseActivity {
             public void call(HousePublishEvent housePublishEvent) {
                 mTvPublic.setText(R.string.end_to_rent);
                 bean.setIs_pub(1);
+            }
+        });
+        addRxBusSubscribe(CreateOrderEvent.class, new Action1<CreateOrderEvent>() {
+            @Override
+            public void call(CreateOrderEvent createOrderEvent) {
+                finish();
             }
         });
     }

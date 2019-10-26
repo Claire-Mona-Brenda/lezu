@@ -352,6 +352,9 @@ public class UnderwayTFragment extends BaseFragment implements IPayResCall, PayS
         switch (type) {
             case 0:
                 // 支付成功
+                if (choosePayWayPopup!=null){
+                    choosePayWayPopup.dismiss();
+                }
                 RxBus.getDefault().post(new PayRentRefreshEvent());
                 ResultActivity.toActivity(mActivity, getString(R.string.pay_result), getString(R.string.pay_success), getString(R.string.pay_success_tips), true);
                 break;
@@ -360,11 +363,17 @@ public class UnderwayTFragment extends BaseFragment implements IPayResCall, PayS
 //                    payStatusDialog = new PayStatusDialog(this, false, bond).setFailReason(reason).setPayReTry(this);
 //                    payStatusDialog.show();
 //                }
+                if (choosePayWayPopup!=null){
+                    choosePayWayPopup.dismiss();
+                }
                 showToast(getString(R.string.pay_fail));
 
 //                UIUtils.displayToast("支付失败");
                 break;
             case -2:
+                if (choosePayWayPopup!=null){
+                    choosePayWayPopup.dismiss();
+                }
                 showToast(getString(R.string.pay_cancel));
 //                Toast.makeText()
 //                UIUtils.displayToast("支付取消!!!");

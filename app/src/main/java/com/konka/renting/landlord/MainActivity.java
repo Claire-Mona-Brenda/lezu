@@ -30,6 +30,8 @@ import com.konka.renting.bean.AppConfigBean;
 import com.konka.renting.bean.DataInfo;
 import com.konka.renting.bean.LandlordUserDetailsInfoBean;
 import com.konka.renting.bean.LoginUserBean;
+import com.konka.renting.event.MainSwitchFragmentEvent;
+import com.konka.renting.event.TenantMainSwitchFragmentEvent;
 import com.konka.renting.http.SecondRetrofitHelper;
 import com.konka.renting.http.subscriber.CommonSubscriber;
 import com.konka.renting.landlord.house.HouseFragment;
@@ -76,6 +78,9 @@ public class MainActivity extends BaseMainActivity {
     UpdateAppPopupwindow updateAppPopupwindow;
     public AppConfigBean mAppConfigBean;
 
+    boolean isSwitchFragment = false;
+    int switchFragment_index = 0;
+
     public static void toMainActivity(Context context, int type) {
         if (LoginInfo.isLandlord(type))
             toActivity(context);
@@ -97,6 +102,10 @@ public class MainActivity extends BaseMainActivity {
         PushManager.getInstance().registerPushIntentService(this.getApplicationContext(), GeTuiIntentService.class);
         if (LoginUserBean.getInstance().getIs_lodge_identity() == null || LoginUserBean.getInstance().getIs_lodge_identity().equals("")) {
             getUserInfo();
+        }
+        if (isSwitchFragment){
+            isSwitchFragment=false;
+            menuItemClicked(switchFragment_index);
         }
         //neadGoTo(getIntent());
     }
@@ -214,6 +223,14 @@ public class MainActivity extends BaseMainActivity {
         PushManager.getInstance().bindAlias(this, LoginUserBean.getInstance().getMobile());
 
         mBottomViews[0].setSelected(true);
+
+        addRxBusSubscribe(MainSwitchFragmentEvent.class, new Action1<MainSwitchFragmentEvent>() {
+            @Override
+            public void call(MainSwitchFragmentEvent event) {
+                isSwitchFragment = true;
+                switchFragment_index = event.getIndex();
+            }
+        });
 //        addRxBusSubscribe(LocationEvent.class, new Action1<LocationEvent>() {
 //            @Override
 //            public void call(LocationEvent locationEvent) {
@@ -252,7 +269,7 @@ public class MainActivity extends BaseMainActivity {
                     public void call(Boolean aBoolean) {
                         if (aBoolean) {
                             checkVersion();
-                        }else{
+                        } else {
                             showToast(getString(R.string.no_permissions));
                         }
                     }

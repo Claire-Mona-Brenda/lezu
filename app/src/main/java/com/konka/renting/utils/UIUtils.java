@@ -114,7 +114,7 @@ public class UIUtils {
 
     public static void displayToast(String str) {
         Toast toast = Toast.makeText(UIUtils.getContext(), str, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER, 0, 100);
+        toast.setGravity(Gravity.CENTER, 0, -100);
         toast.show();
     }
 

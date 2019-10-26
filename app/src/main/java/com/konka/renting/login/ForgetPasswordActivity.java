@@ -218,7 +218,7 @@ public class ForgetPasswordActivity extends BaseActivity implements TextWatcher 
             return false;
         if (mEditNum.getText().toString().equals(""))
             return false;
-        if (mEditPasswordNew.getText().toString().equals(""))
+        if (mEditPasswordNew.getText().toString().length()<6)
             return false;
         return true;
     }

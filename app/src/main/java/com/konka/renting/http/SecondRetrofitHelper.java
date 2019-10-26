@@ -96,6 +96,7 @@ import com.konka.renting.login.LoginNewActivity;
 import com.konka.renting.utils.AppManager;
 import com.konka.renting.utils.NetWorkUtil;
 import com.konka.renting.utils.RxBus;
+import com.konka.renting.utils.UIUtils;
 import com.lljjcoder.style.citylist.Toast.ToastUtils;
 
 import org.json.JSONException;
@@ -258,17 +259,17 @@ public class SecondRetrofitHelper {
                 if (j != null && j.optInt("status") == -1) {
                     RxBus.getDefault().post(new LogInAgainEvent());
 //                    Log.e(TAG, "--->登录失效，自动重新登录");
-                    if (BaseActivity.getForegroundActivity() != null) {
+//                    if (BaseActivity.getForegroundActivity() != null) {
                         LoginUserBean.getInstance().reset();
                         if (LoginUserBean.getInstance().isLandlord()) {
-                            LoginNewActivity.toLandlordActivity(BaseActivity.getForegroundActivity());
+                            LoginNewActivity.toLandlordActivity(UIUtils.getContext());
                         } else {
-                            LoginNewActivity.toTenantActivity(BaseActivity.getForegroundActivity());
+                            LoginNewActivity.toTenantActivity(UIUtils.getContext());
                         }
-                        if (BaseActivity.getForegroundActivity() != null)
-                            BaseActivity.getForegroundActivity().finish();
-                        AppManager.getInstance().killAllBeyondActivity(LoginNewActivity.class);
-                    }
+//                        if (BaseActivity.getForegroundActivity() != null)
+//                            BaseActivity.getForegroundActivity().finish();
+//                        AppManager.getInstance().killAllBeyondActivity(LoginNewActivity.class);
+//                    }
                     throw new RuntimeException("登录失效，请重新登录");
                     // 判断是否登录成功了
                 }

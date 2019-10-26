@@ -17,6 +17,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -126,7 +129,10 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
     View mTypeShort;
     @BindView(R.id.fragment_tenant_main_ll_type_short)
     LinearLayout mLlTypeShort;
-
+    @BindView(R.id.fragment_tenant_main_coordinatorLayout)
+    CoordinatorLayout mCoordinatorLayout;
+    @BindView(R.id.fragment_tenant_main_nestedScrollView)
+    NestedScrollView mNestedScrollView;
 
     public final String COUNTRY = "country"; // 行政区划，国家级
 
@@ -139,6 +145,7 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
     SharedPreferences sharedPreferences;
 
     PinYinUtils pinYinUtils;
+
 
     //当前选中的级别
     private String selectedLevel = COUNTRY;
@@ -391,7 +398,6 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
         mRvRecommend.setAdapter(recommendAdapter);
 
 
-
     }
 
     private void initListent() {
@@ -479,8 +485,8 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
     private void initDate() {
         getHoustListData();
         getHotShortListData();
-        page_long=1;
-        page_short=1;
+        page_long = 1;
+        page_short = 1;
         getRecommendListData(2);
         getRecommendListData(1);
         swipeRefreshLayout.setRefreshing(false);
@@ -720,9 +726,27 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
                             if (reShortList.size() > 0 || reLongList.size() > 0) {
                                 mLlRecommend.setVisibility(View.VISIBLE);
                                 mRefreshRecommend.setVisibility(View.VISIBLE);
+                                mNestedScrollView.setNestedScrollingEnabled(true);
+                                CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) mAppBarLayout.getLayoutParams();
+                                AppBarLayout.Behavior behavior = (AppBarLayout.Behavior) params.getBehavior();
+                                behavior.setDragCallback(new AppBarLayout.Behavior.DragCallback() {
+                                    @Override
+                                    public boolean canDrag(@NonNull AppBarLayout appBarLayout) {
+                                        return true;
+                                    }
+                                });
                             } else {
                                 mLlRecommend.setVisibility(View.GONE);
                                 mRefreshRecommend.setVisibility(View.GONE);
+                                mNestedScrollView.setNestedScrollingEnabled(false);
+                                CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) mAppBarLayout.getLayoutParams();
+                                AppBarLayout.Behavior behavior = (AppBarLayout.Behavior) params.getBehavior();
+                                behavior.setDragCallback(new AppBarLayout.Behavior.DragCallback() {
+                                    @Override
+                                    public boolean canDrag(@NonNull AppBarLayout appBarLayout) {
+                                        return false;
+                                    }
+                                });
                             }
                         } else {
                             if (page > 1 && type == 1) {

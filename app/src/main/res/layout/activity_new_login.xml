@@ -143,6 +143,7 @@
             android:layout_marginStart="@dimen/dp_20"
             android:layout_weight="1.0"
             android:background="@android:color/transparent"
+            android:maxLength="12"
             android:hint="@string/login_password_hint"
             android:digits="@string/login_pwd_input"
             android:inputType="textPassword"

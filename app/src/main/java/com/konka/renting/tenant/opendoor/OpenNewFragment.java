@@ -169,6 +169,10 @@ public class OpenNewFragment extends BaseFragment {
 
             @Override
             public void onClickHistoryMore(int position) {//开门记录
+                if (!LoginUserBean.getInstance().getIs_lodge_identity().equals("1")) {
+                    NewFaceDectectActivity.toActivity(getActivity(), 1);
+                    return;
+                }
                 OpenDoorListbean openDoorListbean = mData.get(position);
                 if (TextUtils.isEmpty(openDoorListbean.getOrder_id())) {
                     ShowToastUtil.showNormalToast(getContext(), getString(R.string.warm_open_no_order));
@@ -179,6 +183,10 @@ public class OpenNewFragment extends BaseFragment {
 
             @Override
             public void onClickOpenPwd(int position) {//开锁密码
+                if (!LoginUserBean.getInstance().getIs_lodge_identity().equals("1")) {
+                    NewFaceDectectActivity.toActivity(getActivity(), 1);
+                    return;
+                }
                 OpenDoorListbean openDoorListbean = mData.get(position);
                 if (TextUtils.isEmpty(openDoorListbean.getOrder_id())) {
                     ShowToastUtil.showNormalToast(getContext(), getString(R.string.warm_open_no_order));
@@ -194,6 +202,10 @@ public class OpenNewFragment extends BaseFragment {
 
             @Override
             public void onClickGateway(int position) {//网关设置
+                if (!LoginUserBean.getInstance().getIs_lodge_identity().equals("1")) {
+                    NewFaceDectectActivity.toActivity(getActivity(), 1);
+                    return;
+                }
                 OpenDoorListbean openDoorListbean = mData.get(position);
                 if (TextUtils.isEmpty(openDoorListbean.getOrder_id())) {
                     ShowToastUtil.showNormalToast(getContext(), getString(R.string.warm_open_no_order));
@@ -210,6 +222,10 @@ public class OpenNewFragment extends BaseFragment {
 
             @Override
             public void onClickSync(int position) {//同步服务费
+                if (!LoginUserBean.getInstance().getIs_lodge_identity().equals("1")) {
+                    NewFaceDectectActivity.toActivity(getActivity(), 1);
+                    return;
+                }
                 OpenDoorListbean openDoorListbean = mData.get(position);
                 if (TextUtils.isEmpty(openDoorListbean.getOrder_id())) {
                     ShowToastUtil.showNormalToast(getContext(), getString(R.string.warm_open_no_order));
@@ -224,6 +240,10 @@ public class OpenNewFragment extends BaseFragment {
 
             @Override
             public void onClickKeyPwd(int position) {//钥匙孔密码
+                if (!LoginUserBean.getInstance().getIs_lodge_identity().equals("1")) {
+                    NewFaceDectectActivity.toActivity(getActivity(), 1);
+                    return;
+                }
                 OpenDoorListbean openDoorListbean = mData.get(position);
                 if ( !openDoorListbean.getDevice_id().equals("")) {
                     if (queryKeyPwdTime <= 0 || queryKeyPwdTime >= 10) {
@@ -243,6 +263,10 @@ public class OpenNewFragment extends BaseFragment {
 
             @Override
             public void onClickAddUser(int position) {//添加使用者
+                if (!LoginUserBean.getInstance().getIs_lodge_identity().equals("1")) {
+                    NewFaceDectectActivity.toActivity(getActivity(), 1);
+                    return;
+                }
                 OpenDoorListbean openDoorListbean = mData.get(position);
                 if (TextUtils.isEmpty(openDoorListbean.getOrder_id())) {
                     ShowToastUtil.showNormalToast(getContext(), getString(R.string.warm_open_no_order));
@@ -259,6 +283,10 @@ public class OpenNewFragment extends BaseFragment {
 
             @Override
             public void onClickManager(int position) {//管理员密码
+                if (!LoginUserBean.getInstance().getIs_lodge_identity().equals("1")) {
+                    NewFaceDectectActivity.toActivity(getActivity(), 1);
+                    return;
+                }
                 OpenDoorListbean openDoorListbean = mData.get(position);
                 if (TextUtils.isEmpty(openDoorListbean.getOrder_id())) {
                     ShowToastUtil.showNormalToast(getContext(), getString(R.string.warm_open_no_order));

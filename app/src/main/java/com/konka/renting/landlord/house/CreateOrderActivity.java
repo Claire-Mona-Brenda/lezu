@@ -30,6 +30,7 @@ import com.konka.renting.bean.RentingDateBean;
 import com.konka.renting.bean.TenantListBean;
 import com.konka.renting.event.ChooseDateEvent;
 import com.konka.renting.event.CreateOrderEvent;
+import com.konka.renting.event.MainSwitchFragmentEvent;
 import com.konka.renting.http.SecondRetrofitHelper;
 import com.konka.renting.http.subscriber.CommonSubscriber;
 import com.konka.renting.landlord.house.widget.ChooseHourPopup;
@@ -312,15 +313,14 @@ public class CreateOrderActivity extends BaseActivity {
                     public void onNext(DataInfo<AddRentingBean> dataInfo) {
                         dismiss();
                         if (dataInfo.success()) {
-                            if (dataInfo.success()) {
                                 RxBus.getDefault().post(new CreateOrderEvent());
+                                RxBus.getDefault().post(new MainSwitchFragmentEvent(1));
                                 if (TextUtils.isEmpty(mobile)) {
                                     PwsOrderDetailsActivity.toActivity(CreateOrderActivity.this, dataInfo.data().getOrder_id());
                                 }else{
                                     showToast(R.string.order_create_success);
                                 }
                                 finish();
-                            }
                         } else {
                             btnToCreate.setEnabled(true);
                             showToast(dataInfo.msg());

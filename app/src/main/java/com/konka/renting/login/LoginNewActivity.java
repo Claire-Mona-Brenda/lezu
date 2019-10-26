@@ -6,11 +6,13 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.text.Editable;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.TransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -193,7 +195,13 @@ public class LoginNewActivity extends BaseActivity implements CompoundButton.OnC
                 editPassword.setSelection(editPassword.getText().toString().length());
                 break;
             case R.id.btn_login:
-                login();
+                hideSoftKeyboard(editPassword);
+                hideSoftKeyboard(editPhone);
+                if (editPassword.getText().toString().length() < 6) {
+                    showToast(R.string.regist_password_hint_new);
+                }else{
+                    login();
+                }
                 break;
             case R.id.btn_regist:
                 RegistActivity.toActivity(this, mType);
@@ -290,7 +298,7 @@ public class LoginNewActivity extends BaseActivity implements CompoundButton.OnC
     private boolean checkEnableLogin() {
         if (editPhone.getText().toString().length() < 11)
             return false;
-        if (editPassword.getText().toString().equals(""))
+        if (TextUtils.isEmpty(editPassword.getText().toString()))
             return false;
         return true;
     }
@@ -300,4 +308,20 @@ public class LoginNewActivity extends BaseActivity implements CompoundButton.OnC
         super.onBackPressed();
         AppManager.getInstance().killAllActivity();
     }
+
+    //隐藏软键盘
+    private void hideSoftKeyboard(EditText editText){
+        if (editText == null )return;
+        InputMethodManager imm = (InputMethodManager)  getSystemService(INPUT_METHOD_SERVICE);
+        if (imm == null)return;
+        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0); //强制隐藏键盘
+    }
+    //显示软键盘
+    private void showSoftKeyboard(EditText editText){
+        if (editText == null )return;
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        if (imm == null)return;
+        imm.showSoftInput(editText, InputMethodManager.SHOW_FORCED);
+    }
+
 }

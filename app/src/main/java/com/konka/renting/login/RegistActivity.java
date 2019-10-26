@@ -229,7 +229,7 @@ public class RegistActivity extends BaseActivity implements TextWatcher {
             return false;
         if (mEditNum.getText().toString().equals(""))
             return false;
-        if (mEditPwd.getText().toString().equals(""))
+        if (mEditPwd.getText().toString().length()<6)
             return false;
         if (!checkAgree.isChecked())
             return false;

@@ -219,9 +219,10 @@ public class OrderInfoLActivity extends BaseActivity {
 
 
         if (infoBean.getStatus() > 1) {
-            mRlPerson.setVisibility(View.VISIBLE);
+
             mRlRentCode.setVisibility(View.GONE);
             if (infoBean.getMember() != null && infoBean.getMember().size() > 0) {
+                mRlPerson.setVisibility(View.VISIBLE);
                 if (CacheUtils.checkFileExist(infoBean.getLandlord().getThumb_headimgurl())) {
                     Picasso.get().load(CacheUtils.getFile(infoBean.getLandlord().getThumb_headimgurl())).placeholder(R.mipmap.fangdong_xuanzhong).error(R.mipmap.fangdong_xuanzhong)
                             .transform(new CircleTransform()).into(mImgIconPerson);
@@ -245,6 +246,8 @@ public class OrderInfoLActivity extends BaseActivity {
                     tel = str;
                 }
                 mTvPhone.setText(tel);
+            }else{
+                mRlPerson.setVisibility(View.GONE);
             }
         } else {
             mRlPerson.setVisibility(View.GONE);
