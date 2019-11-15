@@ -8,7 +8,7 @@
         android:id="@+id/adapter_tenant_main_recommend_card"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="@dimen/dp_6"
+        app:cardCornerRadius="@dimen/dp_4"
         app:cardElevation="0dp"
         app:cardUseCompatPadding="false"
         android:layout_margin="@dimen/dp_16">
@@ -32,7 +32,7 @@
         android:typeface="sans"
         android:textStyle="bold"
         android:textSize="@dimen/sp_16"
-        android:textColor="@color/text_black"/>
+        android:textColor="@color/color_000000"/>
     <TextView
         android:id="@+id/adapter_tenant_main_recommend_tv_info"
         android:layout_width="wrap_content"
@@ -41,7 +41,7 @@
         android:layout_below="@+id/adapter_tenant_main_recommend_tv_name"
         android:layout_alignStart="@+id/adapter_tenant_main_recommend_tv_name"
         android:textSize="@dimen/sp_14"
-        android:textColor="@color/text_gray"/>
+        android:textColor="@color/color_000000"/>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -54,15 +54,20 @@
             android:id="@+id/adapter_tenant_main_recommend_tv_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_2"
+            android:typeface="sans"
+            android:textStyle="bold"
             android:textSize="@dimen/sp_16"
-            android:textColor="@color/text_org"
+            android:textColor="@color/text_ren"
             android:text=" - - "/>
         <TextView
             android:id="@+id/adapter_tenant_main_recommend_tv_price_unit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/sp_16"
-            android:textColor="@color/text_org"
+            android:typeface="sans"
+            android:textStyle="bold"
+            android:textSize="@dimen/sp_12"
+            android:textColor="@color/text_ren"
             android:text="@string/public_house_pay_unit_day"/>
     </LinearLayout>
     <View

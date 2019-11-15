@@ -68,19 +68,39 @@ public class EstateListPopup extends PopupWindow {
                 String room_type;
                 if (bean.getRoom_type().contains("_")) {
                     String[] t = bean.getRoom_type().split("_");
-                    room_type = t[0] + "室" + t[2] + "厅" + (t[1].equals("0") ? "" : t[1] + "卫");
+                    room_type = t[0] + "室" + (t[1].equals("0") ? "" : t[1] + "卫") + t[2] + "厅";
                 } else {
                     room_type = bean.getRoom_type();
                 }
                 SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder();
-                spannableStringBuilder.append(room_type + "|");
+                spannableStringBuilder.append(room_type + " | ");
                 spannableStringBuilder.append(bean.getMeasure_area() + mContext.getString(R.string.unit_m2));
-                spannableStringBuilder.append("|" + bean.getFloor() + "/" + bean.getTotal_floor() + "层");
+                spannableStringBuilder.append(" | " + bean.getFloor() + "/" + bean.getTotal_floor() + "层");
                 viewHolder.setText(R.id.adapter_map_search_room_tv_info, spannableStringBuilder);
 
                 viewHolder.setText(R.id.adapter_map_search_room_tv_name, bean.getRoom_name());
-                viewHolder.setText(R.id.adapter_map_search_room_tv_price, Float.valueOf(bean.getHousing_price()).intValue() + "");
-                viewHolder.setText(R.id.adapter_map_search_room_tv_price_unit, mContext.getString(bean.getType() == 1 ? R.string.public_house_pay_unit_day : R.string.public_house_pay_unit_mon));
+
+                int text_color = bean.getType() == 1 ? mContext.getResources().getColor(R.color.text_green) : mContext.getResources().getColor(R.color.text_ren);
+                String unit_rent = bean.getType() == 1 ? mContext.getString(R.string.public_house_pay_unit_day) : mContext.getString(R.string.public_house_pay_unit_mon);
+                String price = bean.getHousing_price();
+                if (!TextUtils.isEmpty(price)) {
+                    float priceF = Float.valueOf(bean.getHousing_price());
+                    int priceI = (int) priceF;
+                    if (priceF <= 0) {
+                        price = "";
+                        unit_rent = mContext.getString(R.string.negotiable);
+                    } else if (priceF > priceI) {
+                        price = priceF + "";
+                    } else {
+                        price = priceI + "";
+                    }
+                } else {
+                    price = "";
+                }
+                viewHolder.setText(R.id.adapter_map_search_room_tv_price, price);
+                viewHolder.setText(R.id.adapter_map_search_room_tv_price_unit,unit_rent);
+                viewHolder.setTextColor(R.id.adapter_map_search_room_tv_price, text_color);
+                viewHolder.setTextColor(R.id.adapter_map_search_room_tv_price_unit,text_color);
 
                 ImageView picView = viewHolder.getView(R.id.adapter_map_search_room_iv_icon);
                 if (!TextUtils.isEmpty(bean.getThumb_image())) {

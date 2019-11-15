@@ -10,7 +10,7 @@
         android:id="@+id/adapter_tenant_main_house_card"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="@dimen/dp_6"
+        app:cardCornerRadius="@dimen/dp_4"
         app:cardElevation="0dp"
         app:cardUseCompatPadding="false">
         <ImageView
@@ -31,11 +31,28 @@
         android:textStyle="bold"
         android:textSize="@dimen/sp_16"
         android:textColor="@color/text_black"/>
-    <TextView
-        android:id="@+id/adapter_tenant_main_house_tv_price"
-        android:layout_width="@dimen/dp_160"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_6"
-        android:textSize="@dimen/sp_16"
-        android:textColor="@color/text_org"/>
+        android:gravity="bottom">
+        <TextView
+            android:id="@+id/adapter_tenant_main_house_tv_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_2"
+            android:textSize="@dimen/sp_16"
+            android:textColor="@color/text_ren"
+            android:typeface="sans"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/adapter_tenant_main_house_tv_price_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_12"
+            android:textColor="@color/text_ren"
+            android:typeface="sans"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
 </LinearLayout>

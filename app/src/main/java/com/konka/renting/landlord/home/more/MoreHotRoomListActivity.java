@@ -3,8 +3,12 @@ package com.konka.renting.landlord.home.more;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.RelativeSizeSpan;
+import android.text.style.SuperscriptSpan;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -95,26 +99,26 @@ public class MoreHotRoomListActivity extends BaseActivity {
                 String room_type;
                 if (bean.getRoom_type().contains("_")) {
                     String[] t = bean.getRoom_type().split("_");
-                    room_type = t[0] + "室" + t[2] + "厅" + (t[1].equals("0") ? "" : t[1] + "卫");
+                    room_type = t[0] + "室" + (t[1].equals("0") ? "" : t[1] + "卫") + t[2] + "厅";
                 } else {
                     room_type = bean.getRoom_type();
                 }
                 SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder();
-                spannableStringBuilder.append(room_type + "|");
-                spannableStringBuilder.append(bean.getMeasure_area() + getString(R.string.unit_m2));
-                spannableStringBuilder.append("|" + bean.getFloor() + "/" + bean.getTotal_floor() + "层");
+                spannableStringBuilder.append(room_type + " | ");
+                spannableStringBuilder.append(getArea(bean.getMeasure_area() +""));
+                spannableStringBuilder.append(" | " + bean.getFloor() + "/" + bean.getTotal_floor() + "层");
                 viewHolder.setText(R.id.tv_date, spannableStringBuilder);
 
-                viewHolder.setText(R.id.tv_type, getString(bean.getType() == 1 ? R.string.short_rent : R.string.long_rent ));
-                viewHolder.setSelected(R.id.tv_type, bean.getType() == 2);
-
-                TextView tv_price = viewHolder.getView(R.id.tv_price);
+                int text_color = bean.getType() == 1 ? getResources().getColor(R.color.text_green) : getResources().getColor(R.color.text_ren);
                 String unit = getString(bean.getType() == 1 ? R.string.public_house_pay_unit_day : R.string.public_house_pay_unit_mon);
                 String price = bean.getHousing_price();
                 if (!TextUtils.isEmpty(price)) {
                     float priceF = Float.valueOf(bean.getHousing_price());
                     int priceI = (int) priceF;
-                    if (priceF > priceI) {
+                    if (priceF <= 0) {
+                        price = "";
+                        unit = getString(R.string.negotiable);
+                    } else if (priceF > priceI) {
                         price = priceF + "";
                     } else {
                         price = priceI + "";
@@ -122,7 +126,10 @@ public class MoreHotRoomListActivity extends BaseActivity {
                 } else {
                     price = "";
                 }
-                tv_price.setText(price + unit);
+                viewHolder.setText(R.id.tv_price,price);
+                viewHolder.setText(R.id.tv_price_unit, unit);
+                viewHolder.setTextColor(R.id.tv_price,text_color);
+                viewHolder.setTextColor(R.id.tv_price_unit,text_color);
 //                tv_price.setText(Html.fromHtml("<font color='#ff4707'>¥" + roomInfo.housing_price + "</font>/月"));
                 if (!TextUtils.isEmpty(bean.getThumb_image()))
                     Picasso.get().load(bean.getThumb_image()).into((ImageView) viewHolder.getView(R.id.iv_icon));
@@ -204,5 +211,17 @@ public class MoreHotRoomListActivity extends BaseActivity {
     @OnClick(R.id.iv_back)
     public void onViewClicked() {
         finish();
+    }
+
+    private SpannableStringBuilder getArea(String area) {
+        SpannableString m2 = new SpannableString("m2");
+        m2.setSpan(new RelativeSizeSpan(0.5f), 1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);//一半大小
+        m2.setSpan(new SuperscriptSpan(), 1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);   //上标
+
+        SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(area);
+        spannableStringBuilder.append(m2);
+
+        return spannableStringBuilder;
+
     }
 }

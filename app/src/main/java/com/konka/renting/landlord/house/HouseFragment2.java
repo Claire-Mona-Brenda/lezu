@@ -230,28 +230,35 @@ public class HouseFragment2 extends BaseFragment {
                     viewHolder.setText(R.id.status, getString(R.string.house_status_type_public));
                     viewHolder.setVisible(R.id.adapter_house_ll_rent_money, true);
 
-                    String price=houseOrderInfoBean.getHousing_price();
-                    if (!TextUtils.isEmpty(price)){
+                    String unit = houseOrderInfoBean.getType() == 1 ? getString(R.string.public_house_pay_unit_day) : getString(R.string.public_house_pay_unit_mon);
+                    String price = houseOrderInfoBean.getHousing_price();
+                    if (!TextUtils.isEmpty(price)) {
                         float priceF = Float.valueOf(houseOrderInfoBean.getHousing_price());
                         int priceI = (int) priceF;
-                        if (priceF>priceI){
-                            price= priceF+"";
-                        }else{
-                            price= priceI+"";
+                        if (priceF <= 0) {
+                            price = "";
+                            unit = getString(R.string.negotiable);
+                        } else if (priceF > priceI) {
+                            price = priceF + "";
+                        } else {
+                            price = priceI + "";
                         }
-                    }else{
-                        price="";
+                    } else {
+                        price = "";
                     }
                     viewHolder.setText(R.id.adapter_house_tv_rent_money, price);
-                    viewHolder.setText(R.id.start_end, getString(R.string.end_to_rent));
+                    viewHolder.setText(R.id.adapter_house_tv_rent_money_unit, unit);
+                    viewHolder.setText(R.id.start_end, TextUtils.isEmpty(houseOrderInfoBean.getDevice_id())?getString(R.string.end_to_rent):getString(R.string.switch_push_rent));
                     if (houseOrderInfoBean.getType() == 1) {//短租
                         viewHolder.setText(R.id.adapter_houselist_tv_rent_type, "【" + getString(R.string.short_rent) + "】");
                         viewHolder.setTextColorRes(R.id.adapter_houselist_tv_rent_type, R.color.color_short);
-                        viewHolder.setText(R.id.adapter_house_tv_rent_money_unit, getString(R.string.public_house_pay_unit_day));
+                        viewHolder.setTextColorRes(R.id.adapter_house_tv_rent_money, R.color.text_green);
+                        viewHolder.setTextColorRes(R.id.adapter_house_tv_rent_money_unit, R.color.text_green);
                     } else {//长租
                         viewHolder.setText(R.id.adapter_houselist_tv_rent_type, "【" + getString(R.string.long_rent) + "】");
                         viewHolder.setTextColorRes(R.id.adapter_houselist_tv_rent_type, R.color.color_long);
-                        viewHolder.setText(R.id.adapter_house_tv_rent_money_unit, getString(R.string.public_house_pay_unit_mon));
+                        viewHolder.setTextColorRes(R.id.adapter_house_tv_rent_money, R.color.text_ren);
+                        viewHolder.setTextColorRes(R.id.adapter_house_tv_rent_money_unit, R.color.text_ren);
                     }
 
                 }
@@ -322,10 +329,10 @@ public class HouseFragment2 extends BaseFragment {
                 viewHolder.setOnClickListener(R.id.ll_start_end, new View.OnClickListener() {//发布操作
                     @Override
                     public void onClick(View v) {
-                        if (houseOrderInfoBean.getIs_pub() == 1) {
+                        if (houseOrderInfoBean.getIs_pub() == 1&&TextUtils.isEmpty(houseOrderInfoBean.getDevice_id())) {
                             cancelPublic(houseOrderInfoBean.getRoom_id() + "");
                         } else {
-                            HousePublishActivity.toActivity(mActivity, houseOrderInfoBean.getRoom_id() + "");
+                            HousePublishActivity.toActivity(mActivity, houseOrderInfoBean.getRoom_id() + "", houseOrderInfoBean.getType() != 1);
                         }
                     }
                 });

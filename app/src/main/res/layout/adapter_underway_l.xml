@@ -45,8 +45,8 @@
         android:layout_below="@+id/adapter_tv_room_name"
         android:layout_alignStart="@+id/adapter_tv_room_name"
         android:layout_marginTop="@dimen/dp_3"
-        android:textSize="@dimen/sp_12"
-        android:textColor="@color/text_gray" />
+        android:textSize="@dimen/sp_14"
+        android:textColor="@color/color_000000" />
     <TextView
         android:id="@+id/adapter_tv_room_price"
         android:layout_width="wrap_content"

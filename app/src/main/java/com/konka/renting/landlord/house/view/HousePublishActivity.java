@@ -51,12 +51,18 @@ public class HousePublishActivity extends BaseActivity implements CompoundButton
     LinearLayout libLl;
 
     int type = 2;
+    boolean isChooseTypeLong;
     String room_id;
 
-    public static void toActivity(Context context, String room_id) {
+    public static void toActivity(Context context, String room_id,boolean isChooseTypeLong) {
         Intent intent = new Intent(context, HousePublishActivity.class);
         intent.putExtra("room_id", room_id);
+        intent.putExtra("isChooseTypeLong", isChooseTypeLong);
         context.startActivity(intent);
+    }
+
+    public static void toActivity(Context context, String room_id) {
+        toActivity(context,room_id,true);
     }
 
     @Override
@@ -71,13 +77,22 @@ public class HousePublishActivity extends BaseActivity implements CompoundButton
         tvRight.setTextColor(getResources().getColor(R.color.style_main));
 
         room_id = getIntent().getStringExtra("room_id");
+        isChooseTypeLong = getIntent().getBooleanExtra("isChooseTypeLong",isChooseTypeLong);
 
         rbtnTypeLong.setOnCheckedChangeListener(this);
         rbtnTypeShort.setOnCheckedChangeListener(this);
-        rbtnTypeLong.setChecked(true);
-        type = 2;
-        tvUnit.setText(R.string.public_house_pay_unit_mon);
-        tvPayDate.setText(R.string.public_house_pay_mon);
+
+        if (isChooseTypeLong) {
+            rbtnTypeLong.setChecked(true);
+            type = 2;
+            tvUnit.setText(R.string.public_house_pay_unit_mon);
+            tvPayDate.setText(R.string.public_house_pay_mon);
+        }else{
+            rbtnTypeShort.setChecked(true);
+            type = 1;
+            tvUnit.setText(R.string.public_house_pay_unit_day);
+            tvPayDate.setText(R.string.public_house_pay_day);
+        }
 
         editMoney.addTextChangedListener(new TextWatcher() {
             @Override

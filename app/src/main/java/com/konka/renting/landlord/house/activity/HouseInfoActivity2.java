@@ -199,8 +199,13 @@ public class HouseInfoActivity2 extends BaseActivity {
         addRxBusSubscribe(HousePublishEvent.class, new Action1<HousePublishEvent>() {
             @Override
             public void call(HousePublishEvent housePublishEvent) {
-                mTvPublic.setText(R.string.end_to_rent);
                 bean.setIs_pub(1);
+                bean.setType(housePublishEvent.getType());
+                if (TextUtils.isEmpty(bean.getDevice_id())){
+                    mTvPublic.setText(R.string.end_to_rent);
+                }else{//发布信息变更
+                    mTvPublic.setText(R.string.switch_push_rent);
+                }
             }
         });
         addRxBusSubscribe(CreateOrderEvent.class, new Action1<CreateOrderEvent>() {
@@ -276,10 +281,10 @@ public class HouseInfoActivity2 extends BaseActivity {
                 if (bean == null) {
                     return;
                 }
-                if (bean.getIs_pub() == 1) {
+                if (bean.getIs_pub() == 1&&TextUtils.isEmpty(bean.getDevice_id())) {
                     cancelPublic();
                 } else {
-                    HousePublishActivity.toActivity(mActivity, bean.getRoom_id());
+                    HousePublishActivity.toActivity(mActivity, bean.getRoom_id(),bean.getType()!=1);
                 }
                 break;
             case R.id.activity_house_info_tv_create://生成订单
@@ -317,7 +322,13 @@ public class HouseInfoActivity2 extends BaseActivity {
                         if (dataInfo.success()) {
                             bean = dataInfo.data();
                             mLlButton.setVisibility(View.VISIBLE);
-                            mTvPublic.setText(bean.getIs_pub() == 0 ? R.string.start_to_rent : R.string.end_to_rent);
+                            if (bean.getIs_pub()==0){
+                                mTvPublic.setText(R.string.start_to_rent);
+                            }else if (TextUtils.isEmpty(bean.getDevice_id())){
+                                mTvPublic.setText(R.string.end_to_rent);
+                            }else{
+                                mTvPublic.setText(R.string.switch_push_rent);
+                            }
                             imageList = bean.getImage();
                             mTvName.setText(bean.getRoom_name());
                             mImgBind.setImageResource(bean.getDevice_id().equals("") ? R.mipmap.unbounded : R.mipmap.binding);

@@ -71,7 +71,6 @@ public class ChooseDateActivity extends BaseActivity {
                 Date d = getNextDay(st, "1");
                 while (d.getTime() < end.getTime()) {
                     String s = format.format(d);
-                    Log.e("123123", "============" + s);
                     rentingList.add(s);
                     d = getNextDay(s,  "1");
                 }

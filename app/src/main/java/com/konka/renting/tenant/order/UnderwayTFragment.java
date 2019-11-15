@@ -137,12 +137,16 @@ public class UnderwayTFragment extends BaseFragment implements IPayResCall, PayS
             @Override
             public void convert(ViewHolder viewHolder, RenterOrderListBean listBean) {
                 if (!TextUtils.isEmpty(listBean.getHousing_price()) && listBean.getRent_type() != 0) {
-                    String unit = listBean.getRent_type() == 1 ? "/天" : "/月";
+                    int text_color = listBean.getRent_type() == 1 ? getResources().getColor(R.color.text_green) : getResources().getColor(R.color.text_ren);
+                    String unit = listBean.getRent_type() == 1 ? getString(R.string.public_house_pay_unit_day) : getString(R.string.public_house_pay_unit_mon);
                     String price=listBean.getHousing_price();
                     if (!TextUtils.isEmpty(price)){
                         float priceF = Float.valueOf(listBean.getHousing_price());
                         int priceI = (int) priceF;
-                        if (priceF>priceI){
+                        if(priceF<=0){
+                            price="";
+                            unit=getString(R.string.negotiable);
+                        }else if (priceF>priceI){
                             price= priceF+"";
                         }else{
                             price= priceI+"";
@@ -150,8 +154,9 @@ public class UnderwayTFragment extends BaseFragment implements IPayResCall, PayS
                     }else{
                         price="";
                     }
-                    viewHolder.setText(R.id.adapter_tv_room_price, "¥ " + price + unit);
+                    viewHolder.setText(R.id.adapter_tv_room_price, price + unit);
                     viewHolder.setVisible(R.id.adapter_tv_room_price, true);
+                    viewHolder.setTextColor(R.id.adapter_tv_room_price,text_color);
                 } else {
                     viewHolder.setVisible(R.id.adapter_tv_room_price, false);
                 }
@@ -182,9 +187,9 @@ public class UnderwayTFragment extends BaseFragment implements IPayResCall, PayS
                     room_type = listBean.getRoom_type();
                 }
                 SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder();
-                spannableStringBuilder.append(room_type + "|");
+                spannableStringBuilder.append(room_type + " | ");
                 spannableStringBuilder.append(getArea(listBean.getMeasure_area()));
-                spannableStringBuilder.append("|" + listBean.getFloor() + "/" + listBean.getTotal_floor() + "层");
+                spannableStringBuilder.append(" | " + listBean.getFloor() + "/" + listBean.getTotal_floor() + "层");
                 viewHolder.setText(R.id.adapter_tv_room_info, spannableStringBuilder);
 
                 viewHolder.setOnClickListener(R.id.adapter_tv_to_pay, new View.OnClickListener() {

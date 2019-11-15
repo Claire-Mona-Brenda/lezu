@@ -5,13 +5,22 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.telecom.Call;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.RelativeSizeSpan;
+import android.text.style.SuperscriptSpan;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -45,6 +54,7 @@ import com.konka.renting.landlord.house.view.OnTouchMapView;
 import com.konka.renting.landlord.house.widget.PicstandardWidget;
 import com.konka.renting.landlord.house.widget.ShowToastUtil;
 import com.konka.renting.landlord.user.userinfo.NewFaceDectectActivity;
+import com.konka.renting.tenant.opendoor.OpeningPopupwindow;
 import com.konka.renting.utils.PhoneUtil;
 import com.konka.renting.utils.RxUtil;
 import com.konka.renting.utils.UIUtils;
@@ -72,7 +82,7 @@ public class RoomInfoActivity extends BaseActivity implements OnClickListener {
     TextView tvRoomName;
     TextView room_no;
     TextView comment_num;
-    TextView tvImgSum, tvRoomMoney, tvRoomMoneyUnit, tvRentType, tvRoomPublicTime, tvRoomType, tvRoomArea, tvRoomFloor, tvRoomIntroduce, tvRoomAddress;
+    TextView tvImgSum, tvRoomMoney, tvRoomMoneyUnit, tvRoomPublicTime, tvRoomType, tvRoomArea, tvRoomFloor, tvRoomIntroduce, tvRoomAddress;
     //    RoomInfo roomInfo;
     MapView mapView;
     OnTouchMapView mRlMapviewAddress;
@@ -91,6 +101,7 @@ public class RoomInfoActivity extends BaseActivity implements OnClickListener {
     private List<HouseConfigBean> confitList;
 
     AMap aMap;
+    CallPopup callPopup;
 
     public static void toActivity(Context context, String roomid) {
         Intent intent = new Intent(context, RoomInfoActivity.class);
@@ -191,7 +202,6 @@ public class RoomInfoActivity extends BaseActivity implements OnClickListener {
         tvRoomName = (TextView) findViewById(R.id.tv_room_name);
         tvRoomMoney = (TextView) findViewById(R.id.tv_room_money);
         tvRoomMoneyUnit = findViewById(R.id.tv_room_money_unit);
-        tvRentType = findViewById(R.id.tv_rent_type);
         tvRoomPublicTime = (TextView) findViewById(R.id.tv_room_public_time);
         tvRoomType = (TextView) findViewById(R.id.tv_room_type);
         tvRoomArea = (TextView) findViewById(R.id.tv_room_area);
@@ -261,6 +271,7 @@ public class RoomInfoActivity extends BaseActivity implements OnClickListener {
 
 
     public void bindData() {
+        int text_color = infoBean.getType() == 1 ? getResources().getColor(R.color.text_green) : getResources().getColor(R.color.text_ren);
         bottom_views.setVisibility(View.VISIBLE);
         tvRoomPublicTime.setText(infoBean.getTime().split(" ")[0] + " 发布");
         if (infoBean.getRoom_type() != null && infoBean.getRoom_type().contains("_")) {
@@ -269,16 +280,20 @@ public class RoomInfoActivity extends BaseActivity implements OnClickListener {
         } else {
             tvRoomType.setText(infoBean.getRoom_type());
         }
-        tvRoomArea.setText(infoBean.getMeasure_area() + "平米");
+        tvRoomArea.setText(getArea(infoBean.getMeasure_area() + ""));
         tvRoomFloor.setText(infoBean.getFloor() + "/" + infoBean.getTotal_floor() + "层");
         tvRoomIntroduce.setText(TextUtils.isEmpty(infoBean.getRemark()) ? "暂无介绍" : infoBean.getRemark());
         tvRoomAddress.setText(infoBean.getProvince() + infoBean.getCity() + infoBean.getArea() + infoBean.getMap_address() + infoBean.getRoom_group() + infoBean.getAddress());
         room_no.setText(infoBean.getRoom_no());
         tvImgSum.setText("1/" + imageList.size());
-        if (infoBean.getType()==1 && infoBean.getIs_device() == 1) {
+        if (infoBean.getType() == 1 && infoBean.getIs_device() == 1) {
             btn_req.setVisibility(View.VISIBLE);
             look_room.setBackgroundResource(R.drawable.shape_white);
             look_room.setTextColor(getResources().getColor(R.color.text_black));
+        } else if (infoBean.getType() == 1) {
+            btn_req.setVisibility(View.GONE);
+            look_room.setBackgroundResource(R.drawable.selector_enable_green_gray);
+            look_room.setTextColor(getResources().getColor(R.color.color_ffffff));
         } else {
             btn_req.setVisibility(View.GONE);
             look_room.setBackgroundResource(R.drawable.selector_enable_org_gray);
@@ -304,11 +319,16 @@ public class RoomInfoActivity extends BaseActivity implements OnClickListener {
 
             }
         });
+
+        String unit_rent = infoBean.getType() == 1 ? getString(R.string.public_house_pay_unit_day) : getString(R.string.public_house_pay_unit_mon);
         String price = infoBean.getHousing_price();
         if (!TextUtils.isEmpty(price)) {
             float priceF = Float.valueOf(infoBean.getHousing_price());
             int priceI = (int) priceF;
-            if (priceF > priceI) {
+            if (priceF <= 0) {
+                price = "";
+                unit_rent = getString(R.string.negotiable);
+            } else if (priceF > priceI) {
                 price = priceF + "";
             } else {
                 price = priceI + "";
@@ -316,16 +336,17 @@ public class RoomInfoActivity extends BaseActivity implements OnClickListener {
         } else {
             price = "";
         }
-        tvRoomMoney.setText( price);
-        if (infoBean.getType() == 1) {
-            tvRoomMoneyUnit.setText(getString(R.string.public_house_pay_unit_day));
-            tvRentType.setText(R.string.short_rent);
-            tvRentType.setSelected(false);
-        } else {
-            tvRoomMoneyUnit.setText(getString(R.string.public_house_pay_unit_mon));
-            tvRentType.setText(R.string.long_rent);
-            tvRentType.setSelected(true);
-        }
+
+        tvRoomMoney.setText(price);
+        tvRoomMoneyUnit.setText(unit_rent);
+
+
+        tvRoomMoney.setTextColor(text_color);
+        tvRoomMoneyUnit.setTextColor(text_color);
+        tvRoomType.setTextColor(text_color);
+        tvRoomArea.setTextColor(text_color);
+        tvRoomFloor.setTextColor(text_color);
+
         tvRoomName.setText(infoBean.getRoom_name());
 
         if (infoBean.getType() == 2) {
@@ -424,31 +445,17 @@ public class RoomInfoActivity extends BaseActivity implements OnClickListener {
             case R.id.look_room:
                 if (infoBean == null)
                     return;
-                String s = "是否联系房东";
+                String phone;
                 if (isJointRent()) {
-                    s = "是否联系租客";
+                    phone = infoBean.getMember_phone();
+                } else {
+                    phone = infoBean.getLandlord_phone();
                 }
-                TextView textView = new TextView(this);
-                textView.setTextSize(17);
-                textView.setText(s);
-                textView.setPadding(60, 30, 60, 10);
-                new AlertDialog.Builder(context).setView(textView).setPositiveButton("联系", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        String phone;
-                        if (isJointRent()) {
-                            phone = infoBean.getMember_phone();
-                        } else {
-                            phone = infoBean.getLandlord_phone();
-                        }
-                        if (!TextUtils.isEmpty(phone)) {
-                            PhoneUtil.call(phone, context);
-                        } else {
-                            ShowToastUtil.showWarningToast(context, "暂无号码");
-                        }
-                    }
-                }).setNeutralButton("取消", null).show();
-
+                if (!TextUtils.isEmpty(phone)) {
+                    showCallPop(phone);
+                } else {
+                    ShowToastUtil.showWarningToast(context, "暂无号码");
+                }
 
                 break;
             default:
@@ -504,6 +511,18 @@ public class RoomInfoActivity extends BaseActivity implements OnClickListener {
         mCompositeSubscription.add(subscription);
     }
 
+    private SpannableStringBuilder getArea(String area) {
+        SpannableString m2 = new SpannableString("m2");
+        m2.setSpan(new RelativeSizeSpan(0.5f), 1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);//一半大小
+        m2.setSpan(new SuperscriptSpan(), 1, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);   //上标
+
+        SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(area);
+        spannableStringBuilder.append(m2);
+
+        return spannableStringBuilder;
+
+    }
+
 
     class PicViewPagerAdapter extends PagerAdapter {
         List<String> mList;
@@ -542,4 +561,37 @@ public class RoomInfoActivity extends BaseActivity implements OnClickListener {
             container.removeView((View) object);
         }
     }
+
+    private void showCallPop(String phone) {
+        // 开启 popup 时界面透明
+        if (callPopup == null) {
+            callPopup = new CallPopup(this);
+            callPopup.setBtnColor(getResources().getDrawable(infoBean.getType() == 1 ? R.drawable.shape_green : R.drawable.shape_main));
+        }
+        callPopup.setPhone(phone);
+        callPopup.setOnClickListen(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PhoneUtil.call(phone, context);
+            }
+        });
+        WindowManager.LayoutParams lp = mActivity.getWindow().getAttributes();
+        lp.alpha = 0.7f;
+        mActivity.getWindow().setAttributes(lp);
+        mActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        // popupwindow 第一个参数指定popup 显示页面
+        callPopup.showAtLocation((View) mAppBarLayout.getParent(), Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL, 0, 0);     // 第一个参数popup显示activity页面
+        // popup 退出时界面恢复
+        callPopup.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                WindowManager.LayoutParams lp = mActivity.getWindow().getAttributes();
+                lp.alpha = 1f;
+                mActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+                mActivity.getWindow().setAttributes(lp);
+            }
+        });
+    }
+
+
 }

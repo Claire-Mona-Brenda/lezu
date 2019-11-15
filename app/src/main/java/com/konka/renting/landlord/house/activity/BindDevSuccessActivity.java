@@ -76,6 +76,8 @@ public class BindDevSuccessActivity extends BaseActivity {
 
         if (!is_Install) {
             getData();
+        }else{
+            tvResult.setText(R.string.device_bind_success_and_push);
         }
 
     }

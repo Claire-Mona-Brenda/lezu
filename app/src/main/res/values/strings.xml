@@ -227,6 +227,7 @@
     <string name="recommend_for_you_short">短租推荐</string>
     <string name="competitive_house_long">长租房源</string>
     <string name="competitive_house_short">短租房源</string>
+    <string name="check_more">查看更多</string>
     <string name="more">更多</string>
     <string name="more_">更多></string>
 
@@ -354,8 +355,10 @@
     <string name="renter_rent_money">租金：</string>
     <string name="renter_cancel_apply">取消申请</string>
     <string name="renter_call_landlord">联系房东</string>
+    <string name="will_call_number">即将拨打电话：</string>
     <string name="renter_apply_to_end">申请退房</string>
     <string name="landlord_apply_to_end_agree">确定退房申请</string>
+
 
     <string name="activation_code">激活码</string>
     <string name="rent_in_code">租客入住权限激活码：</string>
@@ -545,6 +548,7 @@
     <!--城市定位-->
     <string name="choose_city">选择城市</string>
     <string name="choose_location">切换位置</string>
+    <string name="curr_location_">当前位置：</string>
     <string name="open_location_service">手机未开启位置服务,请在设置里将位置服务打开</string>
     <string name="to_open_location_service">去设置</string>
     <string name="choose_location_address_name">请输入地理位置/房屋名称</string>
@@ -572,6 +576,9 @@
     <string name="start_to_rent">开始发布</string>
     <string name="end_to_rent">取消发布</string>
     <string name="sever_pay_money">服务续费</string>
+    <string name="switch_push_rent">发布信息变更</string>
+    <string name="switch_short_rent">切换为短租</string>
+    <string name="switch_long_rent">切换为长租</string>
 
     <string name="house_status_type_1">未缴纳安装费</string>
     <string name="house_status_type_2">待安装认证</string>
@@ -727,6 +734,7 @@
     <string name="public_house_pay_mon">月租</string>
     <string name="public_house_pay_unit_day">元/天</string>
     <string name="public_house_pay_unit_mon">元/月</string>
+    <string name="negotiable">面议</string>
 
     <!--开锁-->
     <string name="warm_open_setting_show_pwd_err">与设备同步失败</string>
@@ -984,6 +992,7 @@
     <string name="tips_gateway_binding">网关已进入绑定模式</string>
     <string name="how_on_the_device_handle">如何操作？</string>
     <string name="please_on_the_device_handle">请在设备上操作响应…</string>
+    <string name="device_bind_success_and_push">绑定成功,房产已上线</string>
     <string name="device_bind_success">绑定成功</string>
     <string name="device_bind_failed">绑定失败</string>
 

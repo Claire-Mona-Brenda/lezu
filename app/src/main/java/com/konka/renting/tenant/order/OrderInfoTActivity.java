@@ -167,13 +167,16 @@ public class OrderInfoTActivity extends BaseActivity {
 
         if (!TextUtils.isEmpty(infoBean.getHousing_price()) && Float.valueOf(infoBean.getHousing_price()) != 0) {
             mTvRoomPrice.setVisibility(View.VISIBLE);
-            String unit = infoBean.getType() == 1 ? "/天" : "/月";
+            String unit = infoBean.getType() == 1 ? getString(R.string.public_house_pay_unit_day) : getString(R.string.public_house_pay_unit_mon);
 
             String price = infoBean.getHousing_price();
             if (!TextUtils.isEmpty(price)) {
                 float priceF = Float.valueOf(infoBean.getHousing_price());
                 int priceI = (int) priceF;
-                if (priceF > priceI) {
+                if(priceF<=0){
+                    price="";
+                    unit=getString(R.string.negotiable);
+                }else if (priceF > priceI) {
                     price = priceF + "";
                 } else {
                     price = priceI + "";
@@ -181,7 +184,7 @@ public class OrderInfoTActivity extends BaseActivity {
             } else {
                 price = "";
             }
-            mTvRoomPrice.setText("¥ " + price + unit);
+            mTvRoomPrice.setText( price + unit);
         } else {
             mTvRoomPrice.setVisibility(View.GONE);
         }

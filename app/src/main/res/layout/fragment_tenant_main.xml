@@ -57,8 +57,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="@dimen/dp_24"
                                 android:gravity="center_vertical"
-                                android:text="@string/choose_city"
-                                android:textColor="@color/text_black"
+                                android:textColor="@color/color_000000"
                                 android:textSize="@dimen/sp_14" />
 
                             <TextView
@@ -68,7 +67,7 @@
                                 android:layout_alignParentEnd="true"
                                 android:gravity="center_vertical"
                                 android:text="@string/choose_location"
-                                android:textColor="@color/text_black"
+                                android:textColor="@color/color_000000"
                                 android:textSize="@dimen/sp_14" />
 
                             <ImageView
@@ -119,7 +118,7 @@
                                 android:layout_height="@dimen/dp_44"
                                 android:layout_below="@+id/fragment_tenant_main_edt_address"
                                 android:layout_marginTop="@dimen/dp_18"
-                                android:background="@drawable/shape_button_main"
+                                android:background="@drawable/shape_main"
                                 android:gravity="center"
                                 android:text="@string/search"
                                 android:textColor="@color/color_ffffff"
@@ -186,7 +185,7 @@
                             android:layout_weight="1"
                             android:text="@string/competitive_house"
                             android:textColor="@color/text_black"
-                            android:textSize="@dimen/sp_22"
+                            android:textSize="@dimen/sp_18"
                             android:textStyle="bold"
                             android:typeface="sans" />
 
@@ -197,13 +196,13 @@
                             android:gravity="center"
                             android:paddingStart="@dimen/dp_10"
                             android:paddingEnd="@dimen/dp_5"
-                            android:text="@string/more"
-                            android:textColor="@color/text_black"
+                            android:text="@string/check_more"
+                            android:textColor="@color/text_gray"
                             android:textSize="@dimen/sp_14" />
 
                         <ImageView
-                            android:layout_width="@dimen/dp_10"
-                            android:layout_height="@dimen/dp_14"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:src="@mipmap/icon_arrow" />
                     </LinearLayout>
 
@@ -231,7 +230,7 @@
                             android:layout_weight="1"
                             android:text="@string/competitive_short"
                             android:textColor="@color/text_black"
-                            android:textSize="@dimen/sp_22"
+                            android:textSize="@dimen/sp_18"
                             android:textStyle="bold"
                             android:typeface="sans" />
 
@@ -242,13 +241,13 @@
                             android:gravity="center"
                             android:paddingStart="@dimen/dp_10"
                             android:paddingEnd="@dimen/dp_5"
-                            android:text="@string/more"
-                            android:textColor="@color/text_black"
+                            android:text="@string/check_more"
+                            android:textColor="@color/text_gray"
                             android:textSize="@dimen/sp_14" />
 
                         <ImageView
-                            android:layout_width="@dimen/dp_10"
-                            android:layout_height="@dimen/dp_14"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:src="@mipmap/icon_arrow" />
                     </LinearLayout>
 
@@ -280,7 +279,7 @@
                     android:layout_weight="1"
                     android:text="@string/recommend_for_you"
                     android:textColor="@color/text_black"
-                    android:textSize="@dimen/sp_22"
+                    android:textSize="@dimen/sp_18"
                     android:textStyle="bold"
                     android:typeface="sans" />
 
@@ -297,15 +296,16 @@
                         android:id="@+id/fragment_tenant_main_tv_type_long"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:typeface="sans"
                         android:text="@string/long_rent"
-                        android:textColor="@color/selector_text_color_selector_org_gray"
+                        android:textColor="@color/selected_text_color_ren_gray"
                         android:textSize="@dimen/sp_14" />
 
                     <View
                         android:id="@+id/fragment_tenant_main_view_type_long"
                         android:layout_width="@dimen/dp_30"
                         android:layout_height="@dimen/dp_2"
-                        android:background="@color/text_org"
+                        android:background="@color/text_ren"
                         android:visibility="gone" />
                 </LinearLayout>
 
@@ -322,16 +322,17 @@
                         android:id="@+id/fragment_tenant_main_tv_type_short"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:typeface="sans"
                         android:text="@string/short_rent"
-                        android:textColor="@color/selector_text_color_selector_org_gray"
+                        android:textColor="@color/selector_text_color_green_gray"
                         android:textSize="@dimen/sp_14" />
 
                     <View
                         android:id="@+id/fragment_tenant_main_view_type_short"
                         android:layout_width="@dimen/dp_30"
                         android:layout_height="@dimen/dp_2"
-                        android:background="@color/text_org"
-                        android:visibility="gone" />
+                        android:background="@color/text_green"
+                        android:visibility="invisible" />
                 </LinearLayout>
 
             </LinearLayout>

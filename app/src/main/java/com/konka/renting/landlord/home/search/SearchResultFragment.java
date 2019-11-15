@@ -103,12 +103,15 @@ SearchResultFragment extends BaseFragment {
 
                 TextView tv_price = viewHolder.getView(R.id.tv_price);
 //                tv_price.setText(Html.fromHtml("<font color='#ff4707'>¥" + roomInfo.housing_price + "</font>/月"));
-                String unit = bean.getType() == 1 ? "天" : "月";
+                String unit = bean.getType() == 1 ? getString(R.string.public_house_pay_unit_day) : getString(R.string.public_house_pay_unit_mon);
                 String price=bean.getHousing_price();
                 if (!TextUtils.isEmpty(price)){
                     float priceF = Float.valueOf(bean.getHousing_price());
                     int priceI = (int) priceF;
-                    if (priceF>priceI){
+                    if (priceF <= 0) {
+                        price = "";
+                        unit = getString(R.string.negotiable);
+                    } else if (priceF>priceI){
                         price= priceF+"";
                     }else{
                         price= priceI+"";
@@ -116,7 +119,7 @@ SearchResultFragment extends BaseFragment {
                 }else{
                     price="";
                 }
-                tv_price.setText("¥" + price + "/" + unit);
+                tv_price.setText( price + unit);
                 if (!TextUtils.isEmpty(bean.getThumb_image()))
                     Picasso.get().load(bean.getThumb_image()).into((ImageView) viewHolder.getView(R.id.iv_icon));
                 else

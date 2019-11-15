@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.SuperscriptSpan;
@@ -216,8 +217,10 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
         rent_type = 2;
         mTvTypeLong.setSelected(true);
         mTvTypeShort.setSelected(false);
+        mTvTypeLong.getPaint().setFakeBoldText(true);
+        mTvTypeShort.getPaint().setFakeBoldText(false);
         mTypeLong.setVisibility(View.VISIBLE);
-        mTypeShort.setVisibility(View.GONE);
+        mTypeShort.setVisibility(View.INVISIBLE);
 
 
         initAdapter();
@@ -238,7 +241,7 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
         String cityName = sharedPreferences.getString(CITY_NAME, "");
         if (!TextUtils.isEmpty(cityName)) {
             city = new City(cityName, cityName, pinYinUtils.getStringPinYin(cityName), "");
-            mTvCity.setText(cityName);
+            mTvCity.setText(getString(R.string.curr_location_) + cityName);
             initDate();
         }
         // 设置行政区划查询监听
@@ -267,11 +270,15 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
             public void convert(ViewHolder viewHolder, RenterSearchListBean bean) {
                 viewHolder.setText(R.id.adapter_tenant_main_house_tv_name, bean.getRoom_name());
                 String unit_rent = bean.getType() == 1 ? getString(R.string.public_house_pay_unit_day) : getString(R.string.public_house_pay_unit_mon);
+                int color_text = bean.getType() == 1 ? getResources().getColor(R.color.text_green) : getResources().getColor(R.color.text_ren);
                 String price = bean.getHousing_price();
                 if (!TextUtils.isEmpty(price)) {
                     float priceF = Float.valueOf(bean.getHousing_price());
                     int priceI = Float.valueOf(bean.getHousing_price()).intValue();
-                    if (priceF > priceI) {
+                    if (priceF <= 0) {
+                        price = "";
+                        unit_rent = getString(R.string.negotiable);
+                    } else if (priceF > priceI) {
                         price = priceF + "";
                     } else {
                         price = priceI + "";
@@ -279,7 +286,11 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
                 } else {
                     price = "";
                 }
-                viewHolder.setText(R.id.adapter_tenant_main_house_tv_price, price + unit_rent);
+                viewHolder.setText(R.id.adapter_tenant_main_house_tv_price, price);
+                viewHolder.setText(R.id.adapter_tenant_main_house_tv_price_unit, unit_rent);
+                viewHolder.setTextColor(R.id.adapter_tenant_main_house_tv_price, color_text);
+                viewHolder.setTextColor(R.id.adapter_tenant_main_house_tv_price_unit, color_text);
+
                 ImageView picView = viewHolder.getView(R.id.adapter_tenant_main_house_iv_icon);
                 if (!TextUtils.isEmpty(bean.getThumb_image())) {
                     Picasso.get().load(bean.getThumb_image()).error(R.mipmap.fangchan_jiazai).into(picView);
@@ -299,21 +310,25 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
                 String room_type;
                 if (bean.getRoom_type().contains("_")) {
                     String[] t = bean.getRoom_type().split("_");
-                    room_type = t[0] + "室" + t[2] + "厅" + (t[1].equals("0") ? "" : t[1] + "卫");
+                    room_type = t[0] + "室" + (t[1].equals("0") ? "" : t[1] + "卫") + t[2] + "厅";
                 } else {
                     room_type = bean.getRoom_type();
                 }
                 SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder();
-                spannableStringBuilder.append(room_type + "|");
-                spannableStringBuilder.append(bean.getMeasure_area() + getString(R.string.unit_m2));
-                spannableStringBuilder.append("|" + bean.getFloor() + "/" + bean.getTotal_floor() + "层");
+                spannableStringBuilder.append(room_type + " | ");
+                spannableStringBuilder.append(getArea(bean.getMeasure_area() +""));
+                spannableStringBuilder.append(" | " + bean.getFloor() + "/" + bean.getTotal_floor() + "层");
                 viewHolder.setText(R.id.adapter_tenant_main_short_tv_info, spannableStringBuilder);
 
+                String unit_rent = getString(R.string.public_house_pay_unit_day);
                 String price = bean.getHousing_price();
                 if (!TextUtils.isEmpty(price)) {
                     float priceF = Float.valueOf(bean.getHousing_price());
                     int priceI = (int) priceF;
-                    if (priceF > priceI) {
+                    if (priceF <= 0) {
+                        price = "";
+                        unit_rent = getString(R.string.negotiable);
+                    } else if (priceF > priceI) {
                         price = priceF + "";
                     } else {
                         price = priceI + "";
@@ -322,6 +337,7 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
                     price = "";
                 }
                 viewHolder.setText(R.id.adapter_tenant_main_short_tv_price, price);
+                viewHolder.setText(R.id.adapter_tenant_main_short_tv_price_unit, unit_rent);
                 viewHolder.setText(R.id.adapter_tenant_main_short_tv_name, bean.getRoom_name());
 
                 ImageView picView = viewHolder.getView(R.id.adapter_tenant_main_short_iv_icon);
@@ -344,23 +360,28 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
                 String room_type;
                 if (bean.getRoom_type().contains("_")) {
                     String[] t = bean.getRoom_type().split("_");
-                    room_type = t[0] + "室" + t[2] + "厅" + (t[1].equals("0") ? "" : t[1] + "卫");
+                    room_type = t[0] + "室" + (t[1].equals("0") ? "" : t[1] + "卫") + t[2] + "厅";
                 } else {
                     room_type = bean.getRoom_type();
                 }
                 SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder();
-                spannableStringBuilder.append(room_type + "|");
-                spannableStringBuilder.append(bean.getMeasure_area() + getString(R.string.unit_m2));
-                spannableStringBuilder.append("|" + bean.getFloor() + "/" + bean.getTotal_floor() + "层");
+                spannableStringBuilder.append(room_type + " | ");
+                spannableStringBuilder.append(getArea(bean.getMeasure_area() +""));
+                spannableStringBuilder.append(" | " + bean.getFloor() + "/" + bean.getTotal_floor() + "层");
                 viewHolder.setText(R.id.adapter_tenant_main_recommend_tv_info, spannableStringBuilder);
 
                 viewHolder.setText(R.id.adapter_tenant_main_recommend_tv_name, bean.getRoom_name());
 
+                int text_color = bean.getType() == 1 ? getResources().getColor(R.color.text_green) : getResources().getColor(R.color.text_ren);
+                String unit_rent = bean.getType() == 1 ? getString(R.string.public_house_pay_unit_day) : getString(R.string.public_house_pay_unit_mon);
                 String price = bean.getHousing_price();
                 if (!TextUtils.isEmpty(price)) {
                     float priceF = Float.valueOf(bean.getHousing_price());
                     int priceI = (int) priceF;
-                    if (priceF > priceI) {
+                    if (priceF <= 0) {
+                        price = getString(R.string.negotiable);
+                        unit_rent = "";
+                    } else if (priceF > priceI) {
                         price = priceF + "";
                     } else {
                         price = priceI + "";
@@ -369,7 +390,9 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
                     price = "";
                 }
                 viewHolder.setText(R.id.adapter_tenant_main_recommend_tv_price, price);
-                viewHolder.setText(R.id.adapter_tenant_main_recommend_tv_price_unit, getString(bean.getType() == 1 ? R.string.public_house_pay_unit_day : R.string.public_house_pay_unit_mon));
+                viewHolder.setText(R.id.adapter_tenant_main_recommend_tv_price_unit, unit_rent);
+                viewHolder.setTextColor(R.id.adapter_tenant_main_recommend_tv_price,text_color);
+                viewHolder.setTextColor(R.id.adapter_tenant_main_recommend_tv_price_unit,text_color);
 
                 ImageView picView = viewHolder.getView(R.id.adapter_tenant_main_recommend_iv_icon);
                 if (!TextUtils.isEmpty(bean.getThumb_image())) {
@@ -451,7 +474,7 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
                 locationCity = new LocatedCity(aMapLocation.getCity(), aMapLocation.getCity(), aMapLocation.getCityCode());
                 if (city == null) {
                     city = new City(aMapLocation.getCity(), aMapLocation.getCity(), pinYinUtils.getStringPinYin(aMapLocation.getCity()), aMapLocation.getCityCode());
-                    mTvCity.setText(city.getName());
+                    mTvCity.setText(getString(R.string.curr_location_) + city.getName());
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString(CITY_NAME, city.getName());
                     editor.commit();
@@ -538,8 +561,10 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
                 rent_type = 2;
                 mTvTypeLong.setSelected(true);
                 mTvTypeShort.setSelected(false);
+                mTvTypeLong.getPaint().setFakeBoldText(true);
+                mTvTypeShort.getPaint().setFakeBoldText(false);
                 mTypeLong.setVisibility(View.VISIBLE);
-                mTypeShort.setVisibility(View.GONE);
+                mTypeShort.setVisibility(View.INVISIBLE);
                 if (reLongList.size() <= 0) {
                     page_long = 1;
                     getRecommendListData(rent_type);
@@ -557,7 +582,9 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
                 rent_type = 1;
                 mTvTypeLong.setSelected(false);
                 mTvTypeShort.setSelected(true);
-                mTypeLong.setVisibility(View.GONE);
+                mTvTypeLong.getPaint().setFakeBoldText(false);
+                mTvTypeShort.getPaint().setFakeBoldText(true);
+                mTypeLong.setVisibility(View.INVISIBLE);
                 mTypeShort.setVisibility(View.VISIBLE);
                 if (reShortList.size() <= 0) {
                     page_short = 1;
@@ -769,7 +796,7 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
     public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {
         String c = regeocodeResult.getRegeocodeAddress().getCity();
         if (!TextUtils.isEmpty(c)) {
-            mTvCity.setText(c);
+            mTvCity.setText(getString(R.string.curr_location_) + c);
             city = new City(c, regeocodeResult.getRegeocodeAddress().getProvince(), pinYinUtils.getStringPinYin(c), regeocodeResult.getRegeocodeAddress().getCityCode());
         }
     }
@@ -843,7 +870,7 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
                             return;
                         if (!TextUtils.isEmpty(data.getName())) {
                             city = data;
-                            mTvCity.setText(data.getName());
+                            mTvCity.setText(getString(R.string.curr_location_) + data.getName());
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             editor.putString(CITY_NAME, city.getName());
                             editor.commit();
@@ -865,4 +892,6 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
                 })
                 .show();
     }
+
+
 }

@@ -14,7 +14,7 @@
         android:layout_margin="@dimen/dp_16">
         <ImageView
             android:id="@+id/adapter_map_search_room_iv_icon"
-            android:layout_width="@dimen/dp_80"
+            android:layout_width="@dimen/dp_110"
             android:layout_height="@dimen/dp_80"
             android:scaleType="centerCrop"
             android:src="@mipmap/fangchan_jiazai"/>
@@ -30,7 +30,7 @@
         android:typeface="sans"
         android:textStyle="bold"
         android:textSize="@dimen/sp_16"
-        android:textColor="@color/text_black"/>
+        android:textColor="@color/color_000000"/>
     <TextView
         android:id="@+id/adapter_map_search_room_tv_info"
         android:layout_width="wrap_content"
@@ -38,12 +38,13 @@
         android:layout_marginTop="@dimen/dp_5"
         android:layout_below="@+id/adapter_map_search_room_tv_name"
         android:layout_alignStart="@+id/adapter_map_search_room_tv_name"
-        android:textSize="@dimen/sp_12"
-        android:textColor="@color/text_black"/>
+        android:textSize="@dimen/sp_14"
+        android:textColor="@color/color_000000"/>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:gravity="bottom"
         android:layout_below="@+id/adapter_map_search_room_tv_info"
         android:layout_alignStart="@+id/adapter_map_search_room_tv_info"
         android:layout_marginTop="@dimen/dp_4">
@@ -52,15 +53,20 @@
             android:id="@+id/adapter_map_search_room_tv_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_2"
+            android:textStyle="bold"
+            android:typeface="sans"
             android:textSize="@dimen/sp_16"
-            android:textColor="@color/text_org"
+            android:textColor="@color/text_ren"
             android:text=" - - "/>
         <TextView
             android:id="@+id/adapter_map_search_room_tv_price_unit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/sp_16"
-            android:textColor="@color/text_org"
+            android:textSize="@dimen/sp_12"
+            android:typeface="sans"
+            android:textStyle="bold"
+            android:textColor="@color/text_ren"
             android:text="@string/public_house_pay_unit_day"/>
     </LinearLayout>
     <View
