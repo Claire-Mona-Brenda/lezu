@@ -93,7 +93,7 @@ public class SetTimesPwdActivity extends BaseActivity {
                 String num=mEdtNum.getText().toString();
                 if (TextUtils.isEmpty(num)){
                     showToast(R.string.please_input_times);
-                }else if (Integer.valueOf(num)<=0){
+                }else if (Integer.valueOf(num)<=0||Integer.valueOf(num)>60){
                     showToast(R.string.please_input_times);
                 }else{
                     addGeneratePassword(num);

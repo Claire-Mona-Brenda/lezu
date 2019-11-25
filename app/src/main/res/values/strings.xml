@@ -782,6 +782,7 @@
     <string name="timer_end_time">请设置失效时间</string>
     <string name="timer_start_no_to_more_end_time">设置的生效时间应小于失效时间</string>
     <string name="timer_end_no_to_more_now_time">失效时间请不要早于当前时间</string>
+    <string name="timer_end_no_to_more_60_day_time">设置有效期最多60天</string>
 
     <string name="timer_start_time_">生效时间：</string>
     <string name="timer_end_time_">失效时间：</string>
@@ -789,7 +790,7 @@
     <string name="times">计次</string>
     <string name="times_times_">使用次数：</string>
     <string name="times_use_time_">密码有效期：</string>
-    <string name="please_input_times">请输入次数（1～999）</string>
+    <string name="please_input_times">请输入次数（1～60）</string>
 
     <string name="times_num">次</string>
     <string name="times_day">天</string>
@@ -804,6 +805,7 @@
 
     <string name="once_pwd_tips2">一次性密码，使用一次后失效</string>
     <string name="once_pwd_tips3">此为离线密码无法保存，请及时记录和使用。</string>
+    <string name="once_pwd_tips4">每10分钟只能生成一个同类型密码</string>
 
     <string name="tips_share_rent_no_authority">很抱歉，合租用户不能进行此操作</string>
     <string name="tips_get_authority_content">房产已出租，权限失效！</string>
