@@ -151,9 +151,9 @@ public class SecondRetrofitHelper {
 
     private static OkHttpClient createOkHttpClient(OkHttpClient.Builder builder) {
         // HttpLoggingInterceptor 打印请求到的json字符串和查看log
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        builder.addInterceptor(loggingInterceptor);
+//        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+//        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+//        builder.addInterceptor(loggingInterceptor);
 
         File cacheFile = new File(SecondRetrofitHelper.PATH_CACHE); //缓存文件夹
         Cache cache = new Cache(cacheFile, 1024 * 1024 * 50); // 创建缓存对象 缓存大小为50M

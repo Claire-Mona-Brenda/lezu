@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -124,6 +125,8 @@ public class SetTimerPwdActivity extends BaseActivity {
                 }
                 break;
             case R.id.activity_set_timer_pwd_tv_create:
+                Log.e("123123","===start=="+DateTimeUtil.stringToDate(start, FORMAT_DATE_TIME_SECOND).getTime());
+                Log.e("123123","===end=="+DateTimeUtil.stringToDate(end, FORMAT_DATE_TIME_SECOND).getTime());
                 if (TextUtils.isEmpty(managePwd)) {
                     showToast(R.string.please_set_manage_pwd);
                 } else if (TextUtils.isEmpty(start)) {
@@ -134,7 +137,7 @@ public class SetTimerPwdActivity extends BaseActivity {
                     showToast(R.string.timer_end_no_to_more_now_time);
                 }else if (DateTimeUtil.stringToDate(start, FORMAT_DATE_TIME_SECOND).getTime() >= DateTimeUtil.stringToDate(end, FORMAT_DATE_TIME_SECOND).getTime()) {
                     showToast(R.string.timer_start_no_to_more_end_time);
-                } else if (DateTimeUtil.stringToDate(start, FORMAT_DATE_TIME_SECOND).getTime()+60*24*3600000 < DateTimeUtil.stringToDate(end, FORMAT_DATE_TIME_SECOND).getTime()) {
+                } else if (DateTimeUtil.stringToDate(start, FORMAT_DATE_TIME_SECOND).getTime()+60*24*3600000L < DateTimeUtil.stringToDate(end, FORMAT_DATE_TIME_SECOND).getTime()) {
                     showToast(R.string.timer_end_no_to_more_60_day_time);
                 }else {
                     addGeneratePassword();
