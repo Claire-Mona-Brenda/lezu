@@ -125,8 +125,6 @@ public class SetTimerPwdActivity extends BaseActivity {
                 }
                 break;
             case R.id.activity_set_timer_pwd_tv_create:
-                Log.e("123123","===start=="+DateTimeUtil.stringToDate(start, FORMAT_DATE_TIME_SECOND).getTime());
-                Log.e("123123","===end=="+DateTimeUtil.stringToDate(end, FORMAT_DATE_TIME_SECOND).getTime());
                 if (TextUtils.isEmpty(managePwd)) {
                     showToast(R.string.please_set_manage_pwd);
                 } else if (TextUtils.isEmpty(start)) {
