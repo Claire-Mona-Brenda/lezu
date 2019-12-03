@@ -2,7 +2,6 @@ package com.konka.renting.landlord.user.withdrawcash;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -31,7 +30,6 @@ import com.konka.renting.widget.WarmPopupwindow;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Subscription;
 
@@ -41,10 +39,10 @@ public class AddBankCardActivity extends BaseActivity {
     EditText mEtHolder;
     @BindView(R.id.et_card_num)
     EditText mEtCardNum;
-    @BindView(R.id.img_type_select)
-    ImageView mImgTypeSelect;
-    @BindView(R.id.tv_type_select)
-    TextView mTvTypeSelect;
+//    @BindView(R.id.img_type_select)
+//    ImageView mImgTypeSelect;
+    @BindView(R.id.et_type_select)
+    EditText mEtTypeSelect;
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.iv_back)
@@ -62,6 +60,7 @@ public class AddBankCardActivity extends BaseActivity {
 
     private String name;
     private String cardnumber;
+    private String bankName;
     private String phone;
 
     WarmPopupwindow warmPopupwindow;
@@ -109,9 +108,9 @@ public class AddBankCardActivity extends BaseActivity {
                         imm.hideSoftInputFromWindow(
                                 textView.getApplicationWindowToken(), 0);
                     }
-                    if (mEtCardNum.getText().toString().length() >= 16) {
-                        getIssueBank(mEtCardNum.getText().toString());
-                    }
+//                    if (mEtCardNum.getText().toString().length() >= 16) {
+//                        getIssueBank(mEtCardNum.getText().toString());
+//                    }
                     return true;
                 }
                 return false;
@@ -120,7 +119,7 @@ public class AddBankCardActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_type_select, R.id.btn_complete})
+    @OnClick({R.id.iv_back, R.id.et_type_select, R.id.btn_complete})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back://返回
@@ -137,9 +136,10 @@ public class AddBankCardActivity extends BaseActivity {
             case R.id.btn_complete://提交
                 name = mEtHolder.getText().toString();
                 cardnumber = mEtCardNum.getText().toString();
+                bankName = mEtTypeSelect.getText().toString();
                 phone = etPhone.getText().toString();
 
-                if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(cardnumber)&&phone.length()==11) {
+                if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(cardnumber)&& !TextUtils.isEmpty(bankName) && phone.length()==11) {
                     comfirmAdd();
                 }else if (phone.length()<11){
                     showToast(R.string.please_input_phone);
@@ -152,7 +152,7 @@ public class AddBankCardActivity extends BaseActivity {
 
     private void comfirmAdd() {
         showLoadingDialog();
-        Subscription subscription = SecondRetrofitHelper.getInstance().addBankCard(cardnumber, name,phone)
+        Subscription subscription = SecondRetrofitHelper.getInstance().addBankCard(cardnumber, name,bankName, phone)
                 .compose(RxUtil.<DataInfo>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo>() {
                     @Override
@@ -176,30 +176,30 @@ public class AddBankCardActivity extends BaseActivity {
         addSubscrebe(subscription);
     }
 
-    private void getIssueBank(String card_no) {
-        Subscription subscription = SecondRetrofitHelper.getInstance().getIssueBank(card_no)
-                .compose(RxUtil.<DataInfo<GetIssueBankBean>>rxSchedulerHelper())
-                .subscribe(new CommonSubscriber<DataInfo<GetIssueBankBean>>() {
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(DataInfo<GetIssueBankBean> dataInfo) {
-                        if (dataInfo.success()) {
-                            mTvTypeSelect.setText(dataInfo.data().getBank_name());
-                            mImgTypeSelect.setVisibility(View.VISIBLE);
-                            if (!TextUtils.isEmpty(dataInfo.data().getBank_image())) {
-                                Picasso.get().load(dataInfo.data().getBank_image()).into(mImgTypeSelect);
-                            } else {
-                                Picasso.get().load(R.mipmap.bank_other).into(mImgTypeSelect);
-                            }
-                        }
-                    }
-                });
-        addSubscrebe(subscription);
-    }
+//    private void getIssueBank(String card_no) {
+//        Subscription subscription = SecondRetrofitHelper.getInstance().getIssueBank(card_no)
+//                .compose(RxUtil.<DataInfo<GetIssueBankBean>>rxSchedulerHelper())
+//                .subscribe(new CommonSubscriber<DataInfo<GetIssueBankBean>>() {
+//                    @Override
+//                    public void onError(Throwable e) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onNext(DataInfo<GetIssueBankBean> dataInfo) {
+//                        if (dataInfo.success()) {
+//                            mEtTypeSelect.setText(dataInfo.data().getBank_name());
+//                            mImgTypeSelect.setVisibility(View.VISIBLE);
+//                            if (!TextUtils.isEmpty(dataInfo.data().getBank_image())) {
+//                                Picasso.get().load(dataInfo.data().getBank_image()).into(mImgTypeSelect);
+//                            } else {
+//                                Picasso.get().load(R.mipmap.bank_other).into(mImgTypeSelect);
+//                            }
+//                        }
+//                    }
+//                });
+//        addSubscrebe(subscription);
+//    }
 
     /*******************************************弹窗***********************************************************/
     private void showTipsPop() {

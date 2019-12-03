@@ -2210,6 +2210,7 @@ public interface KonkaApiService {
     @POST("index.php/api/bank_card/add")
     Observable<DataInfo> addBankBean(@Field("card_no") String card_no,
                                      @Field("username") String username,
+                                     @Field("bank_name") String bankName,
                                      @Field("phone") String phone);
 
     /**

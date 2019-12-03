@@ -129,6 +129,7 @@
     <string name="please_input_true_name">请输入持卡人姓名</string>
     <string name="please_input_bank_mobile">请输入银行预留手机号</string>
     <string name="please_input_card_num">请输入银行卡号</string>
+    <string name="please_input_bank_name">请输入银行名称</string>
     <string name="please_sreading">请大声读出:</string>
     <string name="ver_number">123456</string>
     <string name="start_radio">开始录制</string>

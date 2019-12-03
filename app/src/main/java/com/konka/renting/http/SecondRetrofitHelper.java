@@ -1494,8 +1494,8 @@ public class SecondRetrofitHelper {
     /**
      * 添加银行卡
      */
-    public Observable<DataInfo> addBankCard(String card_no, String username,String phone) {
-        return mApiService.addBankBean(card_no, username,phone);
+    public Observable<DataInfo> addBankCard(String card_no, String username,String bankName, String phone) {
+        return mApiService.addBankBean(card_no, username,bankName, phone);
     }
 
     /**
