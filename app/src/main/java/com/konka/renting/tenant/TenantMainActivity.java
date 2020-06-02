@@ -1,10 +1,12 @@
 package com.konka.renting.tenant;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -131,20 +133,36 @@ public class TenantMainActivity extends BaseMainActivity {
 
     private void initFirstInfo() {
         RxPermissions rxPermission = new RxPermissions(mActivity);
-        rxPermission.request(
-                android.Manifest.permission.CAMERA,
-                android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                android.Manifest.permission.READ_EXTERNAL_STORAGE
-        )
-                .subscribe(new Action1<Boolean>() {
-                    @Override
-                    public void call(Boolean aBoolean) {
-                        if (aBoolean) {
-                            checkVersion();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            rxPermission.request(
+                    android.Manifest.permission.CAMERA,
+                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.ACCESS_MEDIA_LOCATION
+            )
+                    .subscribe(new Action1<Boolean>() {
+                        @Override
+                        public void call(Boolean aBoolean) {
+                            if (aBoolean) {
+                                checkVersion();
+                            }
                         }
-                    }
-                });
-
+                    });
+        }else{
+            rxPermission.request(
+                    android.Manifest.permission.CAMERA,
+                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+                    .subscribe(new Action1<Boolean>() {
+                        @Override
+                        public void call(Boolean aBoolean) {
+                            if (aBoolean) {
+                                checkVersion();
+                            }
+                        }
+                    });
+        }
         addRxBusSubscribe(UpdateEvent.class, new Action1<UpdateEvent>() {
             @Override
             public void call(UpdateEvent updateEvent) {

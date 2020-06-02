@@ -9,6 +9,7 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+
     <style name="FullScreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/common_title</item>
         <item name="colorPrimaryDark">@color/common_title</item>

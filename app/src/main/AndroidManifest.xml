@@ -582,6 +582,9 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:windowSoftInputMode="stateHidden|adjustResize">
 
+
+
+
             <!--
             	AuthorizeAdapter表示一个继承自cn.sharesdk.framework.authorize.AuthorizeAdapter
             	的类，这个类可以监听到页面的生命周期，也可以获取授权页面的各种UI控件。
@@ -635,6 +638,24 @@
             android:name=".landlord.user.userinfo.NewFaceDectectActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
+
+
+<!--        //图片选择Activity-->
+        <activity android:name="com.donkingliang.imageselector.ImageSelectorActivity"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+<!--        //图片预览Activity-->
+        <activity android:name="com.donkingliang.imageselector.PreviewActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
+
+<!--        //图片剪切Activity-->
+        <activity
+            android:name="com.donkingliang.imageselector.ClipImageActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+
+
         <!-- share sdk -->
         <service android:name="com.amap.api.location.APSService"/>
         <meta-data
@@ -643,6 +664,16 @@
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.konka.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            tools:replace="android:authorities">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+        <provider
+            android:authorities="com.konka.renting.provider"
+            android:name=".utils.ImagePickerProvider"
             android:exported="false"
             android:grantUriPermissions="true"
             tools:replace="android:authorities">
@@ -672,6 +703,7 @@
     <!-- iBeancon功能所需权限 -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <!-- 硬件特性 -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.BLUETOOTH" />

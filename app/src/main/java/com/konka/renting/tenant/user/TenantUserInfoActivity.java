@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.view.Gravity;
 import android.view.View;
@@ -29,6 +30,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
+import com.donkingliang.imageselector.utils.ImageSelector;
+import com.donkingliang.imageselector.utils.UriUtils;
 import com.jzxiang.pickerview.TimePickerDialog;
 import com.jzxiang.pickerview.data.Type;
 import com.jzxiang.pickerview.listener.OnDateSetListener;
@@ -54,6 +57,7 @@ import com.konka.renting.landlord.user.userinfo.UpdatePhotoActivity;
 import com.konka.renting.login.ForgetPasswordActivity;
 import com.konka.renting.login.LoginInfo;
 import com.konka.renting.login.LoginNewActivity;
+import com.konka.renting.utils.ImagePickerProvider;
 import com.konka.renting.utils.RxBus;
 import com.konka.renting.utils.RxUtil;
 import com.squareup.picasso.Picasso;
@@ -61,11 +65,13 @@ import com.tbruyelle.rxpermissions.RxPermissions;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import butterknife.BindView;
@@ -76,7 +82,7 @@ import okhttp3.RequestBody;
 import rx.Subscription;
 import rx.functions.Action1;
 
-public class TenantUserInfoActivity extends BaseActivity implements CustompopupWindow.OnPopItemClickListener{
+public class TenantUserInfoActivity extends BaseActivity implements CustompopupWindow.OnPopItemClickListener {
 
     @BindView(R.id.iv_header)
     CircleImageView mIvHeader;
@@ -346,25 +352,45 @@ public class TenantUserInfoActivity extends BaseActivity implements CustompopupW
     public void setPopItemClick(View v) {
         switch (v.getId()) {
             case R.id.id_btn_take_photo:
-                imageUri = Uri.fromFile(outputImage);    //将file 转化为uri路径
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    imageUri = FileProvider.getUriForFile(this, "com.konka.fileprovider", outputImage);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    //		获取图片沙盒文件夹
+                    File PICTURES = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+                    File f = new File(PICTURES.getAbsolutePath(), "photo.jpg");
+                    Uri uri = FileProvider.getUriForFile(mActivity, ImagePickerProvider.getFileProviderName(mActivity), f);
+                    //跳转到相机
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+                    startActivityForResult(intent, RESULT_CODE_CAMEA);
+                } else {
+                    imageUri = Uri.fromFile(outputImage);    //将file 转化为uri路径
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        imageUri = FileProvider.getUriForFile(this, "com.konka.fileprovider", outputImage);
+                    }
+                    Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        //添加这一句表示对目标应用临时授权该Uri所代表的文件
+                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    }
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);   //指定图片输出地址   将拍照结果保存至photo_file的Uri中，不保留在相册中
+                    startActivityForResult(intent, RESULT_CODE_CAMEA);   //启动相机  startActivityForResult() 结果返回onActivityResult()函数   第2个参数——拍照返回参数
                 }
-                Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    //添加这一句表示对目标应用临时授权该Uri所代表的文件
-                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                }
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);   //指定图片输出地址   将拍照结果保存至photo_file的Uri中，不保留在相册中
-                startActivityForResult(intent, RESULT_CODE_CAMEA);   //启动相机  startActivityForResult() 结果返回onActivityResult()函数   第2个参数——拍照返回参数
                 pop.dismiss();
                 break;
             case R.id.id_btn_select:
                 //调用相册
-                Intent photo = new Intent(Intent.ACTION_PICK,
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                photo.setType("image/*");
-                startActivityForResult(photo, RESULT_CODE_PHOTO);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    ImageSelector.builder()
+                            .useCamera(false) // 设置是否使用拍照
+                            .setSingle(true)  //设置是否单选
+                            .canPreview(true) //是否可以预览图片，默认为true
+                            .start(this, RESULT_CODE_PHOTO); // 打开相册
+                } else {
+                    //调用相册
+                    Intent photo = new Intent(Intent.ACTION_PICK,
+                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    photo.setType("image/*");
+                    startActivityForResult(photo, RESULT_CODE_PHOTO);
+                }
                 pop.dismiss();
                 break;
             case R.id.id_btn_cancel:
@@ -385,40 +411,9 @@ public class TenantUserInfoActivity extends BaseActivity implements CustompopupW
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case RESULT_CODE_CAMEA:      // 拍照后裁剪图片
-
-                try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(TenantUserInfoActivity.this.getContentResolver(), imageUri);
-                    if (bitmap != null) {
-                        //userInfoPhoto.setImageBitmap(bitmap);              //  显示头像
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                // 上传头像
-                try {
-                    Bitmap bitmap_up = BitmapFactory.decodeStream(this.getContentResolver().openInputStream(imageUri));
-
-                    try {             //保存头像到本地
-                        saveBitmap(bitmap_up);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-
-
-                break;
-            case RESULT_CODE_PHOTO:    // 相册裁剪图片
-                if (data != null) {
-                    cropImageUri = Uri.fromFile(filepath);
-                    Uri newUri = Uri.parse(PhotoUtils.getPath(this, data.getData()));
-                    // 内容提供者标示
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        newUri = FileProvider.getUriForFile(this, "com.konka.fileprovider", new File(newUri.getPath()));
-                    }
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
                     try {
-                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(TenantUserInfoActivity.this.getContentResolver(), newUri);
+                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(TenantUserInfoActivity.this.getContentResolver(), imageUri);
                         if (bitmap != null) {
                             //userInfoPhoto.setImageBitmap(bitmap);              //  显示头像
                         }
@@ -427,7 +422,7 @@ public class TenantUserInfoActivity extends BaseActivity implements CustompopupW
                     }
                     // 上传头像
                     try {
-                        Bitmap bitmap_up = BitmapFactory.decodeStream(this.getContentResolver().openInputStream(newUri));
+                        Bitmap bitmap_up = BitmapFactory.decodeStream(this.getContentResolver().openInputStream(imageUri));
 
                         try {             //保存头像到本地
                             saveBitmap(bitmap_up);
@@ -436,6 +431,94 @@ public class TenantUserInfoActivity extends BaseActivity implements CustompopupW
                         }
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
+                    }
+                }else{
+                    //		获取图片沙盒文件夹
+                    File PICTURES = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+                    File f = new File(PICTURES.getAbsolutePath() , "photo.jpg");
+                    uploadPhoto(f);
+                }
+
+                break;
+            case RESULT_CODE_PHOTO:    // 相册裁剪图片
+                if (data != null) {
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+                        cropImageUri = Uri.fromFile(filepath);
+                        Uri newUri = Uri.parse(PhotoUtils.getPath(this, data.getData()));
+                        // 内容提供者标示
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            newUri = FileProvider.getUriForFile(this, "com.konka.fileprovider", new File(newUri.getPath()));
+                        }
+                        try {
+                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(TenantUserInfoActivity.this.getContentResolver(), newUri);
+                            if (bitmap != null) {
+                                //userInfoPhoto.setImageBitmap(bitmap);              //  显示头像
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        // 上传头像
+                        try {
+                            Bitmap bitmap_up = BitmapFactory.decodeStream(this.getContentResolver().openInputStream(newUri));
+
+                            try {             //保存头像到本地
+                                saveBitmap(bitmap_up);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    }else {
+                        File PICTURES = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+                        ArrayList<String> images = data.getStringArrayListExtra(
+                                ImageSelector.SELECT_RESULT);
+
+                        int size = images.size();
+                        for (int i = 0; i < size; i++) {
+                            String path = images.get(i);
+                            Uri uri = UriUtils.getImageContentUri(this, path);
+                            //图片路径
+                            String mFilePath = PICTURES.getAbsolutePath() + "/photo.jpg";
+                            File file = new File(mFilePath);
+
+                            FileInputStream inputStream = null;
+                            FileOutputStream outputStream = null;
+                            ParcelFileDescriptor pfd = null;
+                            try {
+                                pfd = getContentResolver().openFileDescriptor(uri, "r");
+                                outputStream = new FileOutputStream(file);
+                                if (pfd != null) {
+                                    inputStream = new FileInputStream(pfd.getFileDescriptor());
+                                    byte[] bytes = new byte[1024];
+                                    //得到实际读取的长度  
+                                    int n = 0;
+                                    //循环读取  
+                                    while ((n = inputStream.read(bytes)) != -1) {
+                                        outputStream.write(bytes, 0, n);
+                                    }
+
+                                }
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            } finally {
+
+                                try {
+                                    if (inputStream != null) {
+                                        inputStream.close();
+                                    }
+                                    if (outputStream != null) {
+                                        outputStream.close();
+                                    }
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            uploadPhoto(file);
+
+                        }
                     }
                 }
                 break;
@@ -504,7 +587,7 @@ public class TenantUserInfoActivity extends BaseActivity implements CustompopupW
         finish();
     }
 
-    private   String getVerName(Context context) {
+    private String getVerName(Context context) {
         String verName = "";
         try {
             verName = context.getPackageManager().

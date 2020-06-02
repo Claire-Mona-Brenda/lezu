@@ -98,8 +98,8 @@ SearchResultFragment extends BaseFragment {
                 description = String.format(description, room_type, bean.getMeasure_area() + "", bean.getFloor() + "", bean.getTotal_floor() + "");
                 viewHolder.setText(R.id.tv_date, description);
 
-                viewHolder.setText(R.id.tv_type, bean.getType() == 1 ? "短租" : "长租");
-                viewHolder.setSelected(R.id.tv_type, bean.getType() == 2);
+//                viewHolder.setText(R.id.tv_type, bean.getType() == 1 ? "短租" : "长租");
+//                viewHolder.setSelected(R.id.tv_type, bean.getType() == 2);
 
                 TextView tv_price = viewHolder.getView(R.id.tv_price);
 //                tv_price.setText(Html.fromHtml("<font color='#ff4707'>¥" + roomInfo.housing_price + "</font>/月"));

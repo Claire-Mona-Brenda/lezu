@@ -1,13 +1,30 @@
 package com.konka.renting.utils;
 
+import android.content.ContentResolver;
 import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.os.ParcelFileDescriptor;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.text.TextUtils;
+
+import com.konka.renting.KonkaApplication;
+import com.konka.renting.base.BaseApplication;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * Created by kaite on 2018/2/8.
@@ -101,4 +118,161 @@ public class PictureUtils {
         return path;
     }
 
+
+    /**
+     * 图片压缩 (AndroidQ以上)
+     *
+     * @param context context
+     * @param uri uri
+     * @return 压缩后的图片uri
+     */
+    private static Uri compressImageWithAndroidQ (Context context, Uri uri) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            return null;
+        }
+        if (uri == null) {
+            return null;
+        }
+        Uri insertUri = null;
+        ContentResolver resolver = context.getContentResolver();
+        ByteArrayOutputStream bos = null;
+        OutputStream os = null;
+        try {
+            //1.uri转换bitmap类型并旋转图片为正常图片
+            Bitmap tagBitmap = uriToBitmap(context, uri);
+
+            //2.压缩图片并写入byteArrayOutputStream流中
+            bos = new ByteArrayOutputStream();
+            if (tagBitmap != null) {
+                tagBitmap.compress(Bitmap.CompressFormat.JPEG, 85, bos);
+                tagBitmap.recycle();
+            }
+            //3.获取图片需要缓存的uri地址并copy到指定路径,主要通过MediaStore,请参照上篇文章
+//            insertUri = insertImageFileIntoMediaStore("","*");
+            if (insertUri == null) {
+                return null;
+            }
+            os = resolver.openOutputStream(insertUri);
+            if (os != null) {
+                os.write(bos.toByteArray());
+                os.flush();
+            }
+            //4.返回uri类型提供页面展示
+            return insertUri;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (os != null) {
+                    os.close();
+                }
+                if (bos != null) {
+                    bos.close();
+                }
+            } catch (IOException e) {
+            }
+        }
+        return insertUri;
+    }
+
+    /**
+     * AndroidQ以上保存图片到公共目录
+     *
+     * @param imageName 图片名称
+     * @param imageType 图片类型
+     * @param relativePath 缓存路径
+     */
+    private static Uri insertImageFileIntoMediaStore (String imageName, String imageType,
+                                                      String relativePath) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            return null;
+        }
+        if (TextUtils.isEmpty(relativePath)) {
+            return null;
+        }
+        Uri insertUri = null;
+        ContentResolver resolver = KonkaApplication.getContext().getContentResolver();
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.DISPLAY_NAME, imageName);
+        values.put(MediaStore.Images.Media.DESCRIPTION, imageName);
+        //设置文件类型为image/*
+        values.put(MediaStore.Images.Media.MIME_TYPE, "image/" + imageType);
+        //注意：MediaStore.Images.Media.RELATIVE_PATH需要targetSdkVersion=29,
+        //故该方法只可在Android10的手机上执行
+        values.put(MediaStore.Images.Media.RELATIVE_PATH, relativePath);
+        Uri external = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+        insertUri = resolver.insert(external, values);
+        return insertUri;
+    }
+
+    /**
+     * AndroidQ以下
+     * 创建图片缓存路径
+     *
+     * @param fileName 名称 包含文件类型
+     * @return 返回file类型
+     */
+    public static File getImageFileCache (String fileName) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            return null;
+        }
+        //创建项目图片公共缓存目录
+        File file = new File(Environment.getExternalStorageDirectory()+
+                File.separator +
+                Environment.DIRECTORY_PICTURES +
+                File.separator +
+                "testAndroidQ" +
+                File.separator +
+                "images");
+        if (! file.exists()) {
+            file.mkdirs();
+        }
+        //创建对应图片的缓存路径
+        return new File(file + File.separator + fileName);
+    }
+
+    /**
+     * uri转bitmap类型并旋转为正常图片
+     *
+     * @param context context
+     * @param uri uri
+     * @return 返回旋转后为正常图片的bitmap类型
+     */
+    private static Bitmap uriToBitmap (Context context, Uri uri) {
+        ParcelFileDescriptor parcelFileDescriptor = null;
+        FileDescriptor fileDescriptor = null;
+        ExifInterface exifInterface = null;
+        Bitmap tagBitmap = null;
+        try {
+            parcelFileDescriptor = context.getContentResolver().openFileDescriptor(uri, "r");
+
+            if (parcelFileDescriptor != null && parcelFileDescriptor.getFileDescriptor() != null) {
+                fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+
+                //1.转换uri为bitmap类型
+                tagBitmap = BitmapFactory.decodeFileDescriptor(fileDescriptor);
+
+                //2.旋转图片
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    exifInterface = new ExifInterface(fileDescriptor);
+                }
+//                tagBitmap = rotatingImage(tagBitmap, exifInterface);
+            }
+            return tagBitmap;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (parcelFileDescriptor != null) {
+                    parcelFileDescriptor.close();
+                }
+            } catch (IOException e) {
+            }
+        }
+        return tagBitmap;
+    }
 }

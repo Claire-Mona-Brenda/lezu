@@ -3,9 +3,11 @@ package com.konka.renting.utils;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Environment;
 import android.text.TextUtils;
 
+import com.konka.renting.KonkaApplication;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -15,6 +17,7 @@ import java.io.FileOutputStream;
 public class CacheUtils {
     private static final String FILE_NAME = "lezu";
     private static final String CACHE_PATH = FILE_NAME + File.separator + "pic_cache" + File.separator;
+    private static final String CACHE_PATH_Q = File.separator + "pic_cache" + File.separator;
 
     public static boolean isHavePermission = false;
 
@@ -26,7 +29,13 @@ public class CacheUtils {
             return null;
         String[] s = url.split("/");
         String name = s[s.length - 1];
-        String path = getSDCardPath() == null ? null : getSDCardPath() + CACHE_PATH + name;
+        String path;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            File PICTURES = KonkaApplication.getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+            path = PICTURES.getAbsolutePath() + CACHE_PATH_Q + name;
+        } else {
+            path = getSDCardPath() == null ? null : getSDCardPath() + CACHE_PATH + name;
+        }
         if (path == null)
             return null;
         File file = new File(path);
@@ -43,7 +52,13 @@ public class CacheUtils {
             return false;
         String[] s = url.split("/");
         String name = s[s.length - 1];
-        String path = getSDCardPath() == null ? null : getSDCardPath() + CACHE_PATH + name;
+        String path;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            File PICTURES = KonkaApplication.getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+            path = PICTURES.getAbsolutePath() + CACHE_PATH_Q + name;
+        } else {
+            path = getSDCardPath() == null ? null : getSDCardPath() + CACHE_PATH + name;
+        }
         if (path == null)
             return false;
         File file = new File(path);
@@ -94,7 +109,14 @@ public class CacheUtils {
             return false;
         String[] s = url.split("/");
         String name = s[s.length - 1];
-        String path = getSDCardPath() == null ? null : getSDCardPath() + CACHE_PATH + name;
+        String path;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            File PICTURES = KonkaApplication.getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+            path = PICTURES.getAbsolutePath() + CACHE_PATH_Q + name;
+        } else {
+            path = getSDCardPath() == null ? null : getSDCardPath() + CACHE_PATH + name;
+        }
+
         if (path == null)
             return false;
         File file = new File(path);

@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.ParcelFileDescriptor;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.text.Editable;
@@ -35,11 +36,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
+import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.services.core.PoiItem;
+import com.donkingliang.imageselector.utils.ImageSelector;
+import com.donkingliang.imageselector.utils.UriUtils;
 import com.konka.renting.R;
 import com.konka.renting.base.BaseActivity;
 import com.konka.renting.bean.DataInfo;
@@ -63,6 +67,7 @@ import com.konka.renting.landlord.house.widget.PicRecordWidget;
 import com.konka.renting.landlord.house.widget.PicassoEngine;
 import com.konka.renting.landlord.house.widget.ShowToastUtil;
 import com.konka.renting.utils.CacheUtils;
+import com.konka.renting.utils.ImagePickerProvider;
 import com.konka.renting.utils.PictureUtils;
 import com.konka.renting.utils.RxBus;
 import com.konka.renting.utils.RxUtil;
@@ -76,9 +81,12 @@ import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -538,17 +546,33 @@ public class HouseEditActivity extends BaseActivity {
                             if (s.equals("相机")) {
                                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                                 photoFileName = "JPEG_" + timeStamp + ".png";
-                                File f = new File(Environment.getExternalStorageDirectory() +"/konka/", photoFileName);
-                                File dir = new File(Environment.getExternalStorageDirectory() +"/konka/");
+                                File f = null;
+                                File dir = null;
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                                    //		获取图片沙盒文件夹
+                                    File PICTURES = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+                                    f = new File(PICTURES.getAbsolutePath() , photoFileName);
+                                    dir = new File(PICTURES.getAbsolutePath() );
+                                } else {
+                                    f = new File(Environment.getExternalStorageDirectory() + "/konka/", photoFileName);
+                                    dir = new File(Environment.getExternalStorageDirectory() + "/konka/");
+                                }
+
                                 if (!dir.exists()) {
                                     dir.mkdirs();
                                 }
-                                if (f.exists()) {
-                                    f.delete();
-                                }
-                                if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.N){
+//                                if (f.exists()) {
+//                                    f.delete();
+//                                }
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                                    Uri uri = FileProvider.getUriForFile(HouseEditActivity.this, ImagePickerProvider.getFileProviderName(HouseEditActivity.this), f);
+                                    //跳转到相机
+                                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                    intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+                                    startActivityForResult(intent, REQUEST_CODE_CHOOSE_CAMERA);
+                                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                                     takePhotoBiggerThan7(f.getAbsolutePath());
-                                }else {
+                                } else {
                                     // 加载路径图片路径
                                     Uri mUri = Uri.fromFile(f);
                                     Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -591,18 +615,27 @@ public class HouseEditActivity extends BaseActivity {
     }
 
     private void selectPhoto() {
-        Matisse.from(this)
-                .choose(MimeType.allOf())
-                .capture(false)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            ImageSelector.builder()
+                    .useCamera(false) // 设置是否使用拍照
+                    .setSingle(false)  //设置是否单选
+                    .setMaxSelectCount(9) // 图片的最大选择数量，小于等于0时，不限数量。
+                    .canPreview(true) //是否可以预览图片，默认为true
+                    .start(this, REQUEST_CODE_CHOOSE_PHOTO); // 打开相册
+        } else {
+            Matisse.from(this)
+                    .choose(MimeType.allOf())
+                    .capture(false)
 //                .captureStrategy(new CaptureStrategy(true, "com.konka.fileprovider"))
-                .countable(true)
-                .maxSelectable(PHOTO_MAX_SUM - uploadPicBeans.size())
-                .gridExpectedSize(getResources().getDimensionPixelSize(R.dimen.dp_130))
-                .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
-                .thumbnailScale(0.85f)
+                    .countable(true)
+                    .maxSelectable(PHOTO_MAX_SUM - uploadPicBeans.size())
+                    .gridExpectedSize(getResources().getDimensionPixelSize(R.dimen.dp_130))
+                    .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+                    .thumbnailScale(0.85f)
 //                .imageEngine(new PicassoEngine())
-                .imageEngine(new PicassoEngine())
-                .forResult(REQUEST_CODE_CHOOSE_PHOTO);
+                    .imageEngine(new PicassoEngine())
+                    .forResult(REQUEST_CODE_CHOOSE_PHOTO);
+        }
     }
 
 
@@ -626,7 +659,7 @@ public class HouseEditActivity extends BaseActivity {
                 }
                 break;
             case R.id.activity_addHouse_tv_address:
-                ChooseEstateActivity.toActivity(this,bean.getCity());
+                ChooseEstateActivity.toActivity(this, bean.getCity());
                 break;
             case R.id.activity_addHouse_tv_type:
                 picker.show();
@@ -834,6 +867,7 @@ public class HouseEditActivity extends BaseActivity {
      */
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_CODE_CHOOSE_CAMERA) {
 //                Bundle extras = data.getExtras();
@@ -842,22 +876,31 @@ public class HouseEditActivity extends BaseActivity {
 //                String imageFileName = "JPEG_" + timeStamp + ".png";
 //                File f = saveBitmap(imageFileName, imageBitmap);
                 picCurSum++;
-                File f = new File(Environment.getExternalStorageDirectory() +"/konka/", photoFileName);
-                File compressedImageFile;
-                try {
-                    // 图片压缩
-                    compressedImageFile = new Compressor(this).compressToFile(f);
-                    if (!compressedImageFile.exists())
-                        compressedImageFile.createNewFile();
-                    uploadPic(compressedImageFile, compressedImageFile.getName());
-                } catch (IOException e) {
-                    e.printStackTrace();
+                File f = null;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    //		获取图片沙盒文件夹
+                    File PICTURES = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+                    f = new File(PICTURES.getAbsolutePath() , photoFileName);
+                    uploadPic(f, f.getName());
+                } else {
+                    f = new File(Environment.getExternalStorageDirectory() , photoFileName);
+
+                    File compressedImageFile;
+                    try {
+                        // 图片压缩
+                        compressedImageFile = new Compressor(this).compressToFile(f);
+                        if (!compressedImageFile.exists())
+                            compressedImageFile.createNewFile();
+                        uploadPic(compressedImageFile, compressedImageFile.getName());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
 
 //                uploadPic(compressedImageFile, compressedImageFile.getName());
 
-            } else if (requestCode == REQUEST_CODE_CHOOSE_PHOTO) {
-                if (data != null) {
+            } else if (requestCode == REQUEST_CODE_CHOOSE_PHOTO && data != null) {
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
 //                    Uri selectedImageUri = data.getData();
 //                    if (selectedImageUri != null) {
 //                        String s2 = getRealPathFromURI(selectedImageUri);
@@ -881,10 +924,67 @@ public class HouseEditActivity extends BaseActivity {
                             e.printStackTrace();
                         }
                     }
+                } else {
+                    //		获取图片沙盒文件夹
+                    File PICTURES = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+                    ArrayList<String> images = data.getStringArrayListExtra(
+                            ImageSelector.SELECT_RESULT);
+
+                    int size = images.size();
+                    picCurSum += size;
+                    for (int i = 0; i < size; i++) {
+                        String path = images.get(i);
+                        Uri uri = UriUtils.getImageContentUri(this, path);
+                        //图片名称
+                        String mFileName = path.substring(path.lastIndexOf("/") + 1, path.length());
+                        //图片路径
+                        String mFilePath = PICTURES.getAbsolutePath() + "/" + mFileName;
+                        File file = new File(mFilePath);
+
+                        FileInputStream inputStream = null;
+                        FileOutputStream outputStream = null;
+                        ParcelFileDescriptor pfd = null;
+                        try {
+                            pfd = getContentResolver().openFileDescriptor(uri, "r");
+                            outputStream = new FileOutputStream(file);
+                            if (pfd != null) {
+                                inputStream = new FileInputStream(pfd.getFileDescriptor());
+                                byte[] bytes = new byte[1024];
+                                //得到实际读取的长度  
+                                int n = 0;
+                                //循环读取  
+                                while ((n = inputStream.read(bytes)) != -1) {
+                                    outputStream.write(bytes, 0, n);
+                                }
+
+                            }
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } finally {
+
+                            try {
+                                if (inputStream != null) {
+                                    inputStream.close();
+                                }
+                                if (outputStream != null) {
+                                    outputStream.close();
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        uploadPic(file, file.getName());
+
+                    }
+
+
                 }
             }
         }
     }
+
 
     /**
      * 保存图片到本地

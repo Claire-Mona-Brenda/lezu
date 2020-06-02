@@ -7,5 +7,9 @@
         <external-path
             name="download"
             path="" />
+        <!-- 这个是保存拍照图片的路径,必须配置。 -->
+        <external-path
+            name="images"
+            path="Pictures" />
     </paths>
 </resources>
