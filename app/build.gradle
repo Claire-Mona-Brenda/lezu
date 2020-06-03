@@ -37,6 +37,26 @@ MobSDK {
 
 }
 android {
+    signingConfigs {
+        debug {
+            storeFile file('D:\\AndroidKey\\keystore\\konka.keystore')
+            storePassword '1qaz2wsx'
+            keyPassword '1qaz2wsx'
+            keyAlias = 'konka'
+        }
+        release {
+            keyPassword '1qaz2wsx'
+            storePassword '1qaz2wsx'
+            keyAlias = 'konka'
+            storeFile file('D:\\AndroidKey\\keystore\\konka.keystore')
+        }
+        config {
+            storeFile file('D:\\AndroidKey\\keystore\\konka.keystore')
+            storePassword '1qaz2wsx'
+            keyPassword '1qaz2wsx'
+            keyAlias = 'konka'
+        }
+    }
     compileSdkVersion 29
     buildToolsVersion = '29.0.2'
 
@@ -79,26 +99,7 @@ android {
             debuggable = true
         }
     }
-    signingConfigs {
-        release {
-            keyAlias 'konka'
-            keyPassword '1qaz2wsx'
-            storeFile file('D:\\Android\\keystore\\konka.keystore')
-            storePassword '1qaz2wsx'
-        }
-        debug {
-            keyAlias 'konka'
-            keyPassword '1qaz2wsx'
-            storeFile file('D:\\Android\\keystore\\konka.keystore')
-            storePassword '1qaz2wsx'
-        }
-        config {
-            keyAlias 'konka'
-            keyPassword '1qaz2wsx'
-            storeFile file('D:\\Android\\keystore\\konka.keystore')
-            storePassword '1qaz2wsx'
-        }
-    }
+
     dexOptions {
         preDexLibraries = false
     }

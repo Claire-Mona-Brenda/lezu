@@ -5,12 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.Point;
-import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -28,13 +25,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.amap.api.maps.AMap;
-import com.amap.api.maps.CameraUpdate;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.CameraPosition;
-import com.amap.api.maps.model.Circle;
-import com.amap.api.maps.model.CircleOptions;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
@@ -42,17 +36,10 @@ import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.maps.model.Text;
 import com.amap.api.maps.model.TextOptions;
 import com.amap.api.maps.model.VisibleRegion;
-import com.amap.api.services.core.AMapException;
-import com.amap.api.services.core.LatLonPoint;
-import com.amap.api.services.district.DistrictItem;
-import com.amap.api.services.district.DistrictResult;
-import com.amap.api.services.district.DistrictSearch;
-import com.amap.api.services.district.DistrictSearchQuery;
 import com.amap.api.services.geocoder.GeocodeAddress;
 import com.amap.api.services.geocoder.GeocodeQuery;
 import com.amap.api.services.geocoder.GeocodeResult;
 import com.amap.api.services.geocoder.GeocodeSearch;
-import com.amap.api.services.geocoder.RegeocodeQuery;
 import com.amap.api.services.geocoder.RegeocodeResult;
 import com.konka.renting.R;
 import com.konka.renting.base.BaseActivity;
@@ -60,25 +47,19 @@ import com.konka.renting.bean.DataInfo;
 import com.konka.renting.bean.GroupRoomListBean;
 import com.konka.renting.bean.MapSearchBean;
 import com.konka.renting.bean.PageDataBean;
-import com.konka.renting.bean.RoomGroupListBean;
 import com.konka.renting.bean.RoomPriceAreaBean;
 import com.konka.renting.bean.RoomTypeListBean;
 import com.konka.renting.event.MapSearchChooseEvent;
 import com.konka.renting.http.SecondRetrofitHelper;
 import com.konka.renting.http.subscriber.CommonSubscriber;
-import com.konka.renting.landlord.house.widget.ShowToastUtil;
-import com.konka.renting.tenant.findroom.map.Constants;
 import com.konka.renting.utils.RxUtil;
 import com.konka.renting.utils.UIUtils;
-import com.konka.renting.widget.CommonInputPopupWindow;
 import com.lljjcoder.utils.PinYinUtils;
 import com.mcxtzhang.commonadapter.rv.CommonAdapter;
 import com.mcxtzhang.commonadapter.rv.ViewHolder;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.zaaach.citypicker.CityPicker;
-import com.zaaach.citypicker.adapter.OnPickListener;
 import com.zaaach.citypicker.model.City;
 import com.zaaach.citypicker.model.HotCity;
 
@@ -87,7 +68,6 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
 import rx.Subscription;
@@ -352,8 +332,12 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
 
     private void initMap() {
         MyLocationStyle myLocationStyle = new MyLocationStyle();
-        myLocationStyle.showMyLocation(false);
-        aMap.setMyLocationEnabled(false);// 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false。
+        myLocationStyle.strokeColor(Color.argb(0, 0, 0, 0));
+        myLocationStyle.strokeWidth(new Float(0));
+        myLocationStyle.radiusFillColor(Color.argb(0, 0, 0, 0));
+        myLocationStyle.showMyLocation(true);
+
+        aMap.setMyLocationEnabled(true);// 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false。
         aMap.setMyLocationStyle(myLocationStyle);//设置定位蓝点的Style
         aMap.setMinZoomLevel(9);
         aMap.setMaxZoomLevel(19);
@@ -577,7 +561,15 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mMapview.onDestroy();
+        if (null != mMapview) {
+            mMapview.onDestroy();
+        }
+        if (null != aMap) {
+            aMap.stopAnimation();
+            aMap.clear();
+        }
+        aMap = null;
+        mMapview = null;
     }
 
     /**
