@@ -4,10 +4,10 @@ import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -109,7 +109,9 @@ public class EstateListPopup extends PopupWindow {
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        RoomInfoActivity.toActivity(mContext, bean.getRoom_id() + "");
+                        RoomInfoActivity.toActivity(mContext,
+                                bean.getRoom_id() + "");
+                        Log.d("MapFindHouseActivity", "跳转完成");
                     }
                 });
             }

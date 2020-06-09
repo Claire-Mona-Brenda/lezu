@@ -357,7 +357,8 @@ public class TenantMainActivity extends BaseMainActivity {
         PushManager.getInstance().initialize(this.getApplicationContext(), GeTuiPushService.class);
         // com.getui.demo.DemoIntentService 为第三方自定义的推送服务事件接收类
         PushManager.getInstance().registerPushIntentService(this.getApplicationContext(), GeTuiIntentService.class);
-        if (LoginUserBean.getInstance().getIs_lodge_identity() == null || LoginUserBean.getInstance().getIs_lodge_identity().equals("")) {
+        if (LoginUserBean.getInstance().getIs_lodge_identity() == null
+                || LoginUserBean.getInstance().getIs_lodge_identity().equals("")) {
             getUserInfo();
         }
         //neadGoTo(getIntent());

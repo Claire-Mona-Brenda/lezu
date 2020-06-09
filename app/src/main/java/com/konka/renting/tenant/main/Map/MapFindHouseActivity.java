@@ -5,9 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,9 +26,10 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
-import com.amap.api.maps.MapView;
+import com.amap.api.maps.TextureMapView;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.LatLng;
@@ -76,6 +79,8 @@ import rx.functions.Action1;
 
 public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.OnGeocodeSearchListener {
 
+    public static final String TAG = MapFindHouseActivity.class.getSimpleName();
+
     @BindView(R.id.activity_map_find_house_img_back)
     ImageView imgBack;
     @BindView(R.id.activity_map_find_house_tv_long_rent)
@@ -95,7 +100,7 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
     @BindView(R.id.activity_map_find_house_img_search)
     ImageView mImgSearch;
     @BindView(R.id.activity_map_find_house_mapview)
-    MapView mMapview;
+    TextureMapView mMapview;
     @BindView(R.id.activity_find_house_ll_main)
     LinearLayout mLlMain;
     @BindView(R.id.activity_find_house_tv_title)
@@ -330,19 +335,31 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
     }
 
 
+
     private void initMap() {
         MyLocationStyle myLocationStyle = new MyLocationStyle();
+        myLocationStyle.interval(2000);
+        myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE_NO_CENTER);
         myLocationStyle.strokeColor(Color.argb(0, 0, 0, 0));
         myLocationStyle.strokeWidth(new Float(0));
         myLocationStyle.radiusFillColor(Color.argb(0, 0, 0, 0));
         myLocationStyle.showMyLocation(true);
 
-        aMap.setMyLocationEnabled(true);// 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false。
-        aMap.setMyLocationStyle(myLocationStyle);//设置定位蓝点的Style
+        aMap.setMyLocationStyle(myLocationStyle); // 设置定位蓝点的Style
+        aMap.setMyLocationEnabled(true); // 设置为true表示启动显示定位蓝点
+        aMap.getUiSettings().setMyLocationButtonEnabled(true);
         aMap.setMinZoomLevel(9);
         aMap.setMaxZoomLevel(19);
         aMap.getUiSettings().setRotateGesturesEnabled(false);
         // 设置可视范围变化时的回调的接口方法
+        aMap.setOnMyLocationChangeListener(new AMap.OnMyLocationChangeListener() {
+            @Override
+            public void onMyLocationChange(Location location) {
+                double lng = location.getLongitude();
+                double lat = location.getLatitude();
+                Log.d(TAG, lng + ", " + lat);
+            }
+        });
         aMap.setOnCameraChangeListener(new AMap.OnCameraChangeListener() {
             @Override
             public void onCameraChange(CameraPosition position) {
@@ -373,6 +390,7 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
                         checkLocationTime();
                         curr_lat = aMap.getCameraPosition().target.latitude;
                         curr_lng = aMap.getCameraPosition().target.longitude;
+                        Log.d(TAG, curr_lng + ", " + curr_lat);
                         break;
                     case MotionEvent.ACTION_UP:
                         isTimer = false;
@@ -382,7 +400,9 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
                 }
             }
         });
+
     }
+
 
     private void initAdapter() {
 
@@ -427,7 +447,8 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
                     }
                     viewHolder.setSelected(R.id.adapter_find_map_price_tv_price, isChoose);
                 }
-                viewHolder.setOnClickListener(R.id.adapter_find_map_price_tv_price, new View.OnClickListener() {
+                viewHolder.setOnClickListener(R.id.adapter_find_map_price_tv_price,
+                        new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         TextView tv = (TextView) view;
@@ -502,7 +523,8 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
                     }
                 }
                 viewHolder.setSelected(R.id.adapter_find_map_type_tv_type, isChoose);
-                viewHolder.setOnClickListener(R.id.adapter_find_map_type_tv_type, new View.OnClickListener() {
+                viewHolder.setOnClickListener(R.id.adapter_find_map_type_tv_type,
+                        new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         TextView tv = (TextView) view;
@@ -518,8 +540,9 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
             }
         };
 
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);//定义瀑布流管理器，第一个参数是列数，第二个是方向。
-//        layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);//不设置的话，图片闪烁错位，有可能有整列错位的情况。
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);// 定义瀑布流管理器，第一个参数是列数，第二个是方向。
+//        layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
+//        不设置的话，图片闪烁错位，有可能有整列错位的情况。
         mRvPrice.setLayoutManager(layoutManager);
         mRvPrice.setAdapter(priceAreaCommonAdapter);
 
@@ -568,8 +591,8 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
             aMap.stopAnimation();
             aMap.clear();
         }
-        aMap = null;
         mMapview = null;
+        aMap = null;
     }
 
     /**
@@ -617,13 +640,13 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
         });
 
         TextOptions textOptions1 = new TextOptions();
-        textOptions1.position(new LatLng(lat, lng));
-        textOptions1.align(Text.ALIGN_CENTER_HORIZONTAL, Text.ALIGN_BOTTOM);
         String name = mapSearchBean.getName();
         if (name.length() > 5) {
             name = name.substring(0, 5) + "...";
         }
         textOptions1.text(name);
+        textOptions1.position(new LatLng(lat, lng));
+        textOptions1.align(Text.ALIGN_CENTER_HORIZONTAL, Text.ALIGN_BOTTOM);
         textOptions1.backgroundColor(Color.parseColor("#00FF7500"));
         textOptions1.fontColor(getResources().getColor(R.color.color_ffffff));
         textOptions1.fontSize(getResources().getDimensionPixelSize(R.dimen.sp_12));
@@ -648,7 +671,8 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
         markerOption.anchor(0.5f, 0.5f);
         markerOption.draggable(false);//设置Marker可拖动
         markerOption.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
-                .decodeResource(getResources(), rent_type == 2 ? R.mipmap.map_2_orange_bg : R.mipmap.map_2_green_bg)));
+                .decodeResource(getResources(),
+                        rent_type == 2 ? R.mipmap.map_2_orange_bg : R.mipmap.map_2_green_bg)));
         markerOption.alpha(0.9f);
         // 将Marker设置为贴地显示，可以双指下拉地图查看效果
         markerOption.setFlat(true);//设置marker平贴地图效果
@@ -660,11 +684,13 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
             public boolean onMarkerClick(Marker marker) {
                 MapSearchBean bean = (MapSearchBean) marker.getObject();
                 if (!TextUtils.isEmpty(room_group_id) && room_group_id.equals(bean.getRoom_group_id() + "")) {
-                    showRoomListPop(bean.getName() + " " + bean.getCount() + "套", false);
+                    showRoomListPop(bean.getName() + " " + bean.getCount() + "套",
+                            false);
                 } else {
                     roomListBeans.clear();
                     room_group_id = bean.getRoom_group_id() + "";
-                    showRoomListPop(bean.getName() + " " + bean.getCount() + "套", true);
+                    showRoomListPop(bean.getName() + " " + bean.getCount() + "套",
+                            true);
 
                 }
                 return true;
@@ -686,7 +712,15 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
     }
 
 
-    @OnClick({R.id.activity_map_find_house_img_back, R.id.activity_map_find_house_ll_long_rent, R.id.activity_map_find_house_ll_short_rent, R.id.activity_map_find_house_img_filtrate, R.id.activity_map_find_house_img_search, R.id.activity_find_house_tv_reset, R.id.activity_find_house_tv_sure})
+    @OnClick({
+            R.id.activity_map_find_house_img_back,
+            R.id.activity_map_find_house_ll_long_rent,
+            R.id.activity_map_find_house_ll_short_rent,
+            R.id.activity_map_find_house_img_filtrate,
+            R.id.activity_map_find_house_img_search,
+            R.id.activity_find_house_tv_reset,
+            R.id.activity_find_house_tv_sure
+    })
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.activity_map_find_house_img_back://返回
@@ -836,8 +870,10 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
     public void onGeocodeSearched(GeocodeResult geocodeResult, int i) {
         if (geocodeResult != null) {
             GeocodeAddress address = geocodeResult.getGeocodeAddressList().get(0);
-            LatLng latLng = new LatLng(address.getLatLonPoint().getLatitude(), address.getLatLonPoint().getLongitude());
-            aMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(latLng, 11, 0, 0)));
+            LatLng latLng = new LatLng(address.getLatLonPoint().getLatitude(),
+                    address.getLatLonPoint().getLongitude());
+            aMap.moveCamera(CameraUpdateFactory.newCameraPosition(
+                    new CameraPosition(latLng, 11, 0, 0)));
         }
     }
 
@@ -918,7 +954,9 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
     private void mapSearch(int level, String point1, String point2, String keyword) {
         String price_area_id = rent_type == 1 ? price_area_id_r : price_area_id_l;
         String price_area = rent_type == 1 ? price_area_r : price_area_l;
-        Subscription subscription = (SecondRetrofitHelper.getInstance().mapSearch(level + "", point1, point2, rent_type + "", price_area_id, room_type_id, price_area, keyword)
+        Subscription subscription = (SecondRetrofitHelper.getInstance().mapSearch(
+                level + "", point1, point2, rent_type + "",
+                price_area_id, room_type_id, price_area, keyword)
                 .compose(RxUtil.<DataInfo<List<MapSearchBean>>>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo<List<MapSearchBean>>>() {
                     @Override
@@ -992,8 +1030,6 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
                         }
 
                     }
-
-
                     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
                     @Override
                     public void onNext(DataInfo<PageDataBean<GroupRoomListBean>> dataInfo) {
@@ -1041,16 +1077,20 @@ public class MapFindHouseActivity extends BaseActivity implements GeocodeSearch.
         lp.alpha = 0.5f;
         mActivity.getWindow().setAttributes(lp);
         mActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-        // popupwindow 第一个参数指定popup 显示页面
-        popupWindow.showAtLocation(mLlMain, Gravity.BOTTOM, 0, 0);     // 第一个参数popup显示activity页面
+
+
+        popupWindow.showAtLocation(mLlMain, Gravity.BOTTOM, 0, 0);
+        Log.d(TAG, "popup window弹出");
+
         // popup 退出时界面恢复
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
                 WindowManager.LayoutParams lp = mActivity.getWindow().getAttributes();
                 lp.alpha = 1f;
-                mActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+                mActivity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
                 mActivity.getWindow().setAttributes(lp);
+
             }
         });
     }
