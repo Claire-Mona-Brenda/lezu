@@ -10,6 +10,7 @@ import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.SuperscriptSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -795,9 +796,12 @@ public class TenantMainFragment extends BaseFragment implements GeocodeSearch.On
     @Override
     public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {
         String c = regeocodeResult.getRegeocodeAddress().getCity();
+        Log.d("MapFindHouseActivity","onRegeocodeSearched() 坐标转换定位的当前地址："+c);
         if (!TextUtils.isEmpty(c)) {
             mTvCity.setText(getString(R.string.curr_location_) + c);
-            city = new City(c, regeocodeResult.getRegeocodeAddress().getProvince(), pinYinUtils.getStringPinYin(c), regeocodeResult.getRegeocodeAddress().getCityCode());
+            city = new City(c, regeocodeResult.getRegeocodeAddress().getProvince(),
+                    pinYinUtils.getStringPinYin(c),
+                    regeocodeResult.getRegeocodeAddress().getCityCode());
         }
     }
 
